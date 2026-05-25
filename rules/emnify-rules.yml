@@ -1,0 +1,104 @@
+extends:
+  - spectral:oas
+
+functions: []
+
+rules:
+  emnify-info-contact:
+    description: emnify OpenAPI specs must reference the emnify developer support contact.
+    message: 'info.contact.url should reference https://docs.emnify.com/developers'
+    severity: warn
+    given: $.info.contact
+    then:
+      - field: url
+        function: pattern
+        functionOptions:
+          match: 'docs\.emnify\.com/developers'
+
+  emnify-server-uses-cdn-host:
+    description: emnify REST API uses the cdn.emnify.net host.
+    message: 'servers[*].url should be https://cdn.emnify.net'
+    severity: warn
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: 'cdn\.emnify\.net'
+
+  emnify-paths-use-api-v1-or-v2:
+    description: emnify paths are versioned under /api/v1 or /api/v2.
+    message: 'Path should start with /api/v1 or /api/v2'
+    severity: warn
+    given: $.paths.*~
+    then:
+      function: pattern
+      functionOptions:
+        match: '^/api/v[12]/'
+
+  emnify-operation-summary-title-case:
+    description: All operation summaries must use Title Case.
+    message: 'Summary should use Title Case (first letter of each major word capitalized).'
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete].summary
+    then:
+      function: pattern
+      functionOptions:
+        match: '^([A-Z][a-zA-Z0-9]*)(\s+[A-Za-z0-9][a-zA-Z0-9]*)*$'
+
+  emnify-operation-has-operationid:
+    description: Every operation must have an operationId.
+    message: 'operationId is required.'
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete]
+    then:
+      field: operationId
+      function: truthy
+
+  emnify-operation-has-tags:
+    description: Every operation must be tagged with at least one subpackage tag.
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete]
+    then:
+      field: tags
+      function: truthy
+
+  emnify-operation-tag-prefix:
+    description: emnify operation tags use the subpackage_* prefix.
+    message: 'Tag should start with subpackage_'
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete].tags[*]
+    then:
+      function: pattern
+      functionOptions:
+        match: '^subpackage_'
+
+  emnify-bearer-auth-required:
+    description: emnify operations require the BearerAuth security scheme (JWT). Allow opt-out only for /api/v1/authenticate.
+    severity: warn
+    given: $.components.securitySchemes
+    then:
+      field: BearerAuth
+      function: truthy
+
+  emnify-paths-use-snake-case:
+    description: emnify path segments use snake_case (not kebab-case).
+    message: 'Path segments should use snake_case.'
+    severity: warn
+    given: $.paths.*~
+    then:
+      function: pattern
+      functionOptions:
+        match: '^(/[a-z0-9_{}-]+)+$'
+
+  emnify-operation-has-2xx-response:
+    description: Every operation must define at least one 2xx response.
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete].responses
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          patternProperties:
+            '^2\d\d$': {}
+          minProperties: 1

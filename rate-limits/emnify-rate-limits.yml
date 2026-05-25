@@ -1,0 +1,58 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: emnify
+providerId: emnify
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - IoT
+  - Rate Limiting
+  - Quotas
+description: Reconciled rate limits for the emnify REST API. Per-IP burst protection, per-account monthly quota, and per-endpoint sustained/burst limits enforced via 429 responses.
+sources:
+  - https://docs.emnify.com/developers/api-guidelines/rate-limits
+  - https://docs.emnify.com/developers/api-guidelines/errors
+responseCodes:
+  throttled: 429
+  quotaExceeded: 429
+algorithm: leaky-bucket
+quotas:
+  - scope: per-account
+    metric: requests
+    limit: 10000000
+    window: month
+    description: 10 million API requests per organization per month; resets the first day of each month.
+  - scope: per-ip
+    metric: requests
+    limit: 2000
+    window: 5m
+    description: 2,000 requests per IP address in any rolling 5-minute window.
+limits:
+  - scope: endpoint
+    pattern: '/api/v1/authenticate'
+    rps: null
+    window: 5m
+    limit: 100
+    description: Authentication endpoint allows 100 calls per IP per 5-minute window; cache JWTs aggressively.
+  - scope: endpoint-class
+    pattern: 'stats and most list endpoints'
+    rps: 10
+    burst: 5
+    description: Standard listing and stats endpoints throttled at 10 req/s sustained with a 5-request burst.
+  - scope: endpoint-class
+    pattern: 'enhanced endpoints (endpoint stats, SIM retrieval, service/tariff profiles)'
+    rps: 100
+    burst: 50
+    description: Frequently used read endpoints raised to 100 req/s sustained with 50-request burst.
+  - scope: endpoint-class
+    pattern: 'individual endpoint operations'
+    rps: 50
+    burst: 25
+    description: Mutating endpoint operations capped at 50 req/s with 25-request burst.
+recommendations:
+  - Cache JWTs and refresh proactively before expiry rather than re-authenticating per call.
+  - Use exponential backoff with jitter on 429 responses.
+  - For high-volume event consumption, configure the Data Streamer to push events to S3/Kinesis instead of polling /api/v1/event.
+  - Use bulk endpoints (/api/v2/endpoint/multi) for fleet operations to stay under per-second limits.

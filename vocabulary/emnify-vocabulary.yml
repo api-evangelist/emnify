@@ -1,0 +1,126 @@
+vocabulary: emnify IoT Connectivity Vocabulary
+version: '0.1'
+provider: emnify
+providerId: emnify
+description: Domain vocabulary mapping for the emnify IoT SuperNetwork — concepts, resources, and operational dimensions used across the REST API, GraphQL API, Portal, and Data Streamer.
+created: '2026-05-25'
+modified: '2026-05-25'
+sources:
+  - https://docs.emnify.com/developers
+  - https://docs.emnify.com/developers/api-guidelines/conventions
+  - https://docs.emnify.com/developers/reference/endpoint
+  - https://docs.emnify.com/developers/reference/sim
+
+concepts:
+  - id: connectivity
+    label: IoT Connectivity
+    description: Cellular and satellite IP connectivity supplied to IoT devices through the emnify SuperNetwork.
+  - id: supernetwork
+    label: SuperNetwork
+    description: emnify's aggregated coverage across 540+ MNOs in 190+ countries with unsteered multi-network access.
+  - id: workspace
+    label: Workspace
+    description: A logical tenant inside an emnify Organization that owns SIMs, endpoints, profiles, and integrations.
+  - id: organization
+    label: Organization
+    description: A hierarchical tenant entity. Customers, issuers, and resellers are all modeled as organizations.
+  - id: ntn-iot
+    label: NTN-IoT
+    description: Non-Terrestrial Network IoT — NB-IoT over GEO satellite (RAT 17) via Skylo, branded SatPlus/SatSolo/CellSolo.
+
+resources:
+  - id: sim
+    label: SIM
+    description: Physical SIM (2FF/3FF/4FF/MFF2) or embedded eUICC profile, identified by ICCID/EID.
+    statuses:
+      - {id: 0, label: Issued}
+      - {id: 1, label: Activated}
+      - {id: 2, label: Suspended}
+      - {id: 3, label: Deleted}
+      - {id: 4, label: Factory Test}
+  - id: endpoint
+    label: Endpoint
+    description: Virtual representation of a device that owns a SIM, service profile, and tariff profile.
+    statuses:
+      - {id: 0, label: Enabled}
+      - {id: 1, label: Disabled}
+      - {id: 2, label: Deleted}
+  - id: service-profile
+    label: Service Profile
+    description: Service-side policy — traffic limits, allowed operators, IMEI lock, callback configuration, etc.
+  - id: tariff-profile
+    label: Tariff Profile
+    description: Rate plan applied to endpoints — data, SMS, and SIM-lifecycle pricing per coverage zone.
+  - id: tariff-plan
+    label: Tariff Plan
+    description: Commercial plan with payment interval, minimum runtime, and contract terms.
+  - id: euicc
+    label: eUICC
+    description: SGP.32 IoT eSIM device identified by EID, hosting one or more downloadable profiles.
+  - id: event
+    label: Event
+    description: Network, API, or portal event (attach/detach, location update, PDP context, SMS, audit).
+  - id: imsi
+    label: IMSI
+    description: International Mobile Subscriber Identity associated with a SIM profile.
+  - id: operator
+    label: Mobile Network Operator
+    description: Carrier identified by MCC/MNC that the SuperNetwork uses to attach a device.
+  - id: breakout-region
+    label: Breakout Region
+    description: Geographic region where IP traffic exits to the public internet or to a customer VPC.
+  - id: cloud-connect
+    label: Cloud Connect
+    description: Private cloud breakout (AWS Transit Gateway, VPN) connecting devices to a customer VPC.
+
+dimensions:
+  authentication:
+    - application-token
+    - user-credentials
+    - jwt
+    - mfa
+  data:
+    - mb
+    - gb
+    - data-volume-upload
+    - data-volume-download
+  messaging:
+    - sms-mo
+    - sms-mt
+    - sms-concatenated
+    - dcs
+    - udh
+  radio:
+    - 2g
+    - 3g
+    - 4g
+    - 5g
+    - lte-m
+    - nb-iot
+    - ntn-iot
+  pricing:
+    - fixed-allowance
+    - pooled-allowance
+    - pay-per-use
+    - commitment
+  geography:
+    - coverage-zone
+    - country
+    - region
+    - global
+
+verbs:
+  - List
+  - Create
+  - Bulk Create
+  - Retrieve
+  - Update
+  - Bulk Update
+  - Delete
+  - Bulk Delete
+  - Activate
+  - Suspend
+  - Reset
+  - Send
+  - Cancel
+  - Stream

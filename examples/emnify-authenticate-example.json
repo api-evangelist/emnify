@@ -1,0 +1,18 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://cdn.emnify.net/api/v1/authenticate",
+    "headers": {"Content-Type": "application/json"},
+    "body": {
+      "application_token": "ory_at_emn1f_examp1e_appl1cat10n_t0ken_va1ue"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {"Content-Type": "application/json"},
+    "body": {
+      "auth_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0In0...",
+      "refresh_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJyZWZyZXNoIn0..."
+    }
+  }
+}

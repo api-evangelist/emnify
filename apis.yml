@@ -1,0 +1,259 @@
+aid: emnify
+url: https://raw.githubusercontent.com/api-evangelist/emnify/refs/heads/main/apis.yml
+apis:
+- aid: emnify:emnify-rest-api
+  name: emnify REST API
+  tags:
+  - IoT
+  - Cellular
+  - Connectivity
+  - SIM
+  - eSIM
+  humanURL: https://docs.emnify.com/developers
+  properties:
+  - url: https://docs.emnify.com/developers
+    type: Documentation
+  - url: https://docs.emnify.com/developers/api-guidelines/conventions
+    type: Documentation
+  - url: https://docs.emnify.com/llms-full.txt
+    type: Documentation
+  - url: openapi/emnify-api-openapi.yml
+    type: OpenAPI
+  - url: rules/emnify-rules.yml
+    type: SpectralRules
+  - url: json-schema/emnify-sim-schema.json
+    type: JSONSchema
+  - url: json-schema/emnify-endpoint-schema.json
+    type: JSONSchema
+  - url: json-schema/emnify-event-schema.json
+    type: JSONSchema
+  - url: json-structure/emnify-sim-structure.json
+    type: JSONStructure
+  - url: json-structure/emnify-endpoint-structure.json
+    type: JSONStructure
+  - url: json-ld/emnify-context.jsonld
+    type: JSONLD
+  - url: examples/emnify-authenticate-example.json
+    type: Example
+  - url: examples/emnify-list-endpoints-example.json
+    type: Example
+  - url: examples/emnify-send-sms-example.json
+    type: Example
+  - url: examples/emnify-list-events-example.json
+    type: Example
+  - url: vocabulary/emnify-vocabulary.yml
+    type: Vocabulary
+  - type: NaftikoCapability
+    url: capabilities/sim-management.yaml
+  - type: NaftikoCapability
+    url: capabilities/endpoint-management.yaml
+  - type: NaftikoCapability
+    url: capabilities/sms-messaging.yaml
+  - type: NaftikoCapability
+    url: capabilities/events-monitoring.yaml
+  - type: NaftikoCapability
+    url: capabilities/policies-and-profiles.yaml
+  - type: NaftikoCapability
+    url: capabilities/euicc-management.yaml
+  - type: NaftikoCapability
+    url: capabilities/data-streamer-callbacks.yaml
+  description: The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with short-lived JWTs obtained via application tokens or user credentials.
+- aid: emnify:emnify-graphql-api
+  name: emnify GraphQL API
+  tags:
+  - IoT
+  - GraphQL
+  - Query
+  humanURL: https://docs.emnify.com/developers/graphql
+  properties:
+  - url: https://docs.emnify.com/developers/graphql
+    type: Documentation
+  - url: https://docs.emnify.com/developers/graphql/graphiql-ide
+    type: Documentation
+  - url: https://docs.emnify.com/developers/api-guidelines/conventions
+    type: Documentation
+  description: emnify GraphQL API for flexible, single-request queries against the emnify data model with customizable response shapes. An in-browser GraphiQL IDE supports interactive exploration and testing.
+- aid: emnify:emnify-data-streamer
+  name: emnify Data Streamer
+  tags:
+  - Streaming
+  - Events
+  - Data
+  - Webhooks
+  humanURL: https://docs.emnify.com/developers/reference/data-streamer
+  properties:
+  - url: https://docs.emnify.com/developers/reference/data-streamer
+    type: Documentation
+  - url: https://docs.emnify.com/developers/integrations/data-streamer/aws-s3-kinesis
+    type: Documentation
+  - url: https://docs.emnify.com/developers/callbacks/api
+    type: Documentation
+  - url: https://docs.emnify.com/developers/callbacks/sms
+    type: Documentation
+  description: Stream event and usage data to outbound destinations (AWS S3, AWS Kinesis, REST/webhook, Datadog, Salesforce, Keen.io). Supports detailed object schemas for data types, traffic types, tariffs, operators, and volume tracking. SMS and API callbacks deliver mobile-originated SMS and event payloads to your infrastructure.
+- aid: emnify:emnify-mcp-server
+  name: emnify Documentation MCP Server
+  tags:
+  - MCP
+  - Documentation
+  - AI
+  humanURL: https://docs.emnify.com/_mcp/server
+  properties:
+  - url: https://docs.emnify.com/_mcp/server
+    type: MCP
+  - url: https://docs.emnify.com/developers/developer-tools/ai-assistance
+    type: Documentation
+  description: Public MCP server for emnify documentation. Connect Claude Code, Cursor, or any MCP-aware client to query emnify product, developer, and API reference content directly from your AI assistant.
+name: emnify
+tags:
+- IoT
+- Internet of Things
+- Cellular Connectivity
+- IoT SIM
+- eSIM
+- Consumer eSIM
+- SGP.32
+- M2M
+- NTN-IoT
+- Satellite
+- SuperNetwork
+kind: contract
+image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+access: 3rd-Party
+common:
+- type: Portal
+  url: https://www.emnify.com
+- type: Documentation
+  url: https://docs.emnify.com
+- type: Documentation
+  url: https://docs.emnify.com/developers
+  name: Developers Portal
+- type: GettingStarted
+  url: https://docs.emnify.com/quickstart
+- type: SignUp
+  url: https://www.emnify.com/get-started
+- type: Pricing
+  url: https://www.emnify.com/plans-and-packages
+- type: GitHubOrganization
+  url: https://github.com/EMnify
+- type: SDK
+  url: https://github.com/emnify/emnify-sdk-python
+  name: Python SDK
+- type: SDK
+  url: https://github.com/emnify/emnify-sdk-java
+  name: Java SDK
+- type: SDK
+  url: https://pypi.org/project/emnify-sdk/
+  name: emnify SDK on PyPI
+- type: Documentation
+  url: https://emnify.github.io/emnify-sdk-python/autoapi/index.html
+  name: Python SDK API Reference
+- type: Documentation
+  url: https://docs.emnify.com/developers/sdks
+  name: emnify SDKs
+- type: Documentation
+  url: https://docs.emnify.com/developers/sdks/python/quickstart
+  name: Python SDK Quickstart
+- type: Documentation
+  url: https://docs.emnify.com/developers/sdks/java/quickstart
+  name: Java SDK Quickstart
+- type: Documentation
+  url: https://docs.emnify.com/developers/auth/application-tokens
+  name: Application Tokens
+- type: Documentation
+  url: https://docs.emnify.com/developers/auth/user-credentials
+  name: User Credentials
+- type: Documentation
+  url: https://docs.emnify.com/developers/auth/multi-factor-authentication
+  name: Multi-factor Authentication
+- type: Documentation
+  url: https://docs.emnify.com/developers/auth/jwts
+  name: JWTs
+- type: RateLimits
+  url: https://docs.emnify.com/developers/api-guidelines/rate-limits
+- type: Errors
+  url: https://docs.emnify.com/developers/api-guidelines/errors
+- type: Pagination
+  url: https://docs.emnify.com/developers/api-guidelines/collections-pagination
+- type: Conventions
+  url: https://docs.emnify.com/developers/api-guidelines/conventions
+- type: ChangeLog
+  url: https://docs.emnify.com/changelog
+- type: Support
+  url: https://support.emnify.com/hc/en-us/requests/new
+- type: Forum
+  url: https://www.emnify.com/iot-blog
+- type: Blog
+  url: https://www.emnify.com/iot-blog
+- type: TermsOfService
+  url: https://www.emnify.com/legal/terms-and-conditions
+- type: PrivacyPolicy
+  url: https://www.emnify.com/legal/privacy-statement
+- type: TrustCenter
+  url: https://www.emnify.com/iot-security
+- type: Tool
+  url: https://github.com/emnify/grafana-pcapextractor-plugin
+  name: Grafana PCAP Extractor Plugin
+- type: Tool
+  url: https://github.com/emnify/akamai-insights-datasource
+  name: Akamai Insights Grafana Datasource
+- type: LinkedIn
+  url: https://www.linkedin.com/company/emnify
+- type: Twitter
+  url: https://twitter.com/emnify
+- type: YouTube
+  url: https://www.youtube.com/c/emnify
+- url: plans/emnify-plans-pricing.yml
+  type: Plans
+- url: rate-limits/emnify-rate-limits.yml
+  type: RateLimits
+- url: finops/emnify-finops.yml
+  type: FinOps
+- type: Features
+  data:
+  - Global cellular IoT connectivity across 540+ MNOs in 190+ countries via the emnify SuperNetwork
+  - Multi-form-factor SIMs (2FF, 3FF, 4FF, MFF2) all eUICC-enabled by default
+  - Advanced IoT eSIM (SGP.32) for remote profile management on enterprise devices
+  - Consumer eSIM profiles deployable via MDM or QR code
+  - SGP.32 IoT eSIM operations — eUICC management, scheduled profile download/install/enable/disable/delete
+  - NTN-IoT satellite connectivity via Skylo (NB-IoT over GEO satellite, RAT 17) — SatPlus, SatSolo, CellSolo plans
+  - REST API with 200+ operations across 150+ paths spanning SIM, Endpoint, eUICC, SMS, Event, Service Profile, Tariff Profile, Organization, User, IP, Tag, Operator, and System resources
+  - GraphQL API with interactive GraphiQL IDE for flexible single-request queries
+  - Data Streamer for outbound event/usage streaming to AWS S3, AWS Kinesis, REST/webhook, Datadog, Salesforce, and Keen.io
+  - API callbacks for asynchronous Data Streamer delivery; SMS callbacks for mobile-originated SMS with JWT auth
+  - Application token authentication (M2M) plus user-credential auth for cross-workspace operations
+  - Multi-factor authentication with trusted device fingerprinting (90-day skip window)
+  - JWT short-lived bearer tokens with refresh-token rotation
+  - Workspaces — multi-tenant logical containers under one organization for complex business structures
+  - Single sign-on (SSO) for enterprise user administration
+  - Service profiles — traffic limits, operator blacklists, IMEI lock, callback configuration per device class
+  - Tariff profiles — geographic rate plans with per-MB, per-SMS, and per-SIM lifecycle fees
+  - Device policies — service and coverage policies applied at the fleet level
+  - Bulk endpoint operations (/api/v2/endpoint/multi) for fleet-scale create/update/delete
+  - Factory Test Mode (FTM) — 100 KB data and 10 SMS free per SIM for pre-production validation
+  - Data plans — fixed allowance, pooled allowance, pay-per-use, and volume commitment
+  - Automations and no-code workflows in the Portal (Zapier, event/SMS/application triggers)
+  - 30+ Portal reports including CDRs, daily usage, live usage, monthly invoiced SIMs, satellite, network activity, global distribution
+  - AWS Transit Gateway Cloud Connect for private VPC breakout; VPN breakout option
+  - LTE-M and NB-IoT LPWAN support with Power Save Mode (PSM) and eDRX
+  - Two officially supported SDKs (Python and Java) plus public MCP documentation server
+  - Documentation MCP server at docs.emnify.com/_mcp/server for AI client integration (Claude Code, Cursor)
+  - Public llms.txt and llms-full.txt feeds with inline OpenAPI fragments for AI-friendly documentation
+  - Standard, Business, and Enterprise support tiers with 24/7 options
+  sources:
+  - https://www.emnify.com
+  - https://docs.emnify.com/developers
+  - https://docs.emnify.com/llms-full.txt
+  - https://github.com/EMnify
+  - https://www.emnify.com/plans-and-packages
+  updated: '2026-05-25'
+created: '2026-05-25T00:00:00.000Z'
+modified: '2026-05-25'
+position: Consuming
+description: emnify is a cloud-native global IoT cellular connectivity provider operating its own mobile core and SuperNetwork across 540+ MNOs in 190+ countries. emnify supplies SIMs, eUICC-enabled multi-form-factor cards, and Consumer/Advanced eSIM (SGP.32) profiles to enterprise IoT deployments — fleet tracking, EV charging, point-of-sale, smart buildings, micromobility, airline crew tablets, and more. The emnify REST API, GraphQL API, and Data Streamer give programmatic control over SIMs, endpoints, service and tariff profiles, eUICC profile operations, events, SMS, callbacks, and outbound usage/event streaming to S3, Kinesis, and webhooks. NTN-IoT satellite connectivity via Skylo extends coverage beyond terrestrial cellular.
+maintainers:
+- FN: Kin Lane
+  email: info@apievangelist.com
+  X: apievangelist
+  url: https://apievangelist.com
+specificationVersion: '0.16'

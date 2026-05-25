@@ -1,0 +1,121 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@vocab": "https://schema.org/",
+    "emnify": "https://cdn.emnify.net/api/v1/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+
+    "SIM": {
+      "@id": "emnify:SIM",
+      "@context": {
+        "id": {"@id": "emnify:SIM/id", "@type": "xsd:integer"},
+        "iccid": {"@id": "emnify:SIM/iccid", "@type": "xsd:string"},
+        "iccid_with_luhn": {"@id": "emnify:SIM/iccidWithLuhn", "@type": "xsd:string"},
+        "eid": {"@id": "emnify:SIM/eid", "@type": "xsd:string"},
+        "imsi": {"@id": "emnify:SIM/imsi", "@type": "xsd:string"},
+        "msisdn": {"@id": "emnify:SIM/msisdn", "@type": "xsd:string"},
+        "production_date": {"@id": "emnify:SIM/productionDate", "@type": "xsd:dateTime"},
+        "activation_date": {"@id": "emnify:SIM/activationDate", "@type": "xsd:dateTime"},
+        "status": {"@id": "emnify:SIM/status", "@type": "emnify:SimStatus"},
+        "endpoint": {"@id": "emnify:SIM/endpoint", "@type": "emnify:Endpoint"}
+      }
+    },
+
+    "Endpoint": {
+      "@id": "emnify:Endpoint",
+      "@context": {
+        "id": {"@id": "emnify:Endpoint/id", "@type": "xsd:integer"},
+        "name": {"@id": "emnify:Endpoint/name", "@type": "xsd:string"},
+        "tags": {"@id": "emnify:Endpoint/tags", "@type": "xsd:string"},
+        "created": {"@id": "emnify:Endpoint/created", "@type": "xsd:dateTime"},
+        "last_updated": {"@id": "emnify:Endpoint/lastUpdated", "@type": "xsd:dateTime"},
+        "status": {"@id": "emnify:Endpoint/status", "@type": "emnify:EndpointStatus"},
+        "service_profile": {"@id": "emnify:Endpoint/serviceProfile", "@type": "emnify:ServiceProfile"},
+        "tariff_profile": {"@id": "emnify:Endpoint/tariffProfile", "@type": "emnify:TariffProfile"},
+        "sim": {"@id": "emnify:Endpoint/sim", "@type": "emnify:SIM"},
+        "imei": {"@id": "emnify:Endpoint/imei", "@type": "xsd:string"},
+        "ip_address": {"@id": "emnify:Endpoint/ipAddress", "@type": "xsd:string"},
+        "imei_lock": {"@id": "emnify:Endpoint/imeiLock", "@type": "xsd:boolean"}
+      }
+    },
+
+    "ServiceProfile": {
+      "@id": "emnify:ServiceProfile",
+      "@context": {
+        "id": {"@id": "emnify:ServiceProfile/id", "@type": "xsd:integer"},
+        "name": {"@id": "emnify:ServiceProfile/name", "@type": "xsd:string"},
+        "description": {"@id": "emnify:ServiceProfile/description", "@type": "xsd:string"},
+        "traffic_limits": {"@id": "emnify:ServiceProfile/trafficLimits", "@container": "@list"}
+      }
+    },
+
+    "TariffProfile": {
+      "@id": "emnify:TariffProfile",
+      "@context": {
+        "id": {"@id": "emnify:TariffProfile/id", "@type": "xsd:integer"},
+        "name": {"@id": "emnify:TariffProfile/name", "@type": "xsd:string"},
+        "tariff": {"@id": "emnify:TariffProfile/tariff", "@type": "emnify:Tariff"}
+      }
+    },
+
+    "Event": {
+      "@id": "emnify:Event",
+      "@context": {
+        "id": {"@id": "emnify:Event/id", "@type": "xsd:integer"},
+        "timestamp": {"@id": "emnify:Event/timestamp", "@type": "xsd:dateTime"},
+        "event_type": {"@id": "emnify:Event/eventType", "@type": "emnify:EventType"},
+        "event_severity": {"@id": "emnify:Event/eventSeverity", "@type": "xsd:string"},
+        "event_source": {"@id": "emnify:Event/eventSource", "@type": "xsd:string"},
+        "endpoint": {"@id": "emnify:Event/endpoint", "@type": "emnify:Endpoint"},
+        "sim": {"@id": "emnify:Event/sim", "@type": "emnify:SIM"},
+        "organisation": {"@id": "emnify:Event/organisation", "@type": "emnify:Organisation"}
+      }
+    },
+
+    "SMS": {
+      "@id": "emnify:SMS",
+      "@context": {
+        "id": {"@id": "emnify:SMS/id", "@type": "xsd:integer"},
+        "source_address": {"@id": "emnify:SMS/sourceAddress", "@type": "xsd:string"},
+        "submit_date": {"@id": "emnify:SMS/submitDate", "@type": "xsd:dateTime"},
+        "delivery_date": {"@id": "emnify:SMS/deliveryDate", "@type": "xsd:dateTime"},
+        "expiry_date": {"@id": "emnify:SMS/expiryDate", "@type": "xsd:dateTime"},
+        "status": {"@id": "emnify:SMS/status", "@type": "xsd:string"},
+        "payload": {"@id": "emnify:SMS/payload", "@type": "xsd:string"},
+        "dcs": {"@id": "emnify:SMS/dcs", "@type": "xsd:integer"},
+        "udh": {"@id": "emnify:SMS/udh", "@type": "xsd:string"}
+      }
+    },
+
+    "Organisation": {
+      "@id": "emnify:Organisation",
+      "@context": {
+        "id": {"@id": "emnify:Organisation/id", "@type": "xsd:integer"},
+        "name": {"@id": "emnify:Organisation/name", "@type": "xsd:string"},
+        "country": {"@id": "emnify:Organisation/country", "@type": "schema:Country"}
+      }
+    },
+
+    "Operator": {
+      "@id": "emnify:Operator",
+      "@context": {
+        "id": {"@id": "emnify:Operator/id", "@type": "xsd:integer"},
+        "name": {"@id": "emnify:Operator/name", "@type": "xsd:string"},
+        "mnc": {"@id": "emnify:Operator/mnc", "@type": "xsd:string"},
+        "mcc": {"@id": "emnify:Operator/mcc", "@type": "xsd:string"},
+        "country": {"@id": "emnify:Operator/country", "@type": "schema:Country"}
+      }
+    },
+
+    "eUICC": {
+      "@id": "emnify:eUICC",
+      "@context": {
+        "eid": {"@id": "emnify:eUICC/eid", "@type": "xsd:string"},
+        "profiles": {"@id": "emnify:eUICC/profiles", "@container": "@list"},
+        "status": {"@id": "emnify:eUICC/status", "@type": "xsd:string"}
+      }
+    }
+  }
+}

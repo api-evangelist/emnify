@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.com/schemas/emnify/emnify-sim-schema.json",
+  "title": "emnify SIM",
+  "description": "Schema for the emnify SIM object returned by the /api/v1/sim endpoints. A SIM resource represents a physical or embedded eUICC SIM card managed in the emnify IoT SuperNetwork.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique identifier of the SIM in the emnify system."
+    },
+    "iccid": {
+      "type": "string",
+      "description": "Integrated Circuit Card Identifier without the final Luhn checksum digit (19 digits)."
+    },
+    "iccid_with_luhn": {
+      "type": "string",
+      "description": "Full ICCID including the Luhn checksum digit (20 digits)."
+    },
+    "eid": {
+      "type": ["string", "null"],
+      "description": "EUM serial number for an eUICC device, if applicable."
+    },
+    "production_date": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the SIM was produced."
+    },
+    "activation_date": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of first activation."
+    },
+    "status": {
+      "type": "object",
+      "description": "Current SIM status.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "enum": [0, 1, 2, 3, 4],
+          "description": "Status code: 0 Issued, 1 Activated, 2 Suspended, 3 Deleted, 4 Factory Test."
+        },
+        "description": {
+          "type": "string",
+          "enum": ["Issued", "Activated", "Suspended", "Deleted", "Factory Test"]
+        }
+      },
+      "required": ["id", "description"]
+    },
+    "customer_org": {
+      "$ref": "#/$defs/OrgRef",
+      "description": "Customer organization receiving the SIM."
+    },
+    "issuer_org": {
+      "$ref": "#/$defs/OrgRef",
+      "description": "Organization that issued the SIM (typically emnify)."
+    },
+    "reseller_org": {
+      "anyOf": [{"$ref": "#/$defs/OrgRef"}, {"type": "null"}],
+      "description": "Reseller organization, if any."
+    },
+    "endpoint": {
+      "type": ["object", "null"],
+      "description": "Device the SIM is currently assigned to.",
+      "properties": {
+        "id": {"type": "integer"},
+        "name": {"type": "string"},
+        "ip_address": {"type": ["string", "null"]}
+      }
+    },
+    "imsi": {
+      "type": ["string", "null"],
+      "description": "International Mobile Subscriber Identity."
+    },
+    "msisdn": {
+      "type": ["string", "null"],
+      "description": "Mobile Station International Subscriber Directory Number."
+    },
+    "model": {
+      "type": ["object", "null"],
+      "description": "SIM model specification.",
+      "properties": {
+        "id": {"type": "integer"},
+        "name": {"type": "string"},
+        "manufacturer": {"type": "string"}
+      }
+    }
+  },
+  "required": ["id", "iccid", "status"],
+  "$defs": {
+    "OrgRef": {
+      "type": "object",
+      "description": "Reference to an emnify organization.",
+      "properties": {
+        "id": {"type": "integer"},
+        "name": {"type": "string"},
+        "country": {
+          "type": ["object", "null"],
+          "properties": {
+            "id": {"type": "integer"},
+            "name": {"type": "string"},
+            "country_code": {"type": "string"}
+          }
+        }
+      },
+      "required": ["id", "name"]
+    }
+  }
+}

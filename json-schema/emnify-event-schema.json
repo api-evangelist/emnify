@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.com/schemas/emnify/emnify-event-schema.json",
+  "title": "emnify Event",
+  "description": "Schema for events emitted by the emnify platform — network events (attach/detach, location update, PDP context create/update/release), SMS events, and API/portal user actions. Events are surfaced via the Events API and the Data Streamer.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique event identifier."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the event occurred."
+    },
+    "event_type": {
+      "type": "object",
+      "description": "Categorical event type.",
+      "properties": {
+        "id": {"type": "integer"},
+        "description": {"type": "string"}
+      },
+      "required": ["id", "description"]
+    },
+    "event_severity": {
+      "type": "object",
+      "description": "Severity classification (Info, Warning, Error).",
+      "properties": {
+        "id": {"type": "integer"},
+        "description": {"type": "string", "enum": ["Info", "Warning", "Error"]}
+      }
+    },
+    "event_source": {
+      "type": "object",
+      "description": "Originating source (Network, API, Portal, System).",
+      "properties": {
+        "id": {"type": "integer"},
+        "description": {"type": "string"}
+      }
+    },
+    "description": {
+      "type": "string",
+      "description": "Human-readable description of the event."
+    },
+    "endpoint": {
+      "type": ["object", "null"],
+      "description": "Endpoint associated with the event.",
+      "properties": {
+        "id": {"type": "integer"},
+        "name": {"type": "string"}
+      }
+    },
+    "sim": {
+      "type": ["object", "null"],
+      "description": "SIM associated with the event.",
+      "properties": {
+        "id": {"type": "integer"},
+        "iccid": {"type": "string"}
+      }
+    },
+    "imsi": {
+      "type": ["object", "null"],
+      "description": "IMSI associated with the event.",
+      "properties": {
+        "id": {"type": "integer"},
+        "imsi": {"type": "string"}
+      }
+    },
+    "organisation": {
+      "type": ["object", "null"],
+      "description": "Organisation context.",
+      "properties": {
+        "id": {"type": "integer"},
+        "name": {"type": "string"}
+      }
+    },
+    "user": {
+      "type": ["object", "null"],
+      "description": "API or portal user that triggered the event, if applicable.",
+      "properties": {
+        "id": {"type": "integer"},
+        "username": {"type": "string"}
+      }
+    },
+    "detail": {
+      "type": ["object", "null"],
+      "description": "Free-form event detail payload (varies by event type)."
+    }
+  },
+  "required": ["id", "timestamp", "event_type"]
+}

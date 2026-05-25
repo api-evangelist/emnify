@@ -1,0 +1,186 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: emnify
+providerId: emnify
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: false
+tags:
+  - IoT
+  - Connectivity
+  - Cellular
+  - eSIM
+  - Satellite
+description: 'Plans and packages for emnify IoT cellular and satellite connectivity. emnify does not publish list prices; pricing is custom per deployment with four core arrangement models (fixed, pooled, pay-per-use, commitment). Source: emnify.com/plans-and-packages.'
+sources:
+  - https://www.emnify.com/plans-and-packages
+  - https://www.emnify.com/iot-data-plans
+  - https://www.emnify.com/products/iot-sims
+plans:
+  - id: emnify-trial
+    name: emnify Trial
+    type: free
+    description: Free trial SIMs for evaluating the SuperNetwork before production rollout. Limited data and SMS allowance per trial SIM.
+    entries:
+      - label: Trial SIM
+        name: trial
+        type: free
+        metric: sim
+        limit: -1
+        timeFrame: trial
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: Order free trial SIMs
+      - name: Auto-register and activate via Portal or API
+      - name: Limited data and SMS for evaluation
+      - name: Access to full Portal feature set
+  - id: emnify-fixed-allowance
+    name: Fixed Allowance
+    type: subscription
+    description: 'Each device receives a defined monthly data and SMS allowance with predictable costs. Bands: Low (1-50 MB), Medium (50 MB-1 GB), High (1+ GB).'
+    entries:
+      - label: Per-SIM monthly fee
+        name: per_sim_fee
+        type: contact-sales
+        metric: sim
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: 'Contact Sales'
+        userMultiplied: true
+    elements:
+      - name: Predictable per-device cost
+      - name: Tiered data bands (Low / Medium / High)
+      - name: Per-device SMS allowance
+      - name: Overage and burst options available
+  - id: emnify-pooled-allowance
+    name: Pooled Allowance
+    type: subscription
+    description: A single monthly data pool shared across all devices in the workspace. Eliminates overage on per-device basis; ideal for variable-usage fleets.
+    entries:
+      - label: Pool monthly fee
+        name: pool_fee
+        type: contact-sales
+        metric: pool
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: 'Contact Sales'
+        userMultiplied: false
+    elements:
+      - name: Shared data pool across the fleet
+      - name: No per-device overage charges
+      - name: Scales with combined fleet usage
+  - id: emnify-pay-per-use
+    name: Pay-Per-Use
+    type: usage-based
+    description: Pay only for the data and SMS used, with tiered pricing based on number of active SIMs. No minimum monthly commitment.
+    entries:
+      - label: Data usage
+        name: data_usage
+        type: metered
+        metric: mb
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: 'Tiered / Contact Sales'
+        userMultiplied: false
+      - label: SMS usage
+        name: sms_usage
+        type: metered
+        metric: sms
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: 'Contact Sales'
+        userMultiplied: false
+    elements:
+      - name: No minimum commitment
+      - name: Tiered pricing based on SIM count
+      - name: Ideal for early-stage or seasonal deployments
+  - id: emnify-commitment
+    name: Volume Commitment
+    type: contract
+    description: Volume-based discounted pricing for large deployments under a usage commitment.
+    entries:
+      - label: Committed volume
+        name: committed_volume
+        type: contact-sales
+        metric: mb
+        limit: -1
+        timeFrame: contract
+        geo: global
+        unit: 1
+        price: 'Contact Sales'
+        userMultiplied: false
+    elements:
+      - name: Volume discounts on data and SMS
+      - name: Multi-year contract terms
+      - name: Enterprise support inclusion
+  - id: emnify-satplus-10
+    name: SatPlus 10
+    type: addon
+    description: Non-Terrestrial Network (NTN) IoT satellite add-on with 10 satellite messages per month. Uses Skylo over GEO satellite for last-mile when cellular is unavailable.
+    entries:
+      - label: Satellite messages
+        name: sat_messages
+        type: included
+        metric: message
+        limit: 10
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: 'Contact Sales'
+        userMultiplied: true
+  - id: emnify-satplus-30
+    name: SatPlus 30
+    type: addon
+    description: 30 satellite messages per month NTN-IoT add-on.
+    entries:
+      - label: Satellite messages
+        name: sat_messages
+        type: included
+        metric: message
+        limit: 30
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: 'Contact Sales'
+        userMultiplied: true
+  - id: emnify-satplus-60
+    name: SatPlus 60
+    type: addon
+    description: 60 satellite messages per month NTN-IoT add-on.
+    entries:
+      - label: Satellite messages
+        name: sat_messages
+        type: included
+        metric: message
+        limit: 60
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: 'Contact Sales'
+        userMultiplied: true
+  - id: emnify-support-standard
+    name: Standard Support
+    type: included
+    description: Business-hours email support, included for all paying customers.
+  - id: emnify-support-business
+    name: Business Support
+    type: addon
+    description: 24/7 support with 3-9 hour response SLA.
+  - id: emnify-support-enterprise
+    name: Enterprise Support
+    type: addon
+    description: 24/7 support with 1-hour response SLA and dedicated technical account manager.
+notes: >-
+  emnify publishes pricing categories but not list rates. All commercial plans require contact with sales for a custom quote. The Free Trial is publicly orderable from the website. Updated 2026-05-25.

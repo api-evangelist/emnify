@@ -1,0 +1,23 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://cdn.emnify.net/api/v1/event?page=1&per_page=5&q=endpoint:1450193",
+    "headers": {"Authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."}
+  },
+  "response": {
+    "status": 200,
+    "body": [
+      {
+        "id": 87651234,
+        "timestamp": "2026-05-25T08:14:33.000Z",
+        "event_type": {"id": 1, "description": "Update Location"},
+        "event_severity": {"id": 1, "description": "Info"},
+        "event_source": {"id": 0, "description": "Network"},
+        "description": "Successful location update on MCC=262 MNC=02 (T-Mobile DE)",
+        "endpoint": {"id": 1450193, "name": "fleet-tracker-001"},
+        "sim": {"id": 22041991, "iccid": "8988228066612345678"},
+        "imsi": {"id": 31200, "imsi": "901405100123456"}
+      }
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-structure.github.io/spec/v1.0",
+  "$id": "https://api-evangelist.com/structures/emnify/emnify-endpoint-structure.json",
+  "title": "emnify Endpoint Structure",
+  "description": "JSON Structure 1.0 representation of the emnify Endpoint (device) resource.",
+  "type": "object",
+  "properties": {
+    "id": {"type": "integer"},
+    "name": {"type": "string"},
+    "tags": {"type": ["string", "null"]},
+    "created": {"type": "string", "format": "date-time"},
+    "last_updated": {"type": "string", "format": "date-time"},
+    "status": {
+      "type": "object",
+      "properties": {
+        "id": {"type": "integer", "enum": [0, 1, 2]},
+        "description": {"type": "string"}
+      }
+    },
+    "service_profile": {"type": ["object", "null"]},
+    "tariff_profile": {"type": ["object", "null"]},
+    "sim": {"type": ["object", "null"]},
+    "imei": {"type": ["string", "null"]},
+    "ip_address": {"type": ["string", "null"]},
+    "imei_lock": {"type": "boolean"}
+  },
+  "required": ["id", "name"]
+}

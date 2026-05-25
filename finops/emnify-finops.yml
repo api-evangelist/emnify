@@ -1,0 +1,157 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: emnify
+providerId: emnify
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: false
+tags:
+  - FinOps
+  - Cost Management
+  - FOCUS
+  - IoT
+  - Connectivity
+description: FOCUS-aligned FinOps definition for emnify IoT cellular connectivity. Per-SIM subscription, per-MB data metering, and per-message SMS/satellite metering with multiple commercial models (fixed, pooled, pay-per-use, commitment).
+sources:
+  - https://www.emnify.com/plans-and-packages
+  - https://docs.emnify.com/portal/reports
+  - https://docs.emnify.com/portal/workspaces/billing
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: emnify
+serviceCategory: Networking
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+    - Usage
+    - Purchase
+    - Tax
+    - Credit
+    - Adjustment
+  primaryUnit: SIM-month
+  secondaryUnits:
+    - MB
+    - SMS
+    - satellite-message
+focusColumns:
+  ServiceName: emnify IoT Connectivity
+  ServiceCategory: Networking
+  ProviderName: emnify
+  PublisherName: emnify
+  InvoiceIssuerName: emnify GmbH
+  PricingCategory: Usage-Based
+  PricingUnit: SIM-month
+  BillingCurrency: USD
+meters:
+  - name: sim_subscription
+    unit: SIM-month
+    aggregation: count
+    dimensions:
+      - workspace
+      - tariff_profile
+      - coverage_zone
+      - status
+  - name: data_volume_uplink
+    unit: byte
+    aggregation: sum
+    dimensions:
+      - workspace
+      - endpoint
+      - sim
+      - operator
+      - country
+      - radio_access_type
+      - data_plan
+  - name: data_volume_downlink
+    unit: byte
+    aggregation: sum
+    dimensions:
+      - workspace
+      - endpoint
+      - sim
+      - operator
+      - country
+      - radio_access_type
+      - data_plan
+  - name: sms_mo
+    unit: message
+    aggregation: count
+    dimensions:
+      - workspace
+      - endpoint
+      - operator
+      - country
+  - name: sms_mt
+    unit: message
+    aggregation: count
+    dimensions:
+      - workspace
+      - endpoint
+      - operator
+      - country
+  - name: satellite_message
+    unit: message
+    aggregation: count
+    dimensions:
+      - workspace
+      - endpoint
+      - satellite_plan
+  - name: pool_data_usage
+    unit: byte
+    aggregation: sum
+    dimensions:
+      - workspace
+      - data_pool
+      - coverage_policy
+  - name: factory_test_mode
+    unit: byte
+    aggregation: sum
+    dimensions:
+      - workspace
+      - sim
+costInsights:
+  - name: Data usage per device
+    surface: Portal Report
+    url: https://docs.emnify.com/portal/reports/usage-per-device
+  - name: Call detail records (CDRs)
+    surface: Portal Report
+    url: https://docs.emnify.com/portal/reports/call-detail-records
+  - name: Daily usage
+    surface: Portal Report
+    url: https://docs.emnify.com/portal/reports/daily-usage
+  - name: Monthly invoiced SIMs
+    surface: Portal Report
+    url: https://docs.emnify.com/portal/reports/monthly-invoiced-sims
+  - name: Overview current month
+    surface: Portal Report
+    url: https://docs.emnify.com/portal/reports/overview-current-month
+  - name: Data usage per device policy
+    surface: Portal Report
+    url: https://docs.emnify.com/portal/reports/data-usage-per-device-policy
+allocation:
+  - dimension: workspace
+    description: Cost allocation across multiple workspaces under one organization.
+  - dimension: tag
+    description: Endpoints carry comma-separated tags usable for cost allocation.
+  - dimension: tariff_profile
+    description: Cost allocation by assigned rate plan.
+  - dimension: coverage_zone
+    description: Cost allocation by geographic coverage zone.
+optimization:
+  - name: Switch high-usage devices to pooled allowance
+    description: Eliminates per-device overage and smooths cost across the fleet.
+  - name: Adopt Factory Test Mode (FTM) pre-deployment
+    description: 100 KB data and 10 SMS free of charge per SIM for pre-production testing.
+  - name: Use Data Streamer instead of polling
+    description: Push events to S3/Kinesis to avoid burning the 10M monthly API quota.
+  - name: Use device policies to block expensive operators
+    description: Operator blacklists prevent unintended roaming on premium networks.
+  - name: Suspend unused SIMs
+    description: Suspended SIMs do not incur per-SIM subscription on most plans.

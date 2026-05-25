@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.com/schemas/emnify/emnify-endpoint-schema.json",
+  "title": "emnify Endpoint",
+  "description": "Schema for the emnify Endpoint object returned by the /api/v1/endpoint endpoints. An Endpoint represents a virtual device that owns a SIM, service profile, and tariff profile.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique endpoint identifier."
+    },
+    "name": {
+      "type": "string",
+      "description": "Endpoint (device) name."
+    },
+    "tags": {
+      "type": ["string", "null"],
+      "description": "Comma-separated tag values for the endpoint."
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 creation timestamp."
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 last modification timestamp."
+    },
+    "status": {
+      "type": "object",
+      "description": "Endpoint status.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "enum": [0, 1, 2],
+          "description": "Status code: 0 Enabled, 1 Disabled, 2 Deleted."
+        },
+        "description": {
+          "type": "string",
+          "enum": ["Enabled", "Disabled", "Deleted"]
+        }
+      },
+      "required": ["id", "description"]
+    },
+    "service_profile": {
+      "type": ["object", "null"],
+      "description": "Assigned service profile (traffic limits, network features, callbacks).",
+      "properties": {
+        "id": {"type": "integer"},
+        "name": {"type": "string"}
+      }
+    },
+    "tariff_profile": {
+      "type": ["object", "null"],
+      "description": "Assigned tariff profile (rate plan).",
+      "properties": {
+        "id": {"type": "integer"},
+        "name": {"type": "string"}
+      }
+    },
+    "sim": {
+      "type": ["object", "null"],
+      "description": "Assigned SIM card details.",
+      "properties": {
+        "id": {"type": "integer"},
+        "iccid": {"type": "string"},
+        "eid": {"type": ["string", "null"]},
+        "imsi": {"type": ["string", "null"]},
+        "msisdn": {"type": ["string", "null"]},
+        "status": {
+          "type": "object",
+          "properties": {
+            "id": {"type": "integer"},
+            "description": {"type": "string"}
+          }
+        }
+      }
+    },
+    "runtime_data": {
+      "type": "object",
+      "description": "Runtime connectivity state for the endpoint.",
+      "properties": {
+        "msc": {"type": ["string", "null"], "description": "Mobile Switching Center."},
+        "sgsn": {"type": ["string", "null"], "description": "Serving GPRS Support Node."},
+        "sgsn_ip_address": {"type": ["string", "null"], "description": "SGSN IP address."}
+      }
+    },
+    "imei": {
+      "type": ["string", "null"],
+      "description": "International Mobile Equipment Identity without the check digit (14 digits)."
+    },
+    "imei_with_luhn": {
+      "type": ["string", "null"],
+      "description": "Full IMEI including the Luhn check digit (15 digits)."
+    },
+    "ip_address": {
+      "type": ["string", "null"],
+      "description": "Configured IP address assigned to the endpoint."
+    },
+    "ip_address_space": {
+      "type": ["object", "null"],
+      "description": "IP address space assignment.",
+      "properties": {
+        "id": {"type": "integer"},
+        "ip_address_space": {"type": "string"},
+        "ip_address_version": {"type": "integer", "enum": [4, 6]}
+      }
+    },
+    "imei_lock": {
+      "type": "boolean",
+      "description": "When true, the endpoint is locked to its current IMEI."
+    }
+  },
+  "required": ["id", "name", "status"]
+}

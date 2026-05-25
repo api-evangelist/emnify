@@ -1,0 +1,194 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: emnify Endpoint Management
+  description: emnify Endpoint (device) lifecycle — create, list, update, delete, bulk-manage, and inspect connectivity for IoT endpoints.
+  tags:
+  - emnify
+  - Endpoint
+  - Device
+  - IoT
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    EMNIFY_APPLICATION_TOKEN: EMNIFY_APPLICATION_TOKEN
+capability:
+  consumes:
+  - type: http
+    namespace: endpoint-management
+    baseUri: https://cdn.emnify.net/api
+    description: emnify endpoint management business capability.
+    resources:
+    - name: endpoints
+      path: /v1/endpoint
+      operations:
+      - name: list-endpoints
+        method: GET
+        description: List all endpoints in the workspace
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: array
+          value: $.
+      - name: create-endpoint
+        method: POST
+        description: Create a new endpoint
+        outputRawFormat: json
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: endpoint-by-id
+      path: /v1/endpoint/{endpoint_id}
+      operations:
+      - name: get-endpoint
+        method: GET
+        outputRawFormat: json
+        inputParameters:
+        - name: endpoint_id
+          in: path
+          type: integer
+          required: true
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: update-endpoint
+        method: PATCH
+        inputParameters:
+        - name: endpoint_id
+          in: path
+          type: integer
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: delete-endpoint
+        method: DELETE
+        inputParameters:
+        - name: endpoint_id
+          in: path
+          type: integer
+          required: true
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: endpoint-connectivity
+      path: /v1/endpoint/{endpoint_id}/connectivity
+      operations:
+      - name: get-connectivity
+        method: GET
+        description: Get endpoint connectivity status
+        inputParameters:
+        - name: endpoint_id
+          in: path
+          type: integer
+          required: true
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: reset-connectivity
+        method: PATCH
+        description: Reset endpoint connectivity (forces re-attach)
+        inputParameters:
+        - name: endpoint_id
+          in: path
+          type: integer
+          required: true
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: endpoint-multi
+      path: /v2/endpoint/multi
+      operations:
+      - name: bulk-create-endpoints
+        method: POST
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: bulk-update-endpoints
+        method: PATCH
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: bulk-delete-endpoints
+        method: DELETE
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      value: '{{env.EMNIFY_APPLICATION_TOKEN}}'
+      placement: header
+  exposes:
+  - type: mcp
+    namespace: endpoint-management-mcp
+    port: 9091
+    transport: http
+    tools:
+    - name: emnify-list-endpoints
+      description: List endpoints
+      hints: {readOnly: true, destructive: false, idempotent: true}
+      call: endpoint-management.list-endpoints
+      outputParameters:
+      - type: array
+        mapping: $.
+    - name: emnify-create-endpoint
+      description: Create an endpoint
+      hints: {readOnly: false, destructive: false, idempotent: false}
+      call: endpoint-management.create-endpoint
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: emnify-update-endpoint
+      description: Update endpoint configuration or status
+      hints: {readOnly: false, destructive: false, idempotent: false}
+      call: endpoint-management.update-endpoint
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: emnify-delete-endpoint
+      description: Delete an endpoint
+      hints: {readOnly: false, destructive: true, idempotent: true}
+      call: endpoint-management.delete-endpoint
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: emnify-reset-connectivity
+      description: Reset device connectivity to force network re-attach
+      hints: {readOnly: false, destructive: false, idempotent: true}
+      call: endpoint-management.reset-connectivity
+      outputParameters:
+      - type: object
+        mapping: $.

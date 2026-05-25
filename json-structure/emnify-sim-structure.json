@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-structure.github.io/spec/v1.0",
+  "$id": "https://api-evangelist.com/structures/emnify/emnify-sim-structure.json",
+  "title": "emnify SIM Structure",
+  "description": "JSON Structure 1.0 representation of the emnify SIM resource.",
+  "type": "object",
+  "properties": {
+    "id": {"type": "integer", "description": "SIM identifier."},
+    "iccid": {"type": "string", "description": "ICCID without Luhn digit."},
+    "iccid_with_luhn": {"type": "string", "description": "Full ICCID with Luhn digit."},
+    "eid": {"type": ["string", "null"], "description": "eUICC EID."},
+    "imsi": {"type": ["string", "null"], "description": "IMSI."},
+    "msisdn": {"type": ["string", "null"], "description": "MSISDN."},
+    "production_date": {"type": ["string", "null"], "format": "date-time"},
+    "activation_date": {"type": ["string", "null"], "format": "date-time"},
+    "status": {
+      "type": "object",
+      "properties": {
+        "id": {"type": "integer", "enum": [0, 1, 2, 3, 4]},
+        "description": {"type": "string"}
+      }
+    },
+    "endpoint": {"type": ["object", "null"]},
+    "customer_org": {"type": "object"},
+    "issuer_org": {"type": "object"},
+    "model": {"type": ["object", "null"]}
+  },
+  "required": ["id", "iccid"]
+}
