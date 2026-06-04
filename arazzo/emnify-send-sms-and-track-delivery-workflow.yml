@@ -1,0 +1,89 @@
+arazzo: 1.0.1
+info:
+  title: emnify Send SMS and Track Delivery
+  summary: Authenticate, send an SMS to an endpoint, then list the endpoint's SMS to confirm it.
+  description: >-
+    A messaging-with-confirmation flow. The workflow authenticates, sends a
+    mobile-terminated SMS to the endpoint, and then lists the SMS sent and
+    received by that endpoint so the latest message and its delivery status can
+    be inspected. Every step spells out its request inline, including the Bearer
+    Authorization header threaded from the authenticate step.
+  version: 1.0.0
+sourceDescriptions:
+- name: emnifyApi
+  url: ../openapi/emnify-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: send-sms-and-track-delivery
+  summary: Send an SMS to an endpoint and list its SMS to confirm delivery state.
+  description: >-
+    Authenticates, sends an SMS to the endpoint, and lists the endpoint's SMS
+    history to capture the delivery status.
+  inputs:
+    type: object
+    required:
+    - applicationToken
+    - endpointId
+    - payload
+    properties:
+      applicationToken:
+        type: string
+        description: emnify application token used to obtain an auth_token.
+      endpointId:
+        type: string
+        description: The ID of the endpoint to message and track.
+      payload:
+        type: string
+        description: The SMS message content (UTF-8, up to 160 characters).
+      sourceAddress:
+        type: string
+        description: The sender identifier shown on the device.
+  steps:
+  - stepId: authenticate
+    description: Exchange the application token for an auth_token used as a Bearer token.
+    operationId: authenticate
+    requestBody:
+      contentType: application/json
+      payload:
+        application_token: $inputs.applicationToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      authToken: $response.body#/auth_token
+  - stepId: sendSms
+    description: Send the mobile-terminated SMS to the endpoint.
+    operationId: endpoint-sms-by-id-post
+    parameters:
+    - name: endpoint_id
+      in: path
+      value: $inputs.endpointId
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    requestBody:
+      contentType: application/json
+      payload:
+        payload: $inputs.payload
+        source_address: $inputs.sourceAddress
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      endpointId: $inputs.endpointId
+  - stepId: listSms
+    description: List the endpoint's SMS history to capture the most recent message status.
+    operationId: endpoint-sms-by-id-get
+    parameters:
+    - name: endpoint_id
+      in: path
+      value: $inputs.endpointId
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      latestSmsId: $response.body#/0/id
+      latestSmsStatus: $response.body#/0/status
+  outputs:
+    latestSmsId: $steps.listSms.outputs.latestSmsId
+    latestSmsStatus: $steps.listSms.outputs.latestSmsStatus

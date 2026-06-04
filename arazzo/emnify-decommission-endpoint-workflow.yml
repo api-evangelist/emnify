@@ -1,0 +1,96 @@
+arazzo: 1.0.1
+info:
+  title: emnify Decommission Endpoint
+  summary: Authenticate, read the endpoint, suspend its SIM, then delete the endpoint.
+  description: >-
+    A safe teardown flow for retiring a device. The workflow authenticates,
+    reads the endpoint to capture its assigned SIM ID, suspends that SIM
+    (status id 2) so it stops accruing charges, and then deletes the endpoint
+    along with its child entities. Every step spells out its request inline,
+    including the Bearer Authorization header threaded from the authenticate
+    step.
+  version: 1.0.0
+sourceDescriptions:
+- name: emnifyApi
+  url: ../openapi/emnify-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: decommission-endpoint
+  summary: Suspend an endpoint's SIM and delete the endpoint.
+  description: >-
+    Authenticates, reads the endpoint to find its SIM, suspends the SIM to stop
+    charges, and deletes the endpoint.
+  inputs:
+    type: object
+    required:
+    - applicationToken
+    - endpointId
+    properties:
+      applicationToken:
+        type: string
+        description: emnify application token used to obtain an auth_token.
+      endpointId:
+        type: string
+        description: The ID of the endpoint to decommission.
+  steps:
+  - stepId: authenticate
+    description: Exchange the application token for an auth_token used as a Bearer token.
+    operationId: authenticate
+    requestBody:
+      contentType: application/json
+      payload:
+        application_token: $inputs.applicationToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      authToken: $response.body#/auth_token
+  - stepId: getEndpoint
+    description: Read the endpoint to capture the assigned SIM ID before teardown.
+    operationId: endpoint-by-id-get
+    parameters:
+    - name: endpoint_id
+      in: path
+      value: $inputs.endpointId
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      simId: $response.body#/sim/id
+  - stepId: suspendSim
+    description: Suspend the assigned SIM (status id 2) so it stops accruing charges.
+    operationId: sim-by-id-patch
+    parameters:
+    - name: sim_id
+      in: path
+      value: $steps.getEndpoint.outputs.simId
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    requestBody:
+      contentType: application/json
+      payload:
+        status:
+          id: 2
+    successCriteria:
+    - condition: $statusCode == 204
+    outputs:
+      suspendedSimId: $steps.getEndpoint.outputs.simId
+  - stepId: deleteEndpoint
+    description: Delete the endpoint and all of its child entities.
+    operationId: endpoint-by-id-delete
+    parameters:
+    - name: endpoint_id
+      in: path
+      value: $inputs.endpointId
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    successCriteria:
+    - condition: $statusCode == 204
+    outputs:
+      deletedEndpointId: $inputs.endpointId
+  outputs:
+    suspendedSimId: $steps.suspendSim.outputs.suspendedSimId
+    deletedEndpointId: $steps.deleteEndpoint.outputs.deletedEndpointId

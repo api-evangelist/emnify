@@ -1,0 +1,79 @@
+arazzo: 1.0.1
+info:
+  title: emnify Check Endpoint Connectivity
+  summary: Authenticate, read endpoint details, then read its live connectivity status.
+  description: >-
+    A diagnostics flow for inspecting a single device. The workflow
+    authenticates, fetches the endpoint to confirm it exists and capture its
+    SIM and profiles, and then retrieves the live connectivity status
+    (ATTACHED, ONLINE, OFFLINE, or BLOCKED). Every step spells out its request
+    inline, including the Bearer Authorization header threaded from the
+    authenticate step.
+  version: 1.0.0
+sourceDescriptions:
+- name: emnifyApi
+  url: ../openapi/emnify-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: check-endpoint-connectivity
+  summary: Retrieve an endpoint's details and its current connectivity status.
+  description: >-
+    Authenticates, reads the endpoint by ID, and then reads its current
+    connectivity status.
+  inputs:
+    type: object
+    required:
+    - applicationToken
+    - endpointId
+    properties:
+      applicationToken:
+        type: string
+        description: emnify application token used to obtain an auth_token.
+      endpointId:
+        type: string
+        description: The ID of the endpoint to inspect.
+  steps:
+  - stepId: authenticate
+    description: Exchange the application token for an auth_token used as a Bearer token.
+    operationId: authenticate
+    requestBody:
+      contentType: application/json
+      payload:
+        application_token: $inputs.applicationToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      authToken: $response.body#/auth_token
+  - stepId: getEndpoint
+    description: Retrieve endpoint details, including its assigned SIM and profiles.
+    operationId: endpoint-by-id-get
+    parameters:
+    - name: endpoint_id
+      in: path
+      value: $inputs.endpointId
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      endpointName: $response.body#/name
+      ipAddress: $response.body#/ip_address
+  - stepId: getConnectivity
+    description: Read the endpoint's current connectivity status from the network.
+    operationId: endpoint-connectivity-by-id-get
+    parameters:
+    - name: endpoint_id
+      in: path
+      value: $inputs.endpointId
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      connectivityStatus: $response.body#/status
+  outputs:
+    endpointName: $steps.getEndpoint.outputs.endpointName
+    ipAddress: $steps.getEndpoint.outputs.ipAddress
+    connectivityStatus: $steps.getConnectivity.outputs.connectivityStatus

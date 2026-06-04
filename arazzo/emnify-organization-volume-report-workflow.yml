@@ -1,0 +1,85 @@
+arazzo: 1.0.1
+info:
+  title: emnify Organization Volume Report
+  summary: Authenticate, read organization details, then read active inclusive volumes and daily stats.
+  description: >-
+    A billing-overview flow for the current workspace. The workflow
+    authenticates, reads the organization's own details, retrieves the
+    inclusive volumes currently active in the billing period, and pulls
+    organization-wide daily usage and cost statistics for the month to date.
+    Every step spells out its request inline, including the Bearer Authorization
+    header threaded from the authenticate step.
+  version: 1.0.0
+sourceDescriptions:
+- name: emnifyApi
+  url: ../openapi/emnify-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: organization-volume-report
+  summary: Report a workspace's active inclusive volumes and daily usage.
+  description: >-
+    Authenticates, reads the organization, lists its active inclusive volumes,
+    and pulls daily usage and cost statistics.
+  inputs:
+    type: object
+    required:
+    - applicationToken
+    properties:
+      applicationToken:
+        type: string
+        description: emnify application token used to obtain an auth_token.
+      orgIdOrMy:
+        type: string
+        description: Organization ID or the string "my" for the current workspace.
+        default: my
+  steps:
+  - stepId: authenticate
+    description: Exchange the application token for an auth_token used as a Bearer token.
+    operationId: authenticate
+    requestBody:
+      contentType: application/json
+      payload:
+        application_token: $inputs.applicationToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      authToken: $response.body#/auth_token
+  - stepId: getOrganization
+    description: Read the current organization's own details.
+    operationId: my-organisation-get
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      organisation: $response.body
+  - stepId: getActiveVolumes
+    description: List the inclusive volumes currently active in the billing period.
+    operationId: get-active-organisation-inclusive-volume
+    parameters:
+    - name: org_id_or_my
+      in: path
+      value: $inputs.orgIdOrMy
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      activeVolumes: $response.body
+  - stepId: getDailyStats
+    description: Pull organization-wide daily usage and cost statistics for the month.
+    operationId: statistics-daily-by-id-get
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      dailyStats: $response.body
+  outputs:
+    activeVolumes: $steps.getActiveVolumes.outputs.activeVolumes
+    dailyStats: $steps.getDailyStats.outputs.dailyStats

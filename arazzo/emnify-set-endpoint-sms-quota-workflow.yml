@@ -1,0 +1,100 @@
+arazzo: 1.0.1
+info:
+  title: emnify Set Endpoint SMS Quota
+  summary: Authenticate, read the current SMS quota, then assign a new SMS quota to an endpoint.
+  description: >-
+    An SMS-package flow. The workflow authenticates, reads the endpoint's
+    current SMS quota, and then sets a new SMS quota with the supplied volume,
+    expiry, threshold percentage, and block-on-exhaustion action. This is the
+    pattern used to grant or refresh an endpoint's SMS allowance. Every step
+    spells out its request inline, including the Bearer Authorization header
+    threaded from the authenticate step.
+  version: 1.0.0
+sourceDescriptions:
+- name: emnifyApi
+  url: ../openapi/emnify-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: set-endpoint-sms-quota
+  summary: Read the existing SMS quota and assign a new one to an endpoint.
+  description: >-
+    Authenticates, reads the endpoint's current SMS quota, and sets a new SMS
+    quota with the supplied volume, expiry, and threshold.
+  inputs:
+    type: object
+    required:
+    - applicationToken
+    - endpointId
+    - volume
+    - expiryDate
+    - thresholdPercentage
+    properties:
+      applicationToken:
+        type: string
+        description: emnify application token used to obtain an auth_token.
+      endpointId:
+        type: string
+        description: The ID of the endpoint to set the SMS quota on.
+      volume:
+        type: number
+        description: Number of SMS messages allowed on the quota.
+      expiryDate:
+        type: string
+        description: Timestamp when the quota expires (ISO 8601 date-time).
+      thresholdPercentage:
+        type: number
+        description: Remaining percentage at which a threshold-reached event is generated.
+  steps:
+  - stepId: authenticate
+    description: Exchange the application token for an auth_token used as a Bearer token.
+    operationId: authenticate
+    requestBody:
+      contentType: application/json
+      payload:
+        application_token: $inputs.applicationToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      authToken: $response.body#/auth_token
+  - stepId: getCurrentSmsQuota
+    description: Read the endpoint's current SMS quota before assigning a new one.
+    operationId: endpoint-quota-sms-by-endpoint-id-get
+    parameters:
+    - name: endpoint_id
+      in: path
+      value: $inputs.endpointId
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      currentSmsQuota: $response.body
+  - stepId: setSmsQuota
+    description: >-
+      Set a new SMS quota with ACTIVE status, the supplied volume, expiry, and
+      threshold percentage, and Block on exhaustion (action id 1).
+    operationId: endpoint-quota-sms-by-endpoint-id-post
+    parameters:
+    - name: endpoint_id
+      in: path
+      value: $inputs.endpointId
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    requestBody:
+      contentType: application/json
+      payload:
+        status:
+          id: 1
+        volume: $inputs.volume
+        expiry_date: $inputs.expiryDate
+        threshold_percentage: $inputs.thresholdPercentage
+        action_on_exhaustion:
+          id: 1
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      endpointId: $inputs.endpointId
+  outputs:
+    endpointId: $steps.setSmsQuota.outputs.endpointId

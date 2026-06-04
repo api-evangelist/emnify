@@ -1,0 +1,91 @@
+arazzo: 1.0.1
+info:
+  title: emnify Send SMS to Endpoint
+  summary: Authenticate, confirm the endpoint exists, then send a mobile-terminated SMS to it.
+  description: >-
+    A messaging flow for delivering a mobile-terminated SMS (MT-SMS) to a
+    connected device. The workflow authenticates, looks up the endpoint to
+    confirm it exists and capture its status, and then sends the SMS payload
+    with the supplied sender address. Every step spells out its request inline,
+    including the Bearer Authorization header threaded from the authenticate
+    step.
+  version: 1.0.0
+sourceDescriptions:
+- name: emnifyApi
+  url: ../openapi/emnify-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: send-sms-to-endpoint
+  summary: Send a mobile-terminated SMS to a connected endpoint.
+  description: >-
+    Authenticates, confirms the target endpoint exists, and sends an SMS with
+    the supplied payload and sender address.
+  inputs:
+    type: object
+    required:
+    - applicationToken
+    - endpointId
+    - payload
+    properties:
+      applicationToken:
+        type: string
+        description: emnify application token used to obtain an auth_token.
+      endpointId:
+        type: string
+        description: The ID of the endpoint to send the SMS to.
+      payload:
+        type: string
+        description: The SMS message content (UTF-8, up to 160 characters).
+      sourceAddress:
+        type: string
+        description: The sender identifier shown on the device (MSISDN or short code).
+  steps:
+  - stepId: authenticate
+    description: Exchange the application token for an auth_token used as a Bearer token.
+    operationId: authenticate
+    requestBody:
+      contentType: application/json
+      payload:
+        application_token: $inputs.applicationToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      authToken: $response.body#/auth_token
+  - stepId: getEndpoint
+    description: Confirm the endpoint exists and capture its details before sending.
+    operationId: endpoint-by-id-get
+    parameters:
+    - name: endpoint_id
+      in: path
+      value: $inputs.endpointId
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      endpointName: $response.body#/name
+  - stepId: sendSms
+    description: >-
+      Send the mobile-terminated SMS to the endpoint with the supplied payload
+      and sender address.
+    operationId: endpoint-sms-by-id-post
+    parameters:
+    - name: endpoint_id
+      in: path
+      value: $inputs.endpointId
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    requestBody:
+      contentType: application/json
+      payload:
+        payload: $inputs.payload
+        source_address: $inputs.sourceAddress
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      endpointId: $inputs.endpointId
+  outputs:
+    endpointName: $steps.getEndpoint.outputs.endpointName
+    endpointId: $steps.sendSms.outputs.endpointId

@@ -1,0 +1,101 @@
+arazzo: 1.0.1
+info:
+  title: emnify Extend Traffic Limit When Blocked
+  summary: Authenticate, read endpoint connectivity, then grant a temporary traffic limit extension if blocked.
+  description: >-
+    A flow that restores service to a device that has hit its traffic limit.
+    The workflow authenticates, reads the endpoint connectivity status, and
+    branches: when the device is BLOCKED (which happens when traffic limits are
+    exceeded) it creates a temporary traffic limit extension with the supplied
+    volume; otherwise it ends without acting. Every step spells out its request
+    inline, including the Bearer Authorization header threaded from the
+    authenticate step.
+  version: 1.0.0
+sourceDescriptions:
+- name: emnifyApi
+  url: ../openapi/emnify-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: extend-traffic-limit-when-blocked
+  summary: Grant a temporary traffic limit extension when an endpoint is blocked.
+  description: >-
+    Authenticates, reads endpoint connectivity, and creates a traffic limit
+    extension only when the device is BLOCKED.
+  inputs:
+    type: object
+    required:
+    - applicationToken
+    - endpointId
+    - volume
+    properties:
+      applicationToken:
+        type: string
+        description: emnify application token used to obtain an auth_token.
+      endpointId:
+        type: string
+        description: The ID of the endpoint to evaluate and extend.
+      volume:
+        type: number
+        description: The additional traffic volume limit to grant.
+  steps:
+  - stepId: authenticate
+    description: Exchange the application token for an auth_token used as a Bearer token.
+    operationId: authenticate
+    requestBody:
+      contentType: application/json
+      payload:
+        application_token: $inputs.applicationToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      authToken: $response.body#/auth_token
+  - stepId: getConnectivity
+    description: Read the endpoint's connectivity status to detect a traffic-limit block.
+    operationId: endpoint-connectivity-by-id-get
+    parameters:
+    - name: endpoint_id
+      in: path
+      value: $inputs.endpointId
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      connectivityStatus: $response.body#/status
+    onSuccess:
+    - name: deviceBlocked
+      type: goto
+      stepId: extendLimit
+      criteria:
+      - context: $response.body
+        condition: $.status.description == "BLOCKED"
+        type: jsonpath
+    - name: deviceNotBlocked
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.status.description != "BLOCKED"
+        type: jsonpath
+  - stepId: extendLimit
+    description: Create a temporary traffic limit extension with the supplied volume.
+    operationId: create-endpoint-traffic-limit-extension
+    parameters:
+    - name: endpoint_id
+      in: path
+      value: $inputs.endpointId
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    requestBody:
+      contentType: application/json
+      payload:
+        volume: $inputs.volume
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      extensionId: $response.body#/id
+      expirationDate: $response.body#/expiration_date
+  outputs:
+    connectivityStatus: $steps.getConnectivity.outputs.connectivityStatus
+    extensionId: $steps.extendLimit.outputs.extensionId

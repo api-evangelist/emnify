@@ -1,0 +1,99 @@
+arazzo: 1.0.1
+info:
+  title: emnify Reset Endpoint Connectivity When Blocked
+  summary: Authenticate, read connectivity status, then reset connectivity only when the device is stuck.
+  description: >-
+    A remediation flow for a device that cannot get back online. The workflow
+    authenticates, reads the endpoint's connectivity status, and branches: when
+    the device is OFFLINE or BLOCKED it dispatches a connectivity reset (cancel
+    location and delete PDP context) to force a fresh network attach; when the
+    device is already ATTACHED or ONLINE it ends without acting. Every step
+    spells out its request inline, including the Bearer Authorization header
+    threaded from the authenticate step.
+  version: 1.0.0
+sourceDescriptions:
+- name: emnifyApi
+  url: ../openapi/emnify-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: reset-endpoint-connectivity-when-blocked
+  summary: Reset an endpoint's connectivity when it is OFFLINE or BLOCKED.
+  description: >-
+    Authenticates, reads connectivity status, and dispatches a connectivity
+    reset only when the device is not online.
+  inputs:
+    type: object
+    required:
+    - applicationToken
+    - endpointId
+    properties:
+      applicationToken:
+        type: string
+        description: emnify application token used to obtain an auth_token.
+      endpointId:
+        type: string
+        description: The ID of the endpoint to evaluate and reset.
+  steps:
+  - stepId: authenticate
+    description: Exchange the application token for an auth_token used as a Bearer token.
+    operationId: authenticate
+    requestBody:
+      contentType: application/json
+      payload:
+        application_token: $inputs.applicationToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      authToken: $response.body#/auth_token
+  - stepId: getConnectivity
+    description: Read the endpoint's current connectivity status to decide whether to reset.
+    operationId: endpoint-connectivity-by-id-get
+    parameters:
+    - name: endpoint_id
+      in: path
+      value: $inputs.endpointId
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      connectivityStatus: $response.body#/status
+    onSuccess:
+    - name: deviceStuck
+      type: goto
+      stepId: resetConnectivity
+      criteria:
+      - context: $response.body
+        condition: $.status.description == "BLOCKED" || $.status.description == "OFFLINE"
+        type: jsonpath
+    - name: deviceOnline
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.status.description == "ONLINE" || $.status.description == "ATTACHED"
+        type: jsonpath
+  - stepId: resetConnectivity
+    description: >-
+      Dispatch a connectivity reset that cancels the location and deletes the
+      PDP context to force a fresh network attach.
+    operationId: update-endpoint-connectivity-by-id
+    parameters:
+    - name: endpoint_id
+      in: path
+      value: $inputs.endpointId
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    requestBody:
+      contentType: application/json
+      payload:
+        pdp_context: true
+        location: true
+    successCriteria:
+    - condition: $statusCode == 204
+    outputs:
+      resetEndpointId: $inputs.endpointId
+  outputs:
+    connectivityStatus: $steps.getConnectivity.outputs.connectivityStatus
+    resetEndpointId: $steps.resetConnectivity.outputs.resetEndpointId

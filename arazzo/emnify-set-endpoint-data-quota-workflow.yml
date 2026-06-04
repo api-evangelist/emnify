@@ -1,0 +1,96 @@
+arazzo: 1.0.1
+info:
+  title: emnify Set Endpoint Data Quota
+  summary: Authenticate, read the current data quota, then set a new data quota on an endpoint.
+  description: >-
+    A data-package flow. The workflow authenticates, reads the endpoint's
+    current data quota to capture the existing volume, and then sets a new data
+    quota with the supplied volume, expiry, and block-on-exhaustion action.
+    This is the pattern used to top up or refresh an endpoint's data allowance.
+    Every step spells out its request inline, including the Bearer Authorization
+    header threaded from the authenticate step.
+  version: 1.0.0
+sourceDescriptions:
+- name: emnifyApi
+  url: ../openapi/emnify-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: set-endpoint-data-quota
+  summary: Read the existing data quota and assign a new one to an endpoint.
+  description: >-
+    Authenticates, reads the endpoint's current data quota, and sets a new data
+    quota with the supplied volume and expiry.
+  inputs:
+    type: object
+    required:
+    - applicationToken
+    - endpointId
+    - volume
+    - expiryDate
+    properties:
+      applicationToken:
+        type: string
+        description: emnify application token used to obtain an auth_token.
+      endpointId:
+        type: string
+        description: The ID of the endpoint to set the data quota on.
+      volume:
+        type: number
+        description: Remaining quota volume in MB.
+      expiryDate:
+        type: string
+        description: Timestamp when the quota expires (ISO 8601).
+  steps:
+  - stepId: authenticate
+    description: Exchange the application token for an auth_token used as a Bearer token.
+    operationId: authenticate
+    requestBody:
+      contentType: application/json
+      payload:
+        application_token: $inputs.applicationToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      authToken: $response.body#/auth_token
+  - stepId: getCurrentQuota
+    description: Read the endpoint's current data quota to capture the existing volume.
+    operationId: endpoint-quota-data-by-endpoint-id-get
+    parameters:
+    - name: endpoint_id
+      in: path
+      value: $inputs.endpointId
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      currentVolume: $response.body#/volume
+  - stepId: setQuota
+    description: >-
+      Set a new data quota with ACTIVE status, the supplied volume and expiry,
+      and Block on exhaustion (action id 1).
+    operationId: endpoint-quota-data-by-endpoint-id-post
+    parameters:
+    - name: endpoint_id
+      in: path
+      value: $inputs.endpointId
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    requestBody:
+      contentType: application/json
+      payload:
+        status:
+          id: 1
+        volume: $inputs.volume
+        expiry_date: $inputs.expiryDate
+        action_on_exhaustion:
+          id: 1
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      endpointId: $inputs.endpointId
+  outputs:
+    previousVolume: $steps.getCurrentQuota.outputs.currentVolume
+    endpointId: $steps.setQuota.outputs.endpointId

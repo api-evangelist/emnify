@@ -1,0 +1,104 @@
+arazzo: 1.0.1
+info:
+  title: emnify Get Endpoint Usage Statistics
+  summary: Authenticate, confirm the endpoint, then read its usage and daily usage statistics.
+  description: >-
+    A usage-reporting flow. The workflow authenticates, confirms the endpoint
+    exists, reads the rolled-up usage and cost statistics (last month, current
+    month, last hour), and then reads the per-day data and SMS volumes for a
+    supplied date range. Every step spells out its request inline, including the
+    Bearer Authorization header threaded from the authenticate step.
+  version: 1.0.0
+sourceDescriptions:
+- name: emnifyApi
+  url: ../openapi/emnify-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: get-endpoint-usage-stats
+  summary: Read an endpoint's usage statistics and daily usage breakdown.
+  description: >-
+    Authenticates, confirms the endpoint, reads its aggregated usage stats, and
+    then reads daily usage statistics over a date range.
+  inputs:
+    type: object
+    required:
+    - applicationToken
+    - endpointId
+    properties:
+      applicationToken:
+        type: string
+        description: emnify application token used to obtain an auth_token.
+      endpointId:
+        type: string
+        description: The ID of the endpoint to report on.
+      startDate:
+        type: string
+        description: Start date for daily stats in YYYY-MM-DD format.
+      endDate:
+        type: string
+        description: End date for daily stats in YYYY-MM-DD format.
+  steps:
+  - stepId: authenticate
+    description: Exchange the application token for an auth_token used as a Bearer token.
+    operationId: authenticate
+    requestBody:
+      contentType: application/json
+      payload:
+        application_token: $inputs.applicationToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      authToken: $response.body#/auth_token
+  - stepId: getEndpoint
+    description: Confirm the endpoint exists before pulling statistics.
+    operationId: endpoint-by-id-get
+    parameters:
+    - name: endpoint_id
+      in: path
+      value: $inputs.endpointId
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      endpointName: $response.body#/name
+  - stepId: getUsageStats
+    description: Read aggregated usage and cost statistics for the endpoint.
+    operationId: endpoint-stats-by-id-get
+    parameters:
+    - name: endpoint_id
+      in: path
+      value: $inputs.endpointId
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      currentMonth: $response.body#/current_month
+      lastMonth: $response.body#/last_month
+  - stepId: getDailyStats
+    description: Read per-day data and SMS usage for the supplied date range.
+    operationId: endpoint-stats-daily-by-id-get
+    parameters:
+    - name: endpoint_id
+      in: path
+      value: $inputs.endpointId
+    - name: start_date
+      in: query
+      value: $inputs.startDate
+    - name: end_date
+      in: query
+      value: $inputs.endDate
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      dailyStats: $response.body
+  outputs:
+    endpointName: $steps.getEndpoint.outputs.endpointName
+    currentMonth: $steps.getUsageStats.outputs.currentMonth
+    dailyStats: $steps.getDailyStats.outputs.dailyStats

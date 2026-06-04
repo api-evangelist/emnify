@@ -1,0 +1,79 @@
+arazzo: 1.0.1
+info:
+  title: emnify Blacklist Operator for Endpoint
+  summary: Authenticate, list available operators, then add one to an endpoint's blacklist.
+  description: >-
+    A network-steering flow. The workflow authenticates, lists the available
+    network operators so an operator ID can be resolved, and then adds the
+    chosen operator to the endpoint's blacklist so the device will not attach to
+    that operator's network. Every step spells out its request inline, including
+    the Bearer Authorization header threaded from the authenticate step.
+  version: 1.0.0
+sourceDescriptions:
+- name: emnifyApi
+  url: ../openapi/emnify-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: blacklist-operator-for-endpoint
+  summary: Add a network operator to an endpoint's operator blacklist.
+  description: >-
+    Authenticates, lists operators, and blacklists the supplied operator for the
+    given endpoint.
+  inputs:
+    type: object
+    required:
+    - applicationToken
+    - endpointId
+    - operatorId
+    properties:
+      applicationToken:
+        type: string
+        description: emnify application token used to obtain an auth_token.
+      endpointId:
+        type: string
+        description: The ID of the endpoint to update.
+      operatorId:
+        type: string
+        description: The ID of the operator to blacklist.
+  steps:
+  - stepId: authenticate
+    description: Exchange the application token for an auth_token used as a Bearer token.
+    operationId: authenticate
+    requestBody:
+      contentType: application/json
+      payload:
+        application_token: $inputs.applicationToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      authToken: $response.body#/auth_token
+  - stepId: listOperators
+    description: List the available operators so the chosen operator ID can be confirmed.
+    operationId: operator-get
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      operators: $response.body
+  - stepId: blacklistOperator
+    description: Add the supplied operator to the endpoint's blacklist.
+    operationId: endpoint-operator-blacklist-by-ep-id-and-operator-id-put
+    parameters:
+    - name: endpoint_id
+      in: path
+      value: $inputs.endpointId
+    - name: operator_id
+      in: path
+      value: $inputs.operatorId
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    successCriteria:
+    - condition: $statusCode == 204
+    outputs:
+      blacklistedOperatorId: $inputs.operatorId
+  outputs:
+    blacklistedOperatorId: $steps.blacklistOperator.outputs.blacklistedOperatorId

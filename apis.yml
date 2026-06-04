@@ -121,6 +121,60 @@ kind: contract
 image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 common:
+- type: ArazzoWorkflows
+  url: arazzo/
+  workflows:
+  - url: arazzo/emnify-blacklist-operator-for-endpoint-workflow.yml
+    name: emnify Blacklist Operator for Endpoint
+    summary: Authenticate, list available operators, then add one to an endpoint's blacklist.
+  - url: arazzo/emnify-check-endpoint-connectivity-workflow.yml
+    name: emnify Check Endpoint Connectivity
+    summary: Authenticate, read endpoint details, then read its live connectivity status.
+  - url: arazzo/emnify-create-and-tag-endpoint-workflow.yml
+    name: emnify Create and Tag Endpoint
+    summary: Authenticate, create a tag, create an endpoint, then assign the tag to it.
+  - url: arazzo/emnify-decommission-endpoint-workflow.yml
+    name: emnify Decommission Endpoint
+    summary: Authenticate, read the endpoint, suspend its SIM, then delete the endpoint.
+  - url: arazzo/emnify-extend-traffic-limit-when-blocked-workflow.yml
+    name: emnify Extend Traffic Limit When Blocked
+    summary: Authenticate, read endpoint connectivity, then grant a temporary traffic limit extension if blocked.
+  - url: arazzo/emnify-find-sim-and-provision-endpoint-workflow.yml
+    name: emnify Find SIM and Provision Endpoint
+    summary: Authenticate, find a SIM by ICCID, then create an endpoint bound to that SIM.
+  - url: arazzo/emnify-get-endpoint-usage-stats-workflow.yml
+    name: emnify Get Endpoint Usage Statistics
+    summary: Authenticate, confirm the endpoint, then read its usage and daily usage statistics.
+  - url: arazzo/emnify-locate-endpoint-workflow.yml
+    name: emnify Locate Endpoint
+    summary: Authenticate, confirm the endpoint, then retrieve its cell-tower-based location.
+  - url: arazzo/emnify-organization-volume-report-workflow.yml
+    name: emnify Organization Volume Report
+    summary: Authenticate, read organization details, then read active inclusive volumes and daily stats.
+  - url: arazzo/emnify-provision-and-activate-endpoint-workflow.yml
+    name: emnify Provision and Activate Endpoint
+    summary: Authenticate, create an endpoint with a SIM, then activate that SIM.
+  - url: arazzo/emnify-register-sim-batch-workflow.yml
+    name: emnify Register SIM Batch by BIC
+    summary: Authenticate, validate a SIM batch by its BIC, then register the batch to the workspace.
+  - url: arazzo/emnify-reset-endpoint-connectivity-when-blocked-workflow.yml
+    name: emnify Reset Endpoint Connectivity When Blocked
+    summary: Authenticate, read connectivity status, then reset connectivity only when the device is stuck.
+  - url: arazzo/emnify-send-sms-and-track-delivery-workflow.yml
+    name: emnify Send SMS and Track Delivery
+    summary: Authenticate, send an SMS to an endpoint, then list the endpoint's SMS to confirm it.
+  - url: arazzo/emnify-send-sms-to-endpoint-workflow.yml
+    name: emnify Send SMS to Endpoint
+    summary: Authenticate, confirm the endpoint exists, then send a mobile-terminated SMS to it.
+  - url: arazzo/emnify-set-endpoint-data-quota-workflow.yml
+    name: emnify Set Endpoint Data Quota
+    summary: Authenticate, read the current data quota, then set a new data quota on an endpoint.
+  - url: arazzo/emnify-set-endpoint-sms-quota-workflow.yml
+    name: emnify Set Endpoint SMS Quota
+    summary: Authenticate, read the current SMS quota, then assign a new SMS quota to an endpoint.
+  - url: arazzo/emnify-suspend-sim-when-active-workflow.yml
+    name: emnify Suspend SIM When Active
+    summary: Authenticate, read a SIM, and suspend it only when it is currently Activated.
 - type: Portal
   url: https://www.emnify.com
 - type: Documentation

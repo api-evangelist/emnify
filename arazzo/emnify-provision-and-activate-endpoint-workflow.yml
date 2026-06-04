@@ -1,0 +1,116 @@
+arazzo: 1.0.1
+info:
+  title: emnify Provision and Activate Endpoint
+  summary: Authenticate, create an endpoint with a SIM, then activate that SIM.
+  description: >-
+    The core emnify device onboarding flow. The workflow exchanges an
+    application token for an auth_token, creates a new endpoint with a SIM
+    assigned and the desired service and tariff profiles, and then flips the
+    SIM status to Activated so the device can use cellular connectivity. Every
+    step spells out its request inline — including the Bearer Authorization
+    header threaded from the authenticate step — so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: emnifyApi
+  url: ../openapi/emnify-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: provision-and-activate-endpoint
+  summary: Create an endpoint with a SIM and activate the SIM for cellular service.
+  description: >-
+    Authenticates with an application token, creates an endpoint that has the
+    supplied SIM, service profile, tariff profile, and initial status, and then
+    updates the SIM status to Activated.
+  inputs:
+    type: object
+    required:
+    - applicationToken
+    - simId
+    - serviceProfileId
+    - tariffProfileId
+    properties:
+      applicationToken:
+        type: string
+        description: emnify application token used to obtain an auth_token.
+      name:
+        type: string
+        description: Display name for the new endpoint.
+      simId:
+        type: integer
+        description: The numeric ID of the SIM to assign and activate.
+      serviceProfileId:
+        type: integer
+        description: Service profile ID that determines network access settings.
+      tariffProfileId:
+        type: integer
+        description: Tariff profile ID that determines pricing and data limits.
+      statusId:
+        type: integer
+        description: Initial endpoint status ID (e.g. 0 Enabled).
+        default: 0
+  steps:
+  - stepId: authenticate
+    description: >-
+      Exchange the application token for a short-lived auth_token (JWT) used as
+      a Bearer token on every subsequent request.
+    operationId: authenticate
+    requestBody:
+      contentType: application/json
+      payload:
+        application_token: $inputs.applicationToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      authToken: $response.body#/auth_token
+  - stepId: createEndpoint
+    description: >-
+      Create a single endpoint with the supplied SIM, service profile, tariff
+      profile, and initial status.
+    operationId: create-endpoint
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.name
+        sim:
+          id: $inputs.simId
+        service_profile:
+          id: $inputs.serviceProfileId
+        tariff_profile:
+          id: $inputs.tariffProfileId
+        status:
+          id: $inputs.statusId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      endpointId: $response.body#/id
+      ipAddress: $response.body#/ip_address
+  - stepId: activateSim
+    description: >-
+      Flip the assigned SIM to Activated status (id 1) so the device can use
+      cellular connectivity.
+    operationId: sim-by-id-patch
+    parameters:
+    - name: sim_id
+      in: path
+      value: $inputs.simId
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    requestBody:
+      contentType: application/json
+      payload:
+        status:
+          id: 1
+    successCriteria:
+    - condition: $statusCode == 204
+    outputs:
+      activatedSimId: $inputs.simId
+  outputs:
+    endpointId: $steps.createEndpoint.outputs.endpointId
+    ipAddress: $steps.createEndpoint.outputs.ipAddress
+    activatedSimId: $steps.activateSim.outputs.activatedSimId

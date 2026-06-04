@@ -1,0 +1,89 @@
+arazzo: 1.0.1
+info:
+  title: emnify Register SIM Batch by BIC
+  summary: Authenticate, validate a SIM batch by its BIC, then register the batch to the workspace.
+  description: >-
+    A logistics flow for onboarding a physical box of SIMs. The workflow
+    authenticates, validates the SIM batch identified by its Box Identifier
+    Code (BIC) to confirm the SIMs can be registered, and then registers the
+    batch — assigning all contained SIMs to the organization with the supplied
+    initial status. Every step spells out its request inline, including the
+    Bearer Authorization header threaded from the authenticate step.
+  version: 1.0.0
+sourceDescriptions:
+- name: emnifyApi
+  url: ../openapi/emnify-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: register-sim-batch
+  summary: Validate and register a SIM batch identified by its BIC.
+  description: >-
+    Authenticates, validates the SIM batch by BIC, and registers the batch with
+    the supplied SIM status.
+  inputs:
+    type: object
+    required:
+    - applicationToken
+    - bic
+    - simStatusId
+    properties:
+      applicationToken:
+        type: string
+        description: emnify application token used to obtain an auth_token.
+      bic:
+        type: string
+        description: The Box Identifier Code (BIC) of the SIM batch.
+      simStatusId:
+        type: integer
+        description: Initial status ID applied to all SIMs in the batch (e.g. 0 Issued, 1 Activated).
+  steps:
+  - stepId: authenticate
+    description: Exchange the application token for an auth_token used as a Bearer token.
+    operationId: authenticate
+    requestBody:
+      contentType: application/json
+      payload:
+        application_token: $inputs.applicationToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      authToken: $response.body#/auth_token
+  - stepId: validateBatch
+    description: Validate the SIM batch by BIC to confirm the SIMs can be registered.
+    operationId: validate-sim-batch-by-bic
+    parameters:
+    - name: bic
+      in: path
+      value: $inputs.bic
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      quantity: $response.body#/quantity
+      bsn: $response.body#/bsn
+  - stepId: registerBatch
+    description: >-
+      Register the validated batch, assigning all contained SIMs to the
+      organization with the supplied initial status.
+    operationId: register-sim-batch-by-bic
+    parameters:
+    - name: bic
+      in: path
+      value: $inputs.bic
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    requestBody:
+      contentType: application/json
+      payload:
+        sim_status:
+          id: $inputs.simStatusId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      registeredBic: $inputs.bic
+  outputs:
+    quantity: $steps.validateBatch.outputs.quantity
+    registeredBic: $steps.registerBatch.outputs.registeredBic

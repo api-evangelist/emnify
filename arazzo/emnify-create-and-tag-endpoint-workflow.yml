@@ -1,0 +1,122 @@
+arazzo: 1.0.1
+info:
+  title: emnify Create and Tag Endpoint
+  summary: Authenticate, create a tag, create an endpoint, then assign the tag to it.
+  description: >-
+    An organization flow that labels a new device. The workflow authenticates,
+    creates a tag with the supplied name and color, creates a new endpoint, and
+    then assigns the freshly created tag to that endpoint. Every step spells out
+    its request inline, including the Bearer Authorization header threaded from
+    the authenticate step.
+  version: 1.0.0
+sourceDescriptions:
+- name: emnifyApi
+  url: ../openapi/emnify-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-and-tag-endpoint
+  summary: Create a tag and a new endpoint, then attach the tag to the endpoint.
+  description: >-
+    Authenticates, creates a tag, creates an endpoint with the supplied
+    profiles, and assigns the tag to the new endpoint.
+  inputs:
+    type: object
+    required:
+    - applicationToken
+    - tagName
+    - serviceProfileId
+    - tariffProfileId
+    properties:
+      applicationToken:
+        type: string
+        description: emnify application token used to obtain an auth_token.
+      tagName:
+        type: string
+        description: The name of the tag to create.
+      colorId:
+        type: integer
+        description: Optional tag color ID; a random color is used if omitted.
+      endpointName:
+        type: string
+        description: Display name for the new endpoint.
+      serviceProfileId:
+        type: integer
+        description: Service profile ID for the new endpoint.
+      tariffProfileId:
+        type: integer
+        description: Tariff profile ID for the new endpoint.
+      statusId:
+        type: integer
+        description: Initial endpoint status ID.
+        default: 0
+  steps:
+  - stepId: authenticate
+    description: Exchange the application token for an auth_token used as a Bearer token.
+    operationId: authenticate
+    requestBody:
+      contentType: application/json
+      payload:
+        application_token: $inputs.applicationToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      authToken: $response.body#/auth_token
+  - stepId: createTag
+    description: Create a tag with the supplied name and optional color.
+    operationId: create-tag
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.tagName
+        color:
+          id: $inputs.colorId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      tagId: $response.body#/id
+  - stepId: createEndpoint
+    description: Create a new endpoint with the supplied service and tariff profiles.
+    operationId: create-endpoint
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.endpointName
+        service_profile:
+          id: $inputs.serviceProfileId
+        tariff_profile:
+          id: $inputs.tariffProfileId
+        status:
+          id: $inputs.statusId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      endpointId: $response.body#/id
+  - stepId: assignTag
+    description: Assign the newly created tag to the newly created endpoint.
+    operationId: assign-tag-to-endpoint
+    parameters:
+    - name: endpoint_id
+      in: path
+      value: $steps.createEndpoint.outputs.endpointId
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    requestBody:
+      contentType: application/json
+      payload:
+        id: $steps.createTag.outputs.tagId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      taggedEndpointId: $steps.createEndpoint.outputs.endpointId
+  outputs:
+    tagId: $steps.createTag.outputs.tagId
+    endpointId: $steps.createEndpoint.outputs.endpointId

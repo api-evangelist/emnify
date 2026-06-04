@@ -1,0 +1,105 @@
+arazzo: 1.0.1
+info:
+  title: emnify Find SIM and Provision Endpoint
+  summary: Authenticate, find a SIM by ICCID, then create an endpoint bound to that SIM.
+  description: >-
+    A flow that onboards a device when you know the SIM's printed ICCID rather
+    than its internal ID. The workflow authenticates, lists SIMs filtered by
+    ICCID to resolve the SIM's numeric ID, and then creates an endpoint with
+    that SIM and the supplied service and tariff profiles. Every step spells out
+    its request inline, including the Bearer Authorization header threaded from
+    the authenticate step.
+  version: 1.0.0
+sourceDescriptions:
+- name: emnifyApi
+  url: ../openapi/emnify-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: find-sim-and-provision-endpoint
+  summary: Resolve a SIM by ICCID and create an endpoint bound to it.
+  description: >-
+    Authenticates, looks up the SIM by its ICCID, and creates a new endpoint
+    that uses the matched SIM.
+  inputs:
+    type: object
+    required:
+    - applicationToken
+    - iccid
+    - serviceProfileId
+    - tariffProfileId
+    properties:
+      applicationToken:
+        type: string
+        description: emnify application token used to obtain an auth_token.
+      iccid:
+        type: string
+        description: The printed ICCID of the SIM to locate.
+      endpointName:
+        type: string
+        description: Display name for the new endpoint.
+      serviceProfileId:
+        type: integer
+        description: Service profile ID for the new endpoint.
+      tariffProfileId:
+        type: integer
+        description: Tariff profile ID for the new endpoint.
+      statusId:
+        type: integer
+        description: Initial endpoint status ID.
+        default: 0
+  steps:
+  - stepId: authenticate
+    description: Exchange the application token for an auth_token used as a Bearer token.
+    operationId: authenticate
+    requestBody:
+      contentType: application/json
+      payload:
+        application_token: $inputs.applicationToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      authToken: $response.body#/auth_token
+  - stepId: findSim
+    description: List SIMs filtered by ICCID to resolve the SIM's numeric ID.
+    operationId: sim-per-page-sort-by-q-and-page-get
+    parameters:
+    - name: q
+      in: query
+      value: "iccid:$inputs.iccid"
+    - name: per_page
+      in: query
+      value: 1
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      simId: $response.body#/0/id
+  - stepId: createEndpoint
+    description: Create a new endpoint bound to the matched SIM and supplied profiles.
+    operationId: create-endpoint
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $steps.authenticate.outputs.authToken
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.endpointName
+        sim:
+          id: $steps.findSim.outputs.simId
+        service_profile:
+          id: $inputs.serviceProfileId
+        tariff_profile:
+          id: $inputs.tariffProfileId
+        status:
+          id: $inputs.statusId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      endpointId: $response.body#/id
+      ipAddress: $response.body#/ip_address
+  outputs:
+    simId: $steps.findSim.outputs.simId
+    endpointId: $steps.createEndpoint.outputs.endpointId
