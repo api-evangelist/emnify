@@ -1,76 +1,175 @@
-# emnify
+# emnify (emnify)
 
-Cloud-native global IoT cellular connectivity. emnify operates its own mobile core and "SuperNetwork" across 540+ mobile network operators in 190+ countries, supplying multi-form-factor SIMs, eUICC-enabled cards, and SGP.32 IoT eSIM / Consumer eSIM profiles to enterprise IoT deployments.
+emnify is a cloud-native global IoT cellular connectivity provider operating its own mobile core and SuperNetwork across 540+ MNOs in 190+ countries. emnify supplies SIMs, eUICC-enabled multi-form-factor cards, and Consumer/Advanced eSIM (SGP.32) profiles to enterprise IoT deployments — fleet tracking, EV charging, point-of-sale, smart buildings, micromobility, airline crew tablets, and more. The emnify REST API, GraphQL API, and Data Streamer give programmatic control over SIMs, endpoints, service and tariff profiles, eUICC profile operations, events, SMS, callbacks, and outbound usage/event streaming to S3, Kinesis, and webhooks. NTN-IoT satellite connectivity via Skylo extends coverage beyond terrestrial cellular.
 
-This repo profiles the emnify developer surface — REST API, GraphQL API, Data Streamer, SDKs, MCP documentation server, plans, rate limits, and FinOps — as part of [API Evangelist](https://apievangelist.com/).
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/emnify/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/emnify/refs/heads/main/apis.yml)
+
+## Scope
+
+- **Position:** Consuming
+- **Access:** 3rd-Party
+
+## Tags
+
+- IoT
+- Internet of Things
+- Cellular Connectivity
+- IoT SIM
+- eSIM
+- Consumer eSIM
+- SGP.32
+- M2M
+- NTN-IoT
+- Satellite
+- SuperNetwork
+
+## Timestamps
+
+- **Created:** 2026-05-25T00:00:00.000Z
+- **Modified:** 2026-05-25
 
 ## APIs
 
-| API | Description |
-|---|---|
-| [emnify REST API](https://docs.emnify.com/developers) | Primary HTTP API. 200+ operations across 150+ paths covering SIMs, endpoints, eUICCs (SGP.32), SMS, events, service/tariff profiles, organizations, users, IP, operators, system, and callbacks. JWT-bearer auth (application token or user credentials). |
-| [emnify GraphQL API](https://docs.emnify.com/developers/graphql) | Flexible single-request queries with the in-browser GraphiQL IDE. |
-| [emnify Data Streamer](https://docs.emnify.com/developers/reference/data-streamer) | Outbound event and usage streaming to AWS S3, Kinesis, REST/webhook, Datadog, Salesforce, and Keen.io. SMS and API callbacks deliver MO SMS and event payloads to your infrastructure. |
-| [emnify Documentation MCP Server](https://docs.emnify.com/_mcp/server) | Public MCP server exposing emnify product and developer documentation to Claude Code, Cursor, and other MCP clients. |
+### emnify REST API
 
-## Artifacts
+The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with short-lived JWTs obtained via application tokens or user credentials.
 
-| Type | Path |
-|---|---|
-| OpenAPI 3.1 (full REST surface) | [`openapi/emnify-api-openapi.yml`](openapi/emnify-api-openapi.yml) — 152 paths, 214 operations, 709 schemas assembled from the public emnify `llms-full.txt` feed |
-| Spectral ruleset | [`rules/emnify-rules.yml`](rules/emnify-rules.yml) |
-| JSON Schemas | [`json-schema/emnify-sim-schema.json`](json-schema/emnify-sim-schema.json), [`json-schema/emnify-endpoint-schema.json`](json-schema/emnify-endpoint-schema.json), [`json-schema/emnify-event-schema.json`](json-schema/emnify-event-schema.json) |
-| JSON Structure | [`json-structure/emnify-sim-structure.json`](json-structure/emnify-sim-structure.json), [`json-structure/emnify-endpoint-structure.json`](json-structure/emnify-endpoint-structure.json) |
-| JSON-LD context | [`json-ld/emnify-context.jsonld`](json-ld/emnify-context.jsonld) |
-| Examples | [`examples/`](examples/) — authenticate, list endpoints, send SMS, list events |
-| Vocabulary | [`vocabulary/emnify-vocabulary.yml`](vocabulary/emnify-vocabulary.yml) |
-| Plans / Pricing (API Commons 0.1) | [`plans/emnify-plans-pricing.yml`](plans/emnify-plans-pricing.yml) |
-| Rate Limits (API Commons 0.1) | [`rate-limits/emnify-rate-limits.yml`](rate-limits/emnify-rate-limits.yml) |
-| FinOps (FOCUS 1.3 aligned) | [`finops/emnify-finops.yml`](finops/emnify-finops.yml) |
+- **Human URL:** [https://docs.emnify.com/developers](https://docs.emnify.com/developers)
 
-## Naftiko Capabilities
+#### Tags
 
-Seven business-grouped capabilities packaged as Naftiko consume/expose definitions in [`capabilities/`](capabilities/):
+- IoT
+- Cellular
+- Connectivity
+- SIM
+- eSIM
 
-- `sim-management.yaml` — SIM lifecycle (list, register, activate, suspend)
-- `endpoint-management.yaml` — Endpoint/device CRUD and bulk operations, connectivity reset
-- `sms-messaging.yaml` — Send MT SMS, list MO/MT SMS, cancel buffered messages
-- `euicc-management.yaml` — SGP.32 eSIM eUICC and profile operations
-- `events-monitoring.yaml` — Events, endpoint events, usage stats
-- `policies-and-profiles.yaml` — Service profiles and tariff profiles
-- `data-streamer-callbacks.yaml` — API callbacks and SMS callbacks for outbound streaming
+#### Properties
 
-## Authentication
+- [Documentation](https://docs.emnify.com/developers)
+- [Documentation](https://docs.emnify.com/developers/api-guidelines/conventions)
+- [Documentation](https://docs.emnify.com/llms-full.txt)
+- [OpenAPI](openapi/emnify-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/emnify-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/emnify-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Spectral Rules](rules/emnify-rules.yml)
+- [JSON Schema](json-schema/emnify-sim-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Schema](json-schema/emnify-endpoint-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Schema](json-schema/emnify-event-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Structure](json-structure/emnify-sim-structure.json)
+- [JSON Structure](json-structure/emnify-endpoint-structure.json)
+- [JSON-LD](json-ld/emnify-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
+- [Example](examples/emnify-authenticate-example.json)
+- [Example](examples/emnify-list-endpoints-example.json)
+- [Example](examples/emnify-send-sms-example.json)
+- [Example](examples/emnify-list-events-example.json)
+- [Vocabulary](vocabulary/emnify-vocabulary.yml)
 
-The emnify REST API uses short-lived JWTs:
+### emnify GraphQL API
 
-1. POST `/api/v1/authenticate` with an `application_token` (M2M) or username/password (with optional MFA).
-2. The response contains an `auth_token` (JWT, ~4 hours) and a `refresh_token`.
-3. Send the JWT as `Authorization: Bearer <auth_token>` on subsequent calls.
+emnify GraphQL API for flexible, single-request queries against the emnify data model with customizable response shapes. An in-browser GraphiQL IDE supports interactive exploration and testing.
 
-Rate limits to remember:
+- **Human URL:** [https://docs.emnify.com/developers/graphql](https://docs.emnify.com/developers/graphql)
 
-- 2,000 requests per IP per 5-minute window
-- 10 million requests per organization per month
-- 100 authenticate calls per IP per 5 minutes (cache JWTs)
-- 10 req/s sustained on most list/stats endpoints; 100 req/s on enhanced endpoints; 50 req/s on individual endpoint operations
+#### Tags
 
-## SDKs and Tools
+- IoT
+- GraphQL
+- Query
 
-- [Python SDK](https://github.com/emnify/emnify-sdk-python) — `pip install emnify-sdk` (Apache-2.0)
-- [Java SDK](https://github.com/emnify/emnify-sdk-java) (Apache-2.0)
-- [Grafana PCAP Extractor Plugin](https://github.com/emnify/grafana-pcapextractor-plugin)
-- [Akamai Insights Grafana Datasource](https://github.com/emnify/akamai-insights-datasource)
-- Public MCP documentation server at `https://docs.emnify.com/_mcp/server`
+#### Properties
 
-## Sources
+- [Documentation](https://docs.emnify.com/developers/graphql)
+- [Documentation](https://docs.emnify.com/developers/graphql/graphiql-ide)
+- [Documentation](https://docs.emnify.com/developers/api-guidelines/conventions)
+- [Postman Collection](collections/emnify-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/emnify-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-- emnify website — <https://www.emnify.com>
-- Developer documentation — <https://docs.emnify.com/developers>
-- Full doc feed (used to assemble OpenAPI) — <https://docs.emnify.com/llms-full.txt>
-- GitHub organization — <https://github.com/EMnify>
-- Plans and packages — <https://www.emnify.com/plans-and-packages>
+### emnify Data Streamer
 
-## License
+Stream event and usage data to outbound destinations (AWS S3, AWS Kinesis, REST/webhook, Datadog, Salesforce, Keen.io). Supports detailed object schemas for data types, traffic types, tariffs, operators, and volume tracking. SMS and API callbacks deliver mobile-originated SMS and event payloads to your infrastructure.
 
-Provider content references are attributed to emnify GmbH. Artifacts authored in this repository are released under the same terms as the rest of the api-evangelist catalog.
+- **Human URL:** [https://docs.emnify.com/developers/reference/data-streamer](https://docs.emnify.com/developers/reference/data-streamer)
+
+#### Tags
+
+- Streaming
+- Events
+- Data
+- Webhooks
+
+#### Properties
+
+- [Documentation](https://docs.emnify.com/developers/reference/data-streamer)
+- [Documentation](https://docs.emnify.com/developers/integrations/data-streamer/aws-s3-kinesis)
+- [Documentation](https://docs.emnify.com/developers/callbacks/api)
+- [Documentation](https://docs.emnify.com/developers/callbacks/sms)
+- [Postman Collection](collections/emnify-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/emnify-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### emnify Documentation MCP Server
+
+Public MCP server for emnify documentation. Connect Claude Code, Cursor, or any MCP-aware client to query emnify product, developer, and API reference content directly from your AI assistant.
+
+- **Human URL:** [https://docs.emnify.com/_mcp/server](https://docs.emnify.com/_mcp/server)
+
+#### Tags
+
+- MCP
+- Documentation
+- AI
+
+#### Properties
+
+- [M C P](https://docs.emnify.com/_mcp/server)
+- [Documentation](https://docs.emnify.com/developers/developer-tools/ai-assistance)
+- [Postman Collection](collections/emnify-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/emnify-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+## Common Properties
+
+- [Arazzo Workflows](arazzo/) — [Arazzo Specification](https://spec.openapis.org/arazzo/latest.html)
+- [Portal](https://www.emnify.com)
+- [Documentation](https://docs.emnify.com)
+- [Documentation](https://docs.emnify.com/developers)
+- [Getting Started](https://docs.emnify.com/quickstart)
+- [Sign Up](https://www.emnify.com/get-started)
+- [Pricing](https://www.emnify.com/plans-and-packages)
+- [GitHub Organization](https://github.com/EMnify)
+- [SDK](https://github.com/emnify/emnify-sdk-python)
+- [SDK](https://github.com/emnify/emnify-sdk-java)
+- [SDK](https://pypi.org/project/emnify-sdk/)
+- [Documentation](https://emnify.github.io/emnify-sdk-python/autoapi/index.html)
+- [Documentation](https://docs.emnify.com/developers/sdks)
+- [Documentation](https://docs.emnify.com/developers/sdks/python/quickstart)
+- [Documentation](https://docs.emnify.com/developers/sdks/java/quickstart)
+- [Documentation](https://docs.emnify.com/developers/auth/application-tokens)
+- [Documentation](https://docs.emnify.com/developers/auth/user-credentials)
+- [Documentation](https://docs.emnify.com/developers/auth/multi-factor-authentication)
+- [Documentation](https://docs.emnify.com/developers/auth/jwts)
+- [Rate Limits](https://docs.emnify.com/developers/api-guidelines/rate-limits)
+- [Errors](https://docs.emnify.com/developers/api-guidelines/errors)
+- [Pagination](https://docs.emnify.com/developers/api-guidelines/collections-pagination)
+- [Conventions](https://docs.emnify.com/developers/api-guidelines/conventions)
+- [Changelog](https://docs.emnify.com/changelog)
+- [Support](https://support.emnify.com/hc/en-us/requests/new)
+- [Forum](https://www.emnify.com/iot-blog)
+- [Blog](https://www.emnify.com/iot-blog)
+- [Terms of Service](https://www.emnify.com/legal/terms-and-conditions)
+- [Privacy Policy](https://www.emnify.com/legal/privacy-statement)
+- [Trust Center](https://www.emnify.com/iot-security)
+- [Tool](https://github.com/emnify/grafana-pcapextractor-plugin)
+- [Tool](https://github.com/emnify/akamai-insights-datasource)
+- [LinkedIn](https://www.linkedin.com/company/emnify)
+- [Twitter](https://twitter.com/emnify)
+- [YouTube](https://www.youtube.com/c/emnify)
+- [Plans](plans/emnify-plans-pricing.yml)
+- [Rate Limits](rate-limits/emnify-rate-limits.yml)
+- [Fin Ops](finops/emnify-finops.yml)
+- [Features](undefined)
+
+## Maintainers
+
+**FN:** Kin Lane
+**Email:** info@apievangelist.com
+**URL:** https://apievangelist.com
