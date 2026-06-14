@@ -1,0 +1,1089 @@
+"""
+emnify GraphQL API — Conceptual Schema
+Covers SIM/eSIM lifecycle, endpoint (device) management, data sessions, usage,
+network/operator coverage, service and tariff profiles, organization/user management,
+webhooks, alerts, VPN/breakout, and billing.
+"""
+
+# ---------------------------------------------------------------------------
+# Scalars
+# ---------------------------------------------------------------------------
+
+scalar DateTime
+scalar JSON
+scalar UUID
+scalar IPAddress
+scalar ICCID
+scalar IMSI
+scalar MSISDN
+scalar EID
+
+# ---------------------------------------------------------------------------
+# Enums
+# ---------------------------------------------------------------------------
+
+enum SIMStatus {
+  ISSUED
+  ACTIVATED
+  SUSPENDED
+  DELETED
+  FACTORY_TEST
+}
+
+enum EndpointStatus {
+  ENABLED
+  DISABLED
+  DELETED
+}
+
+enum ConnectivityStatus {
+  ONLINE
+  OFFLINE
+  BLOCKED
+  UNKNOWN
+}
+
+enum SMSDirection {
+  MT
+  MO
+}
+
+enum SMSStatus {
+  SENT
+  DELIVERED
+  FAILED
+  PENDING
+}
+
+enum DataSessionStatus {
+  ACTIVE
+  CLOSED
+}
+
+enum AlertSeverity {
+  INFO
+  WARNING
+  CRITICAL
+}
+
+enum WebhookEventType {
+  SIM_ACTIVATED
+  SIM_SUSPENDED
+  SIM_DELETED
+  ENDPOINT_ENABLED
+  ENDPOINT_DISABLED
+  DATA_LIMIT_REACHED
+  SMS_DELIVERED
+  SMS_FAILED
+  DATA_SESSION_STARTED
+  DATA_SESSION_ENDED
+  CONNECTIVITY_CHANGED
+  INVOICE_GENERATED
+}
+
+enum BreakoutType {
+  DIRECT
+  VPN
+  TRANSIT_GATEWAY
+  STATIC_IP
+}
+
+enum VPNProtocol {
+  IPSEC
+  OPENVPN
+  WIREGUARD
+}
+
+enum TariffType {
+  PAY_PER_USE
+  FIXED_ALLOWANCE
+  POOLED
+  VOLUME_COMMITMENT
+}
+
+enum RoamingMode {
+  ENABLED
+  DISABLED
+  HOME_ONLY
+}
+
+enum MFAMethod {
+  TOTP
+  SMS
+  EMAIL
+}
+
+enum InvoiceStatus {
+  DRAFT
+  ISSUED
+  PAID
+  OVERDUE
+}
+
+enum PolicyAction {
+  ALLOW
+  BLOCK
+  THROTTLE
+}
+
+# ---------------------------------------------------------------------------
+# Core SIM Types
+# ---------------------------------------------------------------------------
+
+"""
+A physical or embedded SIM managed within emnify.
+"""
+type SIM {
+  id: ID!
+  iccid: ICCID!
+  imsi: IMSI
+  msisdn: MSISDN
+  eid: EID
+  status: SIMStatus!
+  activatedAt: DateTime
+  suspendedAt: DateTime
+  deletedAt: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  endpoint: Endpoint
+  serviceProfile: ServiceProfile
+  tariffPlan: TariffPlan
+  roamingProfile: RoamingProfile
+  dataUsage: DataUsage
+  dataQuota: DataQuota
+  smsQuota: SMSQuota
+  tags: [DeviceTag!]
+  organization: Organization
+  batchId: String
+  formFactor: String
+  isEUICC: Boolean!
+  isPlatformSIM: Boolean!
+}
+
+"""
+Represents a SIM card with physical form factor details.
+"""
+type SIMCard {
+  id: ID!
+  iccid: ICCID!
+  eid: EID
+  formFactor: String
+  isEUICC: Boolean!
+  batchId: String
+  registeredAt: DateTime
+  sim: SIM
+}
+
+"""
+A SIM activation record capturing the moment a SIM transitions to active state.
+"""
+type SIMActivation {
+  id: ID!
+  sim: SIM!
+  activatedAt: DateTime!
+  activatedBy: User
+  previousStatus: SIMStatus
+  ipAddress: IPAddress
+  network: Network
+}
+
+# ---------------------------------------------------------------------------
+# Endpoint (Device) Types
+# ---------------------------------------------------------------------------
+
+"""
+An IoT endpoint (device) registered within emnify, associated with a SIM.
+"""
+type Endpoint {
+  id: ID!
+  name: String!
+  status: EndpointStatus!
+  imei: String
+  ip: IPAddress
+  sim: SIM
+  serviceProfile: ServiceProfile
+  tariffPlan: TariffPlan
+  tags: [DeviceTag!]
+  services: [DeviceService!]
+  connectivityStatus: ConnectivityStatus
+  lastSeen: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  organization: Organization
+  fleet: Fleet
+  dataUsage: DataUsage
+  dataQuota: DataQuota
+  smsQuota: SMSQuota
+  smsSessions: [SMS!]
+  dataSessions: [DataSession!]
+  location: EndpointLocation
+  breakout: Breakout
+  policy: Policy
+}
+
+"""
+Live connectivity status information for an endpoint.
+"""
+type EndpointStatus {
+  endpointId: ID!
+  status: ConnectivityStatus!
+  lastSeen: DateTime
+  ipAddress: IPAddress
+  network: Network
+  operator: Operator
+  rat: String
+  signalStrength: Float
+  checkedAt: DateTime!
+}
+
+"""
+Approximate location of an endpoint derived from cell-tower data.
+"""
+type EndpointLocation {
+  endpointId: ID!
+  latitude: Float
+  longitude: Float
+  accuracy: Float
+  country: String
+  network: Network
+  operator: Operator
+  updatedAt: DateTime!
+}
+
+"""
+A logical fleet grouping of endpoints.
+"""
+type Fleet {
+  id: ID!
+  name: String!
+  description: String
+  endpoints: [Endpoint!]
+  endpointCount: Int!
+  organization: Organization!
+  serviceProfile: ServiceProfile
+  tariffPlan: TariffPlan
+  policy: Policy
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A tag that can be applied to endpoints and SIMs for classification.
+"""
+type DeviceTag {
+  id: ID!
+  name: String!
+  value: String
+  endpoints: [Endpoint!]
+  sims: [SIM!]
+  createdAt: DateTime!
+}
+
+"""
+A service (e.g., data, SMS) enabled or disabled on an endpoint.
+"""
+type DeviceService {
+  id: ID!
+  name: String!
+  enabled: Boolean!
+  endpoint: Endpoint!
+  updatedAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# SMS Types
+# ---------------------------------------------------------------------------
+
+"""
+An SMS message sent to or received from an endpoint.
+"""
+type SMS {
+  id: ID!
+  direction: SMSDirection!
+  status: SMSStatus!
+  sourceAddress: String
+  destinationAddress: String
+  payload: String
+  endpoint: Endpoint!
+  sim: SIM
+  sentAt: DateTime
+  deliveredAt: DateTime
+  failedAt: DateTime
+  failureReason: String
+  network: Network
+  operator: Operator
+}
+
+"""
+Input for sending an SMS message to an endpoint (MT SMS).
+"""
+type SMSSend {
+  endpointId: ID!
+  payload: String!
+  sourceAddress: String
+  requestedAt: DateTime!
+  sms: SMS
+}
+
+"""
+A mobile-originated (MO) SMS received from an endpoint.
+"""
+type SMSReceive {
+  id: ID!
+  endpoint: Endpoint!
+  sim: SIM
+  payload: String!
+  sourceAddress: String
+  receivedAt: DateTime!
+  callbackDelivered: Boolean
+  callbackUrl: String
+}
+
+# ---------------------------------------------------------------------------
+# Data / Usage Types
+# ---------------------------------------------------------------------------
+
+"""
+Cumulative data usage for a SIM or endpoint.
+"""
+type DataUsage {
+  entityId: ID!
+  entityType: String!
+  totalVolumeTx: Float!
+  totalVolumeRx: Float!
+  totalVolume: Float!
+  unit: String!
+  period: String
+  updatedAt: DateTime!
+}
+
+"""
+A single data session (PDP context) for an endpoint.
+"""
+type DataSession {
+  id: ID!
+  endpoint: Endpoint!
+  sim: SIM
+  status: DataSessionStatus!
+  ipAddress: IPAddress
+  network: Network
+  operator: Operator
+  rat: String
+  startedAt: DateTime!
+  endedAt: DateTime
+  volumeTx: Float
+  volumeRx: Float
+  volume: Float
+  unit: String!
+}
+
+"""
+Data usage breakdown by time period or network segment.
+"""
+type DataBreakdown {
+  period: String!
+  date: String
+  volumeTx: Float!
+  volumeRx: Float!
+  volume: Float!
+  unit: String!
+  endpointId: ID
+  simId: ID
+  operator: Operator
+  network: Network
+}
+
+"""
+A data quota configured on an endpoint or SIM.
+"""
+type DataQuota {
+  id: ID!
+  endpoint: Endpoint
+  sim: SIM
+  volumeLimit: Float!
+  unit: String!
+  expiryDate: DateTime
+  thresholdPercentage: Float
+  actionOnExhaustion: PolicyAction!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+An SMS quota configured on an endpoint or SIM.
+"""
+type SMSQuota {
+  id: ID!
+  endpoint: Endpoint
+  sim: SIM
+  smsLimit: Int!
+  expiryDate: DateTime
+  actionOnExhaustion: PolicyAction!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A data usage limit rule embedded in a service profile.
+"""
+type UsageLimit {
+  id: ID!
+  volumeLimit: Float
+  unit: String!
+  actionOnExhaustion: PolicyAction!
+  thresholdPercentage: Float
+  serviceProfile: ServiceProfile
+}
+
+# ---------------------------------------------------------------------------
+# Network / Coverage Types
+# ---------------------------------------------------------------------------
+
+"""
+A mobile network (MNO) available through emnify.
+"""
+type Network {
+  id: ID!
+  name: String!
+  mnc: String!
+  mcc: String!
+  country: Country!
+  operators: [Operator!]
+  coverageProfiles: [CoverageProfile!]
+}
+
+"""
+A mobile network operator within a network.
+"""
+type Operator {
+  id: ID!
+  name: String!
+  mnc: String!
+  mcc: String!
+  network: Network!
+  country: Country!
+  rat: [String!]
+  blacklisted: Boolean!
+}
+
+"""
+A country entity with associated network coverage.
+"""
+type Country {
+  id: ID!
+  name: String!
+  isoCode: String!
+  mcc: String!
+  networks: [Network!]
+  covered: Boolean!
+}
+
+"""
+A coverage profile defining which networks and operators are accessible.
+"""
+type Coverage {
+  id: ID!
+  name: String!
+  description: String
+  countries: [Country!]
+  networks: [Network!]
+  operators: [Operator!]
+  updatedAt: DateTime!
+}
+
+"""
+A named coverage profile that can be assigned to service profiles.
+"""
+type CoverageProfile {
+  id: ID!
+  name: String!
+  description: String
+  coverage: [Coverage!]
+  serviceProfiles: [ServiceProfile!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Profile / Plan Types
+# ---------------------------------------------------------------------------
+
+"""
+A service profile defining traffic rules, quotas, and operator settings for endpoints.
+"""
+type ServiceProfile {
+  id: ID!
+  name: String!
+  description: String
+  dataLimit: UsageLimit
+  smsLimit: UsageLimit
+  roamingMode: RoamingMode
+  operatorBlacklist: [Operator!]
+  imeiLock: Boolean!
+  callbackUrl: String
+  coverageProfile: CoverageProfile
+  endpoints: [Endpoint!]
+  sims: [SIM!]
+  organization: Organization!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A tariff plan defining pricing and billing for data and SMS usage.
+"""
+type TariffPlan {
+  id: ID!
+  name: String!
+  description: String
+  type: TariffType!
+  dataRatePerMB: Float
+  smsRatePerMessage: Float
+  monthlyFeePerSIM: Float
+  currency: String!
+  includedDataMB: Float
+  includedSMS: Int
+  region: String
+  endpoints: [Endpoint!]
+  sims: [SIM!]
+  organization: Organization!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A roaming profile specifying allowed roaming behaviour for SIMs.
+"""
+type RoamingProfile {
+  id: ID!
+  name: String!
+  mode: RoamingMode!
+  allowedNetworks: [Network!]
+  blockedNetworks: [Network!]
+  sims: [SIM!]
+  organization: Organization!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Connectivity / Breakout Types
+# ---------------------------------------------------------------------------
+
+"""
+A breakout configuration determining how device traffic exits the emnify core.
+"""
+type Breakout {
+  id: ID!
+  type: BreakoutType!
+  endpoint: Endpoint
+  staticIP: StaticIP
+  vpn: VPN
+  awsTransitGateway: String
+  region: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A static IP address assigned to an endpoint.
+"""
+type StaticIP {
+  id: ID!
+  ipAddress: IPAddress!
+  endpoint: Endpoint
+  breakout: Breakout
+  assignedAt: DateTime!
+  releasedAt: DateTime
+}
+
+"""
+A VPN tunnel configuration for private breakout.
+"""
+type VPN {
+  id: ID!
+  name: String!
+  protocol: VPNProtocol!
+  config: VPNConfig
+  endpoints: [Endpoint!]
+  organization: Organization!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+Detailed VPN configuration parameters.
+"""
+type VPNConfig {
+  vpnId: ID!
+  serverAddress: String!
+  port: Int!
+  presharedKey: String
+  certificate: String
+  dnsServers: [IPAddress!]
+  routedNetworks: [String!]
+  updatedAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Policy / Alert Types
+# ---------------------------------------------------------------------------
+
+"""
+A policy defining automated actions applied to endpoints or fleets.
+"""
+type Policy {
+  id: ID!
+  name: String!
+  description: String
+  action: PolicyAction!
+  triggerCondition: String
+  endpoints: [Endpoint!]
+  fleets: [Fleet!]
+  organization: Organization!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+An alert event generated when a threshold or policy condition is breached.
+"""
+type Alert {
+  id: ID!
+  severity: AlertSeverity!
+  message: String!
+  endpoint: Endpoint
+  sim: SIM
+  organization: Organization!
+  config: AlertConfig
+  triggeredAt: DateTime!
+  resolvedAt: DateTime
+  acknowledged: Boolean!
+}
+
+"""
+Alert configuration defining thresholds and notification channels.
+"""
+type AlertConfig {
+  id: ID!
+  name: String!
+  severity: AlertSeverity!
+  condition: String!
+  notificationChannels: [String!]
+  webhookUrl: String
+  emailRecipients: [String!]
+  organization: Organization!
+  alerts: [Alert!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Organization / User Types
+# ---------------------------------------------------------------------------
+
+"""
+An emnify organization (workspace/tenant).
+"""
+type Organization {
+  id: ID!
+  name: String!
+  billingEmail: String
+  users: [User!]
+  sims: [SIM!]
+  endpoints: [Endpoint!]
+  fleets: [Fleet!]
+  serviceProfiles: [ServiceProfile!]
+  tariffPlans: [TariffPlan!]
+  apiTokens: [APIToken!]
+  webhooks: [Webhook!]
+  invoices: [Invoice!]
+  inclusiveVolumes: [InclusiveVolume!]
+  mfaConfig: MFAConfig
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A user account associated with an emnify organization.
+"""
+type User {
+  id: ID!
+  email: String!
+  firstName: String
+  lastName: String
+  role: String!
+  organization: Organization!
+  mfaEnabled: Boolean!
+  mfaMethod: MFAMethod
+  lastLoginAt: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Auth / Credential Types
+# ---------------------------------------------------------------------------
+
+"""
+An API application token used to obtain JWT bearer tokens.
+"""
+type APIToken {
+  id: ID!
+  name: String!
+  description: String
+  token: String
+  organization: Organization!
+  createdBy: User
+  lastUsedAt: DateTime
+  expiresAt: DateTime
+  createdAt: DateTime!
+}
+
+"""
+API client credentials for OAuth2 machine-to-machine flows.
+"""
+type APIClientCredentials {
+  id: ID!
+  clientId: String!
+  clientSecret: String
+  organization: Organization!
+  scopes: [String!]
+  createdAt: DateTime!
+  expiresAt: DateTime
+}
+
+"""
+Multi-factor authentication configuration for an organization.
+"""
+type MFAConfig {
+  organizationId: ID!
+  enforced: Boolean!
+  allowedMethods: [MFAMethod!]
+  trustedDeviceDays: Int
+  updatedAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Webhook / Event Types
+# ---------------------------------------------------------------------------
+
+"""
+A webhook endpoint configured to receive emnify event notifications.
+"""
+type Webhook {
+  id: ID!
+  name: String!
+  url: String!
+  secret: String
+  eventTypes: [WebhookEventType!]
+  organization: Organization!
+  active: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A webhook event delivery record.
+"""
+type WebhookEvent {
+  id: ID!
+  webhook: Webhook!
+  eventType: WebhookEventType!
+  payload: JSON!
+  deliveredAt: DateTime
+  responseCode: Int
+  attempts: Int!
+  success: Boolean!
+  createdAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Billing / Finance Types
+# ---------------------------------------------------------------------------
+
+"""
+An invoice issued to an organization for usage during a billing period.
+"""
+type Invoice {
+  id: ID!
+  organization: Organization!
+  status: InvoiceStatus!
+  periodStart: DateTime!
+  periodEnd: DateTime!
+  totalAmount: Float!
+  currency: String!
+  lineItems: [InvoiceLineItem!]
+  issuedAt: DateTime
+  dueAt: DateTime
+  paidAt: DateTime
+  downloadUrl: String
+}
+
+"""
+A line item on an invoice detailing a specific charge.
+"""
+type InvoiceLineItem {
+  id: ID!
+  description: String!
+  quantity: Float!
+  unit: String!
+  unitPrice: Float!
+  totalPrice: Float!
+  invoice: Invoice!
+}
+
+"""
+Aggregated usage summary for an organization or endpoint over a period.
+"""
+type Usage {
+  entityId: ID!
+  entityType: String!
+  period: String!
+  dataVolumeMB: Float!
+  smsSent: Int!
+  smsReceived: Int!
+  activeSIMs: Int!
+  cost: Float
+  currency: String
+}
+
+"""
+An inclusive (bundled) data volume available to an organization or plan.
+"""
+type InclusiveVolume {
+  id: ID!
+  name: String!
+  volumeMB: Float!
+  remainingMB: Float!
+  usedMB: Float!
+  expiresAt: DateTime
+  organization: Organization!
+  tariffPlan: TariffPlan
+}
+
+"""
+A connectivity summary providing a high-level view of device states.
+"""
+type ConnectivitySummary {
+  organizationId: ID!
+  totalSIMs: Int!
+  activatedSIMs: Int!
+  suspendedSIMs: Int!
+  issuedSIMs: Int!
+  deletedSIMs: Int!
+  onlineEndpoints: Int!
+  offlineEndpoints: Int!
+  blockedEndpoints: Int!
+  generatedAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# IP Type
+# ---------------------------------------------------------------------------
+
+"""
+An IP address assignment record.
+"""
+type IP {
+  id: ID!
+  address: IPAddress!
+  subnet: String
+  endpoint: Endpoint
+  sim: SIM
+  breakout: Breakout
+  assignedAt: DateTime!
+  releasedAt: DateTime
+  organization: Organization!
+}
+
+# ---------------------------------------------------------------------------
+# Query Root
+# ---------------------------------------------------------------------------
+
+type Query {
+  # SIM queries
+  sim(id: ID!): SIM
+  simByICCID(iccid: ICCID!): SIM
+  sims(
+    status: SIMStatus
+    organizationId: ID
+    tags: [String!]
+    page: Int
+    perPage: Int
+  ): [SIM!]!
+
+  # Endpoint queries
+  endpoint(id: ID!): Endpoint
+  endpoints(
+    status: EndpointStatus
+    fleetId: ID
+    tags: [String!]
+    page: Int
+    perPage: Int
+  ): [Endpoint!]!
+  endpointConnectivityStatus(endpointId: ID!): EndpointStatus
+  endpointLocation(endpointId: ID!): EndpointLocation
+
+  # Fleet queries
+  fleet(id: ID!): Fleet
+  fleets(organizationId: ID): [Fleet!]!
+
+  # SMS queries
+  sms(id: ID!): SMS
+  smsByEndpoint(endpointId: ID!, direction: SMSDirection, page: Int, perPage: Int): [SMS!]!
+
+  # Data session queries
+  dataSession(id: ID!): DataSession
+  dataSessionsByEndpoint(endpointId: ID!, status: DataSessionStatus, page: Int, perPage: Int): [DataSession!]!
+
+  # Usage queries
+  dataUsage(entityId: ID!, entityType: String!): DataUsage
+  dataBreakdown(entityId: ID!, entityType: String!, from: DateTime!, to: DateTime!): [DataBreakdown!]!
+  connectivitySummary(organizationId: ID!): ConnectivitySummary
+  usage(organizationId: ID!, period: String!): Usage
+
+  # Network / coverage queries
+  network(id: ID!): Network
+  networks(countryCode: String): [Network!]!
+  operator(id: ID!): Operator
+  operators(networkId: ID, blacklisted: Boolean): [Operator!]!
+  country(isoCode: String!): Country
+  countries: [Country!]!
+  coverageProfile(id: ID!): CoverageProfile
+  coverageProfiles(organizationId: ID): [CoverageProfile!]!
+
+  # Profile / plan queries
+  serviceProfile(id: ID!): ServiceProfile
+  serviceProfiles(organizationId: ID): [ServiceProfile!]!
+  tariffPlan(id: ID!): TariffPlan
+  tariffPlans(organizationId: ID): [TariffPlan!]!
+  roamingProfile(id: ID!): RoamingProfile
+  roamingProfiles(organizationId: ID): [RoamingProfile!]!
+
+  # Organization / user queries
+  organization(id: ID!): Organization
+  organizations: [Organization!]!
+  user(id: ID!): User
+  users(organizationId: ID): [User!]!
+  me: User
+
+  # Auth / credential queries
+  apiToken(id: ID!): APIToken
+  apiTokens(organizationId: ID): [APIToken!]!
+  mfaConfig(organizationId: ID!): MFAConfig
+
+  # Webhook queries
+  webhook(id: ID!): Webhook
+  webhooks(organizationId: ID): [Webhook!]!
+  webhookEvents(webhookId: ID!, page: Int, perPage: Int): [WebhookEvent!]!
+
+  # Billing queries
+  invoice(id: ID!): Invoice
+  invoices(organizationId: ID!, status: InvoiceStatus, page: Int, perPage: Int): [Invoice!]!
+  inclusiveVolumes(organizationId: ID!): [InclusiveVolume!]!
+
+  # Alert queries
+  alert(id: ID!): Alert
+  alerts(organizationId: ID!, severity: AlertSeverity, acknowledged: Boolean, page: Int, perPage: Int): [Alert!]!
+  alertConfig(id: ID!): AlertConfig
+  alertConfigs(organizationId: ID): [AlertConfig!]!
+
+  # IP queries
+  ip(id: ID!): IP
+  ips(organizationId: ID, endpointId: ID): [IP!]!
+
+  # Data quota
+  dataQuota(endpointId: ID!): DataQuota
+  smsQuota(endpointId: ID!): SMSQuota
+}
+
+# ---------------------------------------------------------------------------
+# Mutation Root
+# ---------------------------------------------------------------------------
+
+type Mutation {
+  # SIM mutations
+  activateSIM(id: ID!): SIM
+  suspendSIM(id: ID!): SIM
+  deleteSIM(id: ID!): Boolean
+  updateSIMServiceProfile(simId: ID!, serviceProfileId: ID!): SIM
+  updateSIMTariffPlan(simId: ID!, tariffPlanId: ID!): SIM
+
+  # Endpoint mutations
+  createEndpoint(name: String!, simId: ID, serviceProfileId: ID!, tariffPlanId: ID!): Endpoint
+  updateEndpoint(id: ID!, name: String, serviceProfileId: ID, tariffPlanId: ID): Endpoint
+  enableEndpoint(id: ID!): Endpoint
+  disableEndpoint(id: ID!): Endpoint
+  deleteEndpoint(id: ID!): Boolean
+  addTagToEndpoint(endpointId: ID!, tagId: ID!): Endpoint
+  removeTagFromEndpoint(endpointId: ID!, tagId: ID!): Endpoint
+  setEndpointDataQuota(endpointId: ID!, volumeLimit: Float!, unit: String!, actionOnExhaustion: PolicyAction!): DataQuota
+  setEndpointSMSQuota(endpointId: ID!, smsLimit: Int!, actionOnExhaustion: PolicyAction!): SMSQuota
+  resetEndpointConnectivity(endpointId: ID!): Boolean
+
+  # Fleet mutations
+  createFleet(name: String!, organizationId: ID!, description: String): Fleet
+  updateFleet(id: ID!, name: String, description: String): Fleet
+  deleteFleet(id: ID!): Boolean
+
+  # Tag mutations
+  createTag(name: String!, value: String): DeviceTag
+  deleteTag(id: ID!): Boolean
+
+  # SMS mutations
+  sendSMS(endpointId: ID!, payload: String!, sourceAddress: String): SMSSend
+
+  # Operator blacklist mutations
+  addOperatorToBlacklist(serviceProfileId: ID!, operatorId: ID!): ServiceProfile
+  removeOperatorFromBlacklist(serviceProfileId: ID!, operatorId: ID!): ServiceProfile
+
+  # Service profile mutations
+  createServiceProfile(name: String!, organizationId: ID!): ServiceProfile
+  updateServiceProfile(id: ID!, name: String, roamingMode: RoamingMode, imeiLock: Boolean, callbackUrl: String): ServiceProfile
+  deleteServiceProfile(id: ID!): Boolean
+
+  # Tariff plan mutations
+  createTariffPlan(name: String!, type: TariffType!, currency: String!, organizationId: ID!): TariffPlan
+  updateTariffPlan(id: ID!, name: String): TariffPlan
+
+  # VPN mutations
+  createVPN(name: String!, protocol: VPNProtocol!, organizationId: ID!): VPN
+  updateVPNConfig(vpnId: ID!, serverAddress: String, port: Int): VPNConfig
+  deleteVPN(id: ID!): Boolean
+
+  # Alert mutations
+  acknowledgeAlert(id: ID!): Alert
+  createAlertConfig(name: String!, condition: String!, severity: AlertSeverity!, organizationId: ID!): AlertConfig
+  updateAlertConfig(id: ID!, name: String, condition: String, severity: AlertSeverity): AlertConfig
+  deleteAlertConfig(id: ID!): Boolean
+
+  # Webhook mutations
+  createWebhook(name: String!, url: String!, organizationId: ID!, eventTypes: [WebhookEventType!]!): Webhook
+  updateWebhook(id: ID!, url: String, eventTypes: [WebhookEventType!], active: Boolean): Webhook
+  deleteWebhook(id: ID!): Boolean
+
+  # API token mutations
+  createAPIToken(name: String!, organizationId: ID!, description: String): APIToken
+  deleteAPIToken(id: ID!): Boolean
+
+  # MFA mutations
+  updateMFAConfig(organizationId: ID!, enforced: Boolean, allowedMethods: [MFAMethod!], trustedDeviceDays: Int): MFAConfig
+
+  # User mutations
+  createUser(email: String!, organizationId: ID!, role: String!): User
+  updateUser(id: ID!, role: String, firstName: String, lastName: String): User
+  deleteUser(id: ID!): Boolean
+}
+
+# ---------------------------------------------------------------------------
+# Subscription Root
+# ---------------------------------------------------------------------------
+
+type Subscription {
+  simStatusChanged(organizationId: ID!): SIM
+  endpointConnectivityChanged(organizationId: ID!): Endpoint
+  dataQuotaThresholdReached(endpointId: ID!): DataQuota
+  smsReceived(endpointId: ID!): SMSReceive
+  alertTriggered(organizationId: ID!): Alert
+}
