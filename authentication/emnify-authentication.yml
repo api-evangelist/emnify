@@ -1,0 +1,15 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/emnify-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: 'Retrieve a JWT via POST /api/v1/authenticate using an application_token or user
+    credentials, then send it as `Authorization: Bearer <token>`.'
+  sources:
+  - openapi/emnify-api-openapi.yml
