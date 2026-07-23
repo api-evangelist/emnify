@@ -1,0 +1,1171 @@
+openapi: 3.1.0
+info:
+  title: emnify REST subpackage_applicationTokens subpackage_organization API
+  version: 1.0.0
+  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
+
+
+    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  contact:
+    name: emnify Developer Support
+    url: https://docs.emnify.com/developers
+  license:
+    name: Proprietary
+    url: https://www.emnify.com/legal
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API base host
+security:
+- BearerAuth: []
+tags:
+- name: subpackage_organization
+  x-display-name: Organization
+paths:
+  /api/v1/organisation/my:
+    get:
+      operationId: my-organisation-get
+      summary: My organization details
+      description: You can retrieve details about your own organisation
+      tags:
+      - subpackage_organization
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization_MyOrganisationGet_Response_200'
+  /api/v1/organisation/status:
+    get:
+      operationId: organisation-status-get
+      summary: List organization statuses
+      description: Provides a list of available organisation status (lookup).
+      tags:
+      - subpackage_organization
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1OrganisationStatusGetResponsesContentApplicationJsonSchemaItems'
+  /api/v1/organisation/{org_id_or_my}/inclusive_volume/active:
+    get:
+      operationId: get-active-organisation-inclusive-volume
+      summary: Get list of active organization inclusive volumes
+      description: 'Returns of a list of inclusive volumes that are currently active in the current billing period for the selected organisation.
+
+        This will not inclusive volumes that are already expired or have the start date set for a future billing period.
+
+
+        Only inclusive volumes for the own organisation or direct child organisations are accessible.
+
+        '
+      tags:
+      - subpackage_organization
+      parameters:
+      - name: org_id_or_my
+        in: path
+        description: Numerical ID of an Organization or the string `my` to use the currently authorized organisation
+        required: true
+        schema:
+          type: string
+          default: my
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItems'
+        '404':
+          description: A non-existent resource is requested
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /api/v1/organisation/{org_id_or_my}/inclusive_volume/{inclusive_volume_id}:
+    put:
+      operationId: assign-ratezone-inclusive-volume
+      summary: Assign a ratezone inclusive volume to an organization
+      description: 'Assigns a pre-configured ratezone inclusive volume to the specified organization.
+
+
+        This can be done in self-service as well as for direct child organizations.
+
+        Only postpaid customers can assign
+
+        inclusive volumes in self-service, while parent organizations can assign inclusive volumes for both postpaid and prepaid child organizations.
+
+        The inclusive volume is charged and calculated against traffic charges accordingly in every bill
+
+        that is refreshed from that point on.
+
+        Inclusive volume is counted per device on a monthly basis, the data can be pooled as well or be treated per individual device.
+
+
+        Only inclusive volumes of ratezones belonging to the tariffs assigned to the selected organization can be chosen.
+
+
+        Enterprise organizations are only allowed to upgrade to a higher inclusive volume if there is already one active in the current month.
+
+
+        The request body is optional. All fields have default values and detailed constraints are specified in the schema below.
+
+        '
+      tags:
+      - subpackage_organization
+      parameters:
+      - name: org_id_or_my
+        in: path
+        description: Numerical ID of an Organization or the string `my` to use the currently authorized organisation
+        required: true
+        schema:
+          type: string
+          default: my
+      - name: inclusive_volume_id
+        in: path
+        description: 'Numerical ID of a ratezone inclusive volume.
+
+          Can be retrieved using `GET /api/v1/tariff/{tariff_id}/ratezone/{ratezone_id}/inclusive_volume`.
+
+          '
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization_AssignRatezoneInclusiveVolume_Response_201'
+        '400':
+          description: The request is malformed, e.g. the body cannot be parsed
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: 'Organisation is not accessible or not valid in this context
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+      requestBody:
+        description: 'Configure the inclusive volume billing period and pooling behavior.
+
+          All fields are optional and will use default values if omitted.
+
+          '
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                start_date:
+                  type: string
+                  format: date-time
+                  description: 'The first day of the month when this inclusive volume assignment becomes active.
+
+                    Defaults to the first day of the current month.
+
+                    Times are normalized to midnight UTC (times in input are stripped).
+
+                    Must be the current month or a future month.
+
+                    '
+                end_date:
+                  type:
+                  - string
+                  - 'null'
+                  format: date-time
+                  description: 'The last day of the month when this inclusive volume assignment expires.
+
+                    Defaults to `null` (indefinite duration).
+
+                    When specified, must be the last day of a calendar month.
+
+                    Times are normalized to 23:59:59 UTC (times in input are stripped).
+
+                    Must be on or after the `start_date`.
+
+                    '
+                pooled:
+                  type: boolean
+                  default: true
+                  description: 'Whether the inclusive volume is shared across all devices or tracked individually.
+
+                    - `true` (default): Data consumption is pooled. All devices share the monthly volume limit.
+
+                    - `false`: Each device receives its own quota proportional to the total volume.
+
+                    '
+  /api/v1/organisation/{org_id_or_my}/stats:
+    get:
+      operationId: get-organisation-monthly-stats
+      summary: Monthly organization traffic and cost statistics
+      description: 'Retrieves traffic and cost statistics for the selected organization.
+
+
+        Traffic statistics accumulate for the `current_month` and `last_month` of the selected organization and all child organizations.
+
+        All other returned values (SIM statistics, user counts, etc.) are only for the selected organization.
+
+        '
+      tags:
+      - subpackage_organization
+      parameters:
+      - name: org_id_or_my
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization_GetOrganisationMonthlyStats_Response_200'
+        '422':
+          description: Selected organisation not found or not accessible
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /api/v1/organisation/{org_id_or_my}/stats/daily:
+    get:
+      operationId: get-organisation-daily-stats
+      summary: Daily organization traffic and cost statistics
+      description: "Retrieves traffic and cost statistics for the selected organization and all child organizations, accumulated per day.\n\n<Info>\n  By default, this call returns statistics for the current month.\n</Info>\n"
+      tags:
+      - subpackage_organization
+      parameters:
+      - name: org_id_or_my
+        in: path
+        description: 'Numerical ID of an organization or the string `my` to use the currently authorized organization.
+
+          '
+        required: true
+        schema:
+          type: string
+          default: my
+      - name: start_date
+        in: query
+        description: 'Filters results to data collected on or after this date.
+
+          If `end_date` isn''t specified, the response includes data through the end of the selected month.
+
+          '
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: end_date
+        in: query
+        description: 'Filters results to data collected before this date.
+
+          Must be used with `start_date`.
+
+          '
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItems'
+  /api/v1/organisation/{org_id_or_my}/stats/hourly:
+    get:
+      operationId: get-organisation-hourly-stats
+      summary: Hourly organization traffic statistics
+      description: "Retrieves traffic statistics for the selected organization and all child organizations, accumulated per hour.\n\n<Info>\n  By default, this call returns statistics for the last three hours.\n</Info>\n"
+      tags:
+      - subpackage_organization
+      parameters:
+      - name: org_id_or_my
+        in: path
+        description: 'Numerical ID of an organization or the string `my` to use the currently authorized organization.
+
+          '
+        required: true
+        schema:
+          type: string
+          default: my
+      - name: start_date
+        in: query
+        description: 'Filters results to data collected on or after this timestamp.
+
+          If not specified, the response includes data from the past three hours up to the current time.
+
+          '
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: end_date
+        in: query
+        description: 'Filters results to data collected before this timestamp.
+
+          Must be used with `start_date`.
+
+          If not specified, defaults to one hour after the current time.
+
+          '
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization_GetOrganisationHourlyStats_Response_200'
+  /api/v1/organisation/{org_id}/tariff:
+    patch:
+      operationId: update-organisation-tariff
+      summary: Update assigned tariff
+      description: 'Allows an organisation to change their assigned tariff.
+
+
+        The following restrictions apply:
+
+        * The organisation must not have more than one tariff assigned.
+
+        * The tariff can be changed only for the own organisation and direct child organisations. The organisation status must be "ACTIVE".
+
+        * If performing the change in self-service, the organisation needs to be in evaluation. Parent organisations are allowed to change the tariffs of production organisations.
+
+        * The selected tariff must be active, visible to the requested organisation and must have the same currency. Parent organisations are allowed to assign private tariffs to their child organisations.
+
+
+        In addition to updating the assigned tariff, the system will also:
+
+        * Update all of the organisations tariff profiles to use the new tariff.
+
+        * Activate all ratezones in the tariff in order to ensure that the endpoints do not lose connection.
+
+        * Expire all currently active inclusive volumes and custom rates and delete future ones.
+
+        '
+      tags:
+      - subpackage_organization
+      parameters:
+      - name: org_id
+        in: path
+        description: Numerical ID of an organization
+        required: true
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response to a successful GET, also used for a POST if it does not result in a creation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization_UpdateOrganisationTariff_Response_200'
+        '400':
+          description: The request is malformed, e.g. the body cannot be parsed
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: A non-existent resource is requested
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '422':
+          description: Body will return list of validation errors
+          content:
+            application/json:
+              schema:
+                description: Any type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
+                  format: double
+                  description: ID of the new tariff
+              required:
+              - id
+  /api/v1/stats/daily:
+    get:
+      operationId: statistics-daily-by-id-get
+      summary: Organization usage and costs statistics per day for the current month
+      description: "Retrieve usage and costs statistics for the currently logged in organization and all child organizations, accumulated per days from beginning of the month until today.\n\n<Info>\n  Data traffic costs aren't returned for enterprise organizations with inclusive volume.\n</Info>\n"
+      tags:
+      - subpackage_organization
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  description: Any type
+components:
+  schemas:
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthDataTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthDataTrafficType
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthSms:
+      type: object
+      properties:
+        cost:
+          type: number
+          format: double
+          description: Total cost
+        month:
+          type: string
+          description: The month that the data has been accumulated in `YYYY-MM-01` format
+        currency:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthSmsCurrency'
+        traffic_type:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthSmsTrafficType'
+        volume:
+          type: number
+          format: double
+          description: Total consumption (`volume_rx` + `volume_tx`)
+        volume_rx:
+          type: number
+          format: double
+          description: '* For traffic type `5` (`Data`): Downloaded data
+
+            * For traffic type `6` (`SMS`): SMS MT
+
+            '
+        volume_tx:
+          type: number
+          format: double
+          description: '* For traffic type `5` (`Data`): Uploaded data
+
+            * For traffic type `6` (`SMS`): SMS MO
+
+            '
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthSms
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthSmsCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthSmsCurrency
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthData:
+      type: object
+      properties:
+        cost:
+          type: number
+          format: double
+          description: Total cost
+        month:
+          type: string
+          description: The month that the data has been accumulated in `YYYY-MM-01` format
+        currency:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthDataCurrency'
+        traffic_type:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthDataTrafficType'
+        volume:
+          type: number
+          format: double
+          description: Total consumption (`volume_rx` + `volume_tx`)
+        volume_rx:
+          type: number
+          format: double
+          description: '* For traffic type `5` (`Data`): Downloaded data
+
+            * For traffic type `6` (`SMS`): SMS MT
+
+            '
+        volume_tx:
+          type: number
+          format: double
+          description: '* For traffic type `5` (`Data`): Uploaded data
+
+            * For traffic type `6` (`SMS`): SMS MO
+
+            '
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthData
+    ApiV1OrganisationOrgIdOrMyStatsHourlyGetResponsesContentApplicationJsonSchemaData:
+      type: object
+      properties:
+        rx:
+          type: array
+          items:
+            type: string
+          description: 'Downloaded data - Array index `0`: Time as `HH:mm` string, index `1`: consumed volume
+
+            '
+        tx:
+          type: array
+          items:
+            type: string
+          description: 'Uploaded data - Array index `0`: Time as `HH:mm` string, index `1`: consumed volume
+
+            '
+      title: ApiV1OrganisationOrgIdOrMyStatsHourlyGetResponsesContentApplicationJsonSchemaData
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaInclusiveVolume:
+      type: object
+      properties:
+        unpooled:
+          type: number
+          format: double
+          description: Total cost of all unpooled inclusive volumes
+        pooled:
+          type: number
+          format: double
+          description: Total cost of all pooled inclusive volumes
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaInclusiveVolume
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaPrepaidBalance:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+          description: Remaining prepaid balance
+        currency:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaPrepaidBalanceCurrency'
+        last_updated:
+          type: string
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaPrepaidBalance
+    Organization_GetOrganisationHourlyStats_Response_200:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsHourlyGetResponsesContentApplicationJsonSchemaData'
+        sms:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsHourlyGetResponsesContentApplicationJsonSchemaSms'
+      title: Organization_GetOrganisationHourlyStats_Response_200
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthDataCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthDataCurrency
+    ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsTrafficType
+    ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsCurrency
+    ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsData:
+      type: object
+      properties:
+        cost:
+          type: string
+          description: Total cost
+        currency_id:
+          type: string
+        currency:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataCurrency'
+        traffic_type_id:
+          type: string
+        traffic_type:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataTrafficType'
+        volume:
+          type: string
+          description: Total consumption (`volume_rx` + `volume_tx`)
+        volume_rx:
+          type: string
+          description: '* For traffic type `5` (`Data`): Downloaded data
+
+            * For traffic type `6` (`SMS`): SMS MT
+
+            '
+        volume_tx:
+          type: string
+          description: '* For traffic type `5` (`Data`): Uploaded data
+
+            * For traffic type `6` (`SMS`): SMS MO
+
+            '
+      title: ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsData
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthSmsTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthSmsTrafficType
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthSmsTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthSmsTrafficType
+    ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsTariffRatezone:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        ratezone_status_id:
+          type: integer
+      title: ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsTariffRatezone
+    ApiV1OrganisationStatusGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ApiV1OrganisationStatusGetResponsesContentApplicationJsonSchemaItems
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthDataTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthDataTrafficType
+    ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataCurrency
+    ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSms:
+      type: object
+      properties:
+        cost:
+          type: string
+          description: Total cost
+        currency_id:
+          type: string
+        currency:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsCurrency'
+        traffic_type_id:
+          type: string
+        traffic_type:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsTrafficType'
+        volume:
+          type: string
+          description: Total consumption (`volume_rx` + `volume_tx`)
+        volume_rx:
+          type: string
+          description: '* For traffic type `5` (`Data`): Downloaded data
+
+            * For traffic type `6` (`SMS`): SMS MT
+
+            '
+        volume_tx:
+          type: string
+          description: '* For traffic type `5` (`Data`): Uploaded data
+
+            * For traffic type `6` (`SMS`): SMS MO
+
+            '
+      title: ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSms
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaPrepaidBalanceCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaPrepaidBalanceCurrency
+    Organization_UpdateOrganisationTariff_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Organization_UpdateOrganisationTariff_Response_200
+    ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        volume:
+          type: number
+          format: double
+          description: The volume in MB
+        rate:
+          type: number
+          format: double
+        pooled:
+          type: boolean
+        start_date:
+          type: string
+          format: date-time
+        end_date:
+          type: string
+          format: date-time
+          description: 'End date will be omitted in the response, if it has been set to null.
+
+            This means the inclusive volume will run infinitely.
+
+            '
+        currency:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsCurrency'
+        tariff:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsTariff'
+      title: ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItems
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthData:
+      type: object
+      properties:
+        cost:
+          type: number
+          format: double
+          description: Total cost
+        month:
+          type: string
+          description: The month that the data has been accumulated in `YYYY-MM-01` format
+        currency:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthDataCurrency'
+        traffic_type:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthDataTrafficType'
+        volume:
+          type: number
+          format: double
+          description: Total consumption (`volume_rx` + `volume_tx`)
+        volume_rx:
+          type: number
+          format: double
+          description: '* For traffic type `5` (`Data`): Downloaded data
+
+            * For traffic type `6` (`SMS`): SMS MT
+
+            '
+        volume_tx:
+          type: number
+          format: double
+          description: '* For traffic type `5` (`Data`): Uploaded data
+
+            * For traffic type `6` (`SMS`): SMS MO
+
+            '
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthData
+    ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsCurrency:
+      type: object
+      properties:
+        id:
+          type: integer
+        code:
+          type: string
+        symbol:
+          type: string
+      title: ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsCurrency
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthDataCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthDataCurrency
+    Organization_AssignRatezoneInclusiveVolume_Response_201:
+      type: object
+      properties:
+        id:
+          type: integer
+        start_date:
+          type: string
+          format: date-time
+        end_date:
+          type: string
+          format: date-time
+        pooled:
+          type: boolean
+      title: Organization_AssignRatezoneInclusiveVolume_Response_201
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonth:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthData'
+        sms:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthSms'
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonth
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaSim:
+      type: object
+      properties:
+        issued:
+          type: number
+          format: double
+        factory_mode:
+          type: number
+          format: double
+        active:
+          type: number
+          format: double
+        suspended:
+          type: number
+          format: double
+        total:
+          type: number
+          format: double
+      description: 'Amount of SIMs per SIM status where the selected organisation is either the customer organisation or the issuer organisation
+
+        '
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaSim
+    ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsTariff:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        tariff_status_id:
+          type: integer
+        ratezone:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsTariffRatezone'
+      title: ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsTariff
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthSmsCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthSmsCurrency
+    ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataTrafficType
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonth:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthData'
+        sms:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthSms'
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonth
+    ApiV1OrganisationOrgIdOrMyStatsHourlyGetResponsesContentApplicationJsonSchemaSms:
+      type: object
+      properties:
+        rx:
+          type: array
+          items:
+            type: string
+          description: 'SMS MO - Array index `0`: Time as `HH:mm` string, index `1`: consumed volume
+
+            '
+        tx:
+          type: array
+          items:
+            type: string
+          description: 'SMS MT - Array index `0`: Time as `HH:mm` string, index `1`: consumed volume
+
+            '
+      title: ApiV1OrganisationOrgIdOrMyStatsHourlyGetResponsesContentApplicationJsonSchemaSms
+    Organization_MyOrganisationGet_Response_200:
+      type: object
+      properties:
+        name:
+          type: string
+        organisation_type_id:
+          type: string
+        country_id:
+          type: string
+        organisation_status_id:
+          type: string
+        ext_reference:
+          type: string
+        monthly_cost_limit:
+          type:
+          - string
+          - 'null'
+        currency_id:
+          type: integer
+        organisation_class_id:
+          type: integer
+        created:
+          type: string
+          format: date-time
+        verification_type_id:
+          type:
+          - string
+          - 'null'
+        verification:
+          type: string
+        brand_id:
+          type: string
+        default_sms_routing_id:
+          type:
+          - string
+          - 'null'
+        id:
+          type: integer
+      title: Organization_MyOrganisationGet_Response_200
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthSms:
+      type: object
+      properties:
+        cost:
+          type: number
+          format: double
+          description: Total cost
+        month:
+          type: string
+          description: The month that the data has been accumulated in `YYYY-MM-01` format
+        currency:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthSmsCurrency'
+        traffic_type:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthSmsTrafficType'
+        volume:
+          type: number
+          format: double
+          description: Total consumption (`volume_rx` + `volume_tx`)
+        volume_rx:
+          type: number
+          format: double
+          description: '* For traffic type `5` (`Data`): Downloaded data
+
+            * For traffic type `6` (`SMS`): SMS MT
+
+            '
+        volume_tx:
+          type: number
+          format: double
+          description: '* For traffic type `5` (`Data`): Uploaded data
+
+            * For traffic type `6` (`SMS`): SMS MO
+
+            '
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthSms
+    ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        date:
+          type: string
+          description: 'Date in `YYYY-MM-DD` format or `TOTAL` to indicate the total volume and cost of the traffic type
+
+            '
+        data:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsData'
+        sms:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSms'
+      title: ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItems
+    Organization_GetOrganisationMonthlyStats_Response_200:
+      type: object
+      properties:
+        current_month:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonth'
+        last_month:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonth'
+        sim:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaSim'
+          description: 'Amount of SIMs per SIM status where the selected organisation is either the customer organisation or the issuer organisation
+
+            '
+        service_profiles:
+          type: number
+          format: double
+          description: Amount of service profiles
+        tariff_profiles:
+          type: number
+          format: double
+          description: Amount of service profiles
+        users:
+          type: number
+          format: double
+          description: Amount of users
+        active_chargeable_sims:
+          type: number
+          format: double
+          description: 'Amount of active SIMs that will be charged within the current month. This field is omitted if there are no chargeable SIMs.
+
+            '
+        hosting_fees:
+          type: number
+          format: double
+          description: Total of SIM hosting fees for all `active_chargeable_sims`. This field is omitted if there are no chargeable SIMs.
+        inclusive_volume:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaInclusiveVolume'
+        prepaid_balance:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaPrepaidBalance'
+      title: Organization_GetOrganisationMonthlyStats_Response_200
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Retrieve a JWT via POST /api/v1/authenticate using an application_token or user credentials, then send it as `Authorization: Bearer <token>`.'

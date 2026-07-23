@@ -1,0 +1,363 @@
+openapi: 3.1.0
+info:
+  title: emnify REST subpackage_applicationTokens subpackage_customEvents API
+  version: 1.0.0
+  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
+
+
+    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  contact:
+    name: emnify Developer Support
+    url: https://docs.emnify.com/developers
+  license:
+    name: Proprietary
+    url: https://www.emnify.com/legal
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API base host
+security:
+- BearerAuth: []
+tags:
+- name: subpackage_customEvents
+  x-display-name: Customevents
+paths:
+  /api/v1/event/custom/configuration:
+    get:
+      operationId: get-custom-events
+      summary: List custom events
+      description: 'Returns a list of all available custom events and their supported targeting options.
+
+        '
+      tags:
+      - subpackage_customEvents
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomEventOutputDto'
+    post:
+      operationId: create-custom-event-instance
+      summary: Deploy custom event
+      description: 'Deploys a custom event with the specified configuration.
+
+        '
+      tags:
+      - subpackage_customEvents
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomEventOutputDto'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomEventCreateDto'
+  /api/v1/event/custom/configuration/{custom_event_id}:
+    get:
+      operationId: get-custom-event
+      summary: Get a custom event by ID
+      description: 'Retrieves a specific custom event and its supported targeting options.
+
+        '
+      tags:
+      - subpackage_customEvents
+      parameters:
+      - name: custom_event_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomEventOutputDto'
+    delete:
+      operationId: delete-custom-event
+      summary: Delete custom event
+      description: 'Deletes a custom event with the specified configuration.
+
+        '
+      tags:
+      - subpackage_customEvents
+      parameters:
+      - name: custom_event_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Custom Events_deleteCustomEvent_Response_200'
+  /api/v1/event/custom/template:
+    get:
+      operationId: get-custom-event-templates
+      summary: List custom event templates
+      description: 'Returns a list of all available custom event templates and their possible configuration parameters.
+
+        '
+      tags:
+      - subpackage_customEvents
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomEventTemplateOutputDto'
+  /api/v1/event/custom/template/{template_id}:
+    get:
+      operationId: get-custom-event-template
+      summary: Get a custom event template by ID
+      description: 'Retrieves a specific custom event template and its possible configuration parameters.
+
+        '
+      tags:
+      - subpackage_customEvents
+      parameters:
+      - name: template_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomEventTemplateOutputDto'
+components:
+  schemas:
+    SupportedTargetingParametersDto:
+      type: object
+      properties:
+        parameter:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        validators:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidatorDto'
+      required:
+      - parameter
+      - type
+      - description
+      - validators
+      title: SupportedTargetingParametersDto
+    WithIdInputDto:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: WithIdInputDto
+    Custom Events_deleteCustomEvent_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Custom Events_deleteCustomEvent_Response_200
+    CustomEventTemplateOutputDto:
+      type: object
+      properties:
+        id:
+          type: string
+        parent_organisation:
+          $ref: '#/components/schemas/WithIdInputDto'
+        name:
+          type: string
+        translationKeyName:
+          type: string
+        status:
+          type: string
+        description:
+          type: string
+        translationKeyDescription:
+          type: string
+        configuration_properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationPropertiesDto'
+        supported_targeting_parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupportedTargetingParametersDto'
+      required:
+      - id
+      - parent_organisation
+      - name
+      - translationKeyName
+      - status
+      - description
+      - translationKeyDescription
+      - configuration_properties
+      - supported_targeting_parameters
+      title: CustomEventTemplateOutputDto
+    ValidatorDto:
+      type: object
+      properties:
+        validator_type:
+          type: string
+        validator_value:
+          type: string
+      required:
+      - validator_type
+      - validator_value
+      title: ValidatorDto
+    ConfigurationInputPropertiesDto:
+      type: object
+      properties:
+        property:
+          type: string
+        value:
+          type: string
+        value_array:
+          type: array
+          items:
+            type: string
+      required:
+      - property
+      - value
+      - value_array
+      title: ConfigurationInputPropertiesDto
+    CustomEventOutputDto:
+      type: object
+      properties:
+        organisation:
+          $ref: '#/components/schemas/WithIdInputDto'
+        template:
+          $ref: '#/components/schemas/WithIdInputDto'
+        configuration_properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
+        name:
+          type: string
+        id:
+          type: string
+        supportedTargetingParameters:
+          type: array
+          items:
+            type: string
+        supportedActions:
+          type: array
+          items:
+            type: string
+      required:
+      - organisation
+      - template
+      - configuration_properties
+      - name
+      - id
+      - supportedTargetingParameters
+      - supportedActions
+      title: CustomEventOutputDto
+    ConfigurationPropertiesDto:
+      type: object
+      properties:
+        property:
+          type: string
+        type:
+          type: string
+        default:
+          type: string
+        required:
+          type: boolean
+        description:
+          type: string
+        validators:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidatorDto'
+      required:
+      - property
+      - type
+      - default
+      - required
+      - description
+      - validators
+      title: ConfigurationPropertiesDto
+    CustomEventCreateDto:
+      type: object
+      properties:
+        organisation:
+          $ref: '#/components/schemas/WithIdInputDto'
+        template:
+          $ref: '#/components/schemas/WithIdInputDto'
+        configuration_properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
+        name:
+          type: string
+      required:
+      - organisation
+      - template
+      - configuration_properties
+      - name
+      title: CustomEventCreateDto
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Retrieve a JWT via POST /api/v1/authenticate using an application_token or user credentials, then send it as `Authorization: Bearer <token>`.'

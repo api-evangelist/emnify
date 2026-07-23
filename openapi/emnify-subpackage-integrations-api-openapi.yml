@@ -1,0 +1,1670 @@
+openapi: 3.1.0
+info:
+  title: emnify REST subpackage_applicationTokens subpackage_integrations API
+  version: 1.0.0
+  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
+
+
+    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  contact:
+    name: emnify Developer Support
+    url: https://docs.emnify.com/developers
+  license:
+    name: Proprietary
+    url: https://www.emnify.com/legal
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API base host
+security:
+- BearerAuth: []
+tags:
+- name: subpackage_integrations
+  x-display-name: Integrations
+paths:
+  /api/v1/api_callback:
+    get:
+      operationId: get-api-callback-ur-ls
+      summary: Retrieve list of API callback URLs
+      tags:
+      - subpackage_integrations
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved a list of API Callback URLs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  description: Any type
+    post:
+      operationId: create-callback-url
+      summary: Create a callback URL
+      description: Create Callback URL
+      tags:
+      - subpackage_integrations
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Resource Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integrations_CreateCallbackURL_Response_201'
+      requestBody:
+        description: Creating an API callback URL
+        content:
+          application/json:
+            schema:
+              description: Any type
+  /api/v1/api_callback/{api_callback_id}:
+    get:
+      operationId: get-callback-ur-lby-id
+      summary: Get a callback URL by ID
+      tags:
+      - subpackage_integrations
+      parameters:
+      - name: api_callback_id
+        in: path
+        description: A numeric ID of an API Callback URL
+        required: true
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: API Callback by ID
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: API Callback with this ID not found
+          content:
+            application/json:
+              schema:
+                description: Any type
+    delete:
+      operationId: delete-callback-url
+      summary: Delete a callback URL
+      tags:
+      - subpackage_integrations
+      parameters:
+      - name: api_callback_id
+        in: path
+        description: A numeric ID of an API Callback URL
+        required: true
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Resource Deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integrations_DeleteCallbackURL_Response_200'
+        '404':
+          description: API Callback with this ID not found
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /api/v1/api_secret:
+    get:
+      operationId: get-api-callback-secret
+      summary: List API callback secrets
+      description: "Lists API callback secrets.\n\n<Info>\n  The `secret` property itself is not returned in this call.\n</Info>\n"
+      tags:
+      - subpackage_integrations
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved a list of API Callback Secrets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1ApiSecretGetResponsesContentApplicationJsonSchemaItems'
+    post:
+      operationId: create-callback-secret
+      summary: Create a callback secret
+      description: 'Creates a new secret that may be used by API callbacks.
+
+
+        When an `api_secret` is assigned to a Service Profile with an API callback, API requests towards this URL will contain an `Authorization` header with a JSON Web Token.
+
+        The `api_secret` is used as the **Signing Key** of the JWT.
+
+        '
+      tags:
+      - subpackage_integrations
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Resource Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integrations_CreateCallbackSecret_Response_201'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                organisation_id:
+                  type: string
+                purpose:
+                  type: string
+                id:
+                  type: integer
+  /api/v1/api_secret/{api_secret_id}:
+    get:
+      operationId: get-callback-secretby-id
+      summary: Get a callback secret by ID
+      tags:
+      - subpackage_integrations
+      parameters:
+      - name: api_secret_id
+        in: path
+        description: A numeric ID of an API secret
+        required: true
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: API Secret by ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integrations_GetCallbackSecretbyID_Response_200'
+        '404':
+          description: API Callback with this ID not found
+          content:
+            application/json:
+              schema:
+                description: Any type
+    delete:
+      operationId: delete-callback-secret
+      summary: Delete a callback secret
+      tags:
+      - subpackage_integrations
+      parameters:
+      - name: api_secret_id
+        in: path
+        description: A numeric ID of an API Secret
+        required: true
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Resource Deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integrations_DeleteCallbackSecret_Response_200'
+        '404':
+          description: Secret with this ID not found
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /api/v2/data_stream:
+    get:
+      operationId: list-data-streamer-v-2-s
+      summary: List data stream configurations of your organization
+      tags:
+      - subpackage_integrations
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of data stream with their current status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integrations_ListDataStreamerV2s_Response_200'
+        '400':
+          description: The request is malformed, e.g. the body cannot be parsed
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '401':
+          description: No or invalid authentication token provided
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: Authentication token is valid, but user has no access permissions to the request resource
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: A non-existent resource is requested
+          content:
+            application/json:
+              schema:
+                description: Any type
+    post:
+      operationId: create-data-streamer
+      summary: Create data stream
+      description: 'Create Data Stream to your destination.
+
+        Click on Examples to see available Data Streams and configuration parameters.
+
+
+        Currently available `connection_types` are
+
+        - `AwsKinesis`
+
+        - `S3`
+
+        - `RestAPI`
+
+        - `KeenIO`
+
+        - `Datadog`
+
+        - `EventHubs`
+
+        - `PubSub`
+
+        '
+      tags:
+      - subpackage_integrations
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Data stream has been successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integrations_CreateDataStreamer_Response_201'
+        '401':
+          description: No or invalid authentication token provided
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: Authentication token is valid, but user has no access permissions to the request resource
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: A non-existent resource is requested
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '422':
+          description: Configuration for the data stream is invalid. Please check your Request Body for errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateDataStreamerRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Descriptive name or purpose of the data stream
+                destination:
+                  $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestination'
+                filters:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaFiltersItems'
+                data_stream_type:
+                  description: Any type
+                relation_resolution:
+                  description: Any type
+                status:
+                  description: Any type
+  /api/v2/data_stream/filter_field_type:
+    get:
+      operationId: get-data-streamer-enum-filter-field-type
+      summary: Get data stream filter fields
+      tags:
+      - subpackage_integrations
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 'Possible filter field types that can be used with data streams.
+
+
+            `event_type_id` will filter Event stream for specific event types (e.g. `"event_type_id":[1,2,3]`).
+
+
+            `alert` will filter Event stream for alert status (e.g. `"alert":true`).
+
+            '
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV2DataStreamFilterFieldTypeGetResponsesContentApplicationJsonSchemaItems'
+        '401':
+          description: No or invalid authentication token provided
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: Authentication token is valid, but user has no access permissions to the request resource
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: A non-existent resource is requested
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /api/v2/data_stream/status:
+    get:
+      operationId: get-data-streamer-statuses
+      summary: Get data stream statuses
+      description: 'Lists possible data stream statuses.
+
+
+        (`1`) is the normal `Running` state meaning your data stream is active and streams data.
+
+
+        (`2`) indicates a `Paused` data stream. It will not send messages to your destination.
+
+        However, messages meant for this data stream are routed and will be stored up to 7 days.
+
+        You will first receive historic data once you resume a paused streamer after longer pausing.
+
+
+        (`3`) indicates that an `Error` has occurred. This might be problems in the configuration (e.g. missing permissions)
+
+        or your destination has been unavailable for a longer period of time and the data stream exceeded maximum retries.
+
+        You may restart the streamer in order to fix a temporary problem, misconfigured streamers will continue to fail.
+
+
+        (`4`) is a `Pending` state. Your data stream has not been initialized, yet.
+
+        This state may occur for a very short time.
+
+        '
+      tags:
+      - subpackage_integrations
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Possible connection statuses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV2DataStreamStatusGetResponsesContentApplicationJsonSchemaItems'
+        '401':
+          description: No or invalid authentication token provided
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: Authentication token is valid, but user has no access permissions to the request resource
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: A non-existent resource is requested
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /api/v2/data_stream/type:
+    get:
+      operationId: get-data-streamer-data-stream-type
+      summary: Get data stream types
+      description: 'List available Data Stream Types.
+
+
+        (`1`) will only stream `Usage` Data.
+
+
+        (`2`) will only stream `Event` Data.
+
+        '
+      tags:
+      - subpackage_integrations
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Possible data stream types
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV2DataStreamTypeGetResponsesContentApplicationJsonSchemaItems'
+        '401':
+          description: No or invalid authentication token provided
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: Authentication token is valid, but user has no access permissions to the request resource
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: A non-existent resource is requested
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /api/v2/data_stream/{data_stream_id}:
+    get:
+      operationId: get-data-streamer-by-id-v-2
+      summary: Get details on existing data stream
+      description: 'Get data stream configuration and status by ID.
+
+        '
+      tags:
+      - subpackage_integrations
+      parameters:
+      - name: data_stream_id
+        in: path
+        description: ID of a data stream.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Single Data Stream Configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integrations_GetDataStreamerByIdV2_Response_200'
+        '401':
+          description: No or invalid authentication token provided
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: Authentication token is valid, but user has no access permissions to the request resource
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: A non-existent resource is requested
+          content:
+            application/json:
+              schema:
+                description: Any type
+    delete:
+      operationId: delete-data-streamer-v-2
+      summary: Delete existing data stream
+      tags:
+      - subpackage_integrations
+      parameters:
+      - name: data_stream_id
+        in: path
+        description: ID of a data stream.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Request accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integrations_DeleteDataStreamerV2_Response_202'
+        '401':
+          description: No or invalid authentication token provided
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: Authentication token is valid, but user has no access permissions to the request resource
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: A non-existent resource is requested
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '409':
+          description: The request could not be completed due to a conflict with the current state of the resource.
+          content:
+            application/json:
+              schema:
+                description: Any type
+    patch:
+      operationId: patch-v-2-data-stream
+      summary: Modify existing data stream
+      tags:
+      - subpackage_integrations
+      parameters:
+      - name: data_stream_id
+        in: path
+        description: ID of a data stream.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Request accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integrations_PatchV2DataStream_Response_202'
+        '401':
+          description: No or invalid authentication token provided
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: Authentication token is valid, but user has no access permissions to the request resource
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: A non-existent resource is requested
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '422':
+          description: Body will return list of validation errors
+          content:
+            application/json:
+              schema:
+                description: Any type
+      requestBody:
+        description: Description of the status
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Descriptive name or purpose of the data stream
+                destination:
+                  $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestination'
+                filters:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaFiltersItems'
+                data_stream_type:
+                  description: Any type
+                relation_resolution:
+                  description: Any type
+                status:
+                  $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaStatus'
+  /api/v2/data_stream/{data_stream_id}/restart:
+    post:
+      operationId: data-streamer-v-2-by-id-restart
+      summary: Restart existing data stream
+      description: 'Restart your Existing Data Stream.
+
+        This might be necessary when e.g. your Webhook endpoint has been unreachable for an extended period of time.
+
+        Webhook Data Stream will exhaust retries and go into Error State.
+
+        By using this API call your Data Stream will be restarted and continue trying to send data.
+
+        '
+      tags:
+      - subpackage_integrations
+      parameters:
+      - name: data_stream_id
+        in: path
+        description: ID of a data stream.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Request accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integrations_DataStreamerV2ByIdRestart_Response_202'
+        '401':
+          description: No or invalid authentication token provided
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: Authentication token is valid, but user has no access permissions to the request resource
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: A non-existent resource is requested
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '409':
+          description: The request could not be completed due to a conflict with the current state of the resource.
+          content:
+            application/json:
+              schema:
+                description: Any type
+components:
+  schemas:
+    ApiV2DataStreamStatusGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+          description: Enum item identifier
+        description:
+          type: string
+          description: Enum item description
+      title: ApiV2DataStreamStatusGetResponsesContentApplicationJsonSchemaItems
+    ApiV2DataStreamTypeGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+          description: Enum item identifier
+        description:
+          type: string
+          description: Enum item description
+      title: ApiV2DataStreamTypeGetResponsesContentApplicationJsonSchemaItems
+    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials:
+      oneOf:
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials0'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials1'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials2'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials3'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials4'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials5'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials6'
+      description: Destination credentials
+      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials
+    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaFiltersItems:
+      type: object
+      properties:
+        field:
+          type: string
+          description: Field to filter on
+        value:
+          type: array
+          items:
+            type: string
+          description: Values to filter on
+      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaFiltersItems
+    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials6:
+      type: object
+      properties:
+        cps_topic:
+          type: string
+          description: Topic name of PubSub topic
+        cps_project:
+          type: string
+          description: Project ID of the topic project.
+      required:
+      - cps_topic
+      - cps_project
+      description: Credential fields for Google Cloud Pub/Sub
+      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials6
+    Integrations_CreateDataStreamer_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Integrations_CreateDataStreamer_Response_201
+    Integrations_GetCallbackSecretbyID_Response_200:
+      type: object
+      properties:
+        organisation_id:
+          type: string
+        purpose:
+          type: string
+        id:
+          type: integer
+      title: Integrations_GetCallbackSecretbyID_Response_200
+    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials4:
+      type: object
+      properties:
+        api_key:
+          type: string
+          description: Datadog API Key
+        region:
+          type: string
+          description: Datadog region. Options are `US` (default), `US3`, `EU` and `US1FED`
+      required:
+      - api_key
+      description: Credential fields for Datadog
+      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials4
+    Integrations_DeleteCallbackSecret_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Integrations_DeleteCallbackSecret_Response_200
+    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials3:
+      type: object
+      properties:
+        project_id:
+          type: string
+          description: Project ID reported by KeenIO
+        write_key:
+          type: string
+          description: Write key of your KeenIO Project.
+        collection_name:
+          type: string
+          description: Collection Name that you want to stream your data to.
+        size:
+          type: integer
+          description: Number specifying of request should contain `1` message or an array of messages of the specified batch size. Default is `3000`. Valid sizes are between 1 and 10000.
+      required:
+      - project_id
+      - write_key
+      - collection_name
+      description: Credential fields for KeenIO
+      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials3
+    CreateDataStreamerRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      required:
+      - error_code
+      - error_token
+      - message
+      title: CreateDataStreamerRequestUnprocessableEntityError
+    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestination:
+      type: object
+      properties:
+        connection_type:
+          type: string
+        format:
+          type: string
+        credentials:
+          $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials'
+          description: Destination credentials
+      required:
+      - connection_type
+      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestination
+    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaFiltersItems:
+      type: object
+      properties:
+        field:
+          type: string
+          description: Field to filter on
+        value:
+          type: array
+          items:
+            type: string
+          description: Values to filter on
+      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaFiltersItems
+    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials5:
+      type: object
+      properties:
+        connection_string:
+          type: string
+          description: Connection string with Access Key to your Event Hub.
+      required:
+      - connection_string
+      description: Credential fields for Microsoft Azure EventHub
+      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials5
+    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials0:
+      type: object
+      properties:
+        region:
+          type: string
+          description: AWS Region of your Kinesis Data Stream
+        stream_name:
+          type: string
+          description: Name of your Kinesis Data Stream
+        role_arn:
+          type: string
+          description: Role ARN of IAM role with write permission for your Kinesis Stream
+      required:
+      - region
+      - stream_name
+      - role_arn
+      description: Credential fields for Amazon Kinesis Data Streams
+      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials0
+    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials4:
+      type: object
+      properties:
+        api_key:
+          type: string
+          description: Datadog API Key
+        region:
+          type: string
+          description: Datadog region. Options are `US` (default), `US3`, `EU` and `US1FED`
+      required:
+      - api_key
+      description: Credential fields for Datadog
+      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials4
+    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+          description: Status identifier
+        description:
+          type: string
+          description: Status description
+      required:
+      - id
+      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaStatus
+    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials6:
+      type: object
+      properties:
+        cps_topic:
+          type: string
+          description: Topic name of PubSub topic
+        cps_project:
+          type: string
+          description: Project ID of the topic project.
+      required:
+      - cps_topic
+      - cps_project
+      description: Credential fields for Google Cloud Pub/Sub
+      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials6
+    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials:
+      oneOf:
+      - $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials0'
+      - $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials1'
+      - $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials2'
+      - $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials3'
+      - $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials4'
+      - $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials5'
+      - $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials6'
+      description: Destination credentials
+      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials
+    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaFiltersItems:
+      type: object
+      properties:
+        field:
+          type: string
+          description: Field to filter on
+        value:
+          type: array
+          items:
+            type: string
+          description: Values to filter on
+      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaFiltersItems
+    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials0:
+      type: object
+      properties:
+        region:
+          type: string
+          description: AWS Region of your Kinesis Data Stream
+        stream_name:
+          type: string
+          description: Name of your Kinesis Data Stream
+        role_arn:
+          type: string
+          description: Role ARN of IAM role with write permission for your Kinesis Stream
+      required:
+      - region
+      - stream_name
+      - role_arn
+      description: Credential fields for Amazon Kinesis Data Streams
+      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials0
+    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestination:
+      type: object
+      properties:
+        connection_type:
+          type: string
+        format:
+          type: string
+        credentials:
+          $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials'
+          description: Destination credentials
+      required:
+      - connection_type
+      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestination
+    Integrations_CreateCallbackURL_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Integrations_CreateCallbackURL_Response_201
+    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials3:
+      type: object
+      properties:
+        project_id:
+          type: string
+          description: Project ID reported by KeenIO
+        write_key:
+          type: string
+          description: Write key of your KeenIO Project.
+        collection_name:
+          type: string
+          description: Collection Name that you want to stream your data to.
+        size:
+          type: integer
+          description: Number specifying of request should contain `1` message or an array of messages of the specified batch size. Default is `3000`. Valid sizes are between 1 and 10000.
+      required:
+      - project_id
+      - write_key
+      - collection_name
+      description: Credential fields for KeenIO
+      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials3
+    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestination:
+      type: object
+      properties:
+        connection_type:
+          type: string
+        format:
+          type: string
+        credentials:
+          $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials'
+          description: Destination credentials
+      required:
+      - connection_type
+      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestination
+    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaFiltersItems:
+      type: object
+      properties:
+        field:
+          type: string
+          description: Field to filter on
+        value:
+          type: array
+          items:
+            type: string
+          description: Values to filter on
+      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaFiltersItems
+    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials2:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL of your Webhook / RestAPI endpoint
+        method:
+          type: string
+          description: HTTP Method to use. Options are `POST` (default), `PUT` and `PATCH`
+        headers:
+          type: array
+          items:
+            type: string
+          description: Array containing additional header tuples. Expected Format is `["header1:value1, "header2:value2", ...]`. Headers are masked in GET request.
+        size:
+          type: integer
+          description: Number specifying of request should contain `1` message or an array of messages of the specified batch size. Default is `3000`. Valid sizes are between 1 and 10000.
+      required:
+      - url
+      description: Credential fields for Webhook
+      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials2
+    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials5:
+      type: object
+      properties:
+        connection_string:
+          type: string
+          description: Connection string with Access Key to your Event Hub.
+      required:
+      - connection_string
+      description: Credential fields for Microsoft Azure EventHub
+      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials5
+    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials:
+      oneOf:
+      - $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials0'
+      - $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials1'
+      - $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials2'
+      - $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials3'
+      - $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials4'
+      - $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials5'
+      - $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials6'
+      description: Destination credentials
+      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials
+    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+          description: Status identifier
+        description:
+          type: string
+          description: Status description
+      required:
+      - id
+      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaStatus
+    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials1:
+      type: object
+      properties:
+        region:
+          type: string
+          description: AWS Region of your Kinesis Data Stream
+        bucket_name:
+          type: string
+          description: Name of your S3 bucket
+        role_arn:
+          type: string
+          description: Role ARN of IAM role with write permission for your S3 bucket
+        flush_size:
+          type: integer
+          description: Maximal number of entries in a single file. Default is `10000`. Valid flush sizes are between 10 and 100000.
+        rotate_interval:
+          type: integer
+          description: Maximal time in milliseconds between file writes. Default is `10000` ms. Valid rotation intervals are between 10000 ms and 900000 ms.
+      required:
+      - region
+      - bucket_name
+      - role_arn
+      description: Credential fields for Amazon S3
+      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials1
+    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials2:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL of your Webhook / RestAPI endpoint
+        method:
+          type: string
+          description: HTTP Method to use. Options are `POST` (default), `PUT` and `PATCH`
+        headers:
+          type: array
+          items:
+            type: string
+          description: Array containing additional header tuples. Expected Format is `["header1:value1, "header2:value2", ...]`. Headers are masked in GET request.
+        size:
+          type: integer
+          description: Number specifying of request should contain `1` message or an array of messages of the specified batch size. Default is `3000`. Valid sizes are between 1 and 10000.
+      required:
+      - url
+      description: Credential fields for Webhook
+      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials2
+    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials2:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL of your Webhook / RestAPI endpoint
+        method:
+          type: string
+          description: HTTP Method to use. Options are `POST` (default), `PUT` and `PATCH`
+        headers:
+          type: array
+          items:
+            type: string
+          description: Array containing additional header tuples. Expected Format is `["header1:value1, "header2:value2", ...]`. Headers are masked in GET request.
+        size:
+          type: integer
+          description: Number specifying of request should contain `1` message or an array of messages of the specified batch size. Default is `3000`. Valid sizes are between 1 and 10000.
+      required:
+      - url
+      description: Credential fields for Webhook
+      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials2
+    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials1:
+      type: object
+      properties:
+        region:
+          type: string
+          description: AWS Region of your Kinesis Data Stream
+        bucket_name:
+          type: string
+          description: Name of your S3 bucket
+        role_arn:
+          type: string
+          description: Role ARN of IAM role with write permission for your S3 bucket
+        flush_size:
+          type: integer
+          description: Maximal number of entries in a single file. Default is `10000`. Valid flush sizes are between 10 and 100000.
+        rotate_interval:
+          type: integer
+          description: Maximal time in milliseconds between file writes. Default is `10000` ms. Valid rotation intervals are between 10000 ms and 900000 ms.
+      required:
+      - region
+      - bucket_name
+      - role_arn
+      description: Credential fields for Amazon S3
+      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials1
+    Integrations_CreateCallbackSecret_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Integrations_CreateCallbackSecret_Response_201
+    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials3:
+      type: object
+      properties:
+        project_id:
+          type: string
+          description: Project ID reported by KeenIO
+        write_key:
+          type: string
+          description: Write key of your KeenIO Project.
+        collection_name:
+          type: string
+          description: Collection Name that you want to stream your data to.
+        size:
+          type: integer
+          description: Number specifying of request should contain `1` message or an array of messages of the specified batch size. Default is `3000`. Valid sizes are between 1 and 10000.
+      required:
+      - project_id
+      - write_key
+      - collection_name
+      description: Credential fields for KeenIO
+      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials3
+    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials1:
+      type: object
+      properties:
+        region:
+          type: string
+          description: AWS Region of your Kinesis Data Stream
+        bucket_name:
+          type: string
+          description: Name of your S3 bucket
+        role_arn:
+          type: string
+          description: Role ARN of IAM role with write permission for your S3 bucket
+        flush_size:
+          type: integer
+          description: Maximal number of entries in a single file. Default is `10000`. Valid flush sizes are between 10 and 100000.
+        rotate_interval:
+          type: integer
+          description: Maximal time in milliseconds between file writes. Default is `10000` ms. Valid rotation intervals are between 10000 ms and 900000 ms.
+      required:
+      - region
+      - bucket_name
+      - role_arn
+      description: Credential fields for Amazon S3
+      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials1
+    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials3:
+      type: object
+      properties:
+        project_id:
+          type: string
+          description: Project ID reported by KeenIO
+        write_key:
+          type: string
+          description: Write key of your KeenIO Project.
+        collection_name:
+          type: string
+          description: Collection Name that you want to stream your data to.
+        size:
+          type: integer
+          description: Number specifying of request should contain `1` message or an array of messages of the specified batch size. Default is `3000`. Valid sizes are between 1 and 10000.
+      required:
+      - project_id
+      - write_key
+      - collection_name
+      description: Credential fields for KeenIO
+      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials3
+    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials5:
+      type: object
+      properties:
+        connection_string:
+          type: string
+          description: Connection string with Access Key to your Event Hub.
+      required:
+      - connection_string
+      description: Credential fields for Microsoft Azure EventHub
+      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials5
+    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials6:
+      type: object
+      properties:
+        cps_topic:
+          type: string
+          description: Topic name of PubSub topic
+        cps_project:
+          type: string
+          description: Project ID of the topic project.
+      required:
+      - cps_topic
+      - cps_project
+      description: Credential fields for Google Cloud Pub/Sub
+      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials6
+    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials4:
+      type: object
+      properties:
+        api_key:
+          type: string
+          description: Datadog API Key
+        region:
+          type: string
+          description: Datadog region. Options are `US` (default), `US3`, `EU` and `US1FED`
+      required:
+      - api_key
+      description: Credential fields for Datadog
+      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials4
+    Integrations_ListDataStreamerV2s_Response_200:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Descriptive name or purpose of the data stream
+        destination:
+          $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestination'
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaFiltersItems'
+        data_stream_type:
+          description: Any type
+        relation_resolution:
+          description: Any type
+        status:
+          description: Any type
+      title: Integrations_ListDataStreamerV2s_Response_200
+    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestination:
+      type: object
+      properties:
+        connection_type:
+          type: string
+        format:
+          type: string
+        credentials:
+          $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials'
+          description: Destination credentials
+      required:
+      - connection_type
+      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestination
+    ApiV1ApiSecretGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        organisation_id:
+          type: string
+        purpose:
+          type: string
+        id:
+          type: integer
+      title: ApiV1ApiSecretGetResponsesContentApplicationJsonSchemaItems
+    Integrations_DeleteCallbackURL_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Integrations_DeleteCallbackURL_Response_200
+    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials6:
+      type: object
+      properties:
+        cps_topic:
+          type: string
+          description: Topic name of PubSub topic
+        cps_project:
+          type: string
+          description: Project ID of the topic project.
+      required:
+      - cps_topic
+      - cps_project
+      description: Credential fields for Google Cloud Pub/Sub
+      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials6
+    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials5:
+      type: object
+      properties:
+        connection_string:
+          type: string
+          description: Connection string with Access Key to your Event Hub.
+      required:
+      - connection_string
+      description: Credential fields for Microsoft Azure EventHub
+      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials5
+    Integrations_DataStreamerV2ByIdRestart_Response_202:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Integrations_DataStreamerV2ByIdRestart_Response_202
+    Integrations_DeleteDataStreamerV2_Response_202:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Integrations_DeleteDataStreamerV2_Response_202
+    Integrations_GetDataStreamerByIdV2_Response_200:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Descriptive name or purpose of the data stream
+        destination:
+          $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestination'
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaFiltersItems'
+        data_stream_type:
+          description: Any type
+        relation_resolution:
+          description: Any type
+        status:
+          $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaStatus'
+      description: Description of the status
+      title: Integrations_GetDataStreamerByIdV2_Response_200
+    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials1:
+      type: object
+      properties:
+        region:
+          type: string
+          description: AWS Region of your Kinesis Data Stream
+        bucket_name:
+          type: string
+          description: Name of your S3 bucket
+        role_arn:
+          type: string
+          description: Role ARN of IAM role with write permission for your S3 bucket
+        flush_size:
+          type: integer
+          description: Maximal number of entries in a single file. Default is `10000`. Valid flush sizes are between 10 and 100000.
+        rotate_interval:
+          type: integer
+          description: Maximal time in milliseconds between file writes. Default is `10000` ms. Valid rotation intervals are between 10000 ms and 900000 ms.
+      required:
+      - region
+      - bucket_name
+      - role_arn
+      description: Credential fields for Amazon S3
+      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials1
+    ApiV2DataStreamFilterFieldTypeGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+          description: Enum item identifier
+        description:
+          type: string
+          description: Enum item description
+      title: ApiV2DataStreamFilterFieldTypeGetResponsesContentApplicationJsonSchemaItems
+    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials0:
+      type: object
+      properties:
+        region:
+          type: string
+          description: AWS Region of your Kinesis Data Stream
+        stream_name:
+          type: string
+          description: Name of your Kinesis Data Stream
+        role_arn:
+          type: string
+          description: Role ARN of IAM role with write permission for your Kinesis Stream
+      required:
+      - region
+      - stream_name
+      - role_arn
+      description: Credential fields for Amazon Kinesis Data Streams
+      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials0
+    Integrations_PatchV2DataStream_Response_202:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Integrations_PatchV2DataStream_Response_202
+    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials0:
+      type: object
+      properties:
+        region:
+          type: string
+          description: AWS Region of your Kinesis Data Stream
+        stream_name:
+          type: string
+          description: Name of your Kinesis Data Stream
+        role_arn:
+          type: string
+          description: Role ARN of IAM role with write permission for your Kinesis Stream
+      required:
+      - region
+      - stream_name
+      - role_arn
+      description: Credential fields for Amazon Kinesis Data Streams
+      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials0
+    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials2:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL of your Webhook / RestAPI endpoint
+        method:
+          type: string
+          description: HTTP Method to use. Options are `POST` (default), `PUT` and `PATCH`
+        headers:
+          type: array
+          items:
+            type: string
+          description: Array containing additional header tuples. Expected Format is `["header1:value1, "header2:value2", ...]`. Headers are masked in GET request.
+        size:
+          type: integer
+          description: Number specifying of request should contain `1` message or an array of messages of the specified batch size. Default is `3000`. Valid sizes are between 1 and 10000.
+      required:
+      - url
+      description: Credential fields for Webhook
+      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials2
+    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials:
+      oneOf:
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials0'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials1'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials2'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials3'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials4'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials5'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials6'
+      description: Destination credentials
+      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials
+    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials4:
+      type: object
+      properties:
+        api_key:
+          type: string
+          description: Datadog API Key
+        region:
+          type: string
+          description: Datadog region. Options are `US` (default), `US3`, `EU` and `US1FED`
+      required:
+      - api_key
+      description: Credential fields for Datadog
+      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials4
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Retrieve a JWT via POST /api/v1/authenticate using an application_token or user credentials, then send it as `Authorization: Bearer <token>`.'

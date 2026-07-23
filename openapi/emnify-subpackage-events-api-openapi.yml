@@ -1,0 +1,296 @@
+openapi: 3.1.0
+info:
+  title: emnify REST subpackage_applicationTokens subpackage_events API
+  version: 1.0.0
+  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
+
+
+    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  contact:
+    name: emnify Developer Support
+    url: https://docs.emnify.com/developers
+  license:
+    name: Proprietary
+    url: https://www.emnify.com/legal
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API base host
+security:
+- BearerAuth: []
+tags:
+- name: subpackage_events
+  x-display-name: Events
+paths:
+  /api/v1/event:
+    get:
+      operationId: get-events
+      summary: List events
+      description: Returns the list of events, filtered, sorted and paged according to query parameters.
+      tags:
+      - subpackage_events
+      parameters:
+      - name: page
+        in: query
+        description: Current page number
+        required: false
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: Defines the number of items per page
+        required: false
+        schema:
+          type: integer
+      - name: sort
+        in: query
+        description: 'Sort properties according to a comma separated list of accepted fields. Valid fields are:
+
+
+          * `id` - (**event id**)
+
+          * `timestamp` - (**event timestamp**)
+
+          * `source` - (**event source**)
+
+          * `severity` - (**event severity**)
+
+          * `alert` - (**alert status**)
+
+          * `organisation` - (**organisation name**)
+
+          * `user` - (**user id**)
+
+          * `endpoint` - (**endpoint name**)
+
+          * `tags` - (**endpoint tags**)
+
+          * `ip_address` - (**endpoint ip_address**)
+
+          * `iccid` - (**sim iccid**)
+
+          * `imsi` - (**sim imsi**)
+
+          * `type` - (**event type**)
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: q
+        in: query
+        description: 'Filter parameter in `<filter>:<value>` format.
+
+          Multiple filters must be a comma-separated list of the following fields:
+
+
+          * `from` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, **only valid with until**)
+
+          * `until` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, **only valid with from**)
+
+          * `type` (**event_type**, numerical)
+
+          * `source` (**event_type**, numerical, e.g. 0 = Network), 1 = Policy Control, 2 = API)
+
+          * `severity` (**event_severity**, numerical, e.g. 0 = Info, 1 = Warn), 2 = Critical)
+
+          * `alert` (boolean, e.g. true, false)
+
+          * `description` (**event description**, string)
+
+          * `organisation` (**organisation name**, string)
+
+          * `user` (**user name**, string)
+
+          * `endpoint` (**endpoint name**, string)
+
+          * `tags` (**endpoint tags**, string)
+
+          * `ip_address` (**endpoint IP address**, valid IPv4/IPv6 address)
+
+          * `imei` (**endpoint imei**, numerical string)
+
+          * `iccid` (**sim iccid**, numerical string)
+
+          * `imsi` (**sim imsi**, numerical string)
+
+          * `timestamp` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, for querying events of 1 day, deprecated in future)
+
+          * `iccid_with_luhn` (**sim iccid with Luhn**, numerical string)
+
+          * `network` (**endpoint network**, string, e.g. Telekom)
+
+          * `rat` (**event pdp context rat type**, numerical string, e.g. 6)
+
+          * `country` (**endpoint country**, string, e.g. Germany)
+
+
+          Some filters can accept up to 6 values which must be separated by the pipe symbol (`|`) or url-encoded as (`%7C`):
+
+
+          * `iccid` (q: iccid:1234567890123456789|8988303000123456789)
+
+          * `iccid_with_luhn` (q: iccid:12345678901234567891|89883030001234567891)
+
+          * `endpoint` (q: endpoint:example_endpoint_name|another_endpoint_name)
+
+          * `type` (q: type:example_event_type|another_event_type)
+
+          * `network` (q: network:example_network|another_network)
+
+          * `rat` (q: rat:example_rat|another_rat)
+
+          * `country` (q: country:example_country|another_country)
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully returned a list of events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1EventGetResponsesContentApplicationJsonSchemaItems'
+        '400':
+          description: '**Bad Request** due to incorrect **Paging** Parameters or **Sorting** Parameter
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '422':
+          description: '**Unprocessable Entity** due to incorrect **Query** parameters
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /api/v1/event/type:
+    get:
+      operationId: event-type-get
+      summary: List event types
+      description: Provides the list of event_types (lookup).
+      tags:
+      - subpackage_events
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1EventTypeGetResponsesContentApplicationJsonSchemaItems'
+components:
+  schemas:
+    ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventSeverity:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventSeverity
+    ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventType:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventType
+    ApiV1EventTypeGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ApiV1EventTypeGetResponsesContentApplicationJsonSchemaItems
+    ApiV1EventGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        alert:
+          type: boolean
+        description:
+          type: string
+        timestamp:
+          type: string
+        event_type:
+          $ref: '#/components/schemas/ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventType'
+        event_source:
+          $ref: '#/components/schemas/ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventSource'
+        event_severity:
+          $ref: '#/components/schemas/ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventSeverity'
+        organisation:
+          $ref: '#/components/schemas/ApiV1EventGetResponsesContentApplicationJsonSchemaItemsOrganisation'
+        user:
+          $ref: '#/components/schemas/ApiV1EventGetResponsesContentApplicationJsonSchemaItemsUser'
+      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItems
+    ApiV1EventGetResponsesContentApplicationJsonSchemaItemsOrganisation:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsOrganisation
+    ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventSource:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventSource
+    ApiV1EventGetResponsesContentApplicationJsonSchemaItemsUser:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        username:
+          type: string
+        name:
+          type: string
+      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsUser
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Retrieve a JWT via POST /api/v1/authenticate using an application_token or user credentials, then send it as `Authorization: Bearer <token>`.'

@@ -1,0 +1,313 @@
+openapi: 3.1.0
+info:
+  title: emnify REST subpackage_applicationTokens subpackage_serviceLookupsAndConfiguration API
+  version: 1.0.0
+  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
+
+
+    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  contact:
+    name: emnify Developer Support
+    url: https://docs.emnify.com/developers
+  license:
+    name: Proprietary
+    url: https://www.emnify.com/legal
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API base host
+security:
+- BearerAuth: []
+tags:
+- name: subpackage_serviceLookupsAndConfiguration
+  x-display-name: Servicelookupsandconfiguration
+paths:
+  /api/v1/dns:
+    get:
+      operationId: dns-get
+      summary: List DNS configs
+      description: 'Retrieves a list of DNS configurations.
+
+        DNS settings can be applied to a service profile and endpoints which use this service profile will have the associated DNS settings applied.
+
+        '
+      tags:
+      - subpackage_serviceLookupsAndConfiguration
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1DnsGetResponsesContentApplicationJsonSchemaItems'
+    post:
+      operationId: dns-post
+      summary: Create DNS config
+      description: "Creates a DNS configuration object. The DNS config can be applied to a service profile and all endpoints which use that service profile will have the associated DNS settings applied.\nDNS changes are instantly applied to any **new PDP context**.\nConnected devices with previously established PDPs will continue to use the previous nameserver config until the next time they reconnect.\n\nPrimary and secondary nameservers and IP version (`4` for IPV4 or `6` for IPV6) must be specified with this request.\n\n<Info>\n  The system currently falls back to IPV4 for the actually-enforced networking settings of endpoints, therefore **the IPV6 parameter will be ignored** when provided.\n</Info>\n"
+      tags:
+      - subpackage_serviceLookupsAndConfiguration
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Resource Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service Lookups and Configuration_DnsPost_Response_201'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                primary:
+                  type: string
+                secondary:
+                  type: string
+                ip_address_version:
+                  type: integer
+              required:
+              - primary
+              - secondary
+              - ip_address_version
+  /api/v1/dns/{dns_id}:
+    delete:
+      operationId: dns-by-id-delete
+      summary: Delete DNS config
+      description: "Delete a DNS configuration object by ID.\n\n<Note>\n  A DNS config object cannot be deleted if it is in use by at least one Service Profile.\n</Note>\n"
+      tags:
+      - subpackage_serviceLookupsAndConfiguration
+      parameters:
+      - name: dns_id
+        in: path
+        description: DNS configuration ID
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+  /api/v1/service:
+    get:
+      operationId: service-get
+      summary: List services
+      description: 'Retrieves a collection of available services. Services are read only objects.
+
+
+        Service objects contain expanded traffic limit nested objects.
+
+        '
+      tags:
+      - subpackage_serviceLookupsAndConfiguration
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1ServiceGetResponsesContentApplicationJsonSchemaItems'
+  /api/v1/service/{service_id}/traffic_limit:
+    get:
+      operationId: service-traffic-limit-by-id-get
+      summary: Get service SMS limit
+      description: 'SMS limits are system configuration parameters defined for a single service.
+
+        SMS limits do not have direct effect, but have to be explicitly assigned to an endpoint or a service profile.
+
+        '
+      tags:
+      - subpackage_serviceLookupsAndConfiguration
+      parameters:
+      - name: service_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1ServiceServiceIdTrafficLimitGetResponsesContentApplicationJsonSchemaItems'
+  /api/v1/traffic_limit:
+    get:
+      operationId: traffic-limit-get
+      summary: List traffic limits
+      description: Retrieves a list of available traffic limits.
+      tags:
+      - subpackage_serviceLookupsAndConfiguration
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1TrafficLimitGetResponsesContentApplicationJsonSchemaItems'
+components:
+  schemas:
+    ApiV1ServiceServiceIdTrafficLimitGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        volume:
+          type: integer
+        period:
+          $ref: '#/components/schemas/ApiV1ServiceServiceIdTrafficLimitGetResponsesContentApplicationJsonSchemaItemsPeriod'
+      title: ApiV1ServiceServiceIdTrafficLimitGetResponsesContentApplicationJsonSchemaItems
+    ApiV1TrafficLimitGetResponsesContentApplicationJsonSchemaItemsPeriod:
+      type: object
+      properties: {}
+      title: ApiV1TrafficLimitGetResponsesContentApplicationJsonSchemaItemsPeriod
+    ApiV1ServiceGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+        teleservice_code:
+          type: integer
+        used_with_vlr:
+          type: boolean
+        used_with_sgsn:
+          type: boolean
+        traffic_type:
+          $ref: '#/components/schemas/ApiV1ServiceGetResponsesContentApplicationJsonSchemaItemsTrafficType'
+      title: ApiV1ServiceGetResponsesContentApplicationJsonSchemaItems
+    ApiV1DnsGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        primary:
+          type: string
+        secondary:
+          type: string
+        ip_address_version:
+          type: integer
+      title: ApiV1DnsGetResponsesContentApplicationJsonSchemaItems
+    ApiV1TrafficLimitGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        service:
+          $ref: '#/components/schemas/ApiV1TrafficLimitGetResponsesContentApplicationJsonSchemaItemsService'
+        volume:
+          type: integer
+        period:
+          $ref: '#/components/schemas/ApiV1TrafficLimitGetResponsesContentApplicationJsonSchemaItemsPeriod'
+      title: ApiV1TrafficLimitGetResponsesContentApplicationJsonSchemaItems
+    ApiV1TrafficLimitGetResponsesContentApplicationJsonSchemaItemsService:
+      type: object
+      properties: {}
+      title: ApiV1TrafficLimitGetResponsesContentApplicationJsonSchemaItemsService
+    ApiV1ServiceGetResponsesContentApplicationJsonSchemaItemsTrafficType:
+      type: object
+      properties: {}
+      title: ApiV1ServiceGetResponsesContentApplicationJsonSchemaItemsTrafficType
+    ApiV1ServiceServiceIdTrafficLimitGetResponsesContentApplicationJsonSchemaItemsPeriod:
+      type: object
+      properties:
+        id:
+          type: integer
+        time_units:
+          type: integer
+        unit:
+          type: string
+      title: ApiV1ServiceServiceIdTrafficLimitGetResponsesContentApplicationJsonSchemaItemsPeriod
+    Service Lookups and Configuration_DnsPost_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Service Lookups and Configuration_DnsPost_Response_201
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Retrieve a JWT via POST /api/v1/authenticate using an application_token or user credentials, then send it as `Authorization: Bearer <token>`.'

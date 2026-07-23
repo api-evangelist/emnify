@@ -1,0 +1,1089 @@
+openapi: 3.1.0
+info:
+  title: emnify REST subpackage_applicationTokens subpackage_tariffProfiles API
+  version: 1.0.0
+  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
+
+
+    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  contact:
+    name: emnify Developer Support
+    url: https://docs.emnify.com/developers
+  license:
+    name: Proprietary
+    url: https://www.emnify.com/legal
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API base host
+security:
+- BearerAuth: []
+tags:
+- name: subpackage_tariffProfiles
+  x-display-name: Tariffprofiles
+paths:
+  /api/v1/tariff_profile:
+    get:
+      operationId: tariff-profile-get
+      summary: List tariff profiles
+      description: Returns the list of tariff profiles of the user's own organisation.
+      tags:
+      - subpackage_tariffProfiles
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItems'
+    post:
+      operationId: tariff-profile-post
+      summary: Create tariff profile
+      description: 'Create the specified tariff profile
+
+        ID must not be specified, neither in query String, nor in JSON payload.
+
+        You can provide following fields with this request:
+
+
+        * `name` (String required)
+
+        * `description` (String optional)
+
+        * `tariff` (Object required)
+
+        '
+      tags:
+      - subpackage_tariffProfiles
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Resource Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tariff Profiles_TariffProfilePost_Response_201'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                tariff:
+                  $ref: '#/components/schemas/ApiV1TariffProfilePostRequestBodyContentApplicationJsonSchemaTariff'
+              required:
+              - name
+              - description
+              - tariff
+  /api/v1/tariff_profile/{tariff_profile_id}:
+    get:
+      operationId: tariff-profile-by-id-get
+      summary: Tariff profile details
+      description: 'Returns tariff profile specified by id. This tariff profile also contains information about the currently valid ratezones of the tariff in the tariff profile and if the ratezone is selected in the tariff profile.
+
+        It also contains applied custom rates for the included tariffs.
+
+        '
+      tags:
+      - subpackage_tariffProfiles
+      parameters:
+      - name: tariff_profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tariff Profiles_TariffProfileByIdGet_Response_200'
+    delete:
+      operationId: tariff-profile-by-id-delete
+      summary: Delete tariff profile
+      description: Deletes tariff profile. Tariff profiles used by an endpoint (`used_count` > 0) cannot be deleted.
+      tags:
+      - subpackage_tariffProfiles
+      parameters:
+      - name: tariff_profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+    patch:
+      operationId: tariff-profile-by-id-patch
+      summary: Update tariff profile
+      description: "Patch the specified tariff profile.\n\n<Warning>\n  The API doesn't provide feedback if you assign an incompatible tariff profile to a SIM.\n  See [Tariff profile](/developers/reference/tariff-profile) for more information.\n</Warning>\n\nYou can provide following fields with this request:\n\n* `name` (String optional)\n* `description` (String optional)\n* `tariff` (Object optional) If the tariff is changed, all selections of ratezones are removed.\n"
+      tags:
+      - subpackage_tariffProfiles
+      parameters:
+      - name: tariff_profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                tariff:
+                  $ref: '#/components/schemas/ApiV1TariffProfileTariffProfileIdPatchRequestBodyContentApplicationJsonSchemaTariff'
+              required:
+              - name
+              - description
+              - tariff
+  /api/v1/tariff_profile/{tariff_profile_id}/coverage:
+    get:
+      operationId: tariff-profile-coverage-by-tp-id-get
+      summary: List tariff profile coverage
+      description: Provides the list of countries where that tariff profile can be used.
+      tags:
+      - subpackage_tariffProfiles
+      parameters:
+      - name: tariff_profile_id
+        in: path
+        description: tariff profile ID
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1TariffProfileTariffProfileIdCoverageGetResponsesContentApplicationJsonSchemaItems'
+  /api/v1/tariff_profile/{tariff_profile_id}/inclusive_volume/{inclusive_volume_id}:
+    put:
+      operationId: tariff-profile-inclusive-volume-assignment
+      summary: Assign inclusive volume to tarriff profile
+      description: 'Assignes an inclusive volume to the selected tariff profile.
+
+        If no inclusive volume is assigned and the customer has multiple active inclusive volumes, the traffic for this tariff profile will be rated as "Pay As You Go".
+
+
+        The selected inclusive volume must not be expired and the tariff profile should not have an inclusive volume assigned yet.
+
+        The tariff of the tariff profile and the inclusive volume ratezone have to match.
+
+        '
+      tags:
+      - subpackage_tariffProfiles
+      parameters:
+      - name: tariff_profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: inclusive_volume_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: The inclusive volume is expired or tariff does not match
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: Tariff profile or inclusive volume not found
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '409':
+          description: Tariff profile already has an inclusive volume assigned
+          content:
+            application/json:
+              schema:
+                description: Any type
+    delete:
+      operationId: tariff-profile-inclusive-volume-remove-assignment
+      summary: Unassign inclusive volume from tariff profile
+      description: 'Unassign the inclusive volume from the selected tariff profile. If the customer has multiple active inclusive volume, the traffic within that tariff profile
+
+        will be rated as "Pay As You Go" afterwards.
+
+        '
+      tags:
+      - subpackage_tariffProfiles
+      parameters:
+      - name: tariff_profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: inclusive_volume_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: The inclusive volume is not assigned to the selected tariff profile
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: Tariff profile or inclusive volume not found
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /api/v1/tariff_profile/{tariff_profile_id}/ratezone_selection/{ratezone_id}:
+    put:
+      operationId: tariff-profile-ratezone-selection-by-tp-id-and-rz-id-put
+      summary: Assign ratezone to tarriff profile
+      description: Only currently valid and active ratezones can be selected for a tariff profile
+      tags:
+      - subpackage_tariffProfiles
+      parameters:
+      - name: tariff_profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: ratezone_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+    delete:
+      operationId: tariff-profile-ratezone-selection-by-tp-id-and-rz-id-delete
+      summary: Delete ratezone from tariff profile
+      description: Remove previously selected ratezones from a tariff profile
+      tags:
+      - subpackage_tariffProfiles
+      parameters:
+      - name: tariff_profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: ratezone_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+  /api/v2/tariff_profile/{tariff_profile_id}/operator_blocklist/operator:
+    get:
+      operationId: tariff-profile-operator-block-list-operator-get
+      summary: Get the operator blocklist for a specific tariff profile
+      description: Retrieve blocklist details for operators within a specific tariff profile
+      tags:
+      - subpackage_tariffProfiles
+      parameters:
+      - name: tariff_profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved the operator blocklist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tariff Profiles_TariffProfileOperatorBlockListOperatorGet_Response_200'
+  /api/v2/tariff_profile/{tariff_profile_id}/operator_blocklist/operator/{operator_id}:
+    get:
+      operationId: tariff-profile-operator-block-operator-by-id-get
+      summary: Get operator blocklist for a specific tariff profile
+      description: Retrieve blocklist details for an operator within a specific tariff profile
+      tags:
+      - subpackage_tariffProfiles
+      parameters:
+      - name: tariff_profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: operator_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved operator blocklist details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tariff Profiles_TariffProfileOperatorBlockOperatorByIDGet_Response_200'
+    put:
+      operationId: tariff-profile-operator-block-operator-by-id-put
+      summary: Block the operator completely for a given tariff profile
+      description: "Block the operator completely.\nIf there are already specific RAT types blocklisted, those entries **aren't** overridden.\n\n<Info>\n  You don't need a request body for this operation.\n</Info>\n"
+      tags:
+      - subpackage_tariffProfiles
+      parameters:
+      - name: tariff_profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: operator_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content. The operator has been successfully blocklisted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+    delete:
+      operationId: tariff-profile-operator-block-operator-by-id-delete
+      summary: Remove an operator from the blocklist
+      description: 'Removes a specific operator from the blocklist of a given tariff profile.
+
+        If there are already specific RAT types blocklisted, the entries will NOT be overridden.
+
+        '
+      tags:
+      - subpackage_tariffProfiles
+      parameters:
+      - name: tariff_profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: operator_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content - Operator successfully removed from the blocklist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+  /api/v2/tariff_profile/{tariff_profile_id}/operator_blocklist/operator/{operator_id}/rat_type:
+    post:
+      operationId: tariff-profile-operator-block-operator-by-id-rat-type-post
+      summary: Block specific RAT types
+      description: 'Add a specific operator to the blocklist of a given tariff profile.
+
+        If the operator is already blocked completely, it is still possible to block specific RAT types.
+
+        '
+      tags:
+      - subpackage_tariffProfiles
+      parameters:
+      - name: tariff_profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: operator_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content - The specific RAT types have been successfully blocked.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rat_types:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdRatTypePostRequestBodyContentApplicationJsonSchemaRatTypesItems'
+              required:
+              - rat_types
+  /api/v2/tariff_profile/{tariff_profile_id}/operator_blocklist/operator/{operator_id}/rat_type/{rate_type_id}:
+    delete:
+      operationId: tariff-profile-operator-block-operator-by-id-rat-type-by-id-delete
+      summary: Unblock a specific RAT type
+      description: Unblock a specific RAT type for an operator within a tariff profile.
+      tags:
+      - subpackage_tariffProfiles
+      parameters:
+      - name: tariff_profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: operator_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: rate_type_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content - The specific RAT type has been successfully unblocked.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+components:
+  schemas:
+    ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaOperator:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaOperator
+    ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaBlocklist:
+      type: object
+      properties:
+        operator:
+          type: boolean
+          description: Will return true if the operator is blocked completely
+        rat_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaBlocklistRatTypesItems'
+      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaBlocklist
+    ? ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdRatTypePostRequestBodyContentApplicationJsonSchemaRatTypesItems
+    : type: object
+      properties:
+        id:
+          type: integer
+      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdRatTypePostRequestBodyContentApplicationJsonSchemaRatTypesItems
+    ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaTariffProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaTariffProfile
+    ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolumeCurrency:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        code:
+          type: string
+        symbol:
+          type: string
+      title: ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolumeCurrency
+    ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaInclusiveVolumeCurrency:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        code:
+          type: string
+        symbol:
+          type: string
+      title: ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaInclusiveVolumeCurrency
+    ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariffCurrency:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariffCurrencyId'
+        code:
+          type: string
+        symbol:
+          type: string
+      title: ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariffCurrency
+    ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolume:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        volume:
+          type: number
+          format: double
+        rate:
+          type: number
+          format: double
+        pooled:
+          type: boolean
+        start_date:
+          type: string
+        end_date:
+          type: string
+        ratezone:
+          $ref: '#/components/schemas/ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolumeRatezone'
+        currency:
+          $ref: '#/components/schemas/ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolumeCurrency'
+      description: If there is an inclusive volume assigned to the tariff profile, the details will be returned within this object
+      title: ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolume
+    ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaBlocklist:
+      type: object
+      properties:
+        operator:
+          type: boolean
+          description: Will return true if the operator is blocked completely
+        rat_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaBlocklistRatTypesItems'
+      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaBlocklist
+    Tariff Profiles_TariffProfileOperatorBlockListOperatorGet_Response_200:
+      type: object
+      properties:
+        operator:
+          $ref: '#/components/schemas/ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaOperator'
+        tariff_profile:
+          $ref: '#/components/schemas/ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaTariffProfile'
+        blocklist:
+          $ref: '#/components/schemas/ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaBlocklist'
+      title: Tariff Profiles_TariffProfileOperatorBlockListOperatorGet_Response_200
+    ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaTariffProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaTariffProfile
+    Tariff Profiles_TariffProfilePost_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Tariff Profiles_TariffProfilePost_Response_201
+    ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsTariff:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        organisation_id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        created:
+          type: string
+        tariff_status_id:
+          type: string
+        currency_id:
+          type: string
+        default_sms_mt_rate:
+          type: number
+          format: double
+        default_sms_mo_rate:
+          type: number
+          format: double
+        sim_issued_rate:
+          type: number
+          format: double
+        sim_activated_rate:
+          type: number
+          format: double
+        sim_suspended_rate:
+          type: number
+          format: double
+        sim_activation_rate:
+          type: number
+          format: double
+        sim_reactivation_rate:
+          type: number
+          format: double
+        sim_suspension_rate:
+          type: number
+          format: double
+        sim_termination_rate:
+          type: number
+          format: double
+        data_throttle_id:
+          type: string
+        data_blocksize_id:
+          type: string
+        public:
+          type: string
+        tariff_category_id:
+          type: string
+        visibility_id:
+          type: string
+        tariff_currency_category_id:
+          type: string
+        used_count:
+          type: string
+        assigned_count:
+          type: string
+        currency:
+          $ref: '#/components/schemas/ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsTariffCurrency'
+      title: ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsTariff
+    ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsTariffCurrency:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsTariffCurrencyId'
+        code:
+          type: string
+        symbol:
+          type: string
+      title: ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsTariffCurrency
+    ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsTariffCurrencyId:
+      type: object
+      properties: {}
+      title: ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsTariffCurrencyId
+    ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaBlocklistRatTypesItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaBlocklistRatTypesItems
+    ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolumeRatezone:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+      title: ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolumeRatezone
+    ? ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaBlocklistRatTypesItems
+    : type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaBlocklistRatTypesItems
+    ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+        description:
+          type: string
+        used_count:
+          type: string
+        organisation_id:
+          type: string
+        tariff:
+          $ref: '#/components/schemas/ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsTariff'
+        inclusive_volume:
+          $ref: '#/components/schemas/ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolume'
+          description: If there is an inclusive volume assigned to the tariff profile, the details will be returned within this object
+      title: ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItems
+    ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariff:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        organisation_id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        created:
+          type: string
+        tariff_status_id:
+          type: string
+        currency_id:
+          type: string
+        default_sms_mt_rate:
+          type: number
+          format: double
+        default_sms_mo_rate:
+          type: number
+          format: double
+        sim_issued_rate:
+          type: number
+          format: double
+        sim_activated_rate:
+          type: number
+          format: double
+        sim_suspended_rate:
+          type: number
+          format: double
+        sim_activation_rate:
+          type: number
+          format: double
+        sim_reactivation_rate:
+          type: number
+          format: double
+        sim_suspension_rate:
+          type: number
+          format: double
+        sim_termination_rate:
+          type: number
+          format: double
+        data_throttle_id:
+          type: string
+        data_blocksize_id:
+          type: string
+        public:
+          type: string
+        tariff_category_id:
+          type: string
+        visibility_id:
+          type: string
+        tariff_currency_category_id:
+          type: string
+        used_count:
+          type: string
+        assigned_count:
+          type: string
+        currency:
+          $ref: '#/components/schemas/ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariffCurrency'
+      title: ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariff
+    ApiV1TariffProfileTariffProfileIdCoverageGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        country:
+          $ref: '#/components/schemas/ApiV1TariffProfileTariffProfileIdCoverageGetResponsesContentApplicationJsonSchemaItemsCountry'
+        redundancy_count:
+          type: integer
+      title: ApiV1TariffProfileTariffProfileIdCoverageGetResponsesContentApplicationJsonSchemaItems
+    ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaOperator:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaOperator
+    ApiV1TariffProfileTariffProfileIdCoverageGetResponsesContentApplicationJsonSchemaItemsCountry:
+      type: object
+      properties: {}
+      title: ApiV1TariffProfileTariffProfileIdCoverageGetResponsesContentApplicationJsonSchemaItemsCountry
+    Tariff Profiles_TariffProfileByIdGet_Response_200:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+        description:
+          type: string
+        used_count:
+          type: string
+        organisation_id:
+          type: string
+        tariff:
+          $ref: '#/components/schemas/ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariff'
+        inclusive_volume:
+          $ref: '#/components/schemas/ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaInclusiveVolume'
+          description: If there is an inclusive volume assigned to the tariff profile, the details will be returned within this object
+      title: Tariff Profiles_TariffProfileByIdGet_Response_200
+    ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariffCurrencyId:
+      type: object
+      properties: {}
+      title: ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariffCurrencyId
+    ApiV1TariffProfilePostRequestBodyContentApplicationJsonSchemaTariff:
+      type: object
+      properties: {}
+      title: ApiV1TariffProfilePostRequestBodyContentApplicationJsonSchemaTariff
+    Tariff Profiles_TariffProfileOperatorBlockOperatorByIDGet_Response_200:
+      type: object
+      properties:
+        operator:
+          $ref: '#/components/schemas/ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaOperator'
+        tariff_profile:
+          $ref: '#/components/schemas/ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaTariffProfile'
+        blocklist:
+          $ref: '#/components/schemas/ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaBlocklist'
+      title: Tariff Profiles_TariffProfileOperatorBlockOperatorByIDGet_Response_200
+    ApiV1TariffProfileTariffProfileIdPatchRequestBodyContentApplicationJsonSchemaTariff:
+      type: object
+      properties: {}
+      title: ApiV1TariffProfileTariffProfileIdPatchRequestBodyContentApplicationJsonSchemaTariff
+    ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaInclusiveVolumeRatezone:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+      title: ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaInclusiveVolumeRatezone
+    ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaInclusiveVolume:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        volume:
+          type: number
+          format: double
+        rate:
+          type: number
+          format: double
+        pooled:
+          type: boolean
+        start_date:
+          type: string
+        end_date:
+          type: string
+        ratezone:
+          $ref: '#/components/schemas/ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaInclusiveVolumeRatezone'
+        currency:
+          $ref: '#/components/schemas/ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaInclusiveVolumeCurrency'
+      description: If there is an inclusive volume assigned to the tariff profile, the details will be returned within this object
+      title: ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaInclusiveVolume
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Retrieve a JWT via POST /api/v1/authenticate using an application_token or user credentials, then send it as `Authorization: Bearer <token>`.'

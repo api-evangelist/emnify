@@ -1,0 +1,509 @@
+openapi: 3.1.0
+info:
+  title: emnify REST subpackage_applicationTokens subpackage_simOperation API
+  version: 1.0.0
+  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
+
+
+    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  contact:
+    name: emnify Developer Support
+    url: https://docs.emnify.com/developers
+  license:
+    name: Proprietary
+    url: https://www.emnify.com/legal
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API base host
+security:
+- BearerAuth: []
+tags:
+- name: subpackage_simOperation
+  x-display-name: Simoperation
+paths:
+  /api/v1/sim/operation:
+    get:
+      operationId: list-sim-operation
+      summary: List SIM operations for organization
+      description: 'List all SIM operations for your organization.
+
+        '
+      tags:
+      - subpackage_simOperation
+      parameters:
+      - name: page
+        in: query
+        description: Page number (1-based).
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: per_page
+        in: query
+        description: Items per page.
+        required: false
+        schema:
+          type: integer
+          default: 100
+      - name: q
+        in: query
+        description: 'Filter parameter in `<field>:<criteria>` format.
+
+          Expects a comma-separated list from the allowed fields:
+
+
+          - `id`
+
+          - `action`
+
+          - `status`
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: sort
+        in: query
+        description: 'Sort properties according to a comma separated list from the allowed fields (prefix with `-` for descending):
+
+
+          - `id`
+
+          - `action`
+
+          - `status`
+
+          - `creation_date`
+
+          - `finalization_date`
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An auth_token should be provided to authenticate a session.
+
+          To obtain an auth_token, see the POST request to `/api/v1/authenticate`.
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: SIM operation list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SimOperationResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      operationId: trigger-sim-operation
+      summary: Trigger SIM operation
+      description: 'Trigger a SIM operation.
+
+        '
+      tags:
+      - subpackage_simOperation
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An auth_token should be provided to authenticate a session.
+
+          To obtain an auth_token, see the POST request to `/api/v1/authenticate`.
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Created, SIM operation scheduled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimOperationResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimOperationRequest'
+  /api/v1/sim/operation/action:
+    get:
+      operationId: list-sim-operation-action
+      summary: List SIM operation actions
+      description: 'List possible SIM operation action objects used in responses and requests.
+
+        '
+      tags:
+      - subpackage_simOperation
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An auth_token should be provided to authenticate a session.
+
+          To obtain an auth_token, see the POST request to `/api/v1/authenticate`.
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of SIM operation actions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OperationAction'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/sim/operation/status:
+    get:
+      operationId: list-sim-operation-status
+      summary: List SIM operation status
+      description: 'List possible SIM operation status objects used in responses.
+
+        '
+      tags:
+      - subpackage_simOperation
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An auth_token should be provided to authenticate a session.
+
+          To obtain an auth_token, see the POST request to `/api/v1/authenticate`.
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of SIM operation status
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OperationStatus'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/sim/operation/{operation_id}:
+    get:
+      operationId: get-sim-operation
+      summary: Get SIM operation details
+      description: 'Get details of a specific SIM operation.
+
+        '
+      tags:
+      - subpackage_simOperation
+      parameters:
+      - name: operation_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: 'An auth_token should be provided to authenticate a session.
+
+          To obtain an auth_token, see the POST request to `/api/v1/authenticate`.
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: SIM operation detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimOperationResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    SimOperationResponseTarget:
+      type: object
+      properties:
+        sim:
+          $ref: '#/components/schemas/SimOperationResponseTargetSim'
+        eid:
+          $ref: '#/components/schemas/Eid'
+      required:
+      - sim
+      title: SimOperationResponseTarget
+    SimOperationResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Operation ID
+        action:
+          $ref: '#/components/schemas/OperationAction'
+        status:
+          $ref: '#/components/schemas/OperationStatus'
+        product:
+          $ref: '#/components/schemas/ProductRef'
+        creation_date:
+          type: string
+          format: date-time
+        last_updated_at:
+          type: string
+          format: date-time
+        finalization_date:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        target:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimOperationResponseTarget'
+        total_count:
+          type: integer
+        failed_count:
+          type: integer
+        success_count:
+          type: integer
+        error:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimOperationResponseErrorItems'
+      required:
+      - id
+      - action
+      - status
+      - creation_date
+      - last_updated_at
+      title: SimOperationResponse
+    SimOperationActionRef:
+      type: object
+      properties:
+        id:
+          type: integer
+      required:
+      - id
+      title: SimOperationActionRef
+    Error:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      required:
+      - status_code
+      - message
+      title: Error
+    SimOperationResponseTargetSim:
+      type: object
+      properties:
+        id:
+          type: integer
+      required:
+      - id
+      title: SimOperationResponseTargetSim
+    OperationStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      required:
+      - id
+      - description
+      title: OperationStatus
+    SimOperationRequestTargetSim:
+      type: object
+      properties:
+        id:
+          type: integer
+      required:
+      - id
+      title: SimOperationRequestTargetSim
+    OperationAction:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      required:
+      - id
+      - description
+      title: OperationAction
+    ProductRef:
+      type: object
+      properties:
+        id:
+          type: integer
+      required:
+      - id
+      title: ProductRef
+    SimOperationResponseErrorItems:
+      type: object
+      properties:
+        eid:
+          $ref: '#/components/schemas/Eid'
+        message:
+          type: string
+      required:
+      - eid
+      - message
+      title: SimOperationResponseErrorItems
+    SimOperationRequest:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/SimOperationActionRef'
+        product:
+          $ref: '#/components/schemas/ProductRef'
+        target:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimOperationRequestTarget'
+      required:
+      - action
+      - target
+      title: SimOperationRequest
+    Eid:
+      type: string
+      title: Eid
+    SimOperationRequestTarget:
+      type: object
+      properties:
+        sim:
+          $ref: '#/components/schemas/SimOperationRequestTargetSim'
+        eid:
+          $ref: '#/components/schemas/Eid'
+      title: SimOperationRequestTarget
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Retrieve a JWT via POST /api/v1/authenticate using an application_token or user credentials, then send it as `Authorization: Bearer <token>`.'

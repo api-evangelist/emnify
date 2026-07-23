@@ -1,0 +1,557 @@
+openapi: 3.1.0
+info:
+  title: emnify REST subpackage_applicationTokens subpackage_euicc API
+  version: 1.0.0
+  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
+
+
+    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  contact:
+    name: emnify Developer Support
+    url: https://docs.emnify.com/developers
+  license:
+    name: Proprietary
+    url: https://www.emnify.com/legal
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API base host
+security:
+- BearerAuth: []
+tags:
+- name: subpackage_euicc
+  x-display-name: Euicc
+paths:
+  /api/v1/euicc:
+    get:
+      operationId: list-euiccs
+      summary: List eUICCs
+      description: 'List all eUICCs for your organization.
+
+        Use filter parameters to search for specific eUICCs and sort to order the response list.
+
+        '
+      tags:
+      - subpackage_euicc
+      parameters:
+      - name: page
+        in: query
+        description: Page number (1-based).
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: per_page
+        in: query
+        description: Items per page.
+        required: false
+        schema:
+          type: integer
+          default: 100
+      - name: q
+        in: query
+        description: 'Filter parameter in `<field>:<criteria>` format.
+
+          Expects a comma-separated list from the allowed fields:
+
+
+          - `id`
+
+          - `eid`
+
+          - `supported_profile_type`
+
+          - `status`
+
+          - `eim`
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: sort
+        in: query
+        description: 'Sort properties according to a comma separated list from the allowed fields (prefix with `-` for descending):
+
+
+          - `id`
+
+          - `eid`
+
+          - `modified`
+
+          - `supported_profile_type`
+
+          - `status`
+
+          - `eim`
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An auth_token should be provided to authenticate a session.
+
+          To obtain an auth_token, see the POST request to `/api/v1/authenticate`.
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of eUICCs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Euicc'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/euicc/profile/status:
+    get:
+      operationId: list-euicc-profile-status
+      summary: List eUICC Profile status
+      description: 'List possible eUICC Profile statuses.
+
+        '
+      tags:
+      - subpackage_euicc
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An auth_token should be provided to authenticate a session.
+
+          To obtain an auth_token, see the POST request to `/api/v1/authenticate`.
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of eUICC Profile statuses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Status'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/euicc/status:
+    get:
+      operationId: list-euicc-status
+      summary: List eUICC status
+      description: 'List possible eUICC statuses (reserved for future use).
+
+        '
+      tags:
+      - subpackage_euicc
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An auth_token should be provided to authenticate a session.
+
+          To obtain an auth_token, see the POST request to `/api/v1/authenticate`.
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of eUICC statuses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Status'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/euicc/unlinked_validation:
+    post:
+      operationId: post-euicc-unlinked-validation
+      summary: Unlinked eUICC validation
+      description: 'Validate whether the specified eUICCs do not have any existing profiles linked.
+
+        '
+      tags:
+      - subpackage_euicc
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An auth_token should be provided to authenticate a session.
+
+          To obtain an auth_token, see the POST request to `/api/v1/authenticate`.
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Validation response containing EIDs that already have linked profiles
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EuiccUnlinkedValidationResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EuiccUnlinkedValidationRequest'
+  /api/v1/euicc/{euicc_id}:
+    get:
+      operationId: get-euicc
+      summary: Get eUICC
+      description: 'List details on one specific eUICC within your organization.
+
+        '
+      tags:
+      - subpackage_euicc
+      parameters:
+      - name: euicc_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        description: 'An auth_token should be provided to authenticate a session.
+
+          To obtain an auth_token, see the POST request to `/api/v1/authenticate`.
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: eUICC detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Euicc'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    IdName:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: IdName
+    ProfileProfileType:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ProfileProfileType
+    Organisation:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: Organisation
+    EuiccUnlinkedValidationRequest:
+      type: object
+      properties:
+        target:
+          type: array
+          items:
+            $ref: '#/components/schemas/EuiccUnlinkedValidationRequestTargetItems'
+      required:
+      - target
+      title: EuiccUnlinkedValidationRequest
+    Error:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      required:
+      - status_code
+      - message
+      title: Error
+    EuiccUnlinkedValidationResponseItems:
+      type: object
+      properties:
+        eid:
+          $ref: '#/components/schemas/Eid'
+      required:
+      - eid
+      title: EuiccUnlinkedValidationResponseItems
+    ProfileStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ProfileStatus
+    EuiccUnlinkedValidationRequestTargetItems:
+      type: object
+      properties:
+        eid:
+          $ref: '#/components/schemas/Eid'
+      required:
+      - eid
+      title: EuiccUnlinkedValidationRequestTargetItems
+    EuiccUnlinkedValidationResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/EuiccUnlinkedValidationResponseItems'
+      title: EuiccUnlinkedValidationResponse
+    Status:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      required:
+      - id
+      - description
+      title: Status
+    Endpoint:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: Endpoint
+    IccidWithLuhnRef:
+      type: string
+      description: Full ICCID including the Luhn check digit
+      title: IccidWithLuhnRef
+    Eid:
+      type: string
+      title: Eid
+    Profile:
+      type: object
+      properties:
+        iccid_with_luhn:
+          $ref: '#/components/schemas/IccidWithLuhnRef'
+        status:
+          $ref: '#/components/schemas/ProfileStatus'
+        customer_org:
+          oneOf:
+          - $ref: '#/components/schemas/Organisation'
+          - type: 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        operator:
+          oneOf:
+          - $ref: '#/components/schemas/IdName'
+          - type: 'null'
+        preloaded:
+          type:
+          - boolean
+          - 'null'
+        fallback_allowed:
+          type:
+          - boolean
+          - 'null'
+        fallback_attribute:
+          type:
+          - boolean
+          - 'null'
+        profile_type:
+          oneOf:
+          - $ref: '#/components/schemas/ProfileProfileType'
+          - type: 'null'
+        endpoint:
+          oneOf:
+          - $ref: '#/components/schemas/Endpoint'
+          - type: 'null'
+      required:
+      - iccid_with_luhn
+      title: Profile
+    EuiccSupportedProfileType:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: EuiccSupportedProfileType
+    Euicc:
+      type: object
+      properties:
+        id:
+          type: integer
+        eid:
+          $ref: '#/components/schemas/Eid'
+        created:
+          type: string
+          format: date-time
+        issuer_org:
+          $ref: '#/components/schemas/Organisation'
+        customer_org:
+          $ref: '#/components/schemas/Organisation'
+        supported_profile_type:
+          $ref: '#/components/schemas/EuiccSupportedProfileType'
+        status:
+          $ref: '#/components/schemas/Status'
+        last_audited:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        last_polled:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        last_synced:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        eim:
+          $ref: '#/components/schemas/EuiccEim'
+        profile:
+          type: array
+          items:
+            $ref: '#/components/schemas/Profile'
+      required:
+      - id
+      - eid
+      - created
+      - profile
+      title: Euicc
+    EuiccEim:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: EuiccEim
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Retrieve a JWT via POST /api/v1/authenticate using an application_token or user credentials, then send it as `Authorization: Bearer <token>`.'

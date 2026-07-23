@@ -1,0 +1,1000 @@
+openapi: 3.1.0
+info:
+  title: emnify REST subpackage_applicationTokens subpackage_workspaces API
+  version: 1.0.0
+  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
+
+
+    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  contact:
+    name: emnify Developer Support
+    url: https://docs.emnify.com/developers
+  license:
+    name: Proprietary
+    url: https://www.emnify.com/legal
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API base host
+security:
+- BearerAuth: []
+tags:
+- name: subpackage_workspaces
+  x-display-name: Workspaces
+paths:
+  /api/v1/authenticate/workspace:
+    post:
+      operationId: authenticate-workspace
+      summary: Switch to an assigned Workspace
+      description: "Switch to an assigned Workspace and receive an authentication token for the target Workspace.\n\n<Note>\n  This endpoint requires authentication with [user credentials](/developers/auth/user-credentials) (not an application token), as application tokens are scoped to a single Workspace.\n\n  The returned `auth_token` is valid for the target Workspace.\n  Your original token remains valid for the source Workspace.\n</Note>\n"
+      tags:
+      - subpackage_workspaces
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully switched to the assigned Workspace
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workspaces_AuthenticateWorkspace_Response_200'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: Any type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                target_organisation:
+                  $ref: '#/components/schemas/ApiV1AuthenticateWorkspacePostRequestBodyContentApplicationJsonSchemaTargetOrganisation'
+              required:
+              - target_organisation
+  /api/v2/user/activation:
+    post:
+      operationId: accept-user-invitation
+      summary: Accept user invitation
+      description: 'Accepts a user invitation to join a Workspace.
+
+
+        The following fields may be provided:
+
+        - `activationKey` (String, required) - the JWT token received in the verification email
+
+        - `password` (String) - only mandatory if the user is invited to an organization without single sign-on (SSO) and doesn''t have a password yet
+
+        - `name` (String) - name of the user
+
+        '
+      tags:
+      - subpackage_workspaces
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: User successfully accepted the invitation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                description: Any type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                activationKey:
+                  type: string
+                password:
+                  type: string
+                name:
+                  type: string
+              required:
+              - activationKey
+  /api/v2/user/{user_id}/default_organisation/{workspace_id}:
+    put:
+      operationId: update-default-workspace
+      summary: Update a user's default Workspace
+      description: "Update a user's default Workspace.\n\n<Warning>\n  You must have **Administrator** access in both the old and new default Workspaces to execute this call.\n</Warning>\n"
+      tags:
+      - subpackage_workspaces
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: workspace_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully updated the default Workspace
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workspaces_UpdateDefaultWorkspace_Response_200'
+        '403':
+          description: Administrator role required on the selected Workspace
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /api/v2/user/{user_id}/workspace:
+    get:
+      operationId: get-assigned-workspaces
+      summary: List assigned Workspaces
+      description: "Retrieve a list of the Workspaces assigned to a user.\n\n<Note>\n  Only returns Workspaces where you have **Administrator** access.\n</Note>\n"
+      tags:
+      - subpackage_workspaces
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved assigned Workspaces list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItems'
+        '403':
+          description: Administrator role required on the selected Workspace
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /api/v2/user/{user_id}/workspace/{workspace_id}:
+    delete:
+      operationId: unassign-workspaces
+      summary: Unassign a Workspace
+      description: "Unassign a Workspace from a user.\n\n- If the user is deleted from their default Workspace, the next active Workspace is assigned as the default Workspace.\n- **SuperAdmins** can't be removed unless you're logged in to the main organization.\n\n<Warning>\n  You must have **Administrator** access in the requested Workspace to remove users.\n</Warning>\n"
+      tags:
+      - subpackage_workspaces
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: workspace_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successfully unassigned the Workspace
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: Administrator role required on the selected Workspace or missing permissions to update SuperAdmins
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: Workspace not found or not accessible
+          content:
+            application/json:
+              schema:
+                description: Any type
+    patch:
+      operationId: update-workspace-user-status
+      summary: Update user status in a Workspace
+      description: "Update a user's status in the requested Workspace.\n\n- Allowed statuses: `ACTIVE` (1) and `SUSPENDED` (2)\n- If the user is suspended in their default Workspace, the next active Workspace is assigned as the default Workspace.\n\n<Warning>\n  You must have **Administrator** access in the requested Workspace to update user statuses.\n</Warning>\n"
+      tags:
+      - subpackage_workspaces
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: workspace_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successfully updated the user status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: Administrator role required on the selected Workspace or missing permissions to update SuperAdmins
+          content:
+            application/json:
+              schema:
+                description: Any type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  $ref: '#/components/schemas/ApiV2UserUserIdWorkspaceWorkspaceIdPatchRequestBodyContentApplicationJsonSchemaStatus'
+              required:
+              - status
+  /api/v2/user/{user_id}/workspace/{workspace_id}/role/{role_id}:
+    put:
+      operationId: assign-user-role-by-id
+      summary: Assign a role to a Workspace user
+      description: "Assign a role to a user in the requested Workspace.\n\n<Warning>\n  You must have **Administrator** access in the requested Workspace to modify user roles.\n  **SuperAdmin** roles also can't be modified unless you're logged in to the main organization.\n</Warning>\n"
+      tags:
+      - subpackage_workspaces
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: workspace_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: role_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successfully assigned the role
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Modifying your own account isn't allowed
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '401':
+          description: User isn't allowed to do that action
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: Administrator role required on the selected Workspace or missing permissions to update SuperAdmins
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                description: Any type
+    delete:
+      operationId: remove-user-role-by-id
+      summary: Remove a role from a Workspace user
+      description: "Remove a user's role in the requested Workspace.\n\n<Warning>\n  You must have **Administrator** access in the requested Workspace to modify user roles.\n  **SuperAdmin** roles also can't be modified unless you're logged in to the main organization.\n</Warning>\n"
+      tags:
+      - subpackage_workspaces
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: workspace_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: role_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successfully removed the role
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Modifying your own account isn't allowed
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '401':
+          description: User isn't allowed to do that action
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: Administrator role required on the selected Workspace or missing permissions to update SuperAdmins
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /api/v2/workspace/stats/daily:
+    get:
+      operationId: get-workspace-daily-stats
+      summary: Retrieve Workspace daily stats
+      description: 'Retrieve the daily stats for your Workspaces.
+
+        '
+      tags:
+      - subpackage_workspaces
+      parameters:
+      - name: start_date
+        in: query
+        description: "Filters by start date, provided in a `YYYY-MM-DD` format.\n\n<Info>\n  If you don't define an end date, the response will include 6 months of data, beginning on the current date.\n</Info>\n"
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: end_date
+        in: query
+        description: "Filters by end date, provided in an `YYYY-MM-DD` format.\n\n<Info>\n  If you don't define a start date, the response will only return data from the month indicated in your end date.\n</Info>\n"
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: workspace_ids
+        in: query
+        description: 'Comma separated list of workspace IDs to filter the results for.
+
+          If not provided, the response will include all Workspaces you have access to.
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved the daily Workspace stats
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workspaces_GetWorkspaceDailyStats_Response_200'
+        '422':
+          description: Requested Workspaces not found or not accessible
+          content:
+            application/json:
+              schema:
+                description: Any type
+components:
+  schemas:
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolumeCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolumeCurrency
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSmsVolumeCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSmsVolumeCurrency
+    Workspaces_UpdateDefaultWorkspace_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Workspaces_UpdateDefaultWorkspace_Response_200
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolumeTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolumeTrafficType
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolume:
+      type: object
+      properties:
+        volume:
+          type: number
+          format: double
+        volume_tx:
+          type: number
+          format: double
+        volume_rx:
+          type: number
+          format: double
+        cost:
+          type:
+          - number
+          - 'null'
+          format: double
+        traffic_type:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolumeTrafficType'
+          - type: 'null'
+        currency:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolumeCurrency'
+          - type: 'null'
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolume
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolumeCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolumeCurrency
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoDataVolumeCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoDataVolumeCurrency
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolumeCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolumeCurrency
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSmsVolumeCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSmsVolumeCurrency
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotal:
+      type: object
+      properties:
+        data_volume:
+          $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolume'
+        sms_volume:
+          $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSmsVolume'
+        sat_geo_data_volume:
+          $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolume'
+        sat_geo_sms_volume:
+          $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolume'
+      required:
+      - data_volume
+      - sms_volume
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotal
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoDataVolume:
+      type: object
+      properties:
+        volume:
+          type: number
+          format: double
+        volume_tx:
+          type: number
+          format: double
+        volume_rx:
+          type: number
+          format: double
+        cost:
+          type:
+          - number
+          - 'null'
+          format: double
+        traffic_type:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoDataVolumeTrafficType'
+          - type: 'null'
+        currency:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoDataVolumeCurrency'
+          - type: 'null'
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoDataVolume
+    Workspaces_GetWorkspaceDailyStats_Response_200:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        days:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItems'
+        total:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotal'
+          - type: 'null'
+      title: Workspaces_GetWorkspaceDailyStats_Response_200
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsDataVolume:
+      type: object
+      properties:
+        volume:
+          type: number
+          format: double
+        volume_tx:
+          type: number
+          format: double
+        volume_rx:
+          type: number
+          format: double
+        cost:
+          type:
+          - number
+          - 'null'
+          format: double
+        traffic_type:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsDataVolumeTrafficType'
+          - type: 'null'
+        currency:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsDataVolumeCurrency'
+          - type: 'null'
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsDataVolume
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItems:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        sms_volume:
+          $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSmsVolume'
+        data_volume:
+          $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsDataVolume'
+        sat_geo_data_volume:
+          $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoDataVolume'
+        sat_geo_sms_volume:
+          $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolume'
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItems
+    ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItemsStatus:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItemsStatusStatus'
+      required:
+      - status
+      title: ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItemsStatus
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolumeTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolumeTrafficType
+    ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItemsRolesItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItemsRolesItems
+    ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItemsStatus'
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItemsRolesItems'
+        owner:
+          type: boolean
+        default_workspace:
+          type: boolean
+      required:
+      - id
+      - name
+      - status
+      - roles
+      title: ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItems
+    ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItemsStatusStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+      title: ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItemsStatusStatus
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolumeCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolumeCurrency
+    Workspaces_AuthenticateWorkspace_Response_200:
+      type: object
+      properties:
+        auth_token:
+          type: string
+          description: JWT authentication token valid for the target Workspace
+      title: Workspaces_AuthenticateWorkspace_Response_200
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsDataVolumeTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsDataVolumeTrafficType
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolumeTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolumeTrafficType
+    ApiV1AuthenticateWorkspacePostRequestBodyContentApplicationJsonSchemaTargetOrganisation:
+      type: object
+      properties:
+        id:
+          type: integer
+      title: ApiV1AuthenticateWorkspacePostRequestBodyContentApplicationJsonSchemaTargetOrganisation
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolumeTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolumeTrafficType
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoDataVolumeTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoDataVolumeTrafficType
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSmsVolumeTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSmsVolumeTrafficType
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolume:
+      type: object
+      properties:
+        volume:
+          type: number
+          format: double
+        volume_tx:
+          type: number
+          format: double
+        volume_rx:
+          type: number
+          format: double
+        cost:
+          type:
+          - number
+          - 'null'
+          format: double
+        traffic_type:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolumeTrafficType'
+          - type: 'null'
+        currency:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolumeCurrency'
+          - type: 'null'
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolume
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSmsVolumeTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSmsVolumeTrafficType
+    ApiV2UserUserIdWorkspaceWorkspaceIdPatchRequestBodyContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+      title: ApiV2UserUserIdWorkspaceWorkspaceIdPatchRequestBodyContentApplicationJsonSchemaStatus
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsDataVolumeCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsDataVolumeCurrency
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolume:
+      type: object
+      properties:
+        volume:
+          type: number
+          format: double
+        volume_tx:
+          type: number
+          format: double
+        volume_rx:
+          type: number
+          format: double
+        cost:
+          type:
+          - number
+          - 'null'
+          format: double
+        traffic_type:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolumeTrafficType'
+          - type: 'null'
+        currency:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolumeCurrency'
+          - type: 'null'
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolume
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSmsVolume:
+      type: object
+      properties:
+        volume:
+          type: number
+          format: double
+        volume_tx:
+          type: number
+          format: double
+        volume_rx:
+          type: number
+          format: double
+        cost:
+          type:
+          - number
+          - 'null'
+          format: double
+        traffic_type:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSmsVolumeTrafficType'
+          - type: 'null'
+        currency:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSmsVolumeCurrency'
+          - type: 'null'
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSmsVolume
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSmsVolume:
+      type: object
+      properties:
+        volume:
+          type: number
+          format: double
+        volume_tx:
+          type: number
+          format: double
+        volume_rx:
+          type: number
+          format: double
+        cost:
+          type:
+          - number
+          - 'null'
+          format: double
+        traffic_type:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSmsVolumeTrafficType'
+          - type: 'null'
+        currency:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSmsVolumeCurrency'
+          - type: 'null'
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSmsVolume
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolume:
+      type: object
+      properties:
+        volume:
+          type: number
+          format: double
+        volume_tx:
+          type: number
+          format: double
+        volume_rx:
+          type: number
+          format: double
+        cost:
+          type:
+          - number
+          - 'null'
+          format: double
+        traffic_type:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolumeTrafficType'
+          - type: 'null'
+        currency:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolumeCurrency'
+          - type: 'null'
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolume
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Retrieve a JWT via POST /api/v1/authenticate using an application_token or user credentials, then send it as `Authorization: Bearer <token>`.'

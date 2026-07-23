@@ -1,0 +1,110 @@
+openapi: 3.1.0
+info:
+  title: emnify REST subpackage_applicationTokens subpackage_operator API
+  version: 1.0.0
+  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
+
+
+    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  contact:
+    name: emnify Developer Support
+    url: https://docs.emnify.com/developers
+  license:
+    name: Proprietary
+    url: https://www.emnify.com/legal
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API base host
+security:
+- BearerAuth: []
+tags:
+- name: subpackage_operator
+  x-display-name: Operator
+paths:
+  /api/v1/operator:
+    get:
+      operationId: operator-get
+      summary: List operators
+      description: 'Returns a collection of existing operators.
+
+
+        It will return an array of items with following properties:
+
+
+        * `id`: identifier of this operator
+
+        * `name`: the official name of the operator
+
+        * `name_and_country`: Name / Country (for easy access in the UI)
+
+        * `country`: country object with the nested country `id`
+
+        * `mnc`: Array of Mobile Network Codes (MNCs)
+
+        * `tapcode`: Array of TAP Codes
+
+        '
+      tags:
+      - subpackage_operator
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1OperatorGetResponsesContentApplicationJsonSchemaItems'
+components:
+  schemas:
+    ApiV1OperatorGetResponsesContentApplicationJsonSchemaItemsCountry:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country_code:
+          type: integer
+        mcc:
+          type: integer
+        iso_code:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+      title: ApiV1OperatorGetResponsesContentApplicationJsonSchemaItemsCountry
+    ApiV1OperatorGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        name:
+          type: string
+        country_name:
+          type: string
+        id:
+          type: number
+          format: double
+        country:
+          $ref: '#/components/schemas/ApiV1OperatorGetResponsesContentApplicationJsonSchemaItemsCountry'
+      title: ApiV1OperatorGetResponsesContentApplicationJsonSchemaItems
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Retrieve a JWT via POST /api/v1/authenticate using an application_token or user credentials, then send it as `Authorization: Bearer <token>`.'

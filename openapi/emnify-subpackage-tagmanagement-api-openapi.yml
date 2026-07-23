@@ -1,0 +1,1102 @@
+openapi: 3.1.0
+info:
+  title: emnify REST subpackage_applicationTokens subpackage_tagManagement API
+  version: 1.0.0
+  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
+
+
+    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  contact:
+    name: emnify Developer Support
+    url: https://docs.emnify.com/developers
+  license:
+    name: Proprietary
+    url: https://www.emnify.com/legal
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API base host
+security:
+- BearerAuth: []
+tags:
+- name: subpackage_tagManagement
+  x-display-name: Tagmanagement
+paths:
+  /api/v2/bulk-operations/endpoint/add-tags:
+    post:
+      operationId: assign-tag-to-endpoints-in-bulk
+      summary: Bulk assign tags
+      description: 'Assigns tags in bulk to multiple endpoints.
+
+        '
+      tags:
+      - subpackage_tagManagement
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tags successfully assigned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag Management_AssignTagToEndpointsInBulk_Response_200'
+        '400':
+          description: 'Invalid payload.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssignTagToEndpointsInBulkRequestBadRequestError'
+        '403':
+          description: User does not have permission to bulk assign tags.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '409':
+          description: One or more tags is already assigned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssignTagToEndpointsInBulkRequestConflictError'
+        '422':
+          description: 'Unprocessable entity.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssignTagToEndpointsInBulkRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                items:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ApiV2BulkOperationsEndpointAddTagsPostRequestBodyContentApplicationJsonSchemaItemsItems'
+  /api/v2/bulk-operations/endpoint/remove-tags:
+    post:
+      operationId: unassign-tags-from-endpoints-in-bulk
+      summary: Bulk unassign tags
+      description: 'Unassign tags from multiple endpoints in bulk.
+
+        '
+      tags:
+      - subpackage_tagManagement
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tags successfully unassigned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag Management_UnassignTagsFromEndpointsInBulk_Response_200'
+        '400':
+          description: 'Invalid payload.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnassignTagsFromEndpointsInBulkRequestBadRequestError'
+        '403':
+          description: User doesn't have permission to bulk unassign tags.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '422':
+          description: 'Unprocessable entity.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnassignTagsFromEndpointsInBulkRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                items:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItems'
+  /api/v2/bulk-operations/tag/delete-tags:
+    post:
+      operationId: delete-tags-in-bulk
+      summary: Bulk delete tags
+      description: 'Deletes tags in bulk.
+
+        '
+      tags:
+      - subpackage_tagManagement
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tags successfully deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag Management_DeleteTagsInBulk_Response_200'
+        '400':
+          description: 'Invalid payload.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteTagsInBulkRequestBadRequestError'
+        '403':
+          description: User doesn't have permission to bulk delete tags.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '422':
+          description: 'Unprocessable entity.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteTagsInBulkRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tags:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ApiV2BulkOperationsTagDeleteTagsPostRequestBodyContentApplicationJsonSchemaTagsItems'
+  /api/v2/endpoint/{endpoint_id}/tags:
+    get:
+      operationId: list-endpoint-tags
+      summary: List endpoint tags
+      description: 'Returns a list of tags assigned to the provided endpoint.
+
+        '
+      tags:
+      - subpackage_tagManagement
+      parameters:
+      - name: endpoint_id
+        in: path
+        description: Numeric ID of an endpoint
+        required: true
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tags successfully listed.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV2EndpointEndpointIdTagsGetResponsesContentApplicationJsonSchemaItems'
+        '400':
+          description: 'Invalid payload.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListEndpointTagsRequestBadRequestError'
+        '403':
+          description: User doesn't have permission to list endpoint tags.
+          content:
+            application/json:
+              schema:
+                description: Any type
+    post:
+      operationId: assign-tag-to-endpoint
+      summary: Assign a tag to an endpoint
+      description: 'Assigns a tag to the provided endpoint.
+
+        To successfully assign a tag, you must include the tag''s ID in the request body.
+
+        '
+      tags:
+      - subpackage_tagManagement
+      parameters:
+      - name: endpoint_id
+        in: path
+        description: Numeric ID of an endpoint
+        required: true
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Tag successfully assigned to the endpoint.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag Management_AssignTagToEndpoint_Response_201'
+        '400':
+          description: 'Invalid payload.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssignTagToEndpointRequestBadRequestError'
+        '403':
+          description: User doesn't have permission to assign tags.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '409':
+          description: The tag is already assigned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssignTagToEndpointRequestConflictError'
+        '422':
+          description: 'Unprocessable entity.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssignTagToEndpointRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
+                  format: double
+  /api/v2/endpoint/{endpoint_id}/tags/{tag_id}:
+    delete:
+      operationId: unassign-endpoint-tag
+      summary: Unassign a tag from an endpoint
+      description: 'Unassigns a tag from the provided endpoint.
+
+        To successfully unassign a tag, you must include the tag''s ID in the request body.
+
+        '
+      tags:
+      - subpackage_tagManagement
+      parameters:
+      - name: endpoint_id
+        in: path
+        description: Numeric ID of an endpoint
+        required: true
+        schema:
+          type: integer
+      - name: tag_id
+        in: path
+        description: The tag ID
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tag successfully unassigned from the endpoint.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag Management_UnassignEndpointTag_Response_200'
+        '400':
+          description: 'Invalid payload.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnassignEndpointTagRequestBadRequestError'
+        '403':
+          description: User doesn't have permission to unassign tags.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: The provided tag ID doesn't exist.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '422':
+          description: 'Unprocessable entity.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnassignEndpointTagRequestUnprocessableEntityError'
+  /api/v2/tag-colors:
+    get:
+      operationId: list-tag-colors
+      summary: Returns the list of available tag colors
+      description: Returns the list of available tag colors
+      tags:
+      - subpackage_tagManagement
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tag colors successfully listed.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV2TagColorsGetResponsesContentApplicationJsonSchemaItems'
+  /api/v2/tags:
+    get:
+      operationId: list-tags
+      summary: List tags
+      description: 'Returns a list of all registered tags within the organization.
+
+        '
+      tags:
+      - subpackage_tagManagement
+      parameters:
+      - name: name
+        in: query
+        description: The tag name
+        required: false
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Current page number
+        required: false
+        schema:
+          type: integer
+      - name: page_size
+        in: query
+        description: Defines the number of items per page
+        required: false
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tags successfully listed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag Management_ListTags_Response_200'
+        '400':
+          description: 'Invalid payload.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListTagsRequestBadRequestError'
+        '403':
+          description: User doesn't have permission to list tags.
+          content:
+            application/json:
+              schema:
+                description: Any type
+    post:
+      operationId: create-tag
+      summary: Create a tag
+      description: 'Creates a tag with the given name and color ID.
+
+
+        If no color ID is provided, a random color is assigned to the tag.
+
+        '
+      tags:
+      - subpackage_tagManagement
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Tag successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag Management_CreateTag_Response_201'
+        '400':
+          description: 'Invalid payload.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTagRequestBadRequestError'
+        '403':
+          description: User doesn't have permission to create tags.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '409':
+          description: The tag already exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTagRequestConflictError'
+        '422':
+          description: 'Unprocessable entity.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTagRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                color:
+                  $ref: '#/components/schemas/ApiV2TagsPostRequestBodyContentApplicationJsonSchemaColor'
+              required:
+              - name
+  /api/v2/tags/{tag_id}:
+    delete:
+      operationId: delete-tag
+      summary: Delete a tag
+      description: 'Deletes a tag and it removes all associations with resources (for example, devices or automations).
+
+        '
+      tags:
+      - subpackage_tagManagement
+      parameters:
+      - name: tag_id
+        in: path
+        description: The tag ID
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Tag successfully deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: User doesn't have permission to delete tags.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: The provided tag ID doesn't exist.
+          content:
+            application/json:
+              schema:
+                description: Any type
+    patch:
+      operationId: update-tag
+      summary: Update a tag
+      description: 'Updates a tag with the provided name and color ID.
+
+        '
+      tags:
+      - subpackage_tagManagement
+      parameters:
+      - name: tag_id
+        in: path
+        description: The tag ID
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Tag successfully updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: 'Invalid payload.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateTagRequestBadRequestError'
+        '403':
+          description: User doesn't have permission to update tags.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: The provided tag ID doesn't exist.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '422':
+          description: 'Unprocessable entity.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateTagRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                color:
+                  $ref: '#/components/schemas/ApiV2TagsTagIdPatchRequestBodyContentApplicationJsonSchemaColor'
+components:
+  schemas:
+    ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsEndpoint:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      title: ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsEndpoint
+    UnassignTagsFromEndpointsInBulkRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UnassignTagsFromEndpointsInBulkRequestUnprocessableEntityError
+    ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsTagsItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      title: ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsTagsItems
+    ApiV2BulkOperationsTagDeleteTagsPostRequestBodyContentApplicationJsonSchemaTagsItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      title: ApiV2BulkOperationsTagDeleteTagsPostRequestBodyContentApplicationJsonSchemaTagsItems
+    ApiV2TagsPostResponsesContentApplicationJsonSchemaTagColor:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: ApiV2TagsPostResponsesContentApplicationJsonSchemaTagColor
+    UnassignTagsFromEndpointsInBulkRequestBadRequestError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UnassignTagsFromEndpointsInBulkRequestBadRequestError
+    Tag Management_CreateTag_Response_201:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+        tag_color:
+          $ref: '#/components/schemas/ApiV2TagsPostResponsesContentApplicationJsonSchemaTagColor'
+      title: Tag Management_CreateTag_Response_201
+    ApiV2TagsGetResponsesContentApplicationJsonSchemaDataItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+        resource_count:
+          type: number
+          format: double
+        tag_color:
+          $ref: '#/components/schemas/ApiV2TagsGetResponsesContentApplicationJsonSchemaDataItemsTagColor'
+      title: ApiV2TagsGetResponsesContentApplicationJsonSchemaDataItems
+    ApiV2BulkOperationsEndpointAddTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsTagsItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      title: ApiV2BulkOperationsEndpointAddTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsTagsItems
+    CreateTagRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: CreateTagRequestUnprocessableEntityError
+    ApiV2EndpointEndpointIdTagsGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+        resource_count:
+          type: number
+          format: double
+        tag_color:
+          $ref: '#/components/schemas/ApiV2EndpointEndpointIdTagsGetResponsesContentApplicationJsonSchemaItemsTagColor'
+      title: ApiV2EndpointEndpointIdTagsGetResponsesContentApplicationJsonSchemaItems
+    AssignTagToEndpointRequestBadRequestError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: AssignTagToEndpointRequestBadRequestError
+    ApiV2TagsPostRequestBodyContentApplicationJsonSchemaColor:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: ApiV2TagsPostRequestBodyContentApplicationJsonSchemaColor
+    Tag Management_UnassignTagsFromEndpointsInBulk_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Tag Management_UnassignTagsFromEndpointsInBulk_Response_200
+    ApiV2BulkOperationsEndpointAddTagsPostRequestBodyContentApplicationJsonSchemaItemsItems:
+      type: object
+      properties:
+        endpoint:
+          $ref: '#/components/schemas/ApiV2BulkOperationsEndpointAddTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsEndpoint'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV2BulkOperationsEndpointAddTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsTagsItems'
+      title: ApiV2BulkOperationsEndpointAddTagsPostRequestBodyContentApplicationJsonSchemaItemsItems
+    UpdateTagRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UpdateTagRequestUnprocessableEntityError
+    DeleteTagsInBulkRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: DeleteTagsInBulkRequestUnprocessableEntityError
+    ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItems:
+      type: object
+      properties:
+        endpoint:
+          $ref: '#/components/schemas/ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsEndpoint'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsTagsItems'
+      title: ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItems
+    AssignTagToEndpointsInBulkRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: AssignTagToEndpointsInBulkRequestConflictError
+    AssignTagToEndpointsInBulkRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: AssignTagToEndpointsInBulkRequestUnprocessableEntityError
+    ApiV2BulkOperationsEndpointAddTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsEndpoint:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      title: ApiV2BulkOperationsEndpointAddTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsEndpoint
+    Tag Management_UnassignEndpointTag_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Tag Management_UnassignEndpointTag_Response_200
+    UnassignEndpointTagRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UnassignEndpointTagRequestUnprocessableEntityError
+    ListTagsRequestBadRequestError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ListTagsRequestBadRequestError
+    ApiV2TagsGetResponsesContentApplicationJsonSchemaDataItemsTagColor:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      title: ApiV2TagsGetResponsesContentApplicationJsonSchemaDataItemsTagColor
+    UpdateTagRequestBadRequestError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UpdateTagRequestBadRequestError
+    ApiV2EndpointEndpointIdTagsGetResponsesContentApplicationJsonSchemaItemsTagColor:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      title: ApiV2EndpointEndpointIdTagsGetResponsesContentApplicationJsonSchemaItemsTagColor
+    ListEndpointTagsRequestBadRequestError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ListEndpointTagsRequestBadRequestError
+    UnassignEndpointTagRequestBadRequestError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UnassignEndpointTagRequestBadRequestError
+    Tag Management_ListTags_Response_200:
+      type: object
+      properties:
+        total:
+          type: number
+          format: double
+        page:
+          type: number
+          format: double
+        page_size:
+          type: number
+          format: double
+        last_page:
+          type: number
+          format: double
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV2TagsGetResponsesContentApplicationJsonSchemaDataItems'
+      title: Tag Management_ListTags_Response_200
+    DeleteTagsInBulkRequestBadRequestError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: DeleteTagsInBulkRequestBadRequestError
+    AssignTagToEndpointRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: AssignTagToEndpointRequestConflictError
+    Tag Management_AssignTagToEndpoint_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Tag Management_AssignTagToEndpoint_Response_201
+    CreateTagRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: CreateTagRequestConflictError
+    ApiV2TagsTagIdPatchRequestBodyContentApplicationJsonSchemaColor:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: ApiV2TagsTagIdPatchRequestBodyContentApplicationJsonSchemaColor
+    CreateTagRequestBadRequestError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: CreateTagRequestBadRequestError
+    AssignTagToEndpointsInBulkRequestBadRequestError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: AssignTagToEndpointsInBulkRequestBadRequestError
+    ApiV2TagColorsGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        hex_color:
+          type: string
+        description:
+          type: string
+      title: ApiV2TagColorsGetResponsesContentApplicationJsonSchemaItems
+    AssignTagToEndpointRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: AssignTagToEndpointRequestUnprocessableEntityError
+    Tag Management_DeleteTagsInBulk_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Tag Management_DeleteTagsInBulk_Response_200
+    Tag Management_AssignTagToEndpointsInBulk_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Tag Management_AssignTagToEndpointsInBulk_Response_200
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Retrieve a JWT via POST /api/v1/authenticate using an application_token or user credentials, then send it as `Authorization: Bearer <token>`.'

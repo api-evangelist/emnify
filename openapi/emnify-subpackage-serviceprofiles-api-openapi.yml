@@ -1,0 +1,1116 @@
+openapi: 3.1.0
+info:
+  title: emnify REST subpackage_applicationTokens subpackage_serviceProfiles API
+  version: 1.0.0
+  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
+
+
+    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  contact:
+    name: emnify Developer Support
+    url: https://docs.emnify.com/developers
+  license:
+    name: Proprietary
+    url: https://www.emnify.com/legal
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API base host
+security:
+- BearerAuth: []
+tags:
+- name: subpackage_serviceProfiles
+  x-display-name: Serviceprofiles
+paths:
+  /api/v1/service_profile:
+    get:
+      operationId: service-profile-get
+      summary: List service profiles
+      description: 'Retrieves a collection of all service profiles for your organization.
+
+
+        Returned service profiles contain just the total count of associated services, so this is the short view.
+
+        '
+      tags:
+      - subpackage_serviceProfiles
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItems'
+    post:
+      operationId: service-profile-post
+      summary: Create service profile
+      description: "Creates a new Service Profile. A `name` must be specified for the Service Profile and all other fields are optional.\n\nEditable fields:\n* `name` (String required)\n* `description` (String optional)\n* `allowed_3g` (boolean optional, defaults to true)\n* `allowed_4g` (boolean optional, defaults to true). Allows or restricts connectivity for 4G/LTE and LTE-M networks.\n* `allowed_nb_iot` (boolean optional, defaults to true)\n* `allowed_nb_iot_geo` (boolean optional, defaults to false). Allows or restricts NB-IoT connectivity over satellite networks.\n* **DEPRECATED** `apply_quota` (boolean optional, defaults to false).  Use `apply_data_quota` instead. Will be ignored if `apply_data_quota` is present.\n* `apply_data_quota` (boolean optional, defaults to false)\n* `apply_sms_quota` (boolean optional, defaults to false)\n* `retail` (boolean optional, defaults to false)\n* `sms_p2p_int` (boolean optional, defaults to true)\n* `sms_p2p_ext` (boolean optional, defaults to true)\n* **DEPRECATED** `prepaid` (boolean optional, defaults to false)\n* `nipdp` (boolean optional, defaults to false)\n* `api_callback` (object optional)\n* `api_secret` (object optional)\n* `moc_callback` (object optional)\n* `esme_interface_type` (object optional)\n* `breakout_region` (object optional)\n* `dns` (object optional)\n\n<Info>\n  Enabling services (SMS, Data etc.) is done via `PUT` to `/api/v1/service_profile/{profile_id}/service/{service_id}`.\n</Info>\n"
+      tags:
+      - subpackage_serviceProfiles
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Resource Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service Profiles_ServiceProfilePost_Response_201'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                allowed_3g:
+                  type: boolean
+                allowed_4g:
+                  type: boolean
+                allowed_nb_iot:
+                  type: boolean
+                allowed_nb_iot_geo:
+                  type: boolean
+                apply_sms_quota:
+                  type: boolean
+                apply_data_quota:
+                  type: boolean
+                retail:
+                  type: boolean
+                sms_p2p_int:
+                  type: boolean
+                sms_p2p_ext:
+                  type: boolean
+                prepaid:
+                  type: boolean
+                nipdp:
+                  type: boolean
+                api_callback:
+                  $ref: '#/components/schemas/ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaApiCallback'
+                api_secret:
+                  $ref: '#/components/schemas/ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaApiSecret'
+                moc_callback:
+                  $ref: '#/components/schemas/ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaMocCallback'
+                esme_interface_type:
+                  $ref: '#/components/schemas/ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaEsmeInterfaceType'
+                breakout_region:
+                  $ref: '#/components/schemas/ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaBreakoutRegion'
+                dns:
+                  $ref: '#/components/schemas/ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaDns'
+  /api/v1/service_profile/{profile_id}:
+    get:
+      operationId: service-profile-by-profile-id-get
+      summary: Retrieve a service profile
+      description: Retrieve a service profile with a given id.
+      tags:
+      - subpackage_serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service Profiles_ServiceProfileByProfileIdGet_Response_200'
+    delete:
+      operationId: service-profile-by-profile-id-delete
+      summary: Delete a service profile
+      description: 'Deletes a service profile and all its associations with services and traffic limits.
+
+        A service profile can only be deleted if it is **not** selected on an endpoint.
+
+        If it is not selected on an endpoint, the used_count is 0.
+
+        '
+      tags:
+      - subpackage_serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '409':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProfileByProfileIdDeleteRequestConflictError'
+    patch:
+      operationId: service-profile-by-profile-id-patch
+      summary: Update service profile
+      description: 'Update a service profile with a given id.
+
+
+        Editable fields:
+
+        * `name` (String optional)
+
+        * `description` (String optional)
+
+        * `allowed_3g` (boolean optional)
+
+        * `allowed_4g` (boolean optional). Allows or restricts connectivity for 4G/LTE and LTE-M networks.
+
+        * `allowed_nb_iot` (boolean optional)
+
+        * `allowed_nb_iot_geo` (boolean optional). Allows or restricts NB-IoT connectivity over satellite networks.
+
+        * **DEPRECATED** `apply_quota` (boolean optional, defaults to false). Use `apply_data_quota` instead. Will be ignored if `apply_data_quota` is present.
+
+        * `apply_data_quota` (boolean optional, defaults to false)
+
+        * `apply_sms_quota` (boolean optional, defaults to false)
+
+        * `retail` (boolean optional, defaults to false)
+
+        * `sms_p2p_int` (boolean optional, defaults to true)
+
+        * `sms_p2p_ext` (boolean optional, defaults to true)
+
+        * **DEPRECATED** `prepaid` (boolean optional, defaults to false)
+
+        * `nipdp` (boolean optional, defaults to false)
+
+        * `api_callback` (object optional) can be emptied by setting the id to null ("api_callback":{"id":null})
+
+        * `api_secret` (object optional) can be emptied by setting the id to null ("api_secret":{"id":null})
+
+        * `moc_callback` (object optional) can be emptied by setting the id to null ("moc_callback":{"id":null})
+
+        * `esme_interface_type` (object optional)
+
+        * `breakout_region` (object optional)
+
+        * `dns` (object optional)
+
+        '
+      tags:
+      - subpackage_serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Successfully updated the Service Profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service Profiles_ServiceProfileByProfileIdPatch_Response_201'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                allowed_3g:
+                  type: boolean
+                allowed_4g:
+                  type: boolean
+                allowed_nb_iot:
+                  type: boolean
+                allowed_nb_iot_geo:
+                  type: boolean
+                apply_sms_quota:
+                  type: boolean
+                apply_data_quota:
+                  type: boolean
+                retail:
+                  type: boolean
+                sms_p2p_int:
+                  type: boolean
+                sms_p2p_ext:
+                  type: boolean
+                prepaid:
+                  type: boolean
+                nipdp:
+                  type: boolean
+                api_callback:
+                  $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaApiCallback'
+                api_secret:
+                  $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaApiSecret'
+                moc_callback:
+                  $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaMocCallback'
+                esme_interface_type:
+                  $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaEsmeInterfaceType'
+                breakout_region:
+                  $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaBreakoutRegion'
+                dns:
+                  $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaDns'
+  /api/v1/service_profile/{profile_id}/quota/{quota_type}:
+    delete:
+      operationId: delete-quota-by-service-profile-id
+      summary: Remove all quotas of assigned endpoints
+      description: 'Remove all quotas of endpoints which are assigned to this profile. Notice that `apply_data_quota` and/or
+
+        `apply_sms_quota` have to be patched to false before, otherwise the endpoints will get blocked
+
+        for having no quota left.
+
+        This call will also return successfully if no endpoint is assigned or no quotas are set.
+
+        '
+      tags:
+      - subpackage_serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: quota_type
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successfully deleted the quota of all (0 or more) assigned endpoints.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '404':
+          description: Service profile not found or not part of this organisation.
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /api/v1/service_profile/{profile_id}/service/{service_id}:
+    put:
+      operationId: service-profile-service-by-profile-and-service-put
+      summary: Add a service to a service profile
+      description: "Add service to the collection of services associated to a profile.\nMultiple services can be assigned, but each only once.\n\n<Warning>\n  Adding the voice service with an id of `3` to a service profile will be successful, but this feature **isn't enabled** by the platform.\n</Warning>\n"
+      tags:
+      - subpackage_serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: service_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '409':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProfileServiceByProfileAndServicePutRequestConflictError'
+    delete:
+      operationId: service-profile-service-by-profile-and-service-delete
+      summary: Remove a service from a service profile
+      description: Remove service from the collection of services associated to a profile. A service can only be removed if it has no assigned traffic limits.
+      tags:
+      - subpackage_serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: service_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '409':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProfileServiceByProfileAndServiceDeleteRequestConflictError'
+  /api/v1/service_profile/{profile_id}/service/{service_id}/traffic_limit/{limit_id}:
+    put:
+      operationId: add-traffic-limit
+      summary: Add SMS limit to service profile
+      description: Add SMS limit to a service policy.
+      tags:
+      - subpackage_serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: service_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: limit_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service Profiles_AddTrafficLimit_Response_200'
+        '404':
+          description: SMS limit not found
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '422':
+          description: General error happened when trying to add the SMS limit
+          content:
+            application/json:
+              schema:
+                description: Any type
+    delete:
+      operationId: remove-traffic-limit
+      summary: Remove SMS limit from a service profile
+      description: Removes the SMS Limit (if any) from a given service profile.
+      tags:
+      - subpackage_serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: service_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: limit_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service Profiles_RemoveTrafficLimit_Response_200'
+        '422':
+          description: General error happened when trying to add the SMS limit
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /api/v1/service_profile/{profile_id}/traffic_limit:
+    get:
+      operationId: list-service-profile-traffic-limits
+      summary: List data limits of service profile
+      description: 'List data limits of the service profile. These have the possibility to add
+
+        custom `volume` values per data limit, as well if they apply only to data traffic over
+
+        satellite rat type, which incurs higher cost, or to cellular.
+
+
+        These data limits will not disable any other traffic limits, but can be used to achieve the
+
+        same outcome.
+
+        '
+      tags:
+      - subpackage_serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdTrafficLimitGetResponsesContentApplicationJsonSchemaItems'
+        '403':
+          description: Service Profile is not found or not accessible
+          content:
+            application/json:
+              schema:
+                description: Any type
+    post:
+      operationId: add-service-profile-traffic-limit
+      summary: Add data limit to service profile
+      description: "This API endpoint allows you to add a data limit to a service profile.\nA data limit is a rule that defines how much data a service can consume within a certain period.\nThis is useful for managing your data usage and avoiding overage charges.\n\nYou can use this API to customize the data limit for your service profile by specifying the service type, time period, volume threshold, and warning percentage.\nYou can also choose to apply the data limit only to satellite radio access technology (RAT) types that use satellites for communication.\n\n<Note>\n  Only users with `User` or `Admin` roles can use this API endpoint.\n  You can only add **one** data limit per service and satellite RAT type combination.\n</Note>\n\nTo change the data limit, you must first delete the existing data limit and then add a new one.\n**Exception**: Creating a temporary [traffic limit extension](/developers/api/endpoint/create-endpoint-traffic-limit-extension).\n"
+      tags:
+      - subpackage_serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service Profiles_AddServiceProfileTrafficLimit_Response_201'
+        '400':
+          description: One or more values of the data limit are invalid
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: Service Profile is not found or not accessible
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '409':
+          description: Data Limit for the same traffic type and rat type combination already exists
+          content:
+            application/json:
+              schema:
+                description: Any type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                service:
+                  $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaService'
+                  description: 'Service type to which the limit applies.
+
+                    The only supported service type is `Data`, which has an ID of `38`.
+
+                    '
+                satellite_only:
+                  type: boolean
+                  default: false
+                  description: 'Determines if the limit only applies to satellite RAT types.
+
+                    The default value is `false`, which means the limit applies to all RAT types.
+
+                    '
+                period:
+                  $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaPeriod'
+                  description: 'Period of the limit.
+
+                    The only supported period is `Monthly`, which uses calendar months and has an ID of `2`.
+
+                    The limit resets at the beginning of each month 00:00 UTC.
+
+                    '
+                volume:
+                  type: integer
+                  format: int64
+                  description: 'Limit threshold in the atomic units of the service type (for data, this is bytes).
+
+                    This specifies the amount of data that the service can consume within the period before the limit is reached or exceeded.
+
+                    '
+                warning_percent:
+                  type: integer
+                  description: 'Percentage of the limit volume when the system sends an event.
+
+                    The event is sent when the limit is reached or exceeded.
+
+                    For example, if you set the warning percentage to `80`, the system sends an event when the service consumes 80% of the limit volume.
+
+                    '
+              required:
+              - service
+              - volume
+    delete:
+      operationId: remove-service-profile-traffic-limits
+      summary: Delete all data limits of a service profile
+      description: 'Delete all data limits. This will not influence the assignment style limits.
+
+        '
+      tags:
+      - subpackage_serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: Service Profile is not found or not accessible
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /api/v1/service_profile/{profile_id}/traffic_limit/{limit_id}:
+    delete:
+      operationId: delete-service-profile-traffic-limit
+      summary: Remove data limit from a service profile
+      tags:
+      - subpackage_serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: limit_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: Service Profile is not found or not accessible
+          content:
+            application/json:
+              schema:
+                description: Any type
+components:
+  schemas:
+    Service Profiles_ServiceProfileByProfileIdPatch_Response_201:
+      type: object
+      properties: {}
+      title: Service Profiles_ServiceProfileByProfileIdPatch_Response_201
+    ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsIpFirewallRuleSet:
+      type: object
+      properties:
+        ip_firewall_profiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsIpFirewallRuleSetIpFirewallProfilesItems'
+        enforce:
+          type: boolean
+      title: ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsIpFirewallRuleSet
+    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaMocCallback:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaMocCallback
+    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaDns:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaDns
+    ServiceProfileServiceByProfileAndServicePutRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ServiceProfileServiceByProfileAndServicePutRequestConflictError
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaEsmeInterfaceType:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaEsmeInterfaceType
+    ApiV1ServiceProfileProfileIdTrafficLimitGetResponsesContentApplicationJsonSchemaItemsService:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1ServiceProfileProfileIdTrafficLimitGetResponsesContentApplicationJsonSchemaItemsService
+    Service Profiles_RemoveTrafficLimit_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Service Profiles_RemoveTrafficLimit_Response_200
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaServiceItems:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaServiceItems
+    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaApiCallback:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaApiCallback
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaIpFirewallRuleSetIpFirewallProfilesItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        added:
+          type: string
+          format: date-time
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaIpFirewallRuleSetIpFirewallProfilesItems
+    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaDns:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaDns
+    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaApiCallback:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaApiCallback
+    Service Profiles_AddTrafficLimit_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Service Profiles_AddTrafficLimit_Response_200
+    ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaPeriodId:
+      type: string
+      enum:
+      - '2'
+      title: ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaPeriodId
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaMocCallback:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaMocCallback
+    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaApiSecret:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaApiSecret
+    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaApiSecret:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaApiSecret
+    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaBreakoutRegion:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaBreakoutRegion
+    ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaServiceId:
+      type: string
+      enum:
+      - '38'
+      title: ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaServiceId
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaApiSecret:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaApiSecret
+    ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        used_count:
+          type: string
+        allowed_3g:
+          type: boolean
+        allowed_4g:
+          type: boolean
+        allowed_nb_iot:
+          type: boolean
+        allowed_nb_iot_geo:
+          type: boolean
+        apply_sms_quota:
+          type: boolean
+        apply_data_quota:
+          type: boolean
+        ip_firewall_rule_set:
+          $ref: '#/components/schemas/ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsIpFirewallRuleSet'
+      title: ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItems
+    ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaService:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaServiceId'
+      description: 'Service type to which the limit applies.
+
+        The only supported service type is `Data`, which has an ID of `38`.
+
+        '
+      title: ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaService
+    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaBreakoutRegion:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaBreakoutRegion
+    Service Profiles_AddServiceProfileTrafficLimit_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Service Profiles_AddServiceProfileTrafficLimit_Response_201
+    ServiceProfileByProfileIdDeleteRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ServiceProfileByProfileIdDeleteRequestConflictError
+    Service Profiles_ServiceProfilePost_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Service Profiles_ServiceProfilePost_Response_201
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaBreakoutRegion:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaBreakoutRegion
+    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaEsmeInterfaceType:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaEsmeInterfaceType
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaApiCallback:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaApiCallback
+    Service Profiles_ServiceProfileByProfileIdGet_Response_200:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        allowed_3g:
+          type: boolean
+        allowed_4g:
+          type: boolean
+        allowed_nb_iot:
+          type: boolean
+        allowed_nb_iot_geo:
+          type: boolean
+        apply_sms_quota:
+          type: boolean
+        apply_data_quota:
+          type: boolean
+        retail:
+          type: boolean
+        sms_p2p_int:
+          type: boolean
+        sms_p2p_ext:
+          type: boolean
+        prepaid:
+          type: boolean
+        nipdp:
+          type: boolean
+        used_count:
+          type: integer
+        api_callback:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaApiCallback'
+        api_secret:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaApiSecret'
+        moc_callback:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaMocCallback'
+        esme_interface_type:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaEsmeInterfaceType'
+        breakout_region:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaBreakoutRegion'
+        service:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaServiceItems'
+        ip_firewall_rule_set:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaIpFirewallRuleSet'
+      title: Service Profiles_ServiceProfileByProfileIdGet_Response_200
+    ApiV1ServiceProfileProfileIdTrafficLimitGetResponsesContentApplicationJsonSchemaItemsPeriod:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        time_units:
+          type: number
+          format: double
+        unit:
+          type: string
+      title: ApiV1ServiceProfileProfileIdTrafficLimitGetResponsesContentApplicationJsonSchemaItemsPeriod
+    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaEsmeInterfaceType:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaEsmeInterfaceType
+    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaMocCallback:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaMocCallback
+    ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsIpFirewallRuleSetIpFirewallProfilesItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        added:
+          type: string
+          format: date-time
+      title: ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsIpFirewallRuleSetIpFirewallProfilesItems
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaIpFirewallRuleSet:
+      type: object
+      properties:
+        ip_firewall_profiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaIpFirewallRuleSetIpFirewallProfilesItems'
+        enforce:
+          type: boolean
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaIpFirewallRuleSet
+    ApiV1ServiceProfileProfileIdTrafficLimitGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        service:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdTrafficLimitGetResponsesContentApplicationJsonSchemaItemsService'
+        satellite_only:
+          type: boolean
+          description: limit only applies to satellite rat types
+        period:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdTrafficLimitGetResponsesContentApplicationJsonSchemaItemsPeriod'
+        volume:
+          type: integer
+          format: int64
+          description: 'the limit threshold in atomic units of the service type,
+
+            which is bytes for data, and count for SMS
+
+            '
+        warning_percent:
+          type: integer
+          description: 'the percentage of the limit volume when the system will send an event
+
+            '
+      title: ApiV1ServiceProfileProfileIdTrafficLimitGetResponsesContentApplicationJsonSchemaItems
+    ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaPeriod:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaPeriodId'
+      description: 'Period of the limit.
+
+        The only supported period is `Monthly`, which uses calendar months and has an ID of `2`.
+
+        The limit resets at the beginning of each month 00:00 UTC.
+
+        '
+      title: ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaPeriod
+    ServiceProfileServiceByProfileAndServiceDeleteRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ServiceProfileServiceByProfileAndServiceDeleteRequestConflictError
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Retrieve a JWT via POST /api/v1/authenticate using an application_token or user credentials, then send it as `Authorization: Bearer <token>`.'

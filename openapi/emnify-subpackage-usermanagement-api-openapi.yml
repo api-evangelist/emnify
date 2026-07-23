@@ -1,0 +1,1079 @@
+openapi: 3.1.0
+info:
+  title: emnify REST subpackage_applicationTokens subpackage_userManagement API
+  version: 1.0.0
+  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
+
+
+    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  contact:
+    name: emnify Developer Support
+    url: https://docs.emnify.com/developers
+  license:
+    name: Proprietary
+    url: https://www.emnify.com/legal
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API base host
+security:
+- BearerAuth: []
+tags:
+- name: subpackage_userManagement
+  x-display-name: Usermanagement
+paths:
+  /api/v1/user:
+    get:
+      operationId: user-per-page-sort-by-q-and-page-get
+      summary: List user accounts
+      description: 'Retrieves the collection of user accounts, filtered, sorted and paged accourding to query parameters.
+
+        '
+      tags:
+      - subpackage_userManagement
+      parameters:
+      - name: page
+        in: query
+        description: Current page number
+        required: false
+        schema:
+          type: number
+          format: double
+      - name: q
+        in: query
+        description: 'Filter parameter in `<filter>:<value>` format. Multiple filters must be in the format of a comma separated list of the following fields:
+
+
+          * `id`
+
+          * `status`
+
+          * `name`
+
+          * `username`
+
+          * `organisation`
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: per_page
+        in: query
+        description: Defines the number of items per page
+        required: false
+        schema:
+          type: integer
+      - name: sort
+        in: query
+        description: 'Sort parameter in `<operator><field>` format.
+
+          Expects a comma-separated list from the allowed fields:
+
+
+          * `id`
+
+          * `status`
+
+          * `name`
+
+          * `username`
+
+          * `organisation`
+
+          * `created`
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully returned a list of Users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1UserGetResponsesContentApplicationJsonSchemaItems'
+    post:
+      operationId: user-per-page-sort-by-q-and-page-post
+      summary: Create user
+      description: 'Creates a user which is *not active and has no password assigned*.
+
+        The URL to get the user details is provided as Location Header in the response.
+
+
+        #### ACTIVATION
+
+
+        Upon creation, the user account undergoes an activation process (see services below ) in which she receives an email with activation link.
+
+        Following this link the user is asked to set the password and upon successful completion of this process, the account becomes active and operational.
+
+
+        Provided fields:
+
+
+        * `username` (String required) - has to be the email of this user
+
+        * `name` (String required)
+
+        * `organisation` (Object optional) -  **may be provided** by regular user, but **is required** for master user.
+
+        * `roles` (List of Objects optional) - List of one or more role Ids to be assigned at once. If missing, a default role is assigned
+
+
+        #### Notes
+
+
+        * Password is not provided. Separate calls provide password management.
+
+        * When the organisation of the new user is not specified in the request, it is inherited from the user creating the account.
+
+
+        A regular user is allowed to specify **only organisations which are direct children** of his/her own organisation, or his/her own organisation.
+
+        * The status field is not user editable at account creation time - the default imposed by server is ACTIVATION_PENDING.
+
+        '
+      tags:
+      - subpackage_userManagement
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Resource Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User Management_UserPerPageSortByQAndPagePost_Response_201'
+        '404':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPerPageSortByQAndPagePostRequestNotFoundError'
+        '422':
+          description: Unprocessable Entity. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPerPageSortByQAndPagePostRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                name:
+                  type: string
+                organisation:
+                  $ref: '#/components/schemas/ApiV1UserPostRequestBodyContentApplicationJsonSchemaOrganisation'
+                roles:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ApiV1UserPostRequestBodyContentApplicationJsonSchemaRolesItems'
+              required:
+              - username
+              - name
+              - organisation
+              - roles
+  /api/v1/user/role:
+    get:
+      operationId: user-role-get
+      summary: List user roles
+      description: Retrieves the collection of available user roles
+      tags:
+      - subpackage_userManagement
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1UserRoleGetResponsesContentApplicationJsonSchemaItems'
+  /api/v1/user/status:
+    get:
+      operationId: user-status-get
+      summary: List user statuses
+      description: Provides the list of available user status (lookup).
+      tags:
+      - subpackage_userManagement
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1UserStatusGetResponsesContentApplicationJsonSchemaItems'
+  /api/v1/user/{user_id}:
+    get:
+      operationId: user-by-id-get
+      summary: Get user by ID or username
+      description: 'Get a specific user by ID  provided the user is within this requesting user''s organisation or the organisation''s immediate child organisations.
+
+
+        `id` may be one of:
+
+
+        * The numeric ID of the user, e.g. "123". This is the top-level `id` object returned by each item in `GET /api/v1/user`
+
+        * Username (email), e.g. "exampleuser@org.de". This is the top-level `username` object returned by each item in `GET /api/v1/user`
+
+        '
+      tags:
+      - subpackage_userManagement
+      parameters:
+      - name: user_id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User Management_UserByIdGet_Response_200'
+        '404':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserByIdGetRequestNotFoundError'
+    delete:
+      operationId: user-by-id-delete
+      summary: Delete user by ID
+      description: "<Error>\n  **This call is deprecated.**\n  Please use DELETE `/api/v2/user/:id` instead.\n</Error>\n\n<Info>\n  A user can be deleted, if belonging to the same organization as the requesting user, or to an organization which is a direct child of the requesting user's organization.\n</Info>\n"
+      tags:
+      - subpackage_userManagement
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '404':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserByIdDeleteRequestNotFoundError'
+    patch:
+      operationId: user-by-id-patch
+      summary: Update user by ID
+      description: "Provided fields\n* `username` (String optional) - has to be user's email\n* `name` (String optional)\n* `status` (Object optional)\n* `organisation` (Object optional) - must be the current organisation or not to be provided\n\n#### Notes\n\n* Password is not provided. Separate calls provide password management.\n* The organisation is not modifiable. A user can be updated, if belonging to the same organisation as the requesting user,\nor to an organisation which is a direct child of the requesting user's organisation.\n* Status can be changed between ACTIVE (id: 1) and SUSPENDED (id: 2), and from ACTIVATION_PENDING (id: 0) to SUSPENDED.\n\n<Info>\n  Modifying the username invalidates account and triggers the activation procedure.\n</Info>\n"
+      tags:
+      - subpackage_userManagement
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '422':
+          description: Unprocessable Entity. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserByIdPatchRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                name:
+                  type: string
+                status:
+                  $ref: '#/components/schemas/ApiV1UserUserIdPatchRequestBodyContentApplicationJsonSchemaStatus'
+              required:
+              - username
+              - name
+              - status
+  /api/v1/user/{user_id}/event:
+    get:
+      operationId: user-event-page-per-page-sort-by-user-id-and-q-get
+      summary: List user events
+      description: "Returns the list of events, filtered, sorted and paged according to query parameters.\n\nOnly an administrator or observer may be allowed to see events of other users, provided they belong to an organisation he/she has access to.\n\nAny user can retrieve their own events at `/api/v1/user/my/event`.\n\n<Error>\n  This API endpoint deviates from the specified conventions and may not return the same HTTP Codes as the higher layer call (`/api/v1/user/{user_id|my}`).\n\n  In case the requested `{user_id}` does not exist or is not accessible for the user, **HTTP 200** will be returned with empty **[]** as long as the provided `{user_id}` is a number and all parameters are valid.\n\n  Please take that into consideration when building automation on top of the error behavior of this endpoint.\n</Error>\n"
+      tags:
+      - subpackage_userManagement
+      parameters:
+      - name: user_id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: page
+        in: query
+        description: Current page number
+        required: false
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: Defines the number of items per page
+        required: false
+        schema:
+          type: integer
+      - name: sort
+        in: query
+        description: 'Sort properties according to a comma separated list of accepted fields. Valid fields are:
+
+
+          * `id` - (**event id**)
+
+          * `timestamp` - (**event timestamp**)
+
+          * `source` - (**event source**)
+
+          * `severity` - (**event severity**)
+
+          * `alert` - (**alert status**)
+
+          * `organisation` - (**organisation name**)
+
+          * `user` - (**user id**)
+
+          * `endpoint` - (**endpoint name**)
+
+          * `tags` - (**endpoint tags**)
+
+          * `ip_address` - (**endpoint ip_address**)
+
+          * `iccid` - (**sim iccid**)
+
+          * `imsi` - (**sim imsi**)
+
+          * `type` - (**event type**)
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: q
+        in: query
+        description: 'Filter parameter in `<filter>:<value>` format.
+
+          Multiple filters must be a comma-separated list of the following fields:
+
+
+          * `from` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, **only valid with until**)
+
+          * `until` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, **only valid with from**)
+
+          * `type` (**event_type**, numerical)
+
+          * `source` (**event_type**, numerical, e.g. 0 = Network), 1 = Policy Control, 2 = API)
+
+          * `severity` (**event_severity**, numerical, e.g. 0 = Info, 1 = Warn), 2 = Critical)
+
+          * `alert` (boolean, e.g. true, false)
+
+          * `description` (**event description**, string)
+
+          * `organisation` (**organisation name**, string)
+
+          * `user` (**user name**, string)
+
+          * `endpoint` (**endpoint name**, string)
+
+          * `tags` (**endpoint tags**, string)
+
+          * `ip_address` (**endpoint IP address**, valid IPv4/IPv6 address)
+
+          * `imei` (**endpoint imei**, numerical string)
+
+          * `iccid` (**sim iccid**, numerical string)
+
+          * `imsi` (**sim imsi**, numerical string)
+
+          * `timestamp` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, for querying events of 1 day, deprecated in future)
+
+          * `iccid_with_luhn` (**sim iccid with Luhn**, numerical string)
+
+          * `network` (**endpoint network**, string, e.g. Telekom)
+
+          * `rat` (**event pdp context rat type**, numerical string, e.g. 6)
+
+          * `country` (**endpoint country**, string, e.g. Germany)
+
+
+          Some filters can accept up to 6 values which must be separated by the pipe symbol (`|`) or url-encoded as (`%7C`):
+
+
+          * `iccid` (q: iccid:1234567890123456789|8988303000123456789)
+
+          * `iccid_with_luhn` (q: iccid:12345678901234567891|89883030001234567891)
+
+          * `endpoint` (q: endpoint:example_endpoint_name|another_endpoint_name)
+
+          * `type` (q: type:example_event_type|another_event_type)
+
+          * `network` (q: network:example_network|another_network)
+
+          * `rat` (q: rat:example_rat|another_rat)
+
+          * `country` (q: country:example_country|another_country)
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully returned a list of User events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItems'
+        '400':
+          description: '**Bad Request** due to incorrect **Paging** Parameters, **Sorting** Parameter or incorrect `{user_id}`
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: '**Forbidden** due to incorrect user role or lack of access
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '422':
+          description: '**Unprocessable Entity** due to incorrect **Query** parameters
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /api/v1/user/{user_id}/role/permission:
+    get:
+      operationId: user-role-permission-by-id-get
+      summary: List user role permissions
+      description: 'Role permissions available to this user.
+
+
+        Only an administrator or observer is allowed to see the role permissions of other users, provided they belong to an organisation he/she has access to.<br/>
+
+
+        Any user can also retrieve one''s own role permissions at:
+
+        `/api/v1/user/my/role/permission`.
+
+        '
+      tags:
+      - subpackage_userManagement
+      parameters:
+      - name: user_id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User Management_UserRolePermissionByIdGet_Response_200'
+  /api/v1/user/{user_id}/role/{role_id}:
+    put:
+      operationId: user-role-by-id-and-role-id-put
+      summary: Assign role to user
+      description: Role is assigned to this user.
+      tags:
+      - subpackage_userManagement
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: role_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '404':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRoleByIdAndRoleIdPutRequestNotFoundError'
+        '409':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRoleByIdAndRoleIdPutRequestConflictError'
+    delete:
+      operationId: user-role-by-id-and-role-id-delete
+      summary: Delete user role
+      description: "Release a Role from association with this user.\n\n<Info>\n  A role can only be removed if it's not the last role of this user.\n</Info>\n"
+      tags:
+      - subpackage_userManagement
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: role_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '404':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRoleByIdAndRoleIdDeleteRequestNotFoundError'
+        '409':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRoleByIdAndRoleIdDeleteRequestConflictError'
+  /api/v2/user/{user_id}/support_token:
+    post:
+      operationId: user-by-id-v-2-create-support-token
+      summary: Create support access token for given user
+      description: 'Create a bearer token that can be used to acces the portal as the target user. Additionally
+
+        admin or observer role can be selected. The role will not be applied to the user, only to the token.
+
+
+        The access can be made through cannel-partner hierarchies as well.
+
+        An event will be generated on the accessed organisation.
+
+        '
+      tags:
+      - subpackage_userManagement
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Support token successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User Management_UserByIdV2CreateSupportToken_Response_201'
+        '403':
+          description: 'Will appear in these cases:
+
+            - User does not have support role
+
+            - User tries to create support token for his own user
+
+            - User tries to access user of parent or outside the organisation child subtree
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: 'Will appear in these cases:
+
+            - User is not active
+
+            - User does not exist
+
+            - Organisation is not found or not enabled
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                role:
+                  $ref: '#/components/schemas/ApiV2UserUserIdSupportTokenPostRequestBodyContentApplicationJsonSchemaRole'
+components:
+  schemas:
+    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource
+    ApiV1UserUserIdPatchResponsesContentApplicationJsonSchemaErrorsItems:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdPatchResponsesContentApplicationJsonSchemaErrorsItems
+    User Management_UserPerPageSortByQAndPagePost_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: User Management_UserPerPageSortByQAndPagePost_Response_201
+    ApiV1UserUserIdPatchRequestBodyContentApplicationJsonSchemaStatus:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdPatchRequestBodyContentApplicationJsonSchemaStatus
+    ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaRolesItems:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaRolesItems
+    ApiV2UserUserIdSupportTokenPostRequestBodyContentApplicationJsonSchemaRole:
+      type: string
+      enum:
+      - '1'
+      - '3'
+      title: ApiV2UserUserIdSupportTokenPostRequestBodyContentApplicationJsonSchemaRole
+    UserRoleByIdAndRoleIdDeleteRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserRoleByIdAndRoleIdDeleteRequestNotFoundError
+    ApiV1UserPostResponsesContentApplicationJsonSchemaErrorsItems:
+      type: object
+      properties: {}
+      title: ApiV1UserPostResponsesContentApplicationJsonSchemaErrorsItems
+    ApiV1UserGetResponsesContentApplicationJsonSchemaItemsStatus:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1UserGetResponsesContentApplicationJsonSchemaItemsStatus
+    ApiV1UserStatusGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ApiV1UserStatusGetResponsesContentApplicationJsonSchemaItems
+    ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaMfaItems:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaMfaItems
+    UserRoleByIdAndRoleIdPutRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserRoleByIdAndRoleIdPutRequestNotFoundError
+    ApiV1UserRoleGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+      title: ApiV1UserRoleGetResponsesContentApplicationJsonSchemaItems
+    ApiV1UserGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        name:
+          type: string
+        created:
+          type: string
+        status:
+          $ref: '#/components/schemas/ApiV1UserGetResponsesContentApplicationJsonSchemaItemsStatus'
+        organisation:
+          $ref: '#/components/schemas/ApiV1UserGetResponsesContentApplicationJsonSchemaItemsOrganisation'
+      title: ApiV1UserGetResponsesContentApplicationJsonSchemaItems
+    ApiV1UserPostRequestBodyContentApplicationJsonSchemaRolesItems:
+      type: object
+      properties: {}
+      title: ApiV1UserPostRequestBodyContentApplicationJsonSchemaRolesItems
+    User Management_UserByIdV2CreateSupportToken_Response_201:
+      type: object
+      properties:
+        support_token:
+          type: string
+      title: User Management_UserByIdV2CreateSupportToken_Response_201
+    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsUser:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsUser
+    UserRoleByIdAndRoleIdDeleteRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserRoleByIdAndRoleIdDeleteRequestConflictError
+    UserByIdPatchRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1UserUserIdPatchResponsesContentApplicationJsonSchemaErrorsItems'
+      title: UserByIdPatchRequestUnprocessableEntityError
+    UserPerPageSortByQAndPagePostRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserPerPageSortByQAndPagePostRequestNotFoundError
+    UserPerPageSortByQAndPagePostRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1UserPostResponsesContentApplicationJsonSchemaErrorsItems'
+      title: UserPerPageSortByQAndPagePostRequestUnprocessableEntityError
+    UserRoleByIdAndRoleIdPutRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserRoleByIdAndRoleIdPutRequestConflictError
+    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation
+    ApiV1UserPostRequestBodyContentApplicationJsonSchemaOrganisation:
+      type: object
+      properties: {}
+      title: ApiV1UserPostRequestBodyContentApplicationJsonSchemaOrganisation
+    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        alert:
+          type: boolean
+        description:
+          type: string
+        timestamp:
+          type: string
+        event_type:
+          $ref: '#/components/schemas/ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventType'
+        event_source:
+          $ref: '#/components/schemas/ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource'
+        event_severity:
+          $ref: '#/components/schemas/ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity'
+        organisation:
+          $ref: '#/components/schemas/ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation'
+        user:
+          $ref: '#/components/schemas/ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsUser'
+      required:
+      - id
+      - alert
+      - description
+      - timestamp
+      - event_type
+      - event_source
+      - event_severity
+      - organisation
+      - user
+      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItems
+    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity
+    ApiV1UserGetResponsesContentApplicationJsonSchemaItemsOrganisation:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+      title: ApiV1UserGetResponsesContentApplicationJsonSchemaItemsOrganisation
+    UserByIdDeleteRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserByIdDeleteRequestNotFoundError
+    User Management_UserByIdGet_Response_200:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        name:
+          type: string
+        created:
+          type: string
+        status:
+          $ref: '#/components/schemas/ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaStatus'
+        organisation:
+          $ref: '#/components/schemas/ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaOrganisation'
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaRolesItems'
+        mfa:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaMfaItems'
+      title: User Management_UserByIdGet_Response_200
+    ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaOrganisation:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaOrganisation
+    ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaStatus:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaStatus
+    UserByIdGetRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserByIdGetRequestNotFoundError
+    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventType:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventType
+    User Management_UserRolePermissionByIdGet_Response_200:
+      type: object
+      properties: {}
+      title: User Management_UserRolePermissionByIdGet_Response_200
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Retrieve a JWT via POST /api/v1/authenticate using an application_token or user credentials, then send it as `Authorization: Bearer <token>`.'

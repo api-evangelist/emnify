@@ -1,0 +1,728 @@
+openapi: 3.1.0
+info:
+  title: emnify REST subpackage_applicationTokens subpackage_authentication API
+  version: 1.0.0
+  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
+
+
+    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  contact:
+    name: emnify Developer Support
+    url: https://docs.emnify.com/developers
+  license:
+    name: Proprietary
+    url: https://www.emnify.com/legal
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API base host
+security:
+- BearerAuth: []
+tags:
+- name: subpackage_authentication
+  x-display-name: Authentication
+paths:
+  /api/v1/authenticate:
+    post:
+      operationId: authenticate
+      summary: Retrieve authentication token
+      description: "Returns a [JSON Web Token (JWT)](/developers/auth/jwts) `auth_token` for authenticating further requests to the API.\n\n<Note>\n  This API path has a rate limit of 100 requests per IP in a 5-minute window.\n  Make sure to store your authentication token to avoid hitting this limit.\n  For more information, see [Rate limits](/developers/api-guidelines/rate-limits).\n</Note>\n\n### Multi-factor authentication flow\n\nWhen multi-factor authentication (MFA) is enabled for a user account:\n\n1. **Initial login**: Send your username and SHA-1 hashed password.\n  If MFA is enabled and the device isn't trusted, you receive an `mfa_token` instead of `auth_token` in the response and a one-time password (OTP) via email.\n2. **MFA verification**: Send the `mfa_token` with the 6-digit OTP `code`.\n  Optionally include `trusted_device` information to skip MFA for 90 days.\n3. **Subsequent logins**: If you included a trusted device fingerprint during verification, send your username and SHA-1 hashed password with the `fingerprint` to bypass MFA.\n\nFor more information, see [Multi-factor authentication](/developers/auth/multi-factor-authentication).\n"
+      tags:
+      - subpackage_authentication
+      responses:
+        '200':
+          description: Successful Authentication Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Authentication_Authenticate_Response_200'
+        '400':
+          description: The request body is malformed or fails validation.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '401':
+          description: 'The response body is empty for most authentication failures (invalid credentials, suspended or deleted user, etc.).
+
+            When account lockout is triggered after three consecutive failed authentication attempts, the response body contains the `TooManyRequests` error and further attempts are blocked for five minutes.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticateRequestUnauthorizedError'
+        '404':
+          description: 'Unexpected error in API call.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticateRequestNotFoundError'
+      requestBody:
+        description: "Authenticate with an [application token](/developers/auth/application-tokens).\n\n<Info>\n  **Temporary exception**:\n  [User credentials](/developers/auth/user-credentials) are currently required for operations that span multiple workspaces, such as switching between workspaces or transferring SIMs.\n  These APIs are being updated to support application tokens.\n</Info>\n"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                application_token:
+                  type: string
+                  description: Application token for authentication
+                username:
+                  type: string
+                  description: Username for user credentials authentication
+                password:
+                  type: string
+                  format: password
+                  description: 'User password.
+
+                    Must be SHA-1 hashed when authenticating with user credentials.
+
+                    '
+                fingerprint:
+                  type: string
+                  description: Device fingerprint for trusted device authentication (skips MFA)
+                refresh_token:
+                  type: string
+                  description: Refresh token to obtain a new `auth_token`
+                mfa_token:
+                  type: string
+                  description: MFA token received when MFA is enabled
+                code:
+                  type: string
+                  description: 6-digit one-time password (OTP) for MFA verification
+                trusted_device:
+                  $ref: '#/components/schemas/ApiV1AuthenticatePostRequestBodyContentApplicationJsonSchemaTrustedDevice'
+                  description: Device information to register as trusted (90-day MFA exemption)
+  /api/v1/user/mfa:
+    post:
+      operationId: post-mfa
+      summary: Create an MFA key
+      description: "Generate and store a MFA key for the requesting user. After this call, the MFA key has the status `activation pending` and must be activated through a separate call (`/api/v1/user/mfa/{id}`).\n\nYou must provide following fields with this request:\n\n* `type` (Object required)\n  - `id` (Number)\n* `password` (String required) - User password\n\nThe **MFA key** object returned by the server contains the following properties:\n\n* `id` (Integer) - The unique ID of this MFA key\n* `status` (Object) ID (Integer) - Id of status of this MFA key\n  - `description` (String) - description of the status\n* `type` (Object) ID (Integer) - Id of type of this MFA key\n  - `description` (String) - description of the type\n* `secret_key` (String) - Secret key (encoded in Base32) for this MFA key, will be displayed only on creation\n* `otpauth` (String) - Secret key as a URI encoded for QR codes, will be displayed only on creation\n* `creation_date` (Timestamp) - Timestamp when this MFA key was created - type: ISO 8601 timestamp format\n* `activation_date` (Timestamp) - Timestamp when this MFA key was activated - type: ISO 8601 timestamp format\n"
+      tags:
+      - subpackage_authentication
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Authentication_postMfa_Response_200'
+        '409':
+          description: 'Unexpected error in API call.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostMfaRequestConflictError'
+        '422':
+          description: 'Unprocessable Entity.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostMfaRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  $ref: '#/components/schemas/ApiV1UserMfaPostRequestBodyContentApplicationJsonSchemaType'
+                password:
+                  type: string
+              required:
+              - type
+              - password
+  /api/v1/user/mfa/status:
+    get:
+      operationId: user-mfa-status-get
+      summary: List MFA key statuses
+      description: Retrieve a list of possible MFA Key statuses.
+      tags:
+      - subpackage_authentication
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1UserMfaStatusGetResponsesContentApplicationJsonSchemaItems'
+  /api/v1/user/mfa/type:
+    get:
+      operationId: user-mfa-type-get
+      summary: List MFA key types
+      description: Retrieve a list of possible MFA Key types.
+      tags:
+      - subpackage_authentication
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1UserMfaTypeGetResponsesContentApplicationJsonSchemaItems'
+  /api/v1/user/mfa/{key_id}:
+    patch:
+      operationId: user-mfa-by-id-patch
+      summary: Activate MFA key
+      description: 'Activates a pending MFA key for the authenticated user.
+
+
+        After you [create an MFA key](/developers/api/authentication/post-mfa), the key has status `Activation Pending`.
+
+        To complete setup, call this endpoint with the MFA key ID and a valid 6-digit time-based one-time password (TOTP) generated from the `secret_key` or `otpauth` URI returned during creation.
+
+
+        Once activated, the MFA key status changes to `Active`, and MFA is enforced on subsequent logins with [user credentials](/developers/auth/user-credentials).
+
+
+        For more information, see [Multi-factor authentication](/developers/auth/multi-factor-authentication).
+
+        '
+      tags:
+      - subpackage_authentication
+      parameters:
+      - name: key_id
+        in: path
+        description: 'The unique identifier of the MFA key to activate.
+
+          This ID is returned when you [create the MFA key](/developers/api/authentication/post-mfa).
+
+          '
+        required: true
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: MFA key activated successfully. No content returned.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '404':
+          description: 'MFA key not found.
+
+            Verify the `key_id` is correct and belongs to the authenticated user.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserMfaByIdPatchRequestNotFoundError'
+        '409':
+          description: 'MFA key is already activated.
+
+            Each key can only be activated once.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserMfaByIdPatchRequestConflictError'
+        '422':
+          description: 'Invalid TOTP code.
+
+            The code didn''t match the expected value.
+
+            This can happen if:
+
+
+            - The code was entered incorrectly
+
+            - The code expired (codes are valid for 30 seconds)
+
+            - The device clock is out of sync with the server
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserMfaByIdPatchRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  $ref: '#/components/schemas/ApiV1UserMfaKeyIdPatchRequestBodyContentApplicationJsonSchemaStatus'
+                  description: The target status for the MFA key.
+                code:
+                  type: string
+                  description: 'The 6-digit TOTP code generated by your authenticator app using the `secret_key` or `otpauth` URI from the MFA key creation response.
+
+
+                    This code changes every 30 seconds.
+
+                    '
+              required:
+              - status
+              - code
+  /api/v1/user/{user_id}/mfa/trusted_device:
+    get:
+      operationId: user-mfa-trusted-device-by-user-id-get
+      summary: List trusted devices
+      description: 'Returns the list of trusted devices for a given user.
+
+
+        The list of one''s own trusted devices can also be retrieved with a call to either
+
+        `/api/v1/user/my/mfa/trusted_device` or `/api/v1/user/mfa/trusted_device`
+
+        '
+      tags:
+      - subpackage_authentication
+      parameters:
+      - name: user_id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1UserUserIdMfaTrustedDeviceGetResponsesContentApplicationJsonSchemaItems'
+        '404':
+          description: 'Unexpected error in API call.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserMfaTrustedDeviceByUserIdGetRequestNotFoundError'
+  /api/v1/user/{user_id}/mfa/trusted_device/{device_id}:
+    delete:
+      operationId: user-mfa-trusted-device-by-user-id-and-device-id-delete
+      summary: Delete a trusted device
+      description: 'Deletes a trusted device.
+
+
+        Removing one''s own trusted device can also be performed at either `/api/v1/user/my/mfa/trusted_device/{id}` or `/api/v1/user/mfa/trusted_device/{id}`
+
+        '
+      tags:
+      - subpackage_authentication
+      parameters:
+      - name: user_id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: device_id
+        in: path
+        description: Device ID
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '404':
+          description: 'Unexpected error in API call.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserMfaTrustedDeviceByUserIdAndDeviceIdDeleteRequestNotFoundError'
+  /api/v1/user/{user_id}/mfa/{key_id}:
+    delete:
+      operationId: user-mfa-by-user-id-and-key-id-delete
+      summary: Delete an MFA key
+      description: 'Delete an MFA key for a given user.
+
+
+        An own MFA key can also be deleted with a call to `/api/v1/user/my/mfa/{key_id}`
+
+        '
+      tags:
+      - subpackage_authentication
+      parameters:
+      - name: key_id
+        in: path
+        description: Key ID
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: user_id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: 'The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '404':
+          description: 'Unexpected error in API call.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserMfaByUserIdAndKeyIdDeleteRequestNotFoundError'
+components:
+  schemas:
+    ApiV1UserMfaPostResponsesContentApplicationJsonSchemaErrorsItems:
+      type: object
+      properties: {}
+      title: ApiV1UserMfaPostResponsesContentApplicationJsonSchemaErrorsItems
+    UserMfaByIdPatchRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+          description: Numeric error code for programmatic handling.
+        error_token:
+          type: string
+          description: String identifier for the error type.
+        message:
+          type: string
+          description: Human-readable error message.
+      title: UserMfaByIdPatchRequestNotFoundError
+    UserMfaTrustedDeviceByUserIdGetRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserMfaTrustedDeviceByUserIdGetRequestNotFoundError
+    PostMfaRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1UserMfaPostResponsesContentApplicationJsonSchemaErrorsItems'
+      title: PostMfaRequestUnprocessableEntityError
+    AuthenticateRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: AuthenticateRequestNotFoundError
+    ApiV1UserMfaKeyIdPatchRequestBodyContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'Status ID.
+
+            Use `1` to activate the key.
+
+
+            You can retrieve available status IDs from [List MFA key statuses](/developers/api/authentication/user-mfa-status-get).
+
+            '
+      required:
+      - id
+      description: The target status for the MFA key.
+      title: ApiV1UserMfaKeyIdPatchRequestBodyContentApplicationJsonSchemaStatus
+    UserMfaByIdPatchRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+          description: Numeric error code for programmatic handling.
+        error_token:
+          type: string
+          description: String identifier for the error type.
+        message:
+          type: string
+          description: Human-readable error message.
+      title: UserMfaByIdPatchRequestUnprocessableEntityError
+    ApiV1UserMfaPostRequestBodyContentApplicationJsonSchemaType:
+      type: object
+      properties: {}
+      title: ApiV1UserMfaPostRequestBodyContentApplicationJsonSchemaType
+    UserMfaByIdPatchRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+          description: Numeric error code for programmatic handling.
+        error_token:
+          type: string
+          description: String identifier for the error type.
+        message:
+          type: string
+          description: Human-readable error message.
+      title: UserMfaByIdPatchRequestConflictError
+    Authentication_Authenticate_Response_200:
+      type: object
+      properties:
+        auth_token:
+          type: string
+          description: JWT authentication token (returned for successful authentication)
+        refresh_token:
+          type: string
+          description: Refresh token (returned with `auth_token` for user credentials auth)
+        mfa_token:
+          type: string
+          description: MFA token (returned instead of `auth_token` when MFA is enabled and device isn't trusted)
+      title: Authentication_Authenticate_Response_200
+    ApiV1UserUserIdMfaTrustedDeviceGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        operating_system:
+          type: string
+        browser:
+          type: string
+        activation_date:
+          type: string
+      title: ApiV1UserUserIdMfaTrustedDeviceGetResponsesContentApplicationJsonSchemaItems
+    UserMfaByUserIdAndKeyIdDeleteRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserMfaByUserIdAndKeyIdDeleteRequestNotFoundError
+    ApiV1UserMfaPostResponsesContentApplicationJsonSchemaType:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1UserMfaPostResponsesContentApplicationJsonSchemaType
+    PostMfaRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: PostMfaRequestConflictError
+    ApiV1UserMfaTypeGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ApiV1UserMfaTypeGetResponsesContentApplicationJsonSchemaItems
+    ApiV1UserMfaStatusGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ApiV1UserMfaStatusGetResponsesContentApplicationJsonSchemaItems
+    UserMfaTrustedDeviceByUserIdAndDeviceIdDeleteRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserMfaTrustedDeviceByUserIdAndDeviceIdDeleteRequestNotFoundError
+    AuthenticateRequestUnauthorizedError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: AuthenticateRequestUnauthorizedError
+    Authentication_postMfa_Response_200:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        status:
+          $ref: '#/components/schemas/ApiV1UserMfaPostResponsesContentApplicationJsonSchemaStatus'
+        type:
+          $ref: '#/components/schemas/ApiV1UserMfaPostResponsesContentApplicationJsonSchemaType'
+        secret_key:
+          type: string
+        otpauth:
+          type: string
+        creation_date:
+          type: string
+      title: Authentication_postMfa_Response_200
+    ApiV1UserMfaPostResponsesContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1UserMfaPostResponsesContentApplicationJsonSchemaStatus
+    ApiV1AuthenticatePostRequestBodyContentApplicationJsonSchemaTrustedDevice:
+      type: object
+      properties:
+        fingerprint:
+          type: string
+          description: Unique device identifier
+        operating_system:
+          type: string
+          description: Device operating system
+        browser:
+          type: string
+          description: Browser name
+        name:
+          type: string
+          description: Optional name for the device
+      description: Device information to register as trusted (90-day MFA exemption)
+      title: ApiV1AuthenticatePostRequestBodyContentApplicationJsonSchemaTrustedDevice
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Retrieve a JWT via POST /api/v1/authenticate using an application_token or user credentials, then send it as `Authorization: Bearer <token>`.'

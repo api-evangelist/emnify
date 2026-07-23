@@ -1,0 +1,216 @@
+openapi: 3.1.0
+info:
+  title: emnify REST subpackage_applicationTokens API
+  version: 1.0.0
+  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
+
+
+    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  contact:
+    name: emnify Developer Support
+    url: https://docs.emnify.com/developers
+  license:
+    name: Proprietary
+    url: https://www.emnify.com/legal
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API base host
+security:
+- BearerAuth: []
+tags:
+- name: subpackage_applicationTokens
+  x-display-name: Applicationtokens
+paths:
+  /api/v1/application_token:
+    get:
+      operationId: application-token-get
+      summary: List application tokens
+      description: Returns the list of application tokens for the organisation of the requesting user.
+      tags:
+      - subpackage_applicationTokens
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItems'
+    post:
+      operationId: application-token-post
+      summary: Create application token
+      description: 'Creates a new application token.
+
+        ID must not be specified, as it is auto-generated and returned in case of a successful JSON response.
+
+        You can provide following fields with this request:
+
+
+        * `description` (String, optional)
+
+        * `expiry_date` with optional time + time zone (String, optional)
+
+        * `ip` - IP Address in CIDR notation (String, optional)
+
+        '
+      tags:
+      - subpackage_applicationTokens
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application tokens_ApplicationTokenPost_Response_200'
+        '422':
+          description: Unprocessable Entity. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationTokenPostRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                expiry_date:
+                  type: string
+                ip:
+                  type: string
+  /api/v1/application_token/{app_token_id}:
+    patch:
+      operationId: application-token-by-id-patch
+      summary: Update application token
+      description: 'The `description` of the token may be updated and the
+
+        Application Token can be revoked by updating the `status`.
+
+        The possible statuses of tokens are
+
+
+        * `"id": 0` - Activated
+
+        * `"id": 1` - Revoked
+
+        '
+      tags:
+      - subpackage_applicationTokens
+      parameters:
+      - name: app_token_id
+        in: path
+        description: application token ID
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                status:
+                  $ref: '#/components/schemas/ApiV1ApplicationTokenAppTokenIdPatchRequestBodyContentApplicationJsonSchemaStatus'
+components:
+  schemas:
+    ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsStatus:
+      type: object
+      properties: {}
+      title: ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsStatus
+    Application tokens_ApplicationTokenPost_Response_200:
+      type: object
+      properties:
+        application_token:
+          type: string
+      title: Application tokens_ApplicationTokenPost_Response_200
+    ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+        created:
+          type: string
+        status:
+          $ref: '#/components/schemas/ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsStatus'
+        expiry_date:
+          type: string
+        ip:
+          type: string
+        creator:
+          $ref: '#/components/schemas/ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsCreator'
+      title: ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItems
+    ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsCreator:
+      type: object
+      properties: {}
+      title: ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsCreator
+    ApiV1ApplicationTokenAppTokenIdPatchRequestBodyContentApplicationJsonSchemaStatus:
+      type: object
+      properties: {}
+      title: ApiV1ApplicationTokenAppTokenIdPatchRequestBodyContentApplicationJsonSchemaStatus
+    ApplicationTokenPostRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ApplicationTokenPostRequestUnprocessableEntityError
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Retrieve a JWT via POST /api/v1/authenticate using an application_token or user credentials, then send it as `Authorization: Bearer <token>`.'

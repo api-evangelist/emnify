@@ -1,0 +1,359 @@
+openapi: 3.1.0
+info:
+  title: emnify REST subpackage_applicationTokens subpackage_lookups API
+  version: 1.0.0
+  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
+
+
+    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  contact:
+    name: emnify Developer Support
+    url: https://docs.emnify.com/developers
+  license:
+    name: Proprietary
+    url: https://www.emnify.com/legal
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API base host
+security:
+- BearerAuth: []
+tags:
+- name: subpackage_lookups
+  x-display-name: Lookups
+paths:
+  /api/v1/breakout_region:
+    get:
+      operationId: breakout-region-get
+      summary: List breakout regions
+      description: Provides the list of available breakout regions.
+      tags:
+      - subpackage_lookups
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1BreakoutRegionGetResponsesContentApplicationJsonSchemaItems'
+  /api/v1/country:
+    get:
+      operationId: country-get
+      summary: List country codes
+      description: Provides the list of available countries (lookup).
+      tags:
+      - subpackage_lookups
+      parameters:
+      - name: geographic
+        in: query
+        description: 'Filters the country list for geographic countries only.
+
+          This will exclude duplicate countries with different MCCs, like `India MCC 405` or `United States (311)`.
+
+          '
+        required: false
+        schema:
+          type: boolean
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1CountryGetResponsesContentApplicationJsonSchemaItems'
+  /api/v1/currency:
+    get:
+      operationId: currency-get
+      summary: List currencies
+      description: Provides the list of available currencies (lookup).
+      tags:
+      - subpackage_lookups
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1CurrencyGetResponsesContentApplicationJsonSchemaItems'
+  /api/v1/data_blocksize:
+    get:
+      operationId: data-blocksize-get
+      summary: List data blocksizes
+      description: Provides the list of available data blocksizes (lookup).
+      tags:
+      - subpackage_lookups
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1DataBlocksizeGetResponsesContentApplicationJsonSchemaItems'
+  /api/v1/data_throttle:
+    get:
+      operationId: data-throttle-get
+      summary: List data throttles
+      description: Provides the list of available data throttles (lookup).
+      tags:
+      - subpackage_lookups
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1DataThrottleGetResponsesContentApplicationJsonSchemaItems'
+  /api/v1/esme_interface_type:
+    get:
+      operationId: esme-interface-type-get
+      summary: List ESME interface types
+      description: Provides the list of available ESME interface types.
+      tags:
+      - subpackage_lookups
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1EsmeInterfaceTypeGetResponsesContentApplicationJsonSchemaItems'
+  /api/v1/rat_type:
+    get:
+      operationId: rat-type
+      summary: List RAT types
+      description: 'Returns a list of supported RAT types.
+
+        '
+      tags:
+      - subpackage_lookups
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1RatTypeGetResponsesContentApplicationJsonSchemaItems'
+  /api/v1/service_level:
+    get:
+      operationId: list-service-levels
+      summary: Get list of service levels
+      description: 'Returns a list of service levels that can be configured on a tariff plan level.
+
+        For non-enterprise organisations, only own service levels will be returned.
+
+        For enterprise organisations, only the service levels of the parent organisation will be returned.
+
+        '
+      tags:
+      - subpackage_lookups
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1ServiceLevelGetResponsesContentApplicationJsonSchemaItems'
+components:
+  schemas:
+    ApiV1ServiceLevelGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+      required:
+      - id
+      description: The default service level of a tariff plan. Possible values can be fetched with GET `/api/v1/service_level`.
+      title: ApiV1ServiceLevelGetResponsesContentApplicationJsonSchemaItems
+    ApiV1EsmeInterfaceTypeGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      required:
+      - id
+      - description
+      title: ApiV1EsmeInterfaceTypeGetResponsesContentApplicationJsonSchemaItems
+    ApiV1CurrencyGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        code:
+          type: string
+        symbol:
+          type: string
+      title: ApiV1CurrencyGetResponsesContentApplicationJsonSchemaItems
+    ApiV1DataBlocksizeGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        octets:
+          type: string
+        description:
+          type: string
+      title: ApiV1DataBlocksizeGetResponsesContentApplicationJsonSchemaItems
+    ApiV1RatTypeGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1RatTypeGetResponsesContentApplicationJsonSchemaItems
+    ApiV1CountryGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country_code:
+          type: string
+        mcc:
+          type: string
+        iso_code:
+          type: string
+      title: ApiV1CountryGetResponsesContentApplicationJsonSchemaItems
+    ApiV1BreakoutRegionGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        ip_address:
+          type: string
+      title: ApiV1BreakoutRegionGetResponsesContentApplicationJsonSchemaItems
+    ApiV1DataThrottleGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        octets:
+          type: string
+        description:
+          type: string
+      title: ApiV1DataThrottleGetResponsesContentApplicationJsonSchemaItems
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Retrieve a JWT via POST /api/v1/authenticate using an application_token or user credentials, then send it as `Authorization: Bearer <token>`.'

@@ -1,0 +1,808 @@
+openapi: 3.1.0
+info:
+  title: emnify REST subpackage_applicationTokens subpackage_cloudConnect API
+  version: 1.0.0
+  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
+
+
+    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  contact:
+    name: emnify Developer Support
+    url: https://docs.emnify.com/developers
+  license:
+    name: Proprietary
+    url: https://www.emnify.com/legal
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API base host
+security:
+- BearerAuth: []
+tags:
+- name: subpackage_cloudConnect
+  x-display-name: Cloudconnect
+paths:
+  /api/v1/cnc/breakout:
+    get:
+      operationId: get-cloud-connect-attachments
+      summary: List all Cloud Connect attachments of an organization
+      description: 'Lists all Cloud Connect attachments of the logged in organisation if it is an Enterprise. For Master organisations
+
+        it lists all attachments of the direct child organisations. Deleted attachments are left out by default.
+
+
+        Additionally the attachments can be filtered by status and type.
+
+        Master organisations can also filter by organisation ID of their direct child organisations.
+
+        '
+      tags:
+      - subpackage_cloudConnect
+      parameters:
+      - name: status
+        in: query
+        description: 'Numerical ID of the Cloud Connect attachment status
+
+
+          * `1` - Pending Customer Action
+
+          * `2` - Pending AWS Activation
+
+          * `3` - Pending EGN Activation
+
+          * `4` - Pending CRG Activation
+
+          * `5` - Active
+
+          * `6` - Deactivation Pending
+
+          * `7` - Deactivated
+
+          * `8` - Rolling Back
+
+          '
+        required: false
+        schema:
+          $ref: '#/components/schemas/ApiV1CncBreakoutGetParametersStatus'
+      - name: type
+        in: query
+        description: 'Numerical ID of the Cloud Connect attachment type
+
+
+          * `1` - Transit Gateway
+
+          * `2` - IPSec VPN
+
+          * `3` - IPSec VPN BGP
+
+          * `4` - IPSec VPN BGP High Availability
+
+          * `5` - Direct Connect
+
+          * `6` - Shared
+
+          * `7` - Transit Gateway (Classic)
+
+          * `8` - IPSec VPN (Classic)
+
+          '
+        required: false
+        schema:
+          $ref: '#/components/schemas/ApiV1CncBreakoutGetParametersType'
+      - name: organisation
+        in: query
+        description: Numerical ID of an Organization
+        required: false
+        schema:
+          type: number
+          format: double
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1CncBreakoutGetResponsesContentApplicationJsonSchemaItems'
+        '403':
+          description: Authentication token is valid, but user has no access permissions to the request resource
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /api/v1/cnc/breakout/tgw:
+    post:
+      operationId: create-cloud-connect-attachment-tgw
+      summary: Create a Cloud Connect attachment via Transit Gateway
+      description: 'Creates a Transit Gateway breakout towards the customer AWS account.
+
+
+        After the creation the following steps have to be made from the customer''s AWS account:
+
+
+        1. Accept the resource share about the ''CloudConnect'' TransitGateway
+
+        2. Create a Transit Gateway Attachment to the own VPC with the services to connect to
+
+
+        More Information about this can be found on the Cloud Connect Knowledge Base article.
+
+        '
+      tags:
+      - subpackage_cloudConnect
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Response to a POST that results in a creation, usually will return a Location header pointing to the location of the new resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cloud Connect_CreateCloudConnectAttachmentTGW_Response_201'
+        '400':
+          description: The request is malformed, e.g. the body cannot be parsed
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: Authentication token is valid, but user has no access permissions to the request resource
+          content:
+            application/json:
+              schema:
+                description: Any type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  $ref: '#/components/schemas/ApiV1CncBreakoutTgwPostRequestBodyContentApplicationJsonSchemaType'
+                name:
+                  type: string
+                description:
+                  type: string
+                vpc_cidr:
+                  type: array
+                  items:
+                    type: string
+                region:
+                  type: string
+                  description: the region that this attachment should be established to
+                aws_account_id:
+                  type: string
+                  description: 12-digit identifier of the own AWS Account
+              required:
+              - type
+              - name
+              - vpc_cidr
+              - region
+              - aws_account_id
+  /api/v1/cnc/breakout/vpn:
+    post:
+      operationId: create-cloud-connect-attachment-vpn
+      summary: Create a Cloud Connect attachment via IPSec VPN
+      description: "Creates a Cloud Connect attachment via a specified VPN server.\nCurrently two attachment types are available:\n\n- **Static VPN** (type `2`): Basic IPSec VPN connection\n- **Dynamic VPN with BGP** (type `3`): IPSec VPN with BGP routing.\n  Requires `asn` (Autonomous System Number), otherwise dynamic routing is disabled.\n  Optionally accepts `inside_cidr` for BGP tunnel interfaces.\n\nThe `on_prem_cidr` parameter specifies the CIDR ranges of your backend network (up to 3).\nThe `public_ip` is the public IP address of your VPN server.\n\nA `psk` (Pre-Shared Key) can be configured with 8-64 alphanumeric characters, periods (`.`), and underscores (`_`).\nIt must not begin with `0`.\nIf left empty, it generates automatically and can be retrieved via [`GET /api/v1/cnc/breakout/{cloudconnect_attachment_id}`](/developers/api/cloud-connect/get-cloud-connect-attachment-by-id).\n\n<Success>\n  The created connection is available within 3-5 minutes.\n</Success>\n"
+      tags:
+      - subpackage_cloudConnect
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: 'Attachment created successfully.
+
+            The `Location` header contains the URL of the new resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cloud Connect_CreateCloudConnectAttachmentVPN_Response_201'
+        '400':
+          description: 'The request body is malformed or missing required fields.
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: 'Your authentication token is valid, but you don''t have permission to access the requested resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  $ref: '#/components/schemas/ApiV1CncBreakoutVpnPostRequestBodyContentApplicationJsonSchemaType'
+                  description: 'Breakout type.
+
+                    Use `2` for Static VPN or `3` for Dynamic VPN with BGP.
+
+                    '
+                name:
+                  type: string
+                  description: Display name for the Cloud Connect attachment.
+                description:
+                  type: string
+                  description: Optional description for the attachment.
+                region:
+                  type: string
+                  description: AWS region for the attachment (for example, `eu-west-1`).
+                public_ip:
+                  type: string
+                  description: Public IP address of your VPN server.
+                psk:
+                  type: string
+                  description: 'Pre-shared key (PSK) for the VPN connection.
+
+                    If empty, AWS generates one automatically.
+
+                    '
+                asn:
+                  type: integer
+                  description: "Autonomous System Number (ASN) for BGP routing.\n\n<Info>\n  Required for Dynamic VPN (type `3`).\"\n</Info>\n"
+                on_prem_cidr:
+                  type: array
+                  items:
+                    type: string
+                  description: 'CIDR ranges of your backend network.
+
+                    You can configure up to 3 ranges.
+
+                    '
+                inside_cidr:
+                  type: array
+                  items:
+                    type: string
+                  description: 'For Dynamic VPN only: /30 CIDR ranges for BGP tunnel interfaces (up to 3).
+
+                    If empty, AWS generates them automatically.
+
+                    '
+              required:
+              - type
+              - name
+              - public_ip
+              - on_prem_cidr
+  /api/v1/cnc/breakout/{cloudconnect_attachment_id}:
+    get:
+      operationId: get-cloud-connect-attachment-by-id
+      summary: View details of a Cloud Connect attachment
+      description: 'Displays the details including configured CIDR blocks of a Cloud Connect Attachment.
+
+
+        For active IPSec VPN attachments, the tunnel information (public IP, outisde address, inside CIDR, PSK, ASN)
+
+        including metrics over the last hour (tunnel state, bytes in/out) will be displayed as well.
+
+        '
+      tags:
+      - subpackage_cloudConnect
+      parameters:
+      - name: cloudconnect_attachment_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItems'
+    delete:
+      operationId: delete-cloud-connect-attachment
+      summary: Delete a specific Cloud Connect attachment
+      description: 'Deletes the specified Cloud Connect attachment.
+
+
+        Attachments cannot be deleted if they are in the state `7 (Deactivated)` or `8 (Rolling Back)` or if they are Classic attachments.
+
+        '
+      tags:
+      - subpackage_cloudConnect
+      parameters:
+      - name: cloudconnect_attachment_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response to a successful GET, also used for a POST if it does not result in a creation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cloud Connect_DeleteCloudConnectAttachment_Response_200'
+        '400':
+          description: The request is malformed, e.g. the body cannot be parsed
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: Authentication token is valid, but user has no access permissions to the request resource
+          content:
+            application/json:
+              schema:
+                description: Any type
+    patch:
+      operationId: retry-cloud-connect-attachment
+      summary: Retry creation of an expired TGW breakout
+      description: 'Retries the creation of a Transit Gateway breakout where the accept attachment state has expired, meaning the
+
+        attachment on the customer''s side has not been created in time.
+
+
+        Retry is only allowed if:
+
+        - The breakout is of type `Transit Gateway (type_id: 1)`
+
+        - The breakout is in status `Pending AWS Activation (status_id: 2)`
+
+        - The accept attachment state has expired (7 days after creation)
+
+        '
+      tags:
+      - subpackage_cloudConnect
+      parameters:
+      - name: cloudconnect_attachment_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response to a successful GET, also used for a POST if it does not result in a creation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cloud Connect_RetryCloudConnectAttachment_Response_200'
+        '404':
+          description: A non-existent resource is requested
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /api/v1/cnc/breakout_type:
+    get:
+      operationId: get-cloud-connect-breakout-types
+      summary: List Cloud Connect breakout types
+      description: 'Lists all Cloud Connect breakout types.
+
+        '
+      tags:
+      - subpackage_cloudConnect
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1CncBreakoutTypeGetResponsesContentApplicationJsonSchemaItems'
+  /api/v1/cnc/breakout_type/{breakout_type_id}/available_region:
+    get:
+      operationId: get-cloud-connect-available-regions-by-breakout-type
+      summary: Get list of available Cloud Connect regions by breakout type
+      description: 'Returns a list of regions available for use when creating new Cloud Connect breakouts of the selected breakout type.
+
+
+        If the attachment region is peered to another one, the device breakout region will also be returned.
+
+        '
+      tags:
+      - subpackage_cloudConnect
+      parameters:
+      - name: breakout_type_id
+        in: path
+        description: 'ID of a Cloud Connect breakout type. Possible values can be retrieved with `GET /api/v1/cnc/breakout_type`.
+
+          '
+        required: true
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1CncBreakoutTypeBreakoutTypeIdAvailableRegionGetResponsesContentApplicationJsonSchemaItems'
+  /api/v1/cnc/pricing:
+    get:
+      operationId: list-cloud-connect-custom-prices
+      summary: List Cloud Connect prices
+      description: 'Returns a list of the configured monthly prices for Cloud Connect breakouts.
+
+
+        Master organisation, Mobile Network Operators and Resellers will get the list of prices they have configured
+
+        for their child organisations.
+
+
+        Enterprise organisations will get the list of prices that apply for them.
+
+        '
+      tags:
+      - subpackage_cloudConnect
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1CncPricingGetResponsesContentApplicationJsonSchemaItems'
+components:
+  schemas:
+    ApiV1CncBreakoutGetParametersStatus:
+      type: string
+      enum:
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      - '5'
+      - '6'
+      - '7'
+      - '8'
+      title: ApiV1CncBreakoutGetParametersStatus
+    ApiV1CncBreakoutGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        user_id:
+          type: integer
+        creation_date:
+          type: string
+          description: The date this attachment was created in UTC
+        accept_attachment_expiry_date:
+          type: string
+          description: 'The expiry date of the accept attachment state in UTC.
+
+            This will only be returned if the breakout is of type `Transit Gateway (type_id: 1)` and in Status `Pending AWS Actvation (status_id: 2)`
+
+            '
+        termination_date:
+          type: string
+        aws_transit_gateway_attachment_id:
+          type: string
+        aws_vpn_connection_id:
+          type: string
+          description: This is only set when the breakout is a VPN attachment
+        status:
+          $ref: '#/components/schemas/ApiV1CncBreakoutGetResponsesContentApplicationJsonSchemaItemsStatus'
+        type:
+          $ref: '#/components/schemas/ApiV1CncBreakoutGetResponsesContentApplicationJsonSchemaItemsType'
+        region:
+          type: string
+          description: The customer region that this attachment belongs to
+      title: ApiV1CncBreakoutGetResponsesContentApplicationJsonSchemaItems
+    ApiV1CncPricingGetResponsesContentApplicationJsonSchemaItemsCurrency:
+      type: object
+      properties:
+        id:
+          type: integer
+      title: ApiV1CncPricingGetResponsesContentApplicationJsonSchemaItemsCurrency
+    ApiV1CncBreakoutGetParametersType:
+      type: string
+      enum:
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      - '5'
+      - '6'
+      - '7'
+      - '8'
+      title: ApiV1CncBreakoutGetParametersType
+    ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsStatus:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsStatus
+    ApiV1CncBreakoutGetResponsesContentApplicationJsonSchemaItemsType:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1CncBreakoutGetResponsesContentApplicationJsonSchemaItemsType
+    ApiV1CncBreakoutVpnPostRequestBodyContentApplicationJsonSchemaTypeId:
+      type: string
+      enum:
+      - '2'
+      - '3'
+      description: Attachment type identifier.
+      title: ApiV1CncBreakoutVpnPostRequestBodyContentApplicationJsonSchemaTypeId
+    Cloud Connect_DeleteCloudConnectAttachment_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Cloud Connect_DeleteCloudConnectAttachment_Response_200
+    Cloud Connect_RetryCloudConnectAttachment_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Cloud Connect_RetryCloudConnectAttachment_Response_200
+    Cloud Connect_CreateCloudConnectAttachmentTGW_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Cloud Connect_CreateCloudConnectAttachmentTGW_Response_201
+    ApiV1CncPricingGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        breakout_type_id:
+          type: integer
+        amount:
+          type: number
+          format: double
+        currency:
+          $ref: '#/components/schemas/ApiV1CncPricingGetResponsesContentApplicationJsonSchemaItemsCurrency'
+      title: ApiV1CncPricingGetResponsesContentApplicationJsonSchemaItems
+    ApiV1CncBreakoutTypeGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1CncBreakoutTypeGetResponsesContentApplicationJsonSchemaItems
+    ApiV1CncBreakoutTgwPostRequestBodyContentApplicationJsonSchemaType:
+      type: string
+      enum:
+      - '1'
+      title: ApiV1CncBreakoutTgwPostRequestBodyContentApplicationJsonSchemaType
+    ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        user_id:
+          type: integer
+        creation_date:
+          type: string
+          description: The date this attachment was created in UTC
+        accept_attachment_expiry_date:
+          type: string
+          description: 'The expiry date of the accept attachment state in UTC.
+
+            This will only be returned if the breakout is of type `Transit Gateway (type_id: 1)` and in Status `Pending AWS Actvation (status_id: 2)`
+
+            '
+        termination_date:
+          type: string
+        aws_transit_gateway_attachment_id:
+          type: string
+        aws_vpn_connection_id:
+          type: string
+          description: This is only set when the breakout is a VPN attachment
+        status:
+          $ref: '#/components/schemas/ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsStatus'
+        type:
+          $ref: '#/components/schemas/ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsType'
+        region:
+          type: string
+          description: The customer region that this attachment belongs to
+        tunnel_information:
+          $ref: '#/components/schemas/ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsTunnelInformation'
+      title: ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItems
+    ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsTunnelInformationMetrics:
+      type: object
+      properties:
+        tunnel_state:
+          type: string
+        bytes_in:
+          type: object
+          additionalProperties:
+            type: number
+            format: double
+        bytes_out:
+          type: object
+          additionalProperties:
+            type: number
+            format: double
+      title: ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsTunnelInformationMetrics
+    ApiV1CncBreakoutTypeBreakoutTypeIdAvailableRegionGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        attachment_region:
+          type: string
+          description: The region the customer's attachment will reside in
+        device_breakout_region:
+          type: string
+          description: The region the traffic will be peered to
+      title: ApiV1CncBreakoutTypeBreakoutTypeIdAvailableRegionGetResponsesContentApplicationJsonSchemaItems
+    ApiV1CncBreakoutGetResponsesContentApplicationJsonSchemaItemsStatus:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1CncBreakoutGetResponsesContentApplicationJsonSchemaItemsStatus
+    ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsType:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsType
+    Cloud Connect_CreateCloudConnectAttachmentVPN_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Cloud Connect_CreateCloudConnectAttachmentVPN_Response_201
+    ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsTunnelInformation:
+      type: object
+      properties:
+        outside_address:
+          type: string
+        inside_cidr:
+          type: string
+        metrics:
+          $ref: '#/components/schemas/ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsTunnelInformationMetrics'
+        asn:
+          type: number
+          format: double
+        public_ip:
+          type: string
+      title: ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsTunnelInformation
+    ApiV1CncBreakoutVpnPostRequestBodyContentApplicationJsonSchemaType:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ApiV1CncBreakoutVpnPostRequestBodyContentApplicationJsonSchemaTypeId'
+          description: Attachment type identifier.
+      required:
+      - id
+      description: 'Breakout type.
+
+        Use `2` for Static VPN or `3` for Dynamic VPN with BGP.
+
+        '
+      title: ApiV1CncBreakoutVpnPostRequestBodyContentApplicationJsonSchemaType
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Retrieve a JWT via POST /api/v1/authenticate using an application_token or user credentials, then send it as `Authorization: Bearer <token>`.'

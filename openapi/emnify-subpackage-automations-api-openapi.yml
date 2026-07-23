@@ -1,0 +1,676 @@
+openapi: 3.1.0
+info:
+  title: emnify REST subpackage_applicationTokens subpackage_automations API
+  version: 1.0.0
+  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
+
+
+    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  contact:
+    name: emnify Developer Support
+    url: https://docs.emnify.com/developers
+  license:
+    name: Proprietary
+    url: https://www.emnify.com/legal
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API base host
+security:
+- BearerAuth: []
+tags:
+- name: subpackage_automations
+  x-display-name: Automations
+paths:
+  /api/v1/automation:
+    get:
+      operationId: list-automations
+      summary: List configured automations
+      description: 'Returns a list of all configured automations for the organization.
+
+        '
+      tags:
+      - subpackage_automations
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AutomationOutputDto'
+    post:
+      operationId: create-automation
+      summary: Create an automation
+      description: 'Creates an automation with the configured event and selected actions, respecting the configured targets.
+
+        '
+      tags:
+      - subpackage_automations
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutomationOutputDto'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutomationCreateDto'
+  /api/v1/automation/action:
+    get:
+      operationId: list-action
+      summary: List available actions
+      description: 'Returns a list of all available actions, as well as their possible configuration parameters and required fields.
+
+        Availability depends on the parent organization.
+
+        '
+      tags:
+      - subpackage_automations
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AutomationActionOutputDto'
+  /api/v1/automation/action/{id}:
+    get:
+      operationId: get-action-by-id
+      summary: Get an action by ID
+      description: 'Retrieves a specified available actions, as well as the possible configuration parameters and required fields.
+
+        Availability depends on the parent organization.
+
+        '
+      tags:
+      - subpackage_automations
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutomationActionOutputDto'
+  /api/v1/automation/log:
+    get:
+      operationId: list-action-logs
+      summary: List action logs
+      description: 'Returns a list of all action logs for this organization.
+
+        '
+      tags:
+      - subpackage_automations
+      parameters:
+      - name: automationId
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: automationExecutionNumber
+        in: query
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AutomationActionLogOutputDto'
+  /api/v1/automation/recipient/email/verification:
+    post:
+      operationId: verify-automation-recipient-email
+      summary: Verify an automation recipient's email address
+      description: 'Verifies the email address of an automation recipient using the verification token sent to the recipient via email.
+
+        '
+      tags:
+      - subpackage_automations
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Email verification successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Automations_verifyAutomationRecipientEmail_Response_200'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutomationRecipientEmailVerificationInputDto'
+  /api/v1/automation/{id}:
+    get:
+      operationId: get-automation
+      summary: Get configured automation by ID
+      description: 'Retrieves the specified configured automation.
+
+        '
+      tags:
+      - subpackage_automations
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutomationOutputDto'
+    delete:
+      operationId: delete-automation
+      summary: Delete a configured automation
+      description: 'Deletes the specified configured automation.
+
+        '
+      tags:
+      - subpackage_automations
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+    patch:
+      operationId: update-automation
+      summary: Update an automation
+      description: 'Updates an automation with the configured event and selected actions, respecting the configured targets.
+
+        '
+      tags:
+      - subpackage_automations
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutomationOutputDto'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutomationUpdateDto'
+components:
+  schemas:
+    ConfiguredActionCreateDto:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/ConfiguredActionReferenceDto'
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
+      required:
+      - action
+      - properties
+      title: ConfiguredActionCreateDto
+    ConfiguredActionReferenceDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+      required:
+      - id
+      title: ConfiguredActionReferenceDto
+    ConfigurationInputPropertiesDto:
+      type: object
+      properties:
+        property:
+          type: string
+        value:
+          type: string
+        value_array:
+          type: array
+          items:
+            type: string
+      required:
+      - property
+      - value
+      - value_array
+      title: ConfigurationInputPropertiesDto
+    ActionableEventOutputDto:
+      type: object
+      properties:
+        custom_event:
+          $ref: '#/components/schemas/CustomEventOutputDto'
+        system_event:
+          $ref: '#/components/schemas/SystemEventOutputDto'
+      required:
+      - custom_event
+      - system_event
+      title: ActionableEventOutputDto
+    ConfigurationParameterDto:
+      type: object
+      properties:
+        parameter:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+      required:
+      - parameter
+      - type
+      - description
+      title: ConfigurationParameterDto
+    AutomationCreateDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+        actionable_event:
+          $ref: '#/components/schemas/ActionableEventCreateDto'
+        configured_actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfiguredActionCreateDto'
+        targeting_properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
+      required:
+      - name
+      - description
+      - status
+      - actionable_event
+      - configured_actions
+      - targeting_properties
+      title: AutomationCreateDto
+    WithIdInputDto:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: WithIdInputDto
+    Automations_verifyAutomationRecipientEmail_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Automations_verifyAutomationRecipientEmail_Response_200
+    AutomationOutputDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+        organisation:
+          $ref: '#/components/schemas/WithIdInputDto'
+        number_of_executions:
+          type: number
+          format: double
+        last_execution:
+          type: string
+        created_at:
+          type: string
+        modified_at:
+          type: string
+        actionable_event:
+          $ref: '#/components/schemas/ActionableEventOutputDto'
+        configured_actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfiguredActionOutputDto'
+        targeting_properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
+      required:
+      - id
+      - name
+      - description
+      - status
+      - organisation
+      - number_of_executions
+      - last_execution
+      - created_at
+      - modified_at
+      - actionable_event
+      - configured_actions
+      - targeting_properties
+      title: AutomationOutputDto
+    AutomationActionOutputDto:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+        type:
+          type: string
+        configurationProperties:
+          type: array
+          items:
+            type: string
+        name:
+          type: string
+        translationKeyName:
+          type: string
+        description:
+          type: string
+        translationKeyDescription:
+          type: string
+        requiredEventOutputParameters:
+          type: array
+          items:
+            type: string
+      required:
+      - id
+      - status
+      - type
+      - configurationProperties
+      - name
+      - translationKeyName
+      - description
+      - translationKeyDescription
+      - requiredEventOutputParameters
+      title: AutomationActionOutputDto
+    WithUuidInputDto:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+      - id
+      title: WithUuidInputDto
+    AutomationRecipientEmailVerificationInputDto:
+      type: object
+      properties:
+        token:
+          type: string
+      required:
+      - token
+      title: AutomationRecipientEmailVerificationInputDto
+    ActionableEventCreateDto:
+      type: object
+      properties:
+        custom_event:
+          $ref: '#/components/schemas/WithUuidInputDto'
+        system_event:
+          $ref: '#/components/schemas/WithUuidInputDto'
+      required:
+      - custom_event
+      - system_event
+      title: ActionableEventCreateDto
+    SystemEventOutputDto:
+      type: object
+      properties:
+        id:
+          type: string
+        parentOrg:
+          $ref: '#/components/schemas/WithIdInputDto'
+        eventType:
+          $ref: '#/components/schemas/WithIdInputDto'
+        name:
+          type: string
+        translationKeyName:
+          type: string
+        description:
+          type: string
+        translationKeyDescription:
+          type: string
+        supportedTargetingParameters:
+          type: array
+          items:
+            type: string
+        eventOutputParameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationParameterDto'
+        supportedActions:
+          type: array
+          items:
+            type: string
+      required:
+      - id
+      - parentOrg
+      - eventType
+      - name
+      - translationKeyName
+      - description
+      - translationKeyDescription
+      - supportedTargetingParameters
+      - eventOutputParameters
+      - supportedActions
+      title: SystemEventOutputDto
+    ConfiguredActionOutputDto:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/WithUuidInputDto'
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
+        recipients:
+          $ref: '#/components/schemas/ConfiguredActionRecipientOutputDto'
+          description: 'Details of the email notification recipients configured for the action.
+
+            '
+      required:
+      - action
+      - properties
+      - recipients
+      title: ConfiguredActionOutputDto
+    AutomationActionLogOutputDto:
+      type: object
+      properties:
+        automation:
+          $ref: '#/components/schemas/WithUuidInputDto'
+        action:
+          $ref: '#/components/schemas/WithUuidInputDto'
+        message:
+          type: string
+        status:
+          type: string
+        event:
+          $ref: '#/components/schemas/WithStringIdInputDto'
+        smart_event:
+          $ref: '#/components/schemas/WithUuidInputDto'
+        created_at:
+          type: string
+        automation_execution_number:
+          type: number
+          format: double
+        organisation:
+          $ref: '#/components/schemas/WithIdInputDto'
+        id:
+          type: string
+      required:
+      - automation
+      - action
+      - message
+      - status
+      - event
+      - smart_event
+      - created_at
+      - automation_execution_number
+      - organisation
+      - id
+      title: AutomationActionLogOutputDto
+    CustomEventOutputDto:
+      type: object
+      properties:
+        organisation:
+          $ref: '#/components/schemas/WithIdInputDto'
+        template:
+          $ref: '#/components/schemas/WithIdInputDto'
+        configuration_properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
+        name:
+          type: string
+        id:
+          type: string
+        supportedTargetingParameters:
+          type: array
+          items:
+            type: string
+        supportedActions:
+          type: array
+          items:
+            type: string
+      required:
+      - organisation
+      - template
+      - configuration_properties
+      - name
+      - id
+      - supportedTargetingParameters
+      - supportedActions
+      title: CustomEventOutputDto
+    WithStringIdInputDto:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+      - id
+      title: WithStringIdInputDto
+    ConfiguredActionRecipientOutputDto:
+      type: object
+      properties:
+        email:
+          type: array
+          items:
+            type: string
+      required:
+      - email
+      title: ConfiguredActionRecipientOutputDto
+    AutomationUpdateDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+        configured_actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfiguredActionCreateDto'
+        targeting_properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
+      required:
+      - name
+      - description
+      - status
+      - configured_actions
+      - targeting_properties
+      title: AutomationUpdateDto
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Retrieve a JWT via POST /api/v1/authenticate using an application_token or user credentials, then send it as `Authorization: Bearer <token>`.'

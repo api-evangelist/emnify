@@ -1,0 +1,4045 @@
+openapi: 3.1.0
+info:
+  title: emnify REST subpackage_applicationTokens subpackage_endpoint API
+  version: 1.0.0
+  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
+
+
+    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  contact:
+    name: emnify Developer Support
+    url: https://docs.emnify.com/developers
+  license:
+    name: Proprietary
+    url: https://www.emnify.com/legal
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API base host
+security:
+- BearerAuth: []
+tags:
+- name: subpackage_endpoint
+  x-display-name: Endpoint
+paths:
+  /api/v1/endpoint:
+    get:
+      operationId: get-endpoints
+      summary: List endpoints
+      description: 'Retrieves all endpoints for your organization.
+
+        Use the query parameters to filter, sort, and paginate results.
+
+        '
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: q
+        in: query
+        description: 'Filters endpoints by field value.
+
+          Use `<field>:<criteria>` format.
+
+          Combine multiple filters with commas (for example, `status:0,tags:sensor`).
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: sort
+        in: query
+        description: 'Sorts endpoints by field value.
+
+          Use `<operator><field>` format.
+
+          Combine multiple sort fields with commas (for example, `-status,id`).
+
+
+          **Operators:**
+
+          - `-` descending (Z-A for text, highest number first)
+
+          - `+` ascending (A-Z for text, lowest number first)
+
+
+          Defaults to ascending order if no operator is specified.
+
+          Defaults to `id` if no sort field is specified.
+
+          Endpoints with identical values are sorted by ascending `id`.
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: 'Page number to retrieve.
+
+          Starts at 1.
+
+          '
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: per_page
+        in: query
+        description: Number of endpoints to return per page.
+        required: false
+        schema:
+          type: integer
+          default: 1000
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 'Returns an array of endpoint objects.
+
+            Pagination metadata is included in the response headers.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1EndpointGetResponsesContentApplicationJsonSchemaItems'
+    post:
+      operationId: create-endpoint
+      summary: Create an endpoint
+      description: "Creates a single endpoint with the specified configuration.\n\n<Note>\n  For bulk operations, use [`POST /api/v2/endpoint/multi`](/developers/api/endpoint/bulk-create-endpoint) instead (supports up to 2,000 endpoints per request).\n</Note>\n\n<Warning>\n  emnify charges for activated SIMs, even if the endpoint status is set to **Disabled**.\n</Warning>\n"
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Endpoint created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Endpoint_CreateEndpoint_Response_201'
+        '400':
+          description: 'Request body is malformed.
+
+            Check JSON syntax.
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: 'IP address space is full, in use for creating another endpoint or the resource wasn''t found.
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '422':
+          description: 'Validation failed.
+
+            Possible causes:
+
+
+            - Invalid service profile, tariff profile, or status ID
+
+            - Invalid IP address space or organization ID
+
+            - Endpoint data is invalid
+
+            - Organization doesn''t belong to your reseller
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateEndpointRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Display name for the endpoint.
+                tags:
+                  type: string
+                  description: Comma-separated list of tags (for example, `sensor,outdoor`).
+                imei:
+                  type: string
+                  description: International Mobile Equipment Identity with Software Version Number (IMEISV) (16 digits).
+                imei_lock:
+                  type: boolean
+                  default: false
+                  description: If `true`, this endpoint only allows connections from the device with the specified IMEI.
+                sim:
+                  $ref: '#/components/schemas/ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaSim'
+                  description: 'SIM card to assign to this endpoint.
+
+                    If omitted, no SIM is assigned.
+
+                    '
+                ip_address:
+                  type: string
+                  description: "Private IP address to assign.\n\n<Info>\n  If provided, you must also specify `ip_address_space`.\n</Info>\n"
+                service_profile:
+                  $ref: '#/components/schemas/ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaServiceProfile'
+                  description: 'Service profile that determines network access settings.
+
+                    Must belong to your organization.
+
+                    '
+                tariff_profile:
+                  $ref: '#/components/schemas/ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaTariffProfile'
+                  description: 'Tariff profile that determines pricing and data limits.
+
+                    Must belong to your organization.
+
+                    '
+                status:
+                  $ref: '#/components/schemas/ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaStatus'
+                  description: Initial endpoint status.
+                organisation:
+                  $ref: '#/components/schemas/ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaOrganisation'
+                  description: 'Organization to create the endpoint in.
+
+                    Required only for reseller accounts creating endpoints in sub-organizations.
+
+                    '
+                ip_address_space:
+                  $ref: '#/components/schemas/ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaIpAddressSpace'
+                  description: "IP address space for the endpoint.\n\n<Info>\n  Required if `ip_address` is provided.\n</Info>\n"
+              required:
+              - service_profile
+              - tariff_profile
+              - status
+  /api/v1/endpoint/status:
+    get:
+      operationId: endpoint-status-get
+      summary: List endpoint statuses
+      description: Returns a list of available [endpoint statuses](/developers/reference/endpoint#endpoint-statuses).
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1EndpointStatusGetResponsesContentApplicationJsonSchemaItems'
+  /api/v1/endpoint/{endpoint_id}:
+    get:
+      operationId: endpoint-by-id-get
+      summary: Endpoint details
+      description: Retrieves endpoint details for a given ID.
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully returned the endpoint details associated with the provided `id`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Endpoint_EndpointByIdGet_Response_200'
+    delete:
+      operationId: endpoint-by-id-delete
+      summary: Delete an endpoint
+      description: "Deletes an endpoint and all its child entities.\n\n<Note>\n  Execute this operation sequentially - wait for each request to complete before starting the next.\n\n  For bulk deletions, use [`DELETE /api/v2/endpoint/multi`](/developers/api/endpoint/bulk-delete-endpoint) instead (supports up to 2,000 endpoints).\n</Note>\n\n<Info>\n  Endpoints with an assigned SIM cannot be deleted (results in a `409` error).\n</Info>\n"
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: 'Endpoints deleted successfully.
+
+            The response payload body should be empty.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: 'Request body is malformed
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: 'Requested endpoint ID wasn''t found
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '409':
+          description: 'Requested endpoint is still referenced (for example, there is an assigned SIM)
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+    patch:
+      operationId: endpoint-by-id-patch
+      summary: Update an endpoint
+      description: "Updates the details of an endpoint.\n\n<Note>\n  Execute this operation sequentially - wait for each request to complete before starting the next.\n\n  For bulk updates, use [`PATCH /api/v2/endpoint/multi`](/developers/api/endpoint/bulk-update-endpoint) instead (supports up to 2,000 endpoints).\n</Note>\n\n<Warning>\n  emnify charges for activated SIMs, even if the endpoint `status` is set to **Disabled**.\n  To avoid accruing unexpected charges, update the SIM `status` to **Suspended** (`\"id\": 2`).\n</Warning>\n"
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Endpoint updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Request body is malformed
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: 'User doesn''t have permission to bulk update endpoints
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: 'Appears in one of the following cases:
+
+
+            - IP address space isn''t found
+
+            - IP address space is full
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '422':
+          description: 'Appears in one of the following cases:
+
+
+            - Service profile is invalid
+
+            - Tariff profile is invalid
+
+            - Status is invalid
+
+            - IP address space is invalid
+
+            - IP address is invalid
+
+            - SIM is invalid
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EndpointByIdPatchRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                service_profile:
+                  $ref: '#/components/schemas/ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaServiceProfile'
+                tariff_profile:
+                  $ref: '#/components/schemas/ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaTariffProfile'
+                status:
+                  $ref: '#/components/schemas/ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaStatus'
+                ip_address_space:
+                  $ref: '#/components/schemas/ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaIpAddressSpace'
+                sim:
+                  $ref: '#/components/schemas/ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaSim'
+                name:
+                  type: string
+                tags:
+                  type: string
+                imei:
+                  type: string
+                imei_lock:
+                  type: boolean
+                ip_address:
+                  type: string
+              required:
+              - service_profile
+              - tariff_profile
+              - status
+              - ip_address_space
+              - sim
+              - name
+              - tags
+              - imei
+              - imei_lock
+              - ip_address
+  /api/v1/endpoint/{endpoint_id}/connectivity:
+    get:
+      operationId: endpoint-connectivity-by-id-get
+      summary: Endpoint connectivity status
+      description: 'Retrieve details about current connectivity status of endpoint.
+
+        The following is a list of possible statuses:
+
+
+        * `ATTACHED`:
+
+        The Endpoint has succesfully attached to the Home Core network in the past.
+
+        The device will be shown as `ATTACHED` until the visited network has signaled that the device is inactive/offline.
+
+        Usually the visited network informs the Core Network within 1-2 days after a device went offline.
+
+
+        * `ONLINE`:
+
+        The Endpoint has an active data connection
+
+
+        * `OFFLINE`:
+
+        The Endpoint has not attached to the core network yet or the device was previously attached but the visited network signaled that the device had no activity for the last 1-2 days.
+
+        Note: The device is not reachable for external services (e.g. SMS, MSRN lookup).
+
+
+        * `BLOCKED`:
+
+        The device is not granted service. Endpoints are assigned this status when they have exceeded traffic limits.
+
+        '
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Endpoint_EndpointConnectivityByIdGet_Response_200'
+    patch:
+      operationId: update-endpoint-connectivity-by-id
+      summary: Reset endpoint connectivity
+      description: "Dispatches a message that causes either a `Cancel Location`, `Delete PDP Context`, or both sent to the endpoint.\nThe return of the call doesn't yet mean the event has been sent towards the device.\n\n<Info>\n  Master organization types can reset any endpoints inside their organization hierarchy.\n  Enterprises may only reset connectivity of own endpoints.\n</Info>\n"
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successful, no content.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: Calling organization is not of correct type.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: Endpoint not found.
+          content:
+            application/json:
+              schema:
+                description: Any type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pdp_context:
+                  oneOf:
+                  - description: Any type
+                  - type: 'null'
+                location:
+                  oneOf:
+                  - description: Any type
+                  - type: 'null'
+  /api/v1/endpoint/{endpoint_id}/connectivity_info:
+    get:
+      operationId: get-connectivity-info-by-endpoint-id
+      summary: Retrieve connectivity information for an endpoint
+      description: "Returns device location information based on the cell tower to which the device is connected.\n\n<Note>\n  emnify validates the data requested, sends the signal request to the network operator, and interprets the response.\n  Whether the network returns useful data is outside of emnify's control.\n\n  To distinguish these cases, this call returns the HTTP `200 OK` response code whenever the request is successfully executed, even if it includes an error.\n  See the response body for details.\n</Note>\n"
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Endpoint_GetConnectivityInfoByEndpointId_Response_200'
+        '404':
+          description: 'Endpoint not found.
+
+            This error often occurs when the requested endpoint ID is incorrect or doesn''t exist.
+
+            It can also happen if you don''t have the correct permissions to see the connectivity information or the endpoint doesn''t belong to the organization you''re logged in to.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConnectivityInfoByEndpointIdRequestNotFoundError'
+  /api/v1/endpoint/{endpoint_id}/event:
+    get:
+      operationId: endpoint-events-by-id
+      summary: List endpoint events
+      description: "Returns the list of events, filtered, sorted and paged according to query parameters.\n\n<Info>\nA full list of events is found in section \"Retrieve Event Types\" (`/api/v1/event/type`).\n</Info>\n\n<Error>\n  This API endpoint deviates from the specified conventions and may not return the same HTTP Codes as the higher layer call (`/api/v1/endpoint/{endpoint_id}`).\n  In case the requested `{endpoint_id}` doesn't exist or is not accessible for the user, **HTTP 200** will be returned with empty **[]** as long as the provided `{endpoint_id}` is a number and all parameters are valid.\n\n  Please take that into consideration when building automation on top of the error behaviour of this endpoint.\n</Error>\n"
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        description: Numeric ID of an endpoint
+        required: true
+        schema:
+          type: integer
+      - name: page
+        in: query
+        description: Current page number
+        required: false
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: Defines the number of items per page
+        required: false
+        schema:
+          type: integer
+      - name: sort
+        in: query
+        description: 'Sort properties according to a comma separated list of accepted fields. Valid fields are:
+
+
+          * `id` - (**event id**)
+
+          * `timestamp` - (**event timestamp**)
+
+          * `source` - (**event source**)
+
+          * `severity` - (**event severity**)
+
+          * `alert` - (**alert status**)
+
+          * `organisation` - (**organisation name**)
+
+          * `user` - (**user id**)
+
+          * `endpoint` - (**endpoint name**)
+
+          * `tags` - (**endpoint tags**)
+
+          * `ip_address` - (**endpoint ip_address**)
+
+          * `iccid` - (**sim iccid**)
+
+          * `imsi` - (**sim imsi**)
+
+          * `type` - (**event type**)
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: q
+        in: query
+        description: 'Filter parameter in `<filter>:<value>` format.
+
+          Multiple filters must be a comma-separated list of the following fields:
+
+
+          * `from` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, **only valid with until**)
+
+          * `until` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, **only valid with from**)
+
+          * `type` (**event_type**, numerical)
+
+          * `source` (**event_type**, numerical, e.g. 0 = Network), 1 = Policy Control, 2 = API)
+
+          * `severity` (**event_severity**, numerical, e.g. 0 = Info, 1 = Warn), 2 = Critical)
+
+          * `alert` (boolean, e.g. true, false)
+
+          * `description` (**event description**, string)
+
+          * `organisation` (**organisation name**, string)
+
+          * `user` (**user name**, string)
+
+          * `endpoint` (**endpoint name**, string)
+
+          * `tags` (**endpoint tags**, string)
+
+          * `ip_address` (**endpoint IP address**, valid IPv4/IPv6 address)
+
+          * `imei` (**endpoint imei**, numerical string)
+
+          * `iccid` (**sim iccid**, numerical string)
+
+          * `imsi` (**sim imsi**, numerical string)
+
+          * `timestamp` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, for querying events of 1 day, deprecated in future)
+
+          * `iccid_with_luhn` (**sim iccid with Luhn**, numerical string)
+
+          * `network` (**endpoint network**, string, e.g. Telekom)
+
+          * `rat` (**event pdp context rat type**, numerical string, e.g. 6)
+
+          * `country` (**endpoint country**, string, e.g. Germany)
+
+
+          Some filters can accept up to 6 values which must be separated by the pipe symbol (`|`) or url-encoded as (`%7C`):
+
+
+          * `iccid` (q: iccid:1234567890123456789|8988303000123456789)
+
+          * `iccid_with_luhn` (q: iccid_with_luhn:12345678901234567891|89883030001234567891)
+
+          * `endpoint` (q: endpoint:example_endpoint_name|another_endpoint_name)
+
+          * `type` (q: type:example_event_type|another_event_type)
+
+          * `network` (q: network:example_network|another_network)
+
+          * `rat` (q: rat:example_rat|another_rat)
+
+          * `country` (q: country:example_country|another_country)
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully returned a list of events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItems'
+        '400':
+          description: '**Bad Request** due to incorrect **Paging** Parameters, **Sorting** Parameter or incorrect `{endpoint_id}`
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '422':
+          description: '**Unprocessable Entity** due to incorrect **Query** parameters
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /api/v1/endpoint/{endpoint_id}/operator_blacklist:
+    get:
+      operationId: endpoint-operator-blacklist-by-endpoint-id-get
+      summary: List operator blacklist for endpoint
+      description: Returns a list of blacklisted Operators for the requested Endpoint
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItems'
+  /api/v1/endpoint/{endpoint_id}/operator_blacklist/{operator_id}:
+    put:
+      operationId: endpoint-operator-blacklist-by-ep-id-and-operator-id-put
+      summary: Add an operator to the blacklist
+      description: Adds an Operator to the Blacklist of an Endpoint.
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: operator_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '409':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EndpointOperatorBlacklistByEpIdAndOperatorIdPutRequestConflictError'
+    delete:
+      operationId: endpoint-operator-blacklist-by-ep-id-and-operator-id-delete
+      summary: Remove an operator from the blacklist
+      description: Remove Operator from the Blacklist of an Endpoint.
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: operator_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '404':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EndpointOperatorBlacklistByEpIdAndOperatorIdDeleteRequestNotFoundError'
+  /api/v1/endpoint/{endpoint_id}/quota/data:
+    get:
+      operationId: endpoint-quota-data-by-endpoint-id-get
+      summary: Retrieve data quota details
+      description: "Returns details about the assigned Data Quota for an endpoint.\n* `status`: this indicates the current status of the quota and may contain the following values:\n    - `ACTIVE`: the endpoint can currently connect and has quota left\n    - `EXHAUSTED`: the endpoint has exceeded the quota volume, if it still can use data service depends on the action chosen to be performed on exhaustion\n    - `EXPIRED`: the quota has expired; the endpoint is denied from using data services (until new quota is added)\n* `volume`: returns the volume left on this quota in MB\n* `expiry_date`: timestamp when this quota will expire and the endpoint will definitely be denied from using further data services (regardless if the quota volume was used up or not)\n* `peak_throughput`: The maximum bandwidth in octets per second after the endpoint has been throttled.\n* `action_on_exhaustion`: returns the behaviour defined to be applied when quota volume is used up (exhausted).\n    - `Throttle`: bandwidth will be throttle to the defined peak throughput until quota expires\n    - `Block`: data service will be instantly blocked once volume used up, regardless if the expiry date is already reached or not\n* `auto_refill`: 0 (false) / 1 (true), refill the quota with the last added volume on a daily basis\n"
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Endpoint_EndpointQuotaDataByEndpointIdGet_Response_200'
+    post:
+      operationId: endpoint-quota-data-by-endpoint-id-post
+      summary: Set data quota
+      description: "Set a new data quota.\nYou can set a new data quota for a device at any time.\nAt an initial state, when no data quota is set, the device is denied from using data services.\nTo top-up the data volume, you need to retrieve the remaining volume, increase it by the top-up volume, and set it as the new quota volume.\n\n<Warning>\n  We have deprecated throttling as an action on quota exhaustion and the associated peak throughput parameter.\n  These were decommissioned as of December 9, 2024.**\n</Warning>\n\nThe following parameters can be configured:\n* `status` (required) - The status of the quota:\n  - 1: `ACTIVE`\n  - 2: `EXHAUSTED`\n  - 3: `EXPIRED`\n* `volume` - Remaining quota volume in MB\n* `expiry_date` (required) - Timestamp when the quota expires and the device is denied from using further data services\n* `auto_refill` (default: `0`) - Whether the quota should be refilled on a daily basis:\n  - `0`: Disabled\n  - `1`: Enabled\n* `threshold_percentage` - The remaining quota percentage when the system generates a \"Quota threshold reached\" event\n* `action_on_exhaustion`: Action executed after the quota is exhausted:\n  - `id` (required) - Unique identifer of the action on quota exhaustion\n    - `1`: Block\n    - **DEPRECATED** `2`: Throttle\n  - **DEPRECATED** `peak_throughput` - The maximum bandwidth in octets per second after the device has been throttled.\n\n<Note>\n  **Events**:\n  The system generates a \"Quota used up\" event if the data quota is completely depleted.\n  Then, the device is blocked from further consumption of data.\n  The quota object is included in the event details.\n</Note>\n\n<Info>\n  The device can instantly use data services after successfully making this API call.\n  You can set any timestamp with a future date.\n  This allows you to create data packages as required (for example, 1 hour, 24 hours, 7 days, or any other timeframe).\n</Info>\n"
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Resource Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Endpoint_EndpointQuotaDataByEndpointIdPost_Response_201'
+        '422':
+          description: Unprocessable Entity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EndpointQuotaDataByEndpointIdPostRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                last_volume_added:
+                  type: number
+                  format: double
+                last_status_change_date:
+                  type: string
+                auto_refill:
+                  type: integer
+                threshold_volume:
+                  type: number
+                  format: double
+                threshold_percentage:
+                  type: number
+                  format: double
+                status:
+                  $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatus'
+                volume:
+                  type: number
+                  format: double
+                expiry_date:
+                  type: string
+                action_on_exhaustion:
+                  $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustion'
+              required:
+              - status
+              - volume
+              - expiry_date
+              - action_on_exhaustion
+    delete:
+      operationId: delete-endpoint-data-quota-by-id
+      summary: Remove data quota
+      description: "Will delete the data quota for the endpoint, if any is set.\n\n<Info>\n  If `apply_data_quota` is still set in the service profile, the endpoint will get blocked from data service.\n</Info>\n"
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '404':
+          description: 'Can be one of the following reasons:
+
+            - No Data Quota configured
+
+            - Endpoint not found
+
+            - Endpoint not part of this organisation
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /api/v1/endpoint/{endpoint_id}/quota/sms:
+    get:
+      operationId: endpoint-quota-sms-by-endpoint-id-get
+      summary: Show SMS quota details
+      description: "Returns details about the assigned SMS Quota for an endpoint.\n\nYou can retrieve the current SMS quota status for an endpoint with the following API call. It will return following properties:\n* `status`: this indicates the status of the quota and may contain the following values:\n  - `ACTIVE`: the endpoint has quota left and can use SMS services\n  - `EXHAUSTED`: the endpoint has exceeded the quota volume; the endpoint is denied from using SMS services (until new quota is added)\n  - `EXPIRED`: the quota has expired; the endpoint is denied from using SMS services (until new quota is added)\n* `volume`: the amount of SMS left on this quota\n* `expiry_date`: timestamp when this quota will expire and the endpoint will definitely be denied from using further SMS services (regardless if the quota volume was used up or not)\n* `threshold_percentage`: optional threshold in percentage indicating when a \"Threshold Reached\" event shall be sent.\n* `action_on_exhaustion`: returns the behaviour defined to be applied when quota volume is used up (exhausted).\n    - `Throttle`: bandwidth will be throttle to the defined peak throughput until quota expires\n    - `Block`: data service will be instantly blocked once volume used up, regardless if the expiry date is already reached or not\n    - `auto_refill`: 0 (false) / 1 (true), refill the quota with the last added volume on a daily basis\n"
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                description: Any type
+    post:
+      operationId: endpoint-quota-sms-by-endpoint-id-post
+      summary: Set SMS quota
+      description: "At any time, a new SMS quota can be set for an endpoint.\nAt an initial state when no SMS quota is set, the endpoint will be denied from using SMS services.\nTo top-up the SMS volume one need to retrieve the currently left volume, increase it by the top-up volume and set it as the new quota volume.\n\nThe following parameters can be configured:\n* `status` - The status of the quota (mandatory):\n  - 1: `ACTIVE`\n  - 2: `EXHAUSTED`\n  - 3: `EXPIRED`\n* `volume`: The volume left on this quota in MB\n* `expiry_date`: Timestamp when this quota will expire and the endpoint will definitely be denied from using further data services (mandatory)\n* `auto_refill`: Wether the quota shall be refilled on a daily basis (defaults to disabled):\n  - 0: `disabled`\n  - 1: `enabled`\n* `threshold_percentage`: The percentage of remaining quota at which the system should generate a `threshold reached` event\n* `action_on_exhaustion`: The behaviour of the system after the quota is exhausted:\n  - id: ID of the action on quota exhaustion (mandatory)\n    - 1: `Block`\n    - 2: `Throttle` (will not take any effect on SMS quota)\n  - `peak_throughput`: The maximum bandwidth in octets per second after the endpoint has been throttled.\n  Allowed values are 64000, 128000, 256000, 384000. (will not take any effect on SMS quota)\n\n<Note>\n  The endpoint can instantly use the SMS service after the API call is successfully made.\n  Any timestamp with a future date can be set, this allows to create SMS packages (e.g. for 1 hour, 24 hour, 7 days or any other timeframe) as required.\n</Note>\n"
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Resource Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Endpoint_EndpointQuotaSmsByEndpointIdPost_Response_201'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                volume:
+                  type: number
+                  format: double
+                expiry_date:
+                  type: string
+                  format: date-time
+                last_volume_added:
+                  type: number
+                  format: double
+                last_status_change_date:
+                  type:
+                  - string
+                  - 'null'
+                  format: date-time
+                auto_refill:
+                  type: boolean
+                threshold_percentage:
+                  type: number
+                  format: double
+                threshold_volume:
+                  type: number
+                  format: double
+                status:
+                  $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatus'
+                action_on_exhaustion:
+                  $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustion'
+              required:
+              - volume
+              - expiry_date
+              - threshold_percentage
+              - status
+    delete:
+      operationId: delete-endpoint-sms-quota-by-id
+      summary: Remove SMS quota
+      description: "Will delete the SMS quota for the endpoint, if any is set.\n\n<Info>\n  If `apply_sms_quota` is still set in the service profile, the endpoint is blocked from sending SMS.\n</Info>\n"
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '404':
+          description: 'Can be one of the following reasons:
+
+            - No SMS Quota configured
+
+            - Endpoint not found
+
+            - Endpoint not part of this organisation
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /api/v1/endpoint/{endpoint_id}/sms:
+    get:
+      operationId: endpoint-sms-by-id-get
+      summary: List sent and received SMS
+      description: 'Returns the list of SMS sent and received by this endpoint.
+
+
+        A description of the SMS statuses is as follows:
+
+
+        - `1`: Delivery attempt pending
+
+        - `2`: In progress
+
+        - `3`: Buffered
+
+        - `4`: Delivered
+
+        - `5`: Failed
+
+        - `6`: Expired
+
+        - `7`: Canceled
+
+        '
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItems'
+    post:
+      operationId: endpoint-sms-by-id-post
+      summary: Send SMS to an endpoint
+      description: 'Sends a mobile terminating SMS (MT-SMS) to a connected device.
+
+        The device must have an active SIM with SMS capability enabled in its service profile.
+
+
+        ## Use cases
+
+
+        ### Standard SMS
+
+
+        Send an SMS with a numeric sender ID.
+
+        Set `source_address` to the sender''s phone number (for example, `12345689`) and include your message in `payload`.
+
+
+        ### Alphanumeric sender ID
+
+
+        Display a custom sender name instead of a phone number.
+
+        Set `source_address` to your brand name (for example, `CompanyName`, up to 11 characters) and include `source_address_type` with `id: 208`.
+
+
+        <Info>
+
+        Alphanumeric sender IDs are one-way only.
+
+        Recipients can''t reply directly to these messages.
+
+        </Info>
+
+
+        ### Person-to-Application (P2A) SMS
+
+
+        Receive SMS responses at your server.
+
+        Set `dest_address` with a callback identifier.
+
+        The platform forwards incoming messages to the API callback URL configured in your service profile.
+
+
+        ### Concatenated SMS
+
+
+        Send messages longer than 160 characters by splitting them across multiple API calls.
+
+        Each call requires a `udh` (User Data Header) that identifies the message sequence.
+
+
+        The UDH format `050003XXYYZZ` contains:
+
+
+        - `XX`: Unique message reference (for example, `CC`)
+
+        - `YY`: Total number of parts (for example, `02` for 2 parts)
+
+        - `ZZ`: Current part number (for example, `01` for part 1)
+
+
+        For more information, see the [3GPP TS 23.040 specification](https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=747).
+
+        '
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Resource Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Endpoint_EndpointSmsByIdPost_Response_201'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+                  description: 'The SMS message content.
+
+                    Must be UTF-8 encoded.
+
+                    Maximum 160 characters for a single SMS, or use `udh` for longer messages.
+
+                    '
+                source_address:
+                  type: string
+                  description: 'The sender identifier displayed on the recipient''s device.
+
+                    Can be an MSISDN (phone number), short code, or alphanumeric string.
+
+                    Alphanumeric strings are limited to 11 characters per GSM specifications.
+
+                    '
+                source_address_type:
+                  $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsPostRequestBodyContentApplicationJsonSchemaSourceAddressType'
+                  description: 'Defines the format of `source_address`.
+
+                    Required when using alphanumeric sender IDs.
+
+                    '
+                dest_address:
+                  type: string
+                  description: 'The callback identifier for Person-to-Application (P2A) SMS.
+
+                    When set, incoming SMS responses are forwarded to the API callback URL configured in your service profile.
+
+                    '
+                udh:
+                  type: string
+                  description: 'User Data Header for concatenated SMS.
+
+                    Encoded as a hexadecimal string following 3GPP TS 23.040.
+
+                    For example, `050003CC0201` indicates message 1 of 2 in sequence `CC`.
+
+                    '
+                dcs:
+                  type: integer
+                  description: 'Data Coding Scheme per 3GPP TS 23.038.
+
+                    Controls character encoding (for example, `0` for GSM 7-bit default alphabet, `8` for UCS2/UTF-16).
+
+                    '
+                expiry_date:
+                  type: string
+                  format: date-time
+                  description: 'The deadline for delivery attempts.
+
+                    If the SMS can''t be delivered by this time, it''s discarded.
+
+                    ISO 8601 format.
+
+                    '
+              required:
+              - payload
+  /api/v1/endpoint/{endpoint_id}/sms/{sms_id}:
+    get:
+      operationId: endpoint-sms-by-endpoint-id-and-sms-id-get
+      summary: SMS details
+      description: 'Returns details about an Endpoint SMS by SMS ID.
+
+
+        A description of the SMS statuses is as follows:
+
+
+        - `1`: Delivery attempt pending
+
+        - `2`: In progress
+
+        - `3`: Buffered
+
+        - `4`: Delivered
+
+        - `5`: Failed
+
+        - `6`: Expired
+
+        - `7`: Canceled
+
+        '
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: sms_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response with status 200
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Endpoint_EndpointSmsByEndpointIdAndSmsIdGet_Response_200'
+    delete:
+      operationId: endpoint-sms-by-endpoint-id-and-sms-id-delete
+      summary: Cancel SMS
+      description: Cancel SMS that is buffered for endpoint and not yet delivered.
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: sms_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Endpoint_EndpointSmsByEndpointIdAndSmsIdDelete_Response_200'
+  /api/v1/endpoint/{endpoint_id}/stats:
+    get:
+      operationId: endpoint-stats-by-id-get
+      summary: Endpoint usage and cost statistics
+      description: "<Warning>\n  You can only retrieve data traffic costs for organizations without multi-inclusive volumes.\n</Warning>\n\nRetrieves endpoint usage and cost statistics for a given ID.\nUsage statistics are sorted by `data` and `sms`.\n\nReturns statistics from the following periods:\n\n- `last_month`: Previous billing month, from the first to last day (for example, April 1-30, 2023, when you send the request sometime in May 2023).\n- `current_month`: Current month, with statistics calculated up to and including the date requested (for example, May 1-8, 2023, when you sent the request on May 8, 2023).\n- `last_hour`: Previous 60 minutes, accumulated per minute and organized by data or SMS received by the device (`rx`) and transmitted by the device (`tx`).\n\n<Info>\n  `last_month` and `current_month` are only included in the responses if traffic exists.\n</Info>\n"
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully returned the endpoint statistics associated with the provided `id`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Endpoint_EndpointStatsByIdGet_Response_200'
+  /api/v1/endpoint/{endpoint_id}/stats/daily:
+    get:
+      operationId: endpoint-stats-daily-by-id-get
+      summary: Retrieve daily usage statistics for an endpoint
+      description: "Returns daily usage statistics for a specific endpoint, including cellular data and SMS volumes.\n\nBy default, returns statistics for the current month.\nUse `start_date` and `end_date` query parameters to specify a custom date range.\n\n<Warning>\n  Data traffic cost statistics (`cost` field in the `data` object) have been deprecated.\n</Warning>\n"
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: start_date
+        in: query
+        description: "Filters by start date, provided in a `YYYY-MM-DD` format.\n\n<Info>\n  If you don't define an end date, the response will include 6 months of data, beginning on the current date.\n</Info>\n"
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: end_date
+        in: query
+        description: "Filters by end date, provided in an `YYYY-MM-DD` format.\n\n<Info>\n  If you don't define a start date, the response will only return data from the month indicated in your end date.\n</Info>\n"
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 'Successfully returned the daily endpoint statistics.
+
+
+            Each day''s entry contains:
+
+
+            - `date`: The date in YYYY-MM-DD format
+
+            - `data`: Cellular data usage (volume in MB)
+
+            - `sms`: SMS usage (volume as message count)
+
+            - `sat_geo_data`: Satellite data usage, if applicable
+
+            - `sat_geo_sms`: Satellite SMS usage, if applicable
+
+
+            Volume fields include `volume` (total), `volume_tx` (transmitted), and `volume_rx` (received).
+
+            '
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItems'
+  /api/v1/endpoint/{endpoint_id}/traffic_limit_extension:
+    get:
+      operationId: get-endpoint-traffic-limit-extensions
+      summary: List active traffic limit extensions
+      description: 'Returns all active traffic limit extensions for an endpoint, if any exist.
+
+
+        Only accessible by users with Administrator, User or Observer roles who belong to the endpoint''s organization.
+
+        '
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully returned traffic limit extension details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1EndpointEndpointIdTrafficLimitExtensionGetResponsesContentApplicationJsonSchemaItems'
+        '401':
+          description: No or invalid authentication token provided
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: Authentication token is valid, but user has no access permissions to the request resource
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: Endpoint not found or does not belong to user's organization
+          content:
+            application/json:
+              schema:
+                description: Any type
+    post:
+      operationId: create-endpoint-traffic-limit-extension
+      summary: Create traffic limit extension
+      description: 'Creates a temporary traffic limit extension for an endpoint.
+
+
+        Only accessible by users with Administrator or User roles who belong to the endpoint''s organization.
+
+
+        Required fields:
+
+        * `volume` - The traffic volume limit
+
+        '
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Traffic limit extension created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Endpoint_CreateEndpointTrafficLimitExtension_Response_201'
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '401':
+          description: No or invalid authentication token provided
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: Authentication token is valid, but user has no access permissions to the request resource
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: Endpoint not found or does not belong to user's organization
+          content:
+            application/json:
+              schema:
+                description: Any type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                traffic_limit_id:
+                  type: number
+                  format: double
+                volume:
+                  type: number
+                  format: double
+              required:
+              - volume
+    delete:
+      operationId: delete-endpoint-traffic-limit-extensions
+      summary: Delete all traffic limit extensions for an endpoint
+      description: 'Removes all traffic limit extensions from an endpoint.
+
+
+        Only accessible by users with Administrator or User roles who belong to the endpoint''s organization.
+
+
+        The endpoint''s traffic limits will revert to their original values defined in the service profile.
+
+        '
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Traffic limit extensions successfully removed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          description: No or invalid authentication token provided
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: Authentication token is valid, but user has no access permissions to the request resource
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: Endpoint not found or does not belong to user's organization
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /api/v2/endpoint/multi:
+    post:
+      operationId: bulk-create-endpoint
+      summary: Bulk create endpoints
+      description: "Create up to 2,000 endpoints in one request.\n\nUnlike [`POST /api/v1/endpoint`](/developers/api/endpoint/create-endpoint), this bulk endpoint handles multiple endpoints safely in a single request without sequential execution constraints between individual endpoints.\n\n<Note>\n  Execute bulk operations sequentially - wait for each bulk request to complete before starting the next.\n</Note>\n\nIf a `sim` object is provided, the specified SIM is assigned to the endpoint.\nThe `activate` property defaults to `false` and can be omitted unless the SIM should be activated during this call.\n\nIf `activate` is set to `true`:\n- The SIM enters Factory Test Mode (FTM) if FTM is enabled for the organization.\n- Otherwise, it goes directly to **Activated**.\n\nTo override this behavior and explicitly set the SIM's status (for example, skip FTM even if it's enabled for your organization), include a `status` object within the `sim` object.\n\n<Warning>\n  emnify charges for activated SIMs, even if the endpoint status is set to **Disabled**.\n</Warning>\n"
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItems'
+        '400':
+          description: Request body is malformed
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: 'User doesn''t have permission to bulk create endpoints
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: IP address space is full
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '422':
+          description: 'Appears in one of the following cases:
+
+
+            - Service profile is invalid
+
+            - Tariff profile is invalid
+
+            - Status is invalid
+
+            - IP address space is invalid
+
+            - Organization is invalid
+
+            - Endpoints are invalid
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkCreateEndpointRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                service_profile:
+                  $ref: '#/components/schemas/ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaServiceProfile'
+                  description: 'Applies to all endpoints.
+
+                    '
+                tariff_profile:
+                  $ref: '#/components/schemas/ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaTariffProfile'
+                  description: 'Applies to all endpoints.
+
+                    '
+                status:
+                  $ref: '#/components/schemas/ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaStatus'
+                  description: 'Applies to all endpoints.
+
+                    '
+                organisation:
+                  $ref: '#/components/schemas/ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaOrganisation'
+                  description: 'If provided, it must include a valid `id` (cannot be empty).
+
+                    '
+                ip_address_space:
+                  $ref: '#/components/schemas/ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaIpAddressSpace'
+                  description: 'Required if any endpoint in the `endpoints` array has an `ip_address`.
+
+                    '
+                endpoints:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItems'
+              required:
+              - service_profile
+              - tariff_profile
+              - status
+              - endpoints
+    delete:
+      operationId: bulk-delete-endpoint
+      summary: Bulk delete endpoints
+      description: "Deletes a list of endpoints in bulk, along with all child entities.\n\nUnlike [`DELETE /api/v1/endpoint/{endpoint_id}`](/developers/api/endpoint/endpoint-by-id-delete), this bulk endpoint handles multiple endpoints safely in a single request without sequential execution constraints between individual endpoints.\n\n<Note>\n  Execute bulk operations sequentially - wait for each bulk request to complete before starting the next.\n</Note>\n\nIf a SIM is assigned to one of the endpoints, it's released and suspended.\nIf the `delete_sims` query parameter is set to `true`, the SIMs are also deleted.\n"
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: delete_sims
+        in: query
+        description: 'If `true`, the SIMs will be deleted along with the endpoints.
+
+          If `false`, the SIMs will only be suspended.
+
+          Defaults to `false`.
+
+          '
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Endpoints deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Request body is malformed
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: 'User doesn''t have permission to bulk delete endpoints
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: 'Requested endpoint ID isn''t found
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ApiV2EndpointMultiDeleteRequestBodyContentApplicationJsonSchemaItems'
+    patch:
+      operationId: bulk-update-endpoint
+      summary: Bulk update endpoints
+      description: "Updates details of a list of endpoints in bulk.\n\nThe request body must be an array of endpoint objects.\nEach object requires an `id` field to identify the endpoint, and you only need to include the fields you want to update.\n\nUnlike [`PATCH /api/v1/endpoint/{endpoint_id}`](/developers/api/endpoint/endpoint-by-id-patch), this bulk endpoint handles multiple endpoints safely in a single request without sequential execution constraints between individual endpoints.\n\n<Note>\n  Execute bulk operations sequentially - wait for each bulk request to complete before starting the next.\n</Note>\n\n<Warning>\n  emnify charges for activated SIMs, even if the endpoint status is set to **Disabled**.\n  To avoid accruing unexpected charges, update the SIM status to **Suspended** (`\"id\": 2`).\n</Warning>\n"
+      tags:
+      - subpackage_endpoint
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'An `auth_token` should be provided to authenticate a session.
+
+
+          To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Endpoints updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Request body is malformed
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: 'User doesn''t have permission to bulk update endpoints
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: 'Appears in one of the following cases:
+
+
+            - IP address space isn''t found
+
+            - IP address space is full
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '422':
+          description: 'Appears in one of the following cases:
+
+
+            - Service profile is invalid
+
+            - Tariff profile is invalid
+
+            - Status is invalid
+
+            - IP address space is invalid
+
+            - IP address is invalid
+
+            - SIM is invalid
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkUpdateEndpointRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItems'
+components:
+  schemas:
+    ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsImeiWithLuhn:
+      type: object
+      properties: {}
+      title: ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsImeiWithLuhn
+    ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsServiceProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+      title: ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsServiceProfile
+    ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      description: 'Applies to all endpoints.
+
+        '
+      title: ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaStatus
+    Endpoint_EndpointQuotaSmsByEndpointIdPost_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Endpoint_EndpointQuotaSmsByEndpointIdPost_Response_201
+    ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaLocation:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaLocation
+    ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustion:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionId'
+        description:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionDescription'
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustion
+    ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustionId:
+      type: string
+      enum:
+      - '1'
+      title: ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustionId
+    ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsSmsType:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsSmsType
+    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataTrafficType:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Traffic type identifier (5 = Data).
+        description:
+          type: string
+          description: Human-readable traffic type name.
+        unit:
+          type: string
+          description: Unit of measurement (MB for data).
+      description: Information about the traffic type.
+      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataTrafficType
+    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsTagAssignmentsItemsTagColor:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Color ID.
+      description: Color assigned to this tag for UI display.
+      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsTagAssignmentsItemsTagColor
+    ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustion:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionId'
+        description:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionDescription'
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustion
+    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimSimProfileType:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Profile type ID.
+      description: Type of SIM profile.
+      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimSimProfileType
+    ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaServiceProfile:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaServiceProfile
+    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsServiceProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Service profile ID.
+        name:
+          type: string
+          description: Service profile name.
+      required:
+      - id
+      description: Service profile that determines network access settings for this endpoint.
+      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsServiceProfile
+    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsImsi:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsImsi
+    ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsServiceProfile:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+      required:
+      - id
+      - name
+      title: ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsServiceProfile
+    ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsTariffProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+      title: ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsTariffProfile
+    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventType:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventType
+    ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsSim:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: SIM ID to assign (set to null to unassign)
+        status:
+          $ref: '#/components/schemas/ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsSimStatus'
+          description: 'SIM status: 1 (Activated) or 5 (Factory Test)'
+      title: ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsSim
+    ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaEndpoint:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaEndpoint
+    ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+      description: 'Endpoint status: 0 (Enabled) or 1 (Disabled)'
+      title: ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsStatus
+    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the endpoint.
+        created:
+          type: string
+          format: date-time
+          description: Date and time when the endpoint was created (ISO 8601 format).
+        last_updated:
+          type: string
+          format: date-time
+          description: Date and time when the endpoint was last modified (ISO 8601 format).
+        name:
+          type: string
+          description: Display name for the endpoint.
+        tags:
+          type:
+          - string
+          - 'null'
+          description: 'Comma-separated list of tags.
+
+            Use `tag_assignments` for structured tag data.
+
+            '
+        ip_address:
+          type: string
+          description: Private IP address assigned to this endpoint within the IP address space.
+        imei:
+          type:
+          - string
+          - 'null'
+          description: 'International Mobile Equipment Identity with Software Version Number (IMEISV) (16 digits).
+
+            '
+        imei_lock:
+          type: boolean
+          description: If `true`, this endpoint only allows connections from the device with the specified IMEI.
+        status:
+          $ref: '#/components/schemas/ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsStatus'
+          description: 'Endpoint connectivity status.
+
+            Values are `0` (Enabled), `1` (Disabled), or `2` (Deleted).
+
+            '
+        tariff_profile:
+          $ref: '#/components/schemas/ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsTariffProfile'
+          description: Tariff profile that determines pricing and data limits for this endpoint.
+        service_profile:
+          $ref: '#/components/schemas/ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsServiceProfile'
+          description: Service profile that determines network access settings for this endpoint.
+        tag_assignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsTagAssignmentsItems'
+          description: 'Structured tag data with color information.
+
+            Alternative to the comma-separated `tags` field.
+
+            '
+        sim:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSim'
+          - type: 'null'
+          description: 'SIM card assigned to this endpoint.
+
+            `null` if no SIM is assigned.
+
+            '
+        ip_address_space:
+          $ref: '#/components/schemas/ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsIpAddressSpace'
+          description: IP address space that contains this endpoint's private IP address.
+        imei_with_luhn:
+          type:
+          - string
+          - 'null'
+          description: 'International Mobile Equipment Identity with Luhn check digit, without Software Version Number (SVN) (15 digits).
+
+            '
+        runtime_data:
+          $ref: '#/components/schemas/ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsRuntimeData'
+          description: 'Real-time network attachment data.
+
+            Only present when the endpoint is connected.
+
+            '
+      required:
+      - status
+      - tariff_profile
+      - service_profile
+      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItems
+    ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsCountry'
+        tapcode:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsTapcodeItems'
+        mnc:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsMncItems'
+      title: ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItems
+    ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaServiceProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'Service profile ID.
+
+            '
+      required:
+      - id
+      description: 'Service profile that determines network access settings.
+
+        Must belong to your organization.
+
+        '
+      title: ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaServiceProfile
+    ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionDescription:
+      type: string
+      enum:
+      - Block
+      title: ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionDescription
+    ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsIpAddressSpace:
+      type: object
+      properties:
+        id:
+          type: integer
+      description: Required when setting ip_address
+      title: ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsIpAddressSpace
+    ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionId:
+      type: string
+      enum:
+      - '1'
+      title: ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionId
+    ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaOrganisation:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Organization ID.
+      required:
+      - id
+      description: 'Organization to create the endpoint in.
+
+        Required only for reseller accounts creating endpoints in sub-organizations.
+
+        '
+      title: ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaOrganisation
+    ApiV1EndpointPostResponsesContentApplicationJsonSchemaSimStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Status ID.
+        description:
+          type: string
+          description: Human-readable status name.
+      description: SIM activation status.
+      title: ApiV1EndpointPostResponsesContentApplicationJsonSchemaSimStatus
+    ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatusDescription'
+        id:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatusId'
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatus
+    ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatusId:
+      type: string
+      enum:
+      - '1'
+      - '2'
+      - '3'
+      title: ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatusId
+    ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaSimStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaSimStatus
+    Endpoint_GetConnectivityInfoByEndpointId_Response_200:
+      oneOf:
+      - $ref: '#/components/schemas/EndpointGetConnectivityInfoByEndpointIdResponse2000'
+      - $ref: '#/components/schemas/EndpointGetConnectivityInfoByEndpointIdResponse2001'
+      - $ref: '#/components/schemas/EndpointGetConnectivityInfoByEndpointIdResponse2002'
+      title: Endpoint_GetConnectivityInfoByEndpointId_Response_200
+    ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsTapcodeItems:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsTapcodeItems
+    ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatusDescription:
+      type: string
+      enum:
+      - EXHAUSTED
+      - ACTIVE
+      - EXPIRED
+      title: ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatusDescription
+    ApiV1EndpointEndpointIdSmsPostRequestBodyContentApplicationJsonSchemaSourceAddressType:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'The source address format:
+
+
+            - `145`: International number format (E.164)
+
+            - `161`: National number format
+
+            - `208`: Alphanumeric string (for example, "CompanyName")
+
+            '
+      description: 'Defines the format of `source_address`.
+
+        Required when using alphanumeric sender IDs.
+
+        '
+      title: ApiV1EndpointEndpointIdSmsPostRequestBodyContentApplicationJsonSchemaSourceAddressType
+    ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaStatus:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaStatus
+    ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustionDescription:
+      type: string
+      enum:
+      - Block
+      title: ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustionDescription
+    ApiV1EndpointPostResponsesContentApplicationJsonSchemaServiceProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Service profile ID.
+        name:
+          type: string
+          description: Service profile name.
+      required:
+      - id
+      - name
+      description: Service profile assigned to this endpoint.
+      title: ApiV1EndpointPostResponsesContentApplicationJsonSchemaServiceProfile
+    ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsSourceAddressType:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsSourceAddressType
+    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Status ID (`0` = Enabled, `1` = Disabled, `2` = Deleted).
+        description:
+          type: string
+          description: Human-readable status name.
+      required:
+      - id
+      description: 'Endpoint connectivity status.
+
+        Values are `0` (Enabled), `1` (Disabled), or `2` (Deleted).
+
+        '
+      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsStatus
+    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsTrafficType:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Traffic type identifier (6 = SMS).
+        description:
+          type: string
+          description: Human-readable traffic type name.
+        unit:
+          type: string
+          description: Unit of measurement (SMS for messages).
+      description: Information about the traffic type.
+      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsTrafficType
+    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        timestamp:
+          type: string
+        alert:
+          type: boolean
+        description:
+          type: string
+        id:
+          type: integer
+        event_type:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventType'
+        event_source:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource'
+        event_severity:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity'
+        organisation:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation'
+        endpoint:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEndpoint'
+        sim:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsSim'
+        imsi:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsImsi'
+      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItems
+    ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaTariffProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaTariffProfile
+    ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaServiceProfile:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      description: 'Applies to all endpoints.
+
+        '
+      title: ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaServiceProfile
+    ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionId:
+      type: string
+      enum:
+      - '1'
+      title: ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionId
+    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation
+    ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        submit_date:
+          type: string
+        delivery_date:
+          type: string
+        expiry_date:
+          type: string
+        final_date:
+          type: string
+        retry_date:
+          type:
+          - string
+          - 'null'
+        last_delivery_attempt:
+          type: string
+        retry_count:
+          type: integer
+        gsm_map_error:
+          type:
+          - string
+          - 'null'
+        dcs:
+          type: integer
+        pid:
+          type: integer
+        source_address:
+          type: string
+        endpoint:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsEndpoint'
+        sim_id:
+          type: string
+        iccid:
+          type: string
+        msisdn:
+          type: string
+        imsi:
+          type: string
+        msc:
+          type: string
+        udh:
+          type: string
+        payload:
+          type: string
+        id:
+          type: integer
+        status:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsStatus'
+        sms_type:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsSmsType'
+        source_address_type:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsSourceAddressType'
+      title: ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItems
+    ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionDescription:
+      type: string
+      enum:
+      - Block
+      title: ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionDescription
+    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataCurrency:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Currency identifier.
+        code:
+          type: string
+          description: ISO 4217 currency code (for example, EUR, USD).
+        symbol:
+          type: string
+          description: Currency symbol (for example, €, $).
+      description: Currency used for cost calculations.
+      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataCurrency
+    ApiV1EndpointPostResponsesContentApplicationJsonSchemaSim:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: SIM ID.
+        iccid:
+          type: string
+          description: ICCID without Luhn checksum digit (19 digits).
+        iccid_with_luhn:
+          type: string
+          description: ICCID with Luhn checksum digit (20 digits).
+        sim_profile_type_id:
+          type: integer
+          description: SIM profile type ID.
+        imsi:
+          type: string
+          description: International Mobile Subscriber Identity (IMSI).
+        msisdn:
+          type: string
+          description: Phone number assigned to this SIM.
+        status:
+          $ref: '#/components/schemas/ApiV1EndpointPostResponsesContentApplicationJsonSchemaSimStatus'
+          description: SIM activation status.
+      description: 'SIM card assigned to this endpoint.
+
+        `null` if no SIM is assigned.
+
+        '
+      title: ApiV1EndpointPostResponsesContentApplicationJsonSchemaSim
+    ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaTariffProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'Tariff profile ID.
+
+            '
+      required:
+      - id
+      description: 'Tariff profile that determines pricing and data limits.
+
+        Must belong to your organization.
+
+        '
+      title: ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaTariffProfile
+    Endpoint_EndpointSmsByEndpointIdAndSmsIdDelete_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Endpoint_EndpointSmsByEndpointIdAndSmsIdDelete_Response_200
+    ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsStatus:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsStatus
+    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSms:
+      type: object
+      properties:
+        volume:
+          type: number
+          format: double
+          description: Total SMS count.
+        volume_tx:
+          type: number
+          format: double
+          description: SMS messages sent (Mobile Originated).
+        volume_rx:
+          type: number
+          format: double
+          description: SMS messages received (Mobile Terminated).
+        cost:
+          type: number
+          format: double
+          description: Cost of SMS usage.
+        traffic_type:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsTrafficType'
+          description: Information about the traffic type.
+        currency:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsCurrency'
+          description: Currency used for cost calculations.
+      description: SMS usage for this day.
+      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSms
+    ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsSim:
+      type: object
+      properties: {}
+      title: ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsSim
+    ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfoLocationCellGlobalId:
+      type: object
+      properties:
+        mcc:
+          type: string
+        mnc:
+          type: string
+        lac:
+          type: number
+          format: double
+        cid:
+          type: number
+          format: double
+      title: ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfoLocationCellGlobalId
+    EndpointByIdPatchRequestUnprocessableEntityError:
+      type: object
+      properties:
+        message:
+          type: string
+        error_code:
+          type: number
+          format: double
+        error_token:
+          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1EndpointEndpointIdPatchResponsesContentApplicationJsonSchemaErrorsItems'
+      required:
+      - message
+      - error_code
+      - error_token
+      - errors
+      title: EndpointByIdPatchRequestUnprocessableEntityError
+    EndpointQuotaDataByEndpointIdPostRequestUnprocessableEntityError:
+      type: object
+      properties:
+        message:
+          type: string
+      title: EndpointQuotaDataByEndpointIdPostRequestUnprocessableEntityError
+    EndpointGetConnectivityInfoByEndpointIdResponse2002:
+      type: object
+      properties:
+        subscriber_info:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf2SubscriberInfo'
+        request_timestamp:
+          type: string
+          format: date-time
+        reply_timestamp:
+          type: string
+          format: date-time
+      title: EndpointGetConnectivityInfoByEndpointIdResponse2002
+    BulkUpdateEndpointRequestUnprocessableEntityError:
+      type: object
+      properties:
+        message:
+          type: string
+        error_code:
+          type: number
+          format: double
+        error_token:
+          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV2EndpointMultiPatchResponsesContentApplicationJsonSchemaErrorsItems'
+      required:
+      - message
+      - error_code
+      - error_token
+      - errors
+      title: BulkUpdateEndpointRequestUnprocessableEntityError
+    ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItems:
+      type: object
+      properties:
+        name:
+          type: string
+        tags:
+          type: string
+        imei:
+          type: string
+          description: 'Must be unique across all endpoints in the array.
+
+            '
+        imei_lock:
+          type: boolean
+        sim:
+          $ref: '#/components/schemas/ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItemsSim'
+          description: 'If provided for any endpoint, it must include a valid `id` (cannot be empty).
+
+            '
+        ip_address:
+          type: string
+          description: 'Must be unique across all endpoints in the array.
+
+            If provided, you must provide `ip_address_space` at the root level.
+
+            '
+      description: 'Each item represents an endpoint to create.
+
+        '
+      title: ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItems
+    Endpoint_EndpointQuotaDataByEndpointIdPost_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Endpoint_EndpointQuotaDataByEndpointIdPost_Response_201
+    Endpoint_EndpointByIdGet_Response_200:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        tags:
+          type: string
+        created:
+          type: string
+          format: date-time
+        last_updated:
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaStatus'
+        service_profile:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaServiceProfile'
+        tariff_profile:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaTariffProfile'
+        ip_address:
+          type: string
+        ip_address_space:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaIpAddressSpace'
+        sim:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaSim'
+        imei:
+          type: string
+        imei_lock:
+          type: boolean
+        runtime_data:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaRuntimeData'
+      required:
+      - status
+      - service_profile
+      - tariff_profile
+      title: Endpoint_EndpointByIdGet_Response_200
+    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsTariffProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Tariff profile ID.
+        name:
+          type: string
+          description: Tariff profile name.
+      required:
+      - id
+      description: Tariff profile that determines pricing and data limits for this endpoint.
+      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsTariffProfile
+    Endpoint_EndpointSmsByEndpointIdAndSmsIdGet_Response_200:
+      type: object
+      properties:
+        submit_date:
+          type: string
+        delivery_date:
+          type: string
+        expiry_date:
+          type: string
+        final_date:
+          type: string
+        retry_date:
+          type:
+          - string
+          - 'null'
+        last_delivery_attempt:
+          type: string
+        retry_count:
+          type: integer
+        gsm_map_error:
+          type: string
+        dcs:
+          type: integer
+        pid:
+          type: integer
+        source_address:
+          type: string
+        endpoint:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaEndpoint'
+        sim_id:
+          type: string
+        iccid:
+          type: string
+        msisdn:
+          type: string
+        imsi:
+          type: string
+        msc:
+          type: string
+        udh:
+          type: string
+        payload:
+          type: string
+        id:
+          type: integer
+        status:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaStatus'
+        sms_type:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaSmsType'
+        source_address_type:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaSourceAddressType'
+      title: Endpoint_EndpointSmsByEndpointIdAndSmsIdGet_Response_200
+    ApiV1EndpointPostResponsesContentApplicationJsonSchemaIpAddressSpace:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: IP address space ID.
+      description: IP address space containing this endpoint's private IP address.
+      title: ApiV1EndpointPostResponsesContentApplicationJsonSchemaIpAddressSpace
+    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsSim:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsSim
+    ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaIpAddressSpace:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: IP address space ID.
+      required:
+      - id
+      description: "IP address space for the endpoint.\n\n<Info>\n  Required if `ip_address` is provided.\n</Info>\n"
+      title: ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaIpAddressSpace
+    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource
+    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSatGeoData:
+      type: object
+      properties:
+        volume:
+          type: number
+          format: double
+          description: Total satellite data volume in MB.
+        volume_tx:
+          type: number
+          format: double
+          description: Satellite data transmitted in MB.
+        volume_rx:
+          type: number
+          format: double
+          description: Satellite data received in MB.
+        cost:
+          type: number
+          format: double
+          description: Cost of satellite data usage.
+      description: Satellite data usage for this day (if applicable).
+      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSatGeoData
+    ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaIpAddressSpace:
+      type: object
+      properties:
+        id:
+          type: integer
+      title: ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaIpAddressSpace
+    ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaIpAddressSpace:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      description: 'Required if any endpoint in the `endpoints` array has an `ip_address`.
+
+        '
+      title: ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaIpAddressSpace
+    ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaStatus
+    ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsEndpoint:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsEndpoint
+    GetConnectivityInfoByEndpointIdRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: GetConnectivityInfoByEndpointIdRequestNotFoundError
+    ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaSmsType:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaSmsType
+    ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItemsSim:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+          description: 'Must be unique across all endpoints in the array.
+
+            '
+        activate:
+          type: boolean
+        status:
+          $ref: '#/components/schemas/ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItemsSimStatus'
+      required:
+      - id
+      description: 'If provided for any endpoint, it must include a valid `id` (cannot be empty).
+
+        '
+      title: ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItemsSim
+    ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaSim:
+      type: object
+      properties:
+        id:
+          type: integer
+        iccid:
+          type: string
+        eid:
+          type: string
+        msisdn:
+          type: string
+        imsi:
+          type: string
+        status:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaSimStatus'
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaSim
+    ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsTariffProfile:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+        satellite_capable:
+          type: boolean
+      required:
+      - id
+      - name
+      - satellite_capable
+      title: ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsTariffProfile
+    EndpointGetConnectivityInfoByEndpointIdResponse2001:
+      type: object
+      properties:
+        request_timestamp:
+          type: string
+          format: date-time
+        reply_timestamp:
+          type: string
+          format: date-time
+      title: EndpointGetConnectivityInfoByEndpointIdResponse2001
+    ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustion:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustionId'
+        description:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustionDescription'
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustion
+    ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaOrganisation:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      description: 'If provided, it must include a valid `id` (cannot be empty).
+
+        '
+      title: ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaOrganisation
+    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsData:
+      type: object
+      properties:
+        volume:
+          type: number
+          format: double
+          description: Total data volume in MB.
+        volume_tx:
+          type: number
+          format: double
+          description: Data transmitted (uploaded) in MB.
+        volume_rx:
+          type: number
+          format: double
+          description: Data received (downloaded) in MB.
+        cost:
+          type: number
+          format: double
+          description: Cost of data usage.
+        traffic_type:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataTrafficType'
+          description: Information about the traffic type.
+        currency:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataCurrency'
+          description: Currency used for cost calculations.
+      description: Cellular data usage for this day.
+      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsData
+    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsTagAssignmentsItems:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Tag ID.
+        name:
+          type: string
+          description: Tag name.
+        tag_color:
+          $ref: '#/components/schemas/ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsTagAssignmentsItemsTagColor'
+          description: Color assigned to this tag for UI display.
+      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsTagAssignmentsItems
+    ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItemsSimStatus:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItemsSimStatus
+    ApiV1EndpointPostResponsesContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Status ID (`0` = Enabled, `1` = Disabled).
+        description:
+          type: string
+          description: Human-readable status name.
+      required:
+      - id
+      - description
+      description: Endpoint connectivity status.
+      title: ApiV1EndpointPostResponsesContentApplicationJsonSchemaStatus
+    CreateEndpointRequestUnprocessableEntityError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: HTTP status code.
+        message:
+          type: string
+          description: Error summary.
+        error_code:
+          type: integer
+          description: Application-specific error code.
+        error_token:
+          type: string
+          description: Error type identifier.
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1EndpointPostResponsesContentApplicationJsonSchemaErrorsItems'
+          description: List of validation errors.
+      required:
+      - message
+      - error_code
+      - error_token
+      - errors
+      title: CreateEndpointRequestUnprocessableEntityError
+    ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaErrorsItems:
+      type: object
+      properties:
+        error_code:
+          type: number
+          format: double
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaErrorsItems
+    ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatusId:
+      type: string
+      enum:
+      - '1'
+      - '2'
+      - '3'
+      title: ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatusId
+    ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaPdpContext:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaPdpContext
+    ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'Status ID.
+
+            Valid values are `0` (Enabled) or `1` (Disabled).
+
+            '
+      required:
+      - id
+      description: Initial endpoint status.
+      title: ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaStatus
+    ApiV1EndpointPostResponsesContentApplicationJsonSchemaErrorsItems:
+      type: object
+      properties:
+        error_code:
+          type: integer
+          description: Application-specific error code.
+        error_token:
+          type: string
+          description: Error type identifier.
+        message:
+          type: string
+          description: Detailed error message.
+      title: ApiV1EndpointPostResponsesContentApplicationJsonSchemaErrorsItems
+    ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaStatus:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaStatus
+    ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsIpAddressSpace:
+      type: object
+      properties: {}
+      title: ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsIpAddressSpace
+    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsRuntimeData:
+      type: object
+      properties:
+        msc:
+          type: string
+          description: Mobile Switching Center identifier.
+        sgsn:
+          type: string
+          description: Serving GPRS Support Node identifier.
+        sgsn_ip_address:
+          type: string
+          description: IP address of the SGSN.
+      description: 'Real-time network attachment data.
+
+        Only present when the endpoint is connected.
+
+        '
+      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsRuntimeData
+    Endpoint_EndpointSmsByIdPost_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Endpoint_EndpointSmsByIdPost_Response_201
+    ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatusDescription'
+        id:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatusId'
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatus
+    ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaTariffProfile:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaTariffProfile
+    ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaCurrentMonth:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaCurrentMonth
+    ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaRuntimeData:
+      type: object
+      properties:
+        msc:
+          type: string
+        sgsn:
+          type: string
+        sgsn_ip_address:
+          type: string
+      title: ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaRuntimeData
+    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsCurrency:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Currency identifier.
+        code:
+          type: string
+          description: ISO 4217 currency code (for example, EUR, USD).
+        symbol:
+          type: string
+          description: Currency symbol (for example, €, $).
+      description: Currency used for cost calculations.
+      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsCurrency
+    ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaServiceProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaServiceProfile
+    ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsSimStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+      description: 'SIM status: 1 (Activated) or 5 (Factory Test)'
+      title: ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsSimStatus
+    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsIpAddressSpace:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: IP address space ID.
+      description: IP address space that contains this endpoint's private IP address.
+      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsIpAddressSpace
+    ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaSimStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'SIM status ID.
+
+            Valid values are `1` (Activated) or `4` (Factory Test).
+
+            '
+      required:
+      - id
+      description: Explicitly set the SIM status, overriding the default activation behavior.
+      title: ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaSimStatus
+    ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfo:
+      type: object
+      properties:
+        success:
+          type: boolean
+        state:
+          type: string
+        location:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfoLocation'
+      title: ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfo
+    ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsMncItems:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsMncItems
+    ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaSim:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        status:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaSimStatus'
+      required:
+      - id
+      - status
+      title: ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaSim
+    Endpoint_EndpointStatsByIdGet_Response_200:
+      type: object
+      properties:
+        last_month:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaLastMonth'
+        current_month:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaCurrentMonth'
+        last_hour:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaLastHour'
+      title: Endpoint_EndpointStatsByIdGet_Response_200
+    ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsCountry:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsCountry
+    ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaSim:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'SIM ID to assign.
+
+            The SIM must belong to your organization and not be assigned to another endpoint.
+
+            '
+        activate:
+          type: boolean
+          default: false
+          description: 'If `true`, activates the SIM after assignment.
+
+            If [factory test mode (FTM)](/developers/connectivity/factory-test-mode) is enabled for your organization, the SIM enters FTM instead of Activated.
+
+            '
+        status:
+          $ref: '#/components/schemas/ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaSimStatus'
+          description: Explicitly set the SIM status, overriding the default activation behavior.
+      required:
+      - id
+      description: 'SIM card to assign to this endpoint.
+
+        If omitted, no SIM is assigned.
+
+        '
+      title: ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaSim
+    ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaIpAddressSpace:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaIpAddressSpace
+    ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatusId:
+      type: string
+      enum:
+      - '1'
+      - '2'
+      - '3'
+      title: ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatusId
+    EndpointOperatorBlacklistByEpIdAndOperatorIdDeleteRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: EndpointOperatorBlacklistByEpIdAndOperatorIdDeleteRequestNotFoundError
+    EndpointOperatorBlacklistByEpIdAndOperatorIdPutRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: EndpointOperatorBlacklistByEpIdAndOperatorIdPutRequestConflictError
+    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity
+    ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatusDescription'
+        id:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatusId'
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatus
+    BulkCreateEndpointRequestUnprocessableEntityError:
+      type: object
+      properties:
+        message:
+          type: string
+        error_code:
+          type: number
+          format: double
+        error_token:
+          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaErrorsItems'
+      required:
+      - message
+      - error_code
+      - error_token
+      - errors
+      title: BulkCreateEndpointRequestUnprocessableEntityError
+    ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfoLocation:
+      type: object
+      properties:
+        current_location_retrieved:
+          type: boolean
+        age_of_location:
+          type: number
+          format: double
+        cell_global_id:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfoLocationCellGlobalId'
+      title: ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfoLocation
+    Endpoint_EndpointConnectivityByIdGet_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaStatus'
+        location:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaLocation'
+        pdp_context:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaPdpContext'
+        services:
+          type: array
+          items:
+            type: string
+      title: Endpoint_EndpointConnectivityByIdGet_Response_200
+    ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsStatus:
+      type: object
+      properties:
+        description:
+          type: string
+      required:
+      - description
+      title: ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsStatus
+    ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaSourceAddressType:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaSourceAddressType
+    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEndpoint:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEndpoint
+    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimEuiccProfileData:
+      type: object
+      properties: {}
+      description: 'eSIM profile data.
+
+        Present only for eSIM-capable SIMs.
+
+        '
+      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimEuiccProfileData
+    ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The endpoint ID to update
+        name:
+          type: string
+          description: The endpoint name
+        tags:
+          type: string
+          description: Comma-separated tags
+        imei:
+          type: string
+          description: The IMEI number
+        imei_lock:
+          type: boolean
+          description: Whether to lock the endpoint to this IMEI
+        ip_address:
+          type: string
+          description: The IP address to assign
+        ip_address_space:
+          $ref: '#/components/schemas/ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsIpAddressSpace'
+          description: Required when setting ip_address
+        service_profile:
+          $ref: '#/components/schemas/ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsServiceProfile'
+        tariff_profile:
+          $ref: '#/components/schemas/ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsTariffProfile'
+        status:
+          $ref: '#/components/schemas/ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsStatus'
+          description: 'Endpoint status: 0 (Enabled) or 1 (Disabled)'
+        sim:
+          $ref: '#/components/schemas/ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsSim'
+      required:
+      - id
+      title: ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItems
+    ApiV1EndpointStatusGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      required:
+      - id
+      title: ApiV1EndpointStatusGetResponsesContentApplicationJsonSchemaItems
+    ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaLastHour:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaLastHour
+    ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaTariffProfile:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      description: 'Applies to all endpoints.
+
+        '
+      title: ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaTariffProfile
+    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSim:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the SIM.
+        iccid:
+          type: string
+          description: Integrated Circuit Card Identifier without Luhn check digit (19 digits).
+        iccid_with_luhn:
+          type: string
+          description: Integrated Circuit Card Identifier with Luhn check digit (20 digits).
+        status:
+          $ref: '#/components/schemas/ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimStatus'
+          description: SIM activation status.
+        imsi:
+          type: string
+          description: 'International Mobile Subscriber Identity.
+
+            Identifies the SIM on the mobile network.
+
+            '
+        eid:
+          type: string
+          description: 'eUICC Identifier (32 digits).
+
+            Present only for eSIM-capable SIMs.
+
+            '
+        msisdn:
+          type: string
+          description: Phone number assigned to this SIM.
+        sim_profile_type:
+          $ref: '#/components/schemas/ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimSimProfileType'
+          description: Type of SIM profile.
+        euicc_profile_data:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimEuiccProfileData'
+          - type: 'null'
+          description: 'eSIM profile data.
+
+            Present only for eSIM-capable SIMs.
+
+            '
+      required:
+      - id
+      description: 'SIM card assigned to this endpoint.
+
+        `null` if no SIM is assigned.
+
+        '
+      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSim
+    Endpoint_CreateEndpoint_Response_201:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the endpoint.
+        ip_address:
+          type: string
+          description: Private IP address assigned to this endpoint.
+        status:
+          $ref: '#/components/schemas/ApiV1EndpointPostResponsesContentApplicationJsonSchemaStatus'
+          description: Endpoint connectivity status.
+        name:
+          type: string
+          description: Display name for the endpoint.
+        tags:
+          type:
+          - string
+          - 'null'
+          description: Comma-separated list of tags.
+        imei:
+          type:
+          - string
+          - 'null'
+          description: IMEI with Software Version Number (IMEISV) (16 digits).
+        created:
+          type: string
+          format: date-time
+          description: Date and time when the endpoint was created (ISO 8601 format).
+        last_updated:
+          type: string
+          format: date-time
+          description: Date and time when the endpoint was last modified (ISO 8601 format).
+        imei_lock:
+          type: boolean
+          description: If `true`, this endpoint only allows connections from the device with the specified IMEI.
+        service_profile:
+          $ref: '#/components/schemas/ApiV1EndpointPostResponsesContentApplicationJsonSchemaServiceProfile'
+          description: Service profile assigned to this endpoint.
+        tariff_profile:
+          $ref: '#/components/schemas/ApiV1EndpointPostResponsesContentApplicationJsonSchemaTariffProfile'
+          description: Tariff profile assigned to this endpoint.
+        sim:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV1EndpointPostResponsesContentApplicationJsonSchemaSim'
+          - type: 'null'
+          description: 'SIM card assigned to this endpoint.
+
+            `null` if no SIM is assigned.
+
+            '
+        ip_address_space:
+          $ref: '#/components/schemas/ApiV1EndpointPostResponsesContentApplicationJsonSchemaIpAddressSpace'
+          description: IP address space containing this endpoint's private IP address.
+        imei_with_luhn:
+          type:
+          - string
+          - 'null'
+          description: IMEI with Luhn checksum digit, without Software Version Number (15 digits).
+      required:
+      - id
+      - ip_address
+      - status
+      - name
+      - tags
+      - imei
+      - created
+      - last_updated
+      - imei_lock
+      - service_profile
+      - tariff_profile
+      - sim
+      - ip_address_space
+      - imei_with_luhn
+      title: Endpoint_CreateEndpoint_Response_201
+    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSatGeoSms:
+      type: object
+      properties:
+        volume:
+          type: number
+          format: double
+          description: Total satellite SMS count.
+        volume_tx:
+          type: number
+          format: double
+          description: Satellite SMS messages sent.
+        volume_rx:
+          type: number
+          format: double
+          description: Satellite SMS messages received.
+        cost:
+          type: number
+          format: double
+          description: Cost of satellite SMS usage.
+      description: Satellite SMS usage for this day (if applicable).
+      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSatGeoSms
+    ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatusDescription:
+      type: string
+      enum:
+      - EXHAUSTED
+      - ACTIVE
+      - EXPIRED
+      title: ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatusDescription
+    Endpoint_CreateEndpointTrafficLimitExtension_Response_201:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        endpoint_id:
+          type: number
+          format: double
+        traffic_limit_id:
+          type: number
+          format: double
+        volume:
+          type: number
+          format: double
+        expiration_date:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+      required:
+      - id
+      - endpoint_id
+      - traffic_limit_id
+      - volume
+      - expiration_date
+      - created_at
+      title: Endpoint_CreateEndpointTrafficLimitExtension_Response_201
+    ApiV2EndpointMultiPatchResponsesContentApplicationJsonSchemaErrorsItems:
+      type: object
+      properties:
+        error_code:
+          type: number
+          format: double
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ApiV2EndpointMultiPatchResponsesContentApplicationJsonSchemaErrorsItems
+    ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatusDescription:
+      type: string
+      enum:
+      - EXHAUSTED
+      - ACTIVE
+      - EXPIRED
+      title: ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatusDescription
+    ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaSimStatus:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaSimStatus
+    ApiV2EndpointMultiDeleteRequestBodyContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: ApiV2EndpointMultiDeleteRequestBodyContentApplicationJsonSchemaItems
+    ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        ip_address:
+          type: string
+        status:
+          $ref: '#/components/schemas/ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsStatus'
+        name:
+          type: string
+        tags:
+          type: string
+        imei:
+          type: string
+        created:
+          type: string
+          format: date-time
+        last_updated:
+          type: string
+          format: date-time
+        imei_lock:
+          type: boolean
+        service_profile:
+          $ref: '#/components/schemas/ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsServiceProfile'
+        tariff_profile:
+          $ref: '#/components/schemas/ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsTariffProfile'
+        sim:
+          $ref: '#/components/schemas/ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsSim'
+        ip_address_space:
+          $ref: '#/components/schemas/ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsIpAddressSpace'
+        imei_with_luhn:
+          $ref: '#/components/schemas/ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsImeiWithLuhn'
+      required:
+      - id
+      - ip_address
+      - status
+      - name
+      - tags
+      - imei
+      - created
+      - last_updated
+      - imei_lock
+      - service_profile
+      - tariff_profile
+      - sim
+      - ip_address_space
+      - imei_with_luhn
+      title: ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItems
+    Endpoint_EndpointQuotaDataByEndpointIdGet_Response_200:
+      type: object
+      properties:
+        last_volume_added:
+          type: number
+          format: double
+        last_status_change_date:
+          type: string
+        auto_refill:
+          type: integer
+        threshold_volume:
+          type: number
+          format: double
+        threshold_percentage:
+          type: number
+          format: double
+        status:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatus'
+        volume:
+          type: number
+          format: double
+        expiry_date:
+          type: string
+        action_on_exhaustion:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustion'
+      required:
+      - status
+      - volume
+      - expiry_date
+      - action_on_exhaustion
+      title: Endpoint_EndpointQuotaDataByEndpointIdGet_Response_200
+    ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaStatus
+    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+          description: The date for this statistics entry (YYYY-MM-DD format).
+        data:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsData'
+          description: Cellular data usage for this day.
+        sms:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSms'
+          description: SMS usage for this day.
+        sat_geo_data:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSatGeoData'
+          description: Satellite data usage for this day (if applicable).
+        sat_geo_sms:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSatGeoSms'
+          description: Satellite SMS usage for this day (if applicable).
+      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItems
+    EndpointGetConnectivityInfoByEndpointIdResponse2000:
+      type: object
+      properties:
+        subscriber_info:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfo'
+        request_timestamp:
+          type: string
+          format: date-time
+        reply_timestamp:
+          type: string
+          format: date-time
+      title: EndpointGetConnectivityInfoByEndpointIdResponse2000
+    ApiV1EndpointEndpointIdPatchResponsesContentApplicationJsonSchemaErrorsItems:
+      type: object
+      properties:
+        error_code:
+          type: number
+          format: double
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ApiV1EndpointEndpointIdPatchResponsesContentApplicationJsonSchemaErrorsItems
+    ApiV1EndpointEndpointIdTrafficLimitExtensionGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        endpoint_id:
+          type: number
+          format: double
+        traffic_limit_id:
+          type: number
+          format: double
+        volume:
+          type: number
+          format: double
+        expiration_date:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+      required:
+      - id
+      - endpoint_id
+      - traffic_limit_id
+      - volume
+      - expiration_date
+      - created_at
+      title: ApiV1EndpointEndpointIdTrafficLimitExtensionGetResponsesContentApplicationJsonSchemaItems
+    ApiV1EndpointPostResponsesContentApplicationJsonSchemaTariffProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Tariff profile ID.
+        name:
+          type: string
+          description: Tariff profile name.
+        satellite_capable:
+          type: boolean
+          description: If `true`, this tariff profile supports satellite connectivity.
+      required:
+      - id
+      - name
+      - satellite_capable
+      description: Tariff profile assigned to this endpoint.
+      title: ApiV1EndpointPostResponsesContentApplicationJsonSchemaTariffProfile
+    ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf2SubscriberInfo:
+      type: object
+      properties:
+        success:
+          type: boolean
+        error:
+          type: string
+      title: ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf2SubscriberInfo
+    ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaLastMonth:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaLastMonth
+    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Status ID.
+        description:
+          type: string
+          description: Human-readable status name.
+      required:
+      - id
+      description: SIM activation status.
+      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimStatus
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Retrieve a JWT via POST /api/v1/authenticate using an application_token or user credentials, then send it as `Authorization: Bearer <token>`.'

@@ -1,0 +1,148 @@
+openapi: 3.1.0
+info:
+  title: emnify REST subpackage_applicationTokens subpackage_systemEvents API
+  version: 1.0.0
+  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
+
+
+    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  contact:
+    name: emnify Developer Support
+    url: https://docs.emnify.com/developers
+  license:
+    name: Proprietary
+    url: https://www.emnify.com/legal
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API base host
+security:
+- BearerAuth: []
+tags:
+- name: subpackage_systemEvents
+  x-display-name: Systemevents
+paths:
+  /api/v1/event/system/configuration:
+    get:
+      operationId: get-system-events
+      summary: List system events
+      description: 'Returns a list of all available system events and their supported targeting options.
+
+        '
+      tags:
+      - subpackage_systemEvents
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SystemEventOutputDto'
+  /api/v1/event/system/configuration/{system_event_id}:
+    get:
+      operationId: get-system-event
+      summary: Get a system event by ID
+      description: 'Retrieves a specific system event and its supported targeting options.
+
+        '
+      tags:
+      - subpackage_systemEvents
+      parameters:
+      - name: system_event_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemEventOutputDto'
+components:
+  schemas:
+    WithIdInputDto:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: WithIdInputDto
+    SystemEventOutputDto:
+      type: object
+      properties:
+        id:
+          type: string
+        parentOrg:
+          $ref: '#/components/schemas/WithIdInputDto'
+        eventType:
+          $ref: '#/components/schemas/WithIdInputDto'
+        name:
+          type: string
+        translationKeyName:
+          type: string
+        description:
+          type: string
+        translationKeyDescription:
+          type: string
+        supportedTargetingParameters:
+          type: array
+          items:
+            type: string
+        eventOutputParameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationParameterDto'
+        supportedActions:
+          type: array
+          items:
+            type: string
+      required:
+      - id
+      - parentOrg
+      - eventType
+      - name
+      - translationKeyName
+      - description
+      - translationKeyDescription
+      - supportedTargetingParameters
+      - eventOutputParameters
+      - supportedActions
+      title: SystemEventOutputDto
+    ConfigurationParameterDto:
+      type: object
+      properties:
+        parameter:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+      required:
+      - parameter
+      - type
+      - description
+      title: ConfigurationParameterDto
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Retrieve a JWT via POST /api/v1/authenticate using an application_token or user credentials, then send it as `Authorization: Bearer <token>`.'
