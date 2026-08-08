@@ -51,7 +51,7 @@ apis:
   humanURL: https://docs.emnify.com/_mcp/server
   properties:
   - url: https://docs.emnify.com/_mcp/server
-    type: MCP
+    type: Documentation
   - url: https://docs.emnify.com/developers/developer-tools/ai-assistance
     type: Documentation
   description: >-
