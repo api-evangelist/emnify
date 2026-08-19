@@ -1,0 +1,234 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "emnify REST subpackage_applicationTokens subpackage_cloudConnect API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_cloudConnect",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all Cloud Connect attachments of an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/cnc/breakout",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Numerical ID of the Cloud Connect attachment status\n\n* `1` - Pending Customer Action\n* `2` - Pending AWS Activation\n* `3` - Pending EGN Activation\n* `4` - Pending CRG Activation\n* `5` - Active\n* `6` - Deactivation Pending\n* `7` - Deactivated\n* `8` - Rolling Back\n"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Numerical ID of the Cloud Connect attachment type\n\n* `1` - Transit Gateway\n* `2` - IPSec VPN\n* `3` - IPSec VPN BGP\n* `4` - IPSec VPN BGP High Availability\n* `5` - Direct Connect\n* `6` - Shared\n* `7` - Transit Gateway (Classic)\n* `8` - IPSec VPN (Classic)\n"
+              },
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "query",
+                "description": "Numerical ID of an Organization"
+              }
+            ]
+          },
+          "docs": "Lists all Cloud Connect attachments of the logged in organisation if it is an Enterprise. For Master organisations\nit lists all attachments of the direct child organisations. Deleted attachments are left out by default.\n\nAdditionally the attachments can be filtered by status and type.\nMaster organisations can also filter by organisation ID of their direct child organisations.\n"
+        },
+        {
+          "info": {
+            "name": "Create a Cloud Connect attachment via Transit Gateway",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/cnc/breakout/tgw",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a Transit Gateway breakout towards the customer AWS account.\n\nAfter the creation the following steps have to be made from the customer's AWS account:\n\n1. Accept the resource share about the 'CloudConnect' TransitGateway\n2. Create a Transit Gateway Attachment to the own VPC with the services to connect to\n\nMore Information about this can be found on the Cloud Connect Knowledge Base article.\n"
+        },
+        {
+          "info": {
+            "name": "Create a Cloud Connect attachment via IPSec VPN",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/cnc/breakout/vpn",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a Cloud Connect attachment via a specified VPN server.\nCurrently two attachment types are available:\n\n- **Static VPN** (type `2`): Basic IPSec VPN connection\n- **Dynamic VPN with BGP** (type `3`): IPSec VPN with BGP routing.\n  Requires `asn` (Autonomous System Number), otherwise dynamic routing is disabled.\n  Optionally accepts `inside_cidr` for BGP tunnel interfaces.\n\nThe `on_prem_cidr` parameter specifies the CIDR ranges of your backend network (up to 3).\nThe `public_ip` is the public "
+        },
+        {
+          "info": {
+            "name": "View details of a Cloud Connect attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/cnc/breakout/:cloudconnect_attachment_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cloudconnect_attachment_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Displays the details including configured CIDR blocks of a Cloud Connect Attachment.\n\nFor active IPSec VPN attachments, the tunnel information (public IP, outisde address, inside CIDR, PSK, ASN)\nincluding metrics over the last hour (tunnel state, bytes in/out) will be displayed as well.\n"
+        },
+        {
+          "info": {
+            "name": "Retry creation of an expired TGW breakout",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://cdn.emnify.net/api/v1/cnc/breakout/:cloudconnect_attachment_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cloudconnect_attachment_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retries the creation of a Transit Gateway breakout where the accept attachment state has expired, meaning the\nattachment on the customer's side has not been created in time.\n\nRetry is only allowed if:\n- The breakout is of type `Transit Gateway (type_id: 1)`\n- The breakout is in status `Pending AWS Activation (status_id: 2)`\n- The accept attachment state has expired (7 days after creation)\n"
+        },
+        {
+          "info": {
+            "name": "Delete a specific Cloud Connect attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/cnc/breakout/:cloudconnect_attachment_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cloudconnect_attachment_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes the specified Cloud Connect attachment.\n\nAttachments cannot be deleted if they are in the state `7 (Deactivated)` or `8 (Rolling Back)` or if they are Classic attachments.\n"
+        },
+        {
+          "info": {
+            "name": "List Cloud Connect breakout types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/cnc/breakout_type",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Lists all Cloud Connect breakout types.\n"
+        },
+        {
+          "info": {
+            "name": "Get list of available Cloud Connect regions by breakout type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/cnc/breakout_type/:breakout_type_id/available_region",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "breakout_type_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of a Cloud Connect breakout type. Possible values can be retrieved with `GET /api/v1/cnc/breakout_type`.\n"
+              }
+            ]
+          },
+          "docs": "Returns a list of regions available for use when creating new Cloud Connect breakouts of the selected breakout type.\n\nIf the attachment region is peered to another one, the device breakout region will also be returned.\n"
+        },
+        {
+          "info": {
+            "name": "List Cloud Connect prices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/cnc/pricing",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns a list of the configured monthly prices for Cloud Connect breakouts.\n\nMaster organisation, Mobile Network Operators and Resellers will get the list of prices they have configured\nfor their child organisations.\n\nEnterprise organisations will get the list of prices that apply for them.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

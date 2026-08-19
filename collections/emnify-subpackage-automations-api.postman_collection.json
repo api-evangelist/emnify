@@ -1,0 +1,995 @@
+{
+  "item": [
+    {
+      "id": "b8087370-8f37-4a11-96e3-da159a8bb012",
+      "name": "subpackage_automations",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ada857e4-a0c1-467c-bed1-c41fae606b1b",
+          "name": "List configured automations",
+          "request": {
+            "name": "List configured automations",
+            "description": {
+              "content": "Returns a list of all configured automations for the organization.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "automation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8fc22e8f-7e6e-4799-aaf7-eb597cf72e27",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "automation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"status\": \"string\",\n    \"organisation\": {\n      \"id\": 3147.856060035301\n    },\n    \"number_of_executions\": 1154.3619783568226,\n    \"last_execution\": \"string\",\n    \"created_at\": \"string\",\n    \"modified_at\": \"string\",\n    \"actionable_event\": {\n      \"custom_event\": {\n        \"organisation\": {\n          \"id\": 7771.963777157464\n        },\n        \"template\": {\n          \"id\": 3969.259946425451\n        },\n        \"configuration_properties\": [\n          {\n            \"property\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value_array\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"property\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value_array\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"supportedTargetingParameters\": [\n          \"string\",\n          \"string\"\n        ],\n        \"supportedActions\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"system_event\": {\n        \"id\": \"string\",\n        \"parentOrg\": {\n          \"id\": 1646.1154214516637\n        },\n        \"eventType\": {\n          \"id\": 2523.784336909619\n        },\n        \"name\": \"string\",\n        \"translationKeyName\": \"string\",\n        \"description\": \"string\",\n        \"translationKeyDescription\": \"string\",\n        \"supportedTargetingParameters\": [\n          \"string\",\n          \"string\"\n        ],\n        \"eventOutputParameters\": [\n          {\n            \"parameter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"parameter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"supportedActions\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    },\n    \"configured_actions\": [\n      {\n        \"action\": {\n          \"id\": \"string\"\n        },\n        \"properties\": [\n          {\n            \"property\": \"string\",\n            \"value\": \"string\",\n            \"value_array\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"property\": \"string\",\n            \"value\": \"string\",\n            \"value_array\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ],\n        \"recipients\": {\n          \"email\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      },\n      {\n        \"action\": {\n          \"id\": \"string\"\n        },\n        \"properties\": [\n          {\n            \"property\": \"string\",\n            \"value\": \"string\",\n            \"value_array\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"property\": \"string\",\n            \"value\": \"string\",\n            \"value_array\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ],\n        \"recipients\": {\n          \"email\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      }\n    ],\n    \"targeting_properties\": [\n      {\n        \"property\": \"string\",\n        \"value\": \"string\",\n        \"value_array\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"property\": \"string\",\n        \"value\": \"string\",\n        \"value_array\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ]\n  },\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"status\": \"string\",\n    \"organisation\": {\n      \"id\": 7195.278089636218\n    },\n    \"number_of_executions\": 4755.456873110366,\n    \"last_execution\": \"string\",\n    \"created_at\": \"string\",\n    \"modified_at\": \"string\",\n    \"actionable_event\": {\n      \"custom_event\": {\n        \"organisation\": {\n          \"id\": 2747.959396145456\n        },\n        \"template\": {\n          \"id\": 490.6736750812157\n        },\n        \"configuration_properties\": [\n          {\n            \"property\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value_array\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"property\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value_array\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"supportedTargetingParameters\": [\n          \"string\",\n          \"string\"\n        ],\n        \"supportedActions\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"system_event\": {\n        \"id\": \"string\",\n        \"parentOrg\": {\n          \"id\": 6092.2884151214375\n        },\n        \"eventType\": {\n          \"id\": 1047.4775853179374\n        },\n        \"name\": \"string\",\n        \"translationKeyName\": \"string\",\n        \"description\": \"string\",\n        \"translationKeyDescription\": \"string\",\n        \"supportedTargetingParameters\": [\n          \"string\",\n          \"string\"\n        ],\n        \"eventOutputParameters\": [\n          {\n            \"parameter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"parameter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"supportedActions\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    },\n    \"configured_actions\": [\n      {\n        \"action\": {\n          \"id\": \"string\"\n        },\n        \"properties\": [\n          {\n            \"property\": \"string\",\n            \"value\": \"string\",\n            \"value_array\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"property\": \"string\",\n            \"value\": \"string\",\n            \"value_array\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ],\n        \"recipients\": {\n          \"email\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      },\n      {\n        \"action\": {\n          \"id\": \"string\"\n        },\n        \"properties\": [\n          {\n            \"property\": \"string\",\n            \"value\": \"string\",\n            \"value_array\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"property\": \"string\",\n            \"value\": \"string\",\n            \"value_array\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ],\n        \"recipients\": {\n          \"email\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      }\n    ],\n    \"targeting_properties\": [\n      {\n        \"property\": \"string\",\n        \"value\": \"string\",\n        \"value_array\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"property\": \"string\",\n        \"value\": \"string\",\n        \"value_array\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6c59c109-5ea0-45da-a09b-4d69cc950453",
+          "name": "Create an automation",
+          "request": {
+            "name": "Create an automation",
+            "description": {
+              "content": "Creates an automation with the configured event and selected actions, respecting the configured targets.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "automation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"status\": \"<string>\",\n  \"actionable_event\": {\n    \"custom_event\": {\n      \"id\": \"<string>\"\n    },\n    \"system_event\": {\n      \"id\": \"<string>\"\n    }\n  },\n  \"configured_actions\": [\n    {\n      \"action\": {\n        \"id\": \"<string>\",\n        \"type\": \"<string>\"\n      },\n      \"properties\": [\n        {\n          \"property\": \"<string>\",\n          \"value\": \"<string>\",\n          \"value_array\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"property\": \"<string>\",\n          \"value\": \"<string>\",\n          \"value_array\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"action\": {\n        \"id\": \"<string>\",\n        \"type\": \"<string>\"\n      },\n      \"properties\": [\n        {\n          \"property\": \"<string>\",\n          \"value\": \"<string>\",\n          \"value_array\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"property\": \"<string>\",\n          \"value\": \"<string>\",\n          \"value_array\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    }\n  ],\n  \"targeting_properties\": [\n    {\n      \"property\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_array\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"property\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_array\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7730daa9-bb45-4c9c-968f-7cd9050c659e",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "automation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"status\": \"<string>\",\n  \"actionable_event\": {\n    \"custom_event\": {\n      \"id\": \"string\"\n    },\n    \"system_event\": {\n      \"id\": \"string\"\n    }\n  },\n  \"configured_actions\": [\n    {\n      \"action\": {\n        \"id\": \"string\",\n        \"type\": \"string\"\n      },\n      \"properties\": [\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ]\n    },\n    {\n      \"action\": {\n        \"id\": \"string\",\n        \"type\": \"string\"\n      },\n      \"properties\": [\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ]\n    }\n  ],\n  \"targeting_properties\": [\n    {\n      \"property\": \"string\",\n      \"value\": \"string\",\n      \"value_array\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"property\": \"string\",\n      \"value\": \"string\",\n      \"value_array\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"status\": \"string\",\n  \"organisation\": {\n    \"id\": 8694.233876963333\n  },\n  \"number_of_executions\": 454.4193175861633,\n  \"last_execution\": \"string\",\n  \"created_at\": \"string\",\n  \"modified_at\": \"string\",\n  \"actionable_event\": {\n    \"custom_event\": {\n      \"organisation\": {\n        \"id\": 8439.237951257885\n      },\n      \"template\": {\n        \"id\": 46.172918021258894\n      },\n      \"configuration_properties\": [\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"name\": \"string\",\n      \"id\": \"string\",\n      \"supportedTargetingParameters\": [\n        \"string\",\n        \"string\"\n      ],\n      \"supportedActions\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"system_event\": {\n      \"id\": \"string\",\n      \"parentOrg\": {\n        \"id\": 3164.252573609021\n      },\n      \"eventType\": {\n        \"id\": 6371.9040485075675\n      },\n      \"name\": \"string\",\n      \"translationKeyName\": \"string\",\n      \"description\": \"string\",\n      \"translationKeyDescription\": \"string\",\n      \"supportedTargetingParameters\": [\n        \"string\",\n        \"string\"\n      ],\n      \"eventOutputParameters\": [\n        {\n          \"parameter\": \"string\",\n          \"type\": \"string\",\n          \"description\": \"string\"\n        },\n        {\n          \"parameter\": \"string\",\n          \"type\": \"string\",\n          \"description\": \"string\"\n        }\n      ],\n      \"supportedActions\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  },\n  \"configured_actions\": [\n    {\n      \"action\": {\n        \"id\": \"string\"\n      },\n      \"properties\": [\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"recipients\": {\n        \"email\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    },\n    {\n      \"action\": {\n        \"id\": \"string\"\n      },\n      \"properties\": [\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"recipients\": {\n        \"email\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    }\n  ],\n  \"targeting_properties\": [\n    {\n      \"property\": \"string\",\n      \"value\": \"string\",\n      \"value_array\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"property\": \"string\",\n      \"value\": \"string\",\n      \"value_array\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1824c22c-7ae5-433f-b6e5-bc58736d616c",
+          "name": "List available actions",
+          "request": {
+            "name": "List available actions",
+            "description": {
+              "content": "Returns a list of all available actions, as well as their possible configuration parameters and required fields.\nAvailability depends on the parent organization.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "automation",
+                "action"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0914c796-74fe-46f5-94b7-de3584ffe691",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "automation",
+                    "action"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"status\": \"string\",\n    \"type\": \"string\",\n    \"configurationProperties\": [\n      \"string\",\n      \"string\"\n    ],\n    \"name\": \"string\",\n    \"translationKeyName\": \"string\",\n    \"description\": \"string\",\n    \"translationKeyDescription\": \"string\",\n    \"requiredEventOutputParameters\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  {\n    \"id\": \"string\",\n    \"status\": \"string\",\n    \"type\": \"string\",\n    \"configurationProperties\": [\n      \"string\",\n      \"string\"\n    ],\n    \"name\": \"string\",\n    \"translationKeyName\": \"string\",\n    \"description\": \"string\",\n    \"translationKeyDescription\": \"string\",\n    \"requiredEventOutputParameters\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9490422c-9537-43e8-841b-e233764f19b7",
+          "name": "Get an action by ID",
+          "request": {
+            "name": "Get an action by ID",
+            "description": {
+              "content": "Retrieves a specified available actions, as well as the possible configuration parameters and required fields.\nAvailability depends on the parent organization.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "automation",
+                "action",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bb780a92-6c3a-438f-8124-b66194e9f7c7",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "automation",
+                    "action",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"status\": \"string\",\n  \"type\": \"string\",\n  \"configurationProperties\": [\n    \"string\",\n    \"string\"\n  ],\n  \"name\": \"string\",\n  \"translationKeyName\": \"string\",\n  \"description\": \"string\",\n  \"translationKeyDescription\": \"string\",\n  \"requiredEventOutputParameters\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9e25be2c-2af3-4938-9b64-4865d10924fc",
+          "name": "List action logs",
+          "request": {
+            "name": "List action logs",
+            "description": {
+              "content": "Returns a list of all action logs for this organization.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "automation",
+                "log"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "automationId",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "automationExecutionNumber",
+                  "value": "<double>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9490b468-a455-450b-be06-32180a09aff5",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "automation",
+                    "log"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "automationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "automationExecutionNumber",
+                      "value": "<double>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"automation\": {\n      \"id\": \"string\"\n    },\n    \"action\": {\n      \"id\": \"string\"\n    },\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"event\": {\n      \"id\": \"string\"\n    },\n    \"smart_event\": {\n      \"id\": \"string\"\n    },\n    \"created_at\": \"string\",\n    \"automation_execution_number\": 6709.261620517149,\n    \"organisation\": {\n      \"id\": 6682.029103591562\n    },\n    \"id\": \"string\"\n  },\n  {\n    \"automation\": {\n      \"id\": \"string\"\n    },\n    \"action\": {\n      \"id\": \"string\"\n    },\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"event\": {\n      \"id\": \"string\"\n    },\n    \"smart_event\": {\n      \"id\": \"string\"\n    },\n    \"created_at\": \"string\",\n    \"automation_execution_number\": 3964.789474416507,\n    \"organisation\": {\n      \"id\": 7465.236609061368\n    },\n    \"id\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e4d3bd8b-51a3-41c6-8576-e466d935df09",
+          "name": "Verify an automation recipient's email address",
+          "request": {
+            "name": "Verify an automation recipient's email address",
+            "description": {
+              "content": "Verifies the email address of an automation recipient using the verification token sent to the recipient via email.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "automation",
+                "recipient",
+                "email",
+                "verification"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c0f3ce61-5f83-4369-8996-762b5631b7c7",
+              "name": "Email verification successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "automation",
+                    "recipient",
+                    "email",
+                    "verification"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "29e98a2a-0aa8-4701-b2cb-3d4ffc987206",
+          "name": "Get configured automation by ID",
+          "request": {
+            "name": "Get configured automation by ID",
+            "description": {
+              "content": "Retrieves the specified configured automation.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "automation",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "72fe7b03-df60-4126-a994-6ec22c81e675",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "automation",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"status\": \"string\",\n  \"organisation\": {\n    \"id\": 8694.233876963333\n  },\n  \"number_of_executions\": 454.4193175861633,\n  \"last_execution\": \"string\",\n  \"created_at\": \"string\",\n  \"modified_at\": \"string\",\n  \"actionable_event\": {\n    \"custom_event\": {\n      \"organisation\": {\n        \"id\": 8439.237951257885\n      },\n      \"template\": {\n        \"id\": 46.172918021258894\n      },\n      \"configuration_properties\": [\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"name\": \"string\",\n      \"id\": \"string\",\n      \"supportedTargetingParameters\": [\n        \"string\",\n        \"string\"\n      ],\n      \"supportedActions\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"system_event\": {\n      \"id\": \"string\",\n      \"parentOrg\": {\n        \"id\": 3164.252573609021\n      },\n      \"eventType\": {\n        \"id\": 6371.9040485075675\n      },\n      \"name\": \"string\",\n      \"translationKeyName\": \"string\",\n      \"description\": \"string\",\n      \"translationKeyDescription\": \"string\",\n      \"supportedTargetingParameters\": [\n        \"string\",\n        \"string\"\n      ],\n      \"eventOutputParameters\": [\n        {\n          \"parameter\": \"string\",\n          \"type\": \"string\",\n          \"description\": \"string\"\n        },\n        {\n          \"parameter\": \"string\",\n          \"type\": \"string\",\n          \"description\": \"string\"\n        }\n      ],\n      \"supportedActions\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  },\n  \"configured_actions\": [\n    {\n      \"action\": {\n        \"id\": \"string\"\n      },\n      \"properties\": [\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"recipients\": {\n        \"email\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    },\n    {\n      \"action\": {\n        \"id\": \"string\"\n      },\n      \"properties\": [\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"recipients\": {\n        \"email\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    }\n  ],\n  \"targeting_properties\": [\n    {\n      \"property\": \"string\",\n      \"value\": \"string\",\n      \"value_array\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"property\": \"string\",\n      \"value\": \"string\",\n      \"value_array\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "743ca9bd-2310-4d76-815f-043a00c884a4",
+          "name": "Delete a configured automation",
+          "request": {
+            "name": "Delete a configured automation",
+            "description": {
+              "content": "Deletes the specified configured automation.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "automation",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "11e05408-7184-4ead-9b58-04a9c65e44fc",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "automation",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "feea1056-bd63-4157-b50d-7d5b66047d3c",
+          "name": "Update an automation",
+          "request": {
+            "name": "Update an automation",
+            "description": {
+              "content": "Updates an automation with the configured event and selected actions, respecting the configured targets.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "automation",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"status\": \"<string>\",\n  \"configured_actions\": [\n    {\n      \"action\": {\n        \"id\": \"<string>\",\n        \"type\": \"<string>\"\n      },\n      \"properties\": [\n        {\n          \"property\": \"<string>\",\n          \"value\": \"<string>\",\n          \"value_array\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"property\": \"<string>\",\n          \"value\": \"<string>\",\n          \"value_array\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"action\": {\n        \"id\": \"<string>\",\n        \"type\": \"<string>\"\n      },\n      \"properties\": [\n        {\n          \"property\": \"<string>\",\n          \"value\": \"<string>\",\n          \"value_array\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"property\": \"<string>\",\n          \"value\": \"<string>\",\n          \"value_array\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    }\n  ],\n  \"targeting_properties\": [\n    {\n      \"property\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_array\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"property\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_array\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0a989ddb-92b6-4c80-8ebf-f9440a696ce9",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "automation",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"status\": \"<string>\",\n  \"configured_actions\": [\n    {\n      \"action\": {\n        \"id\": \"string\",\n        \"type\": \"string\"\n      },\n      \"properties\": [\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ]\n    },\n    {\n      \"action\": {\n        \"id\": \"string\",\n        \"type\": \"string\"\n      },\n      \"properties\": [\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ]\n    }\n  ],\n  \"targeting_properties\": [\n    {\n      \"property\": \"string\",\n      \"value\": \"string\",\n      \"value_array\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"property\": \"string\",\n      \"value\": \"string\",\n      \"value_array\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"status\": \"string\",\n  \"organisation\": {\n    \"id\": 8694.233876963333\n  },\n  \"number_of_executions\": 454.4193175861633,\n  \"last_execution\": \"string\",\n  \"created_at\": \"string\",\n  \"modified_at\": \"string\",\n  \"actionable_event\": {\n    \"custom_event\": {\n      \"organisation\": {\n        \"id\": 8439.237951257885\n      },\n      \"template\": {\n        \"id\": 46.172918021258894\n      },\n      \"configuration_properties\": [\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"name\": \"string\",\n      \"id\": \"string\",\n      \"supportedTargetingParameters\": [\n        \"string\",\n        \"string\"\n      ],\n      \"supportedActions\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"system_event\": {\n      \"id\": \"string\",\n      \"parentOrg\": {\n        \"id\": 3164.252573609021\n      },\n      \"eventType\": {\n        \"id\": 6371.9040485075675\n      },\n      \"name\": \"string\",\n      \"translationKeyName\": \"string\",\n      \"description\": \"string\",\n      \"translationKeyDescription\": \"string\",\n      \"supportedTargetingParameters\": [\n        \"string\",\n        \"string\"\n      ],\n      \"eventOutputParameters\": [\n        {\n          \"parameter\": \"string\",\n          \"type\": \"string\",\n          \"description\": \"string\"\n        },\n        {\n          \"parameter\": \"string\",\n          \"type\": \"string\",\n          \"description\": \"string\"\n        }\n      ],\n      \"supportedActions\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  },\n  \"configured_actions\": [\n    {\n      \"action\": {\n        \"id\": \"string\"\n      },\n      \"properties\": [\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"recipients\": {\n        \"email\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    },\n    {\n      \"action\": {\n        \"id\": \"string\"\n      },\n      \"properties\": [\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"property\": \"string\",\n          \"value\": \"string\",\n          \"value_array\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"recipients\": {\n        \"email\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    }\n  ],\n  \"targeting_properties\": [\n    {\n      \"property\": \"string\",\n      \"value\": \"string\",\n      \"value_array\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"property\": \"string\",\n      \"value\": \"string\",\n      \"value_array\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://cdn.emnify.net",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "72ca0552-23fc-47ea-8035-4ab29c68a54c",
+    "name": "emnify REST subpackage_applicationTokens subpackage_automations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.\n\nSource: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.\n\nContact Support:\n Name: emnify Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,857 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "emnify REST subpackage_applicationTokens subpackage_endpoint API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_endpoint",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List endpoints",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/endpoint",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Filters endpoints by field value.\nUse `<field>:<criteria>` format.\nCombine multiple filters with commas (for example, `status:0,tags:sensor`).\n"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sorts endpoints by field value.\nUse `<operator><field>` format.\nCombine multiple sort fields with commas (for example, `-status,id`).\n\n**Operators:**\n- `-` descending (Z-A for text, highest number first)\n- `+` ascending (A-Z for text, lowest number first)\n\nDefaults to ascending order if no operator is specified.\nDefaults to `id` if no sort field is specified.\nEndpoints with identical values are sorted by ascending `id`.\n"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number to retrieve.\nStarts at 1.\n"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of endpoints to return per page."
+              }
+            ]
+          },
+          "docs": "Retrieves all endpoints for your organization.\nUse the query parameters to filter, sort, and paginate results.\n"
+        },
+        {
+          "info": {
+            "name": "Create an endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/endpoint",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a single endpoint with the specified configuration.\n\n<Note>\n  For bulk operations, use [`POST /api/v2/endpoint/multi`](/developers/api/endpoint/bulk-create-endpoint) instead (supports up to 2,000 endpoints per request).\n</Note>\n\n<Warning>\n  emnify charges for activated SIMs, even if the endpoint status is set to **Disabled**.\n</Warning>\n"
+        },
+        {
+          "info": {
+            "name": "List endpoint statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/status",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns a list of available [endpoint statuses](/developers/reference/endpoint#endpoint-statuses)."
+        },
+        {
+          "info": {
+            "name": "Endpoint details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves endpoint details for a given ID."
+        },
+        {
+          "info": {
+            "name": "Update an endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the details of an endpoint.\n\n<Note>\n  Execute this operation sequentially - wait for each request to complete before starting the next.\n\n  For bulk updates, use [`PATCH /api/v2/endpoint/multi`](/developers/api/endpoint/bulk-update-endpoint) instead (supports up to 2,000 endpoints).\n</Note>\n\n<Warning>\n  emnify charges for activated SIMs, even if the endpoint `status` is set to **Disabled**.\n  To avoid accruing unexpected charges, update the SIM `status` to **Suspended** (`\"id\": 2`).\n</War"
+        },
+        {
+          "info": {
+            "name": "Delete an endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes an endpoint and all its child entities.\n\n<Note>\n  Execute this operation sequentially - wait for each request to complete before starting the next.\n\n  For bulk deletions, use [`DELETE /api/v2/endpoint/multi`](/developers/api/endpoint/bulk-delete-endpoint) instead (supports up to 2,000 endpoints).\n</Note>\n\n<Info>\n  Endpoints with an assigned SIM cannot be deleted (results in a `409` error).\n</Info>\n"
+        },
+        {
+          "info": {
+            "name": "Endpoint connectivity status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id/connectivity",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve details about current connectivity status of endpoint.\nThe following is a list of possible statuses:\n\n* `ATTACHED`:\nThe Endpoint has succesfully attached to the Home Core network in the past.\nThe device will be shown as `ATTACHED` until the visited network has signaled that the device is inactive/offline.\nUsually the visited network informs the Core Network within 1-2 days after a device went offline.\n\n* `ONLINE`:\nThe Endpoint has an active data connection\n\n* `OFFLINE`:\nThe Endpoint has"
+        },
+        {
+          "info": {
+            "name": "Reset endpoint connectivity",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id/connectivity",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Dispatches a message that causes either a `Cancel Location`, `Delete PDP Context`, or both sent to the endpoint.\nThe return of the call doesn't yet mean the event has been sent towards the device.\n\n<Info>\n  Master organization types can reset any endpoints inside their organization hierarchy.\n  Enterprises may only reset connectivity of own endpoints.\n</Info>\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve connectivity information for an endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id/connectivity_info",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns device location information based on the cell tower to which the device is connected.\n\n<Note>\n  emnify validates the data requested, sends the signal request to the network operator, and interprets the response.\n  Whether the network returns useful data is outside of emnify's control.\n\n  To distinguish these cases, this call returns the HTTP `200 OK` response code whenever the request is successfully executed, even if it includes an error.\n  See the response body for details.\n</Note>\n"
+        },
+        {
+          "info": {
+            "name": "List endpoint events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id/event",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of an endpoint"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page number"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Defines the number of items per page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort properties according to a comma separated list of accepted fields. Valid fields are:\n\n* `id` - (**event id**)\n* `timestamp` - (**event timestamp**)\n* `source` - (**event source**)\n* `severity` - (**event severity**)\n* `alert` - (**alert status**)\n* `organisation` - (**organisation name**)\n* `user` - (**user id**)\n* `endpoint` - (**endpoint name**)\n* `tags` - (**endpoint tags**)\n* `ip_address` - (**endpoint ip_address**)\n* `iccid` - (**sim iccid**)\n* `imsi` - (**sim imsi**)\n* `type` - (**event type**)\n"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Filter parameter in `<filter>:<value>` format.\nMultiple filters must be a comma-separated list of the following fields:\n\n* `from` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, **only valid with until**)\n* `until` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, **only valid with from**)\n* `type` (**event_type**, numerical)\n* `source` (**event_type**, numerical, e.g. 0 = Network), 1 = Policy Control, 2 = API)\n* `severity` (**event_severity**, numerical, e.g. 0 = Info, 1 = Warn), 2 = Critical)\n* `alert` (boolean, e.g. true, false)\n* `description` (**event description**, string)\n* `organisation` (**organisation name**, string)\n* `user` (**user name**, string)\n* `endpoint` (**endpoint name**, string)\n* `tags` (**endpoint tags**, string)\n* `ip_address` (**endpoint IP address**, valid IPv4/IPv6 address)\n* `imei` (**endpoint imei**, numerical string)\n* `iccid` (**sim iccid**, numerical string)\n* `imsi` (**sim imsi**, numerical string)\n* `timestamp` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, for querying events of 1 day, deprecated in future)\n* `iccid_with_luhn` (**sim iccid with Luhn**, numerical string)\n* `network` (**endpoint network**, string, e.g. Telekom)\n* `rat` (**event pdp context rat type**, numerical string, e.g. 6)\n* `country` (**endpoint country**, string, e.g. Germany)\n\nSome filters can accept up to 6 values which must be separated by the pipe symbol (`|`) or url-encoded as (`%7C`):\n\n* `iccid` (q: iccid:1234567890123456789|8988303000123456789)\n* `iccid_with_luhn` (q: iccid_with_luhn:12345678901234567891|89883030001234567891)\n* `endpoint` (q: endpoint:example_endpoint_name|another_endpoint_name)\n* `type` (q: type:example_event_type|another_event_type)\n* `network` (q: network:example_network|another_network)\n* `rat` (q: rat:example_rat|another_rat)\n* `country` (q: country:example_country|another_country)\n"
+              }
+            ]
+          },
+          "docs": "Returns the list of events, filtered, sorted and paged according to query parameters.\n\n<Info>\nA full list of events is found in section \"Retrieve Event Types\" (`/api/v1/event/type`).\n</Info>\n\n<Error>\n  This API endpoint deviates from the specified conventions and may not return the same HTTP Codes as the higher layer call (`/api/v1/endpoint/{endpoint_id}`).\n  In case the requested `{endpoint_id}` doesn't exist or is not accessible for the user, **HTTP 200** will be returned with empty **[]** as "
+        },
+        {
+          "info": {
+            "name": "List operator blacklist for endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id/operator_blacklist",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a list of blacklisted Operators for the requested Endpoint"
+        },
+        {
+          "info": {
+            "name": "Add an operator to the blacklist",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id/operator_blacklist/:operator_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "operator_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Adds an Operator to the Blacklist of an Endpoint."
+        },
+        {
+          "info": {
+            "name": "Remove an operator from the blacklist",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id/operator_blacklist/:operator_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "operator_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Remove Operator from the Blacklist of an Endpoint."
+        },
+        {
+          "info": {
+            "name": "Retrieve data quota details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id/quota/data",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns details about the assigned Data Quota for an endpoint.\n* `status`: this indicates the current status of the quota and may contain the following values:\n    - `ACTIVE`: the endpoint can currently connect and has quota left\n    - `EXHAUSTED`: the endpoint has exceeded the quota volume, if it still can use data service depends on the action chosen to be performed on exhaustion\n    - `EXPIRED`: the quota has expired; the endpoint is denied from using data services (until new quota is added)\n"
+        },
+        {
+          "info": {
+            "name": "Set data quota",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id/quota/data",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set a new data quota.\nYou can set a new data quota for a device at any time.\nAt an initial state, when no data quota is set, the device is denied from using data services.\nTo top-up the data volume, you need to retrieve the remaining volume, increase it by the top-up volume, and set it as the new quota volume.\n\n<Warning>\n  We have deprecated throttling as an action on quota exhaustion and the associated peak throughput parameter.\n  These were decommissioned as of December 9, 2024.**\n</Warning>\n\n"
+        },
+        {
+          "info": {
+            "name": "Remove data quota",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id/quota/data",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Will delete the data quota for the endpoint, if any is set.\n\n<Info>\n  If `apply_data_quota` is still set in the service profile, the endpoint will get blocked from data service.\n</Info>\n"
+        },
+        {
+          "info": {
+            "name": "Show SMS quota details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id/quota/sms",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns details about the assigned SMS Quota for an endpoint.\n\nYou can retrieve the current SMS quota status for an endpoint with the following API call. It will return following properties:\n* `status`: this indicates the status of the quota and may contain the following values:\n  - `ACTIVE`: the endpoint has quota left and can use SMS services\n  - `EXHAUSTED`: the endpoint has exceeded the quota volume; the endpoint is denied from using SMS services (until new quota is added)\n  - `EXPIRED`: the"
+        },
+        {
+          "info": {
+            "name": "Set SMS quota",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id/quota/sms",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "At any time, a new SMS quota can be set for an endpoint.\nAt an initial state when no SMS quota is set, the endpoint will be denied from using SMS services.\nTo top-up the SMS volume one need to retrieve the currently left volume, increase it by the top-up volume and set it as the new quota volume.\n\nThe following parameters can be configured:\n* `status` - The status of the quota (mandatory):\n  - 1: `ACTIVE`\n  - 2: `EXHAUSTED`\n  - 3: `EXPIRED`\n* `volume`: The volume left on this quota in MB\n* `expi"
+        },
+        {
+          "info": {
+            "name": "Remove SMS quota",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id/quota/sms",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Will delete the SMS quota for the endpoint, if any is set.\n\n<Info>\n  If `apply_sms_quota` is still set in the service profile, the endpoint is blocked from sending SMS.\n</Info>\n"
+        },
+        {
+          "info": {
+            "name": "List sent and received SMS",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id/sms",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the list of SMS sent and received by this endpoint.\n\nA description of the SMS statuses is as follows:\n\n- `1`: Delivery attempt pending\n- `2`: In progress\n- `3`: Buffered\n- `4`: Delivered\n- `5`: Failed\n- `6`: Expired\n- `7`: Canceled\n"
+        },
+        {
+          "info": {
+            "name": "Send SMS to an endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id/sms",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a mobile terminating SMS (MT-SMS) to a connected device.\nThe device must have an active SIM with SMS capability enabled in its service profile.\n\n## Use cases\n\n### Standard SMS\n\nSend an SMS with a numeric sender ID.\nSet `source_address` to the sender's phone number (for example, `12345689`) and include your message in `payload`.\n\n### Alphanumeric sender ID\n\nDisplay a custom sender name instead of a phone number.\nSet `source_address` to your brand name (for example, `CompanyName`, up to 11 c"
+        },
+        {
+          "info": {
+            "name": "SMS details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id/sms/:sms_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "sms_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns details about an Endpoint SMS by SMS ID.\n\nA description of the SMS statuses is as follows:\n\n- `1`: Delivery attempt pending\n- `2`: In progress\n- `3`: Buffered\n- `4`: Delivered\n- `5`: Failed\n- `6`: Expired\n- `7`: Canceled\n"
+        },
+        {
+          "info": {
+            "name": "Cancel SMS",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id/sms/:sms_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "sms_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Cancel SMS that is buffered for endpoint and not yet delivered."
+        },
+        {
+          "info": {
+            "name": "Endpoint usage and cost statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id/stats",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Warning>\n  You can only retrieve data traffic costs for organizations without multi-inclusive volumes.\n</Warning>\n\nRetrieves endpoint usage and cost statistics for a given ID.\nUsage statistics are sorted by `data` and `sms`.\n\nReturns statistics from the following periods:\n\n- `last_month`: Previous billing month, from the first to last day (for example, April 1-30, 2023, when you send the request sometime in May 2023).\n- `current_month`: Current month, with statistics calculated up to and includ"
+        },
+        {
+          "info": {
+            "name": "Retrieve daily usage statistics for an endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id/stats/daily",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Filters by start date, provided in a `YYYY-MM-DD` format.\n\n<Info>\n  If you don't define an end date, the response will include 6 months of data, beginning on the current date.\n</Info>\n"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "Filters by end date, provided in an `YYYY-MM-DD` format.\n\n<Info>\n  If you don't define a start date, the response will only return data from the month indicated in your end date.\n</Info>\n"
+              }
+            ]
+          },
+          "docs": "Returns daily usage statistics for a specific endpoint, including cellular data and SMS volumes.\n\nBy default, returns statistics for the current month.\nUse `start_date` and `end_date` query parameters to specify a custom date range.\n\n<Warning>\n  Data traffic cost statistics (`cost` field in the `data` object) have been deprecated.\n</Warning>\n"
+        },
+        {
+          "info": {
+            "name": "List active traffic limit extensions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id/traffic_limit_extension",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns all active traffic limit extensions for an endpoint, if any exist.\n\nOnly accessible by users with Administrator, User or Observer roles who belong to the endpoint's organization.\n"
+        },
+        {
+          "info": {
+            "name": "Create traffic limit extension",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id/traffic_limit_extension",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a temporary traffic limit extension for an endpoint.\n\nOnly accessible by users with Administrator or User roles who belong to the endpoint's organization.\n\nRequired fields:\n* `volume` - The traffic volume limit\n"
+        },
+        {
+          "info": {
+            "name": "Delete all traffic limit extensions for an endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/endpoint/:endpoint_id/traffic_limit_extension",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "endpoint_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Removes all traffic limit extensions from an endpoint.\n\nOnly accessible by users with Administrator or User roles who belong to the endpoint's organization.\n\nThe endpoint's traffic limits will revert to their original values defined in the service profile.\n"
+        },
+        {
+          "info": {
+            "name": "Bulk create endpoints",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v2/endpoint/multi",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create up to 2,000 endpoints in one request.\n\nUnlike [`POST /api/v1/endpoint`](/developers/api/endpoint/create-endpoint), this bulk endpoint handles multiple endpoints safely in a single request without sequential execution constraints between individual endpoints.\n\n<Note>\n  Execute bulk operations sequentially - wait for each bulk request to complete before starting the next.\n</Note>\n\nIf a `sim` object is provided, the specified SIM is assigned to the endpoint.\nThe `activate` property defaults "
+        },
+        {
+          "info": {
+            "name": "Bulk update endpoints",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://cdn.emnify.net/api/v2/endpoint/multi",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates details of a list of endpoints in bulk.\n\nThe request body must be an array of endpoint objects.\nEach object requires an `id` field to identify the endpoint, and you only need to include the fields you want to update.\n\nUnlike [`PATCH /api/v1/endpoint/{endpoint_id}`](/developers/api/endpoint/endpoint-by-id-patch), this bulk endpoint handles multiple endpoints safely in a single request without sequential execution constraints between individual endpoints.\n\n<Note>\n  Execute bulk operations "
+        },
+        {
+          "info": {
+            "name": "Bulk delete endpoints",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v2/endpoint/multi",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "delete_sims",
+                "value": "",
+                "type": "query",
+                "description": "If `true`, the SIMs will be deleted along with the endpoints.\nIf `false`, the SIMs will only be suspended.\nDefaults to `false`.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deletes a list of endpoints in bulk, along with all child entities.\n\nUnlike [`DELETE /api/v1/endpoint/{endpoint_id}`](/developers/api/endpoint/endpoint-by-id-delete), this bulk endpoint handles multiple endpoints safely in a single request without sequential execution constraints between individual endpoints.\n\n<Note>\n  Execute bulk operations sequentially - wait for each bulk request to complete before starting the next.\n</Note>\n\nIf a SIM is assigned to one of the endpoints, it's released and su"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

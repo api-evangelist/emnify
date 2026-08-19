@@ -1,0 +1,393 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "emnify REST subpackage_applicationTokens subpackage_integrations API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_integrations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve list of API callback URLs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/api_callback",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieve list of API callback URLs"
+        },
+        {
+          "info": {
+            "name": "Create a callback URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/api_callback",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Callback URL"
+        },
+        {
+          "info": {
+            "name": "Get a callback URL by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/api_callback/:api_callback_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "api_callback_id",
+                "value": "",
+                "type": "path",
+                "description": "A numeric ID of an API Callback URL"
+              }
+            ]
+          },
+          "docs": "Get a callback URL by ID"
+        },
+        {
+          "info": {
+            "name": "Delete a callback URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/api_callback/:api_callback_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "api_callback_id",
+                "value": "",
+                "type": "path",
+                "description": "A numeric ID of an API Callback URL"
+              }
+            ]
+          },
+          "docs": "Delete a callback URL"
+        },
+        {
+          "info": {
+            "name": "List API callback secrets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/api_secret",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Lists API callback secrets.\n\n<Info>\n  The `secret` property itself is not returned in this call.\n</Info>\n"
+        },
+        {
+          "info": {
+            "name": "Create a callback secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/api_secret",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new secret that may be used by API callbacks.\n\nWhen an `api_secret` is assigned to a Service Profile with an API callback, API requests towards this URL will contain an `Authorization` header with a JSON Web Token.\nThe `api_secret` is used as the **Signing Key** of the JWT.\n"
+        },
+        {
+          "info": {
+            "name": "Get a callback secret by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/api_secret/:api_secret_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "api_secret_id",
+                "value": "",
+                "type": "path",
+                "description": "A numeric ID of an API secret"
+              }
+            ]
+          },
+          "docs": "Get a callback secret by ID"
+        },
+        {
+          "info": {
+            "name": "Delete a callback secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/api_secret/:api_secret_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "api_secret_id",
+                "value": "",
+                "type": "path",
+                "description": "A numeric ID of an API Secret"
+              }
+            ]
+          },
+          "docs": "Delete a callback secret"
+        },
+        {
+          "info": {
+            "name": "List data stream configurations of your organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v2/data_stream",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "List data stream configurations of your organization"
+        },
+        {
+          "info": {
+            "name": "Create data stream",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v2/data_stream",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Data Stream to your destination.\nClick on Examples to see available Data Streams and configuration parameters.\n\nCurrently available `connection_types` are\n- `AwsKinesis`\n- `S3`\n- `RestAPI`\n- `KeenIO`\n- `Datadog`\n- `EventHubs`\n- `PubSub`\n"
+        },
+        {
+          "info": {
+            "name": "Get data stream filter fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v2/data_stream/filter_field_type",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get data stream filter fields"
+        },
+        {
+          "info": {
+            "name": "Get data stream statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v2/data_stream/status",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Lists possible data stream statuses.\n\n(`1`) is the normal `Running` state meaning your data stream is active and streams data.\n\n(`2`) indicates a `Paused` data stream. It will not send messages to your destination.\nHowever, messages meant for this data stream are routed and will be stored up to 7 days.\nYou will first receive historic data once you resume a paused streamer after longer pausing.\n\n(`3`) indicates that an `Error` has occurred. This might be problems in the configuration (e.g. missin"
+        },
+        {
+          "info": {
+            "name": "Get data stream types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v2/data_stream/type",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "List available Data Stream Types.\n\n(`1`) will only stream `Usage` Data.\n\n(`2`) will only stream `Event` Data.\n"
+        },
+        {
+          "info": {
+            "name": "Get details on existing data stream",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v2/data_stream/:data_stream_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "data_stream_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of a data stream."
+              }
+            ]
+          },
+          "docs": "Get data stream configuration and status by ID.\n"
+        },
+        {
+          "info": {
+            "name": "Modify existing data stream",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://cdn.emnify.net/api/v2/data_stream/:data_stream_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "data_stream_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of a data stream."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Modify existing data stream"
+        },
+        {
+          "info": {
+            "name": "Delete existing data stream",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v2/data_stream/:data_stream_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "data_stream_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of a data stream."
+              }
+            ]
+          },
+          "docs": "Delete existing data stream"
+        },
+        {
+          "info": {
+            "name": "Restart existing data stream",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v2/data_stream/:data_stream_id/restart",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "data_stream_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of a data stream."
+              }
+            ]
+          },
+          "docs": "Restart your Existing Data Stream.\nThis might be necessary when e.g. your Webhook endpoint has been unreachable for an extended period of time.\nWebhook Data Stream will exhaust retries and go into Error State.\nBy using this API call your Data Stream will be restarted and continue trying to send data.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

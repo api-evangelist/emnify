@@ -1,0 +1,1551 @@
+{
+  "item": [
+    {
+      "id": "e543e13f-3857-4a4c-b493-649437ce3bfc",
+      "name": "subpackage_organization",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "83e2baf2-a72d-4a79-aac5-a451ee839073",
+          "name": "My organization details",
+          "request": {
+            "name": "My organization details",
+            "description": {
+              "content": "You can retrieve details about your own organisation",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "organisation",
+                "my"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8f8098cf-a522-459c-8e63-17c26dc23c9c",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "organisation",
+                    "my"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"organisation_type_id\": \"string\",\n  \"country_id\": \"string\",\n  \"organisation_status_id\": \"string\",\n  \"ext_reference\": \"string\",\n  \"monthly_cost_limit\": \"string\",\n  \"currency_id\": 3871,\n  \"organisation_class_id\": 1694,\n  \"created\": \"1956-10-25T03:33:32.045Z\",\n  \"verification_type_id\": \"string\",\n  \"verification\": \"string\",\n  \"brand_id\": \"string\",\n  \"default_sms_routing_id\": \"string\",\n  \"id\": 7614\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "69bb77e6-3632-412a-be3d-84ff9509228e",
+          "name": "List organization statuses",
+          "request": {
+            "name": "List organization statuses",
+            "description": {
+              "content": "Provides a list of available organisation status (lookup).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "organisation",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4df5bccf-b0e4-4c6f-8b2c-d8740d24d0e7",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "organisation",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 3662,\n    \"description\": \"string\"\n  },\n  {\n    \"id\": 5497,\n    \"description\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0aeabe3b-3407-4a31-a235-9c743fcea64b",
+          "name": "Get list of active organization inclusive volumes",
+          "request": {
+            "name": "Get list of active organization inclusive volumes",
+            "description": {
+              "content": "Returns of a list of inclusive volumes that are currently active in the current billing period for the selected organisation.\nThis will not inclusive volumes that are already expired or have the start date set for a future billing period.\n\nOnly inclusive volumes for the own organisation or direct child organisations are accessible.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "organisation",
+                ":org_id_or_my",
+                "inclusive_volume",
+                "active"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "my",
+                  "key": "org_id_or_my",
+                  "description": "(Required) Numerical ID of an Organization or the string `my` to use the currently authorized organisation"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9d87cc44-4659-428a-84e4-cb6a27fb8511",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "organisation",
+                    ":org_id_or_my",
+                    "inclusive_volume",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "my",
+                      "key": "org_id_or_my",
+                      "description": "(Required) Numerical ID of an Organization or the string `my` to use the currently authorized organisation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 9935,\n    \"volume\": 5825.430343761786,\n    \"rate\": 5953.87135289367,\n    \"pooled\": true,\n    \"start_date\": \"2014-06-02T04:55:53.521Z\",\n    \"end_date\": \"1958-03-20T00:32:59.872Z\",\n    \"currency\": {\n      \"id\": 9003,\n      \"code\": \"string\",\n      \"symbol\": \"string\"\n    },\n    \"tariff\": {\n      \"id\": 621,\n      \"name\": \"string\",\n      \"tariff_status_id\": 1796,\n      \"ratezone\": {\n        \"id\": 4231,\n        \"name\": \"string\",\n        \"ratezone_status_id\": 6716\n      }\n    }\n  },\n  {\n    \"id\": 7402,\n    \"volume\": 7830.817220910995,\n    \"rate\": 6820.76767497582,\n    \"pooled\": true,\n    \"start_date\": \"2025-03-14T20:28:10.259Z\",\n    \"end_date\": \"1948-04-15T03:40:33.637Z\",\n    \"currency\": {\n      \"id\": 7076,\n      \"code\": \"string\",\n      \"symbol\": \"string\"\n    },\n    \"tariff\": {\n      \"id\": 5443,\n      \"name\": \"string\",\n      \"tariff_status_id\": 7097,\n      \"ratezone\": {\n        \"id\": 6103,\n        \"name\": \"string\",\n        \"ratezone_status_id\": 3183\n      }\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2399a7b0-daff-426b-8071-4585e20ad182",
+              "name": "A non-existent resource is requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "organisation",
+                    ":org_id_or_my",
+                    "inclusive_volume",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "my",
+                      "key": "org_id_or_my",
+                      "description": "(Required) Numerical ID of an Organization or the string `my` to use the currently authorized organisation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "611ed6cf-ead9-4048-9978-1499e90c1389",
+          "name": "Assign a ratezone inclusive volume to an organization",
+          "request": {
+            "name": "Assign a ratezone inclusive volume to an organization",
+            "description": {
+              "content": "Assigns a pre-configured ratezone inclusive volume to the specified organization.\n\nThis can be done in self-service as well as for direct child organizations.\nOnly postpaid customers can assign\ninclusive volumes in self-service, while parent organizations can assign inclusive volumes for both postpaid and prepaid child organizations.\nThe inclusive volume is charged and calculated against traffic charges accordingly in every bill\nthat is refreshed from that point on.\nInclusive volume is counted per device on a monthly basis, the data can be pooled as well or be treated per individual device.\n\nOnly inclusive volumes of ratezones belonging to the tariffs assigned to the selected organization can be chosen.\n\nEnterprise organizations are only allowed to upgrade to a higher inclusive volume if there is already one active in the current month.\n\nThe request body is optional. All fields have default values and detailed constraints are specified in the schema below.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "organisation",
+                ":org_id_or_my",
+                "inclusive_volume",
+                ":inclusive_volume_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "my",
+                  "key": "org_id_or_my",
+                  "description": "(Required) Numerical ID of an Organization or the string `my` to use the currently authorized organisation"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<double>",
+                  "key": "inclusive_volume_id",
+                  "description": "(Required) Numerical ID of a ratezone inclusive volume.\nCan be retrieved using `GET /api/v1/tariff/{tariff_id}/ratezone/{ratezone_id}/inclusive_volume`.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"start_date\": \"<dateTime>\",\n  \"end_date\": \"<string,null-date-time>\",\n  \"pooled\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bcc0303d-044a-4549-a99d-86f0c2a3fa7e",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "organisation",
+                    ":org_id_or_my",
+                    "inclusive_volume",
+                    ":inclusive_volume_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "my",
+                      "key": "org_id_or_my",
+                      "description": "(Required) Numerical ID of an Organization or the string `my` to use the currently authorized organisation"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<double>",
+                      "key": "inclusive_volume_id",
+                      "description": "(Required) Numerical ID of a ratezone inclusive volume.\nCan be retrieved using `GET /api/v1/tariff/{tariff_id}/ratezone/{ratezone_id}/inclusive_volume`.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start_date\": \"<dateTime>\",\n  \"end_date\": \"<string,null-date-time>\",\n  \"pooled\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1666,\n  \"start_date\": \"1950-07-30T15:24:24.492Z\",\n  \"end_date\": \"2007-01-04T21:40:47.263Z\",\n  \"pooled\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3682776d-e905-4edd-ab22-2f9e9112e86a",
+              "name": "The request is malformed, e.g. the body cannot be parsed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "organisation",
+                    ":org_id_or_my",
+                    "inclusive_volume",
+                    ":inclusive_volume_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "my",
+                      "key": "org_id_or_my",
+                      "description": "(Required) Numerical ID of an Organization or the string `my` to use the currently authorized organisation"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<double>",
+                      "key": "inclusive_volume_id",
+                      "description": "(Required) Numerical ID of a ratezone inclusive volume.\nCan be retrieved using `GET /api/v1/tariff/{tariff_id}/ratezone/{ratezone_id}/inclusive_volume`.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start_date\": \"<dateTime>\",\n  \"end_date\": \"<string,null-date-time>\",\n  \"pooled\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d8a18fe-9866-410a-8f41-aabdf8d3c3a9",
+              "name": "Organisation is not accessible or not valid in this context\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "organisation",
+                    ":org_id_or_my",
+                    "inclusive_volume",
+                    ":inclusive_volume_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "my",
+                      "key": "org_id_or_my",
+                      "description": "(Required) Numerical ID of an Organization or the string `my` to use the currently authorized organisation"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<double>",
+                      "key": "inclusive_volume_id",
+                      "description": "(Required) Numerical ID of a ratezone inclusive volume.\nCan be retrieved using `GET /api/v1/tariff/{tariff_id}/ratezone/{ratezone_id}/inclusive_volume`.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start_date\": \"<dateTime>\",\n  \"end_date\": \"<string,null-date-time>\",\n  \"pooled\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a0463b2e-36d6-48c9-a5fb-203debb2222e",
+          "name": "Monthly organization traffic and cost statistics",
+          "request": {
+            "name": "Monthly organization traffic and cost statistics",
+            "description": {
+              "content": "Retrieves traffic and cost statistics for the selected organization.\n\nTraffic statistics accumulate for the `current_month` and `last_month` of the selected organization and all child organizations.\nAll other returned values (SIM statistics, user counts, etc.) are only for the selected organization.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "organisation",
+                ":org_id_or_my",
+                "stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "org_id_or_my",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f338926d-ddf8-4969-bc46-85f939bebb2f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "organisation",
+                    ":org_id_or_my",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "org_id_or_my",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"current_month\": {\n    \"data\": {\n      \"cost\": 3187.023592755258,\n      \"month\": \"string\",\n      \"currency\": {\n        \"code\": \"string\",\n        \"symbol\": \"string\",\n        \"id\": 8606.53504012378\n      },\n      \"traffic_type\": {\n        \"description\": \"string\",\n        \"unit\": \"string\",\n        \"id\": 7036.7421342088965\n      },\n      \"volume\": 7756.095410439666,\n      \"volume_rx\": 7460.7438373245905,\n      \"volume_tx\": 70.70714268023637\n    },\n    \"sms\": {\n      \"cost\": 5764.095973798529,\n      \"month\": \"string\",\n      \"currency\": {\n        \"code\": \"string\",\n        \"symbol\": \"string\",\n        \"id\": 6204.565887189121\n      },\n      \"traffic_type\": {\n        \"description\": \"string\",\n        \"unit\": \"string\",\n        \"id\": 9121.990899789087\n      },\n      \"volume\": 1161.1841387290124,\n      \"volume_rx\": 9035.372748731175,\n      \"volume_tx\": 7430.544375065905\n    }\n  },\n  \"last_month\": {\n    \"data\": {\n      \"cost\": 213.46707855797064,\n      \"month\": \"string\",\n      \"currency\": {\n        \"code\": \"string\",\n        \"symbol\": \"string\",\n        \"id\": 7015.866831243419\n      },\n      \"traffic_type\": {\n        \"description\": \"string\",\n        \"unit\": \"string\",\n        \"id\": 1732.5129449552978\n      },\n      \"volume\": 6796.680788465393,\n      \"volume_rx\": 3784.3919473470123,\n      \"volume_tx\": 8296.900300147747\n    },\n    \"sms\": {\n      \"cost\": 4185.414129213072,\n      \"month\": \"string\",\n      \"currency\": {\n        \"code\": \"string\",\n        \"symbol\": \"string\",\n        \"id\": 718.6110642043575\n      },\n      \"traffic_type\": {\n        \"description\": \"string\",\n        \"unit\": \"string\",\n        \"id\": 88.7120211758785\n      },\n      \"volume\": 4479.727753972156,\n      \"volume_rx\": 1513.5835448022483,\n      \"volume_tx\": 9751.27855110077\n    }\n  },\n  \"sim\": {\n    \"issued\": 8067.35319791126,\n    \"factory_mode\": 8191.56281980661,\n    \"active\": 1593.1734834109222,\n    \"suspended\": 2724.2901361043646,\n    \"total\": 4886.085786668766\n  },\n  \"service_profiles\": 9612.059477540462,\n  \"tariff_profiles\": 7361.068435050606,\n  \"users\": 5363.190532014195,\n  \"active_chargeable_sims\": 5605.222523063933,\n  \"hosting_fees\": 951.4159645000109,\n  \"inclusive_volume\": {\n    \"unpooled\": 4897.321489140023,\n    \"pooled\": 8660.065709319264\n  },\n  \"prepaid_balance\": {\n    \"amount\": 2952.453627246846,\n    \"currency\": {\n      \"code\": \"string\",\n      \"symbol\": \"string\",\n      \"id\": 2215.1881287519714\n    },\n    \"last_updated\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d5f98574-2b14-427b-910f-9026a27de5b4",
+              "name": "Selected organisation not found or not accessible",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "organisation",
+                    ":org_id_or_my",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "org_id_or_my",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "908b2b1a-cbdc-4ad8-8e32-5ce819d18f72",
+          "name": "Daily organization traffic and cost statistics",
+          "request": {
+            "name": "Daily organization traffic and cost statistics",
+            "description": {
+              "content": "Retrieves traffic and cost statistics for the selected organization and all child organizations, accumulated per day.\n\n<Info>\n  By default, this call returns statistics for the current month.\n</Info>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "organisation",
+                ":org_id_or_my",
+                "stats",
+                "daily"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_date",
+                  "value": "<date>",
+                  "description": "Filters results to data collected on or after this date.\nIf `end_date` isn't specified, the response includes data through the end of the selected month.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "end_date",
+                  "value": "<date>",
+                  "description": "Filters results to data collected before this date.\nMust be used with `start_date`.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "my",
+                  "key": "org_id_or_my",
+                  "description": "(Required) Numerical ID of an organization or the string `my` to use the currently authorized organization.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2057cf6c-bc07-48e0-9ef0-07432a2a43f7",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "organisation",
+                    ":org_id_or_my",
+                    "stats",
+                    "daily"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "my",
+                      "key": "org_id_or_my",
+                      "description": "(Required) Numerical ID of an organization or the string `my` to use the currently authorized organization.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"date\": \"string\",\n    \"data\": {\n      \"cost\": \"string\",\n      \"currency_id\": \"string\",\n      \"currency\": {\n        \"code\": \"string\",\n        \"symbol\": \"string\",\n        \"id\": 2900.747926561027\n      },\n      \"traffic_type_id\": \"string\",\n      \"traffic_type\": {\n        \"description\": \"string\",\n        \"unit\": \"string\",\n        \"id\": 1631.2369345200905\n      },\n      \"volume\": \"string\",\n      \"volume_rx\": \"string\",\n      \"volume_tx\": \"string\"\n    },\n    \"sms\": {\n      \"cost\": \"string\",\n      \"currency_id\": \"string\",\n      \"currency\": {\n        \"code\": \"string\",\n        \"symbol\": \"string\",\n        \"id\": 9804.7915558494\n      },\n      \"traffic_type_id\": \"string\",\n      \"traffic_type\": {\n        \"description\": \"string\",\n        \"unit\": \"string\",\n        \"id\": 8503.683556652966\n      },\n      \"volume\": \"string\",\n      \"volume_rx\": \"string\",\n      \"volume_tx\": \"string\"\n    }\n  },\n  {\n    \"date\": \"string\",\n    \"data\": {\n      \"cost\": \"string\",\n      \"currency_id\": \"string\",\n      \"currency\": {\n        \"code\": \"string\",\n        \"symbol\": \"string\",\n        \"id\": 3936.156162096337\n      },\n      \"traffic_type_id\": \"string\",\n      \"traffic_type\": {\n        \"description\": \"string\",\n        \"unit\": \"string\",\n        \"id\": 9226.15502512375\n      },\n      \"volume\": \"string\",\n      \"volume_rx\": \"string\",\n      \"volume_tx\": \"string\"\n    },\n    \"sms\": {\n      \"cost\": \"string\",\n      \"currency_id\": \"string\",\n      \"currency\": {\n        \"code\": \"string\",\n        \"symbol\": \"string\",\n        \"id\": 7163.07941158387\n      },\n      \"traffic_type_id\": \"string\",\n      \"traffic_type\": {\n        \"description\": \"string\",\n        \"unit\": \"string\",\n        \"id\": 6864.872385259915\n      },\n      \"volume\": \"string\",\n      \"volume_rx\": \"string\",\n      \"volume_tx\": \"string\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "19a4ff3c-514d-4fa4-9c45-11ba5f29b42b",
+          "name": "Hourly organization traffic statistics",
+          "request": {
+            "name": "Hourly organization traffic statistics",
+            "description": {
+              "content": "Retrieves traffic statistics for the selected organization and all child organizations, accumulated per hour.\n\n<Info>\n  By default, this call returns statistics for the last three hours.\n</Info>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "organisation",
+                ":org_id_or_my",
+                "stats",
+                "hourly"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_date",
+                  "value": "<date>",
+                  "description": "Filters results to data collected on or after this timestamp.\nIf not specified, the response includes data from the past three hours up to the current time.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "end_date",
+                  "value": "<date>",
+                  "description": "Filters results to data collected before this timestamp.\nMust be used with `start_date`.\nIf not specified, defaults to one hour after the current time.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "my",
+                  "key": "org_id_or_my",
+                  "description": "(Required) Numerical ID of an organization or the string `my` to use the currently authorized organization.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "287f6aee-b547-42a4-aedf-a6234736c49c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "organisation",
+                    ":org_id_or_my",
+                    "stats",
+                    "hourly"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "my",
+                      "key": "org_id_or_my",
+                      "description": "(Required) Numerical ID of an organization or the string `my` to use the currently authorized organization.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"rx\": [\n      \"string\",\n      \"string\"\n    ],\n    \"tx\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"sms\": {\n    \"rx\": [\n      \"string\",\n      \"string\"\n    ],\n    \"tx\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d23dbef3-672e-4ece-9e39-ecafeff21392",
+          "name": "Update assigned tariff",
+          "request": {
+            "name": "Update assigned tariff",
+            "description": {
+              "content": "Allows an organisation to change their assigned tariff.\n\nThe following restrictions apply:\n* The organisation must not have more than one tariff assigned.\n* The tariff can be changed only for the own organisation and direct child organisations. The organisation status must be \"ACTIVE\".\n* If performing the change in self-service, the organisation needs to be in evaluation. Parent organisations are allowed to change the tariffs of production organisations.\n* The selected tariff must be active, visible to the requested organisation and must have the same currency. Parent organisations are allowed to assign private tariffs to their child organisations.\n\nIn addition to updating the assigned tariff, the system will also:\n* Update all of the organisations tariff profiles to use the new tariff.\n* Activate all ratezones in the tariff in order to ensure that the endpoints do not lose connection.\n* Expire all currently active inclusive volumes and custom rates and delete future ones.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "organisation",
+                ":org_id",
+                "tariff"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "org_id",
+                  "description": "(Required) Numerical ID of an organization"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<double>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "39fbf08c-f063-42d6-8073-a84320205528",
+              "name": "Response to a successful GET, also used for a POST if it does not result in a creation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "organisation",
+                    ":org_id",
+                    "tariff"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "org_id",
+                      "description": "(Required) Numerical ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<double>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "64403946-cd98-4849-9c3c-bf28eae13bdb",
+              "name": "The request is malformed, e.g. the body cannot be parsed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "organisation",
+                    ":org_id",
+                    "tariff"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "org_id",
+                      "description": "(Required) Numerical ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<double>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "de339a92-3c76-4676-afb5-4a757152a9e4",
+              "name": "A non-existent resource is requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "organisation",
+                    ":org_id",
+                    "tariff"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "org_id",
+                      "description": "(Required) Numerical ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<double>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1c295e5-10da-48de-94f1-529f767ade4a",
+              "name": "Body will return list of validation errors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "organisation",
+                    ":org_id",
+                    "tariff"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "org_id",
+                      "description": "(Required) Numerical ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<double>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "43e2f910-ff63-406b-9ae5-b428680e029a",
+          "name": "Organization usage and costs statistics per day for the current month",
+          "request": {
+            "name": "Organization usage and costs statistics per day for the current month",
+            "description": {
+              "content": "Retrieve usage and costs statistics for the currently logged in organization and all child organizations, accumulated per days from beginning of the month until today.\n\n<Info>\n  Data traffic costs aren't returned for enterprise organizations with inclusive volume.\n</Info>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "stats",
+                "daily"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ab098951-29db-4438-922e-352ef0a8f599",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stats",
+                    "daily"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://cdn.emnify.net",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "94654200-1acc-4d59-b925-15128c0a4b8d",
+    "name": "emnify REST subpackage_applicationTokens subpackage_organization API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.\n\nSource: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.\n\nContact Support:\n Name: emnify Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "emnify REST subpackage_applicationTokens subpackage_ipAddressSpaces API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_ipAddressSpaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List IP address spaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/ip_address_space",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns a list of allocated IP address spaces for your organization."
+        },
+        {
+          "info": {
+            "name": "Create an IP address space",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/ip_address_space",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Checks the requested IP address space for validity and availability, then allocates it to your organization.\n"
+        },
+        {
+          "info": {
+            "name": "Get random address spaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/ip_address_space/available",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "ip_address_version",
+                "value": "",
+                "type": "query",
+                "description": "Filter by IPv4 which is default or by IPv6.\nExample: `ip_address_version=4` or `ip_address_version=6`\n"
+              }
+            ]
+          },
+          "docs": "Provides a list of 10 random available address spaces (unassigned to any organization).\nAs the list is generated for each request, two successive requests will have different results.\n"
+        },
+        {
+          "info": {
+            "name": "Assign an IP address space to an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://cdn.emnify.net/api/v1/ip_address_space/:address_space_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "address_space_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Error>\n  Use POST API call instead of this deprecated PUT command.\n</Error>\n\nThe IP address space is assigned to the user's organization.\n"
+        },
+        {
+          "info": {
+            "name": "Release an IP address space from an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/ip_address_space/:address_space_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "address_space_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Release the IP address space from association with the user's organisation.\n\n<Info>\n  IP address spaces can only be removed, if the IP address space isn't used on any of the organisations endpoints.\n</Info>\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

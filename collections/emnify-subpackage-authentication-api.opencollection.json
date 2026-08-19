@@ -1,0 +1,210 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "emnify REST subpackage_applicationTokens subpackage_authentication API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve authentication token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns a [JSON Web Token (JWT)](/developers/auth/jwts) `auth_token` for authenticating further requests to the API.\n\n<Note>\n  This API path has a rate limit of 100 requests per IP in a 5-minute window.\n  Make sure to store your authentication token to avoid hitting this limit.\n  For more information, see [Rate limits](/developers/api-guidelines/rate-limits).\n</Note>\n\n### Multi-factor authentication flow\n\nWhen multi-factor authentication (MFA) is enabled for a user account:\n\n1. **Initial login**"
+        },
+        {
+          "info": {
+            "name": "Create an MFA key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/user/mfa",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate and store a MFA key for the requesting user. After this call, the MFA key has the status `activation pending` and must be activated through a separate call (`/api/v1/user/mfa/{id}`).\n\nYou must provide following fields with this request:\n\n* `type` (Object required)\n  - `id` (Number)\n* `password` (String required) - User password\n\nThe **MFA key** object returned by the server contains the following properties:\n\n* `id` (Integer) - The unique ID of this MFA key\n* `status` (Object) ID (Integ"
+        },
+        {
+          "info": {
+            "name": "List MFA key statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/user/mfa/status",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieve a list of possible MFA Key statuses."
+        },
+        {
+          "info": {
+            "name": "List MFA key types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/user/mfa/type",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieve a list of possible MFA Key types."
+        },
+        {
+          "info": {
+            "name": "Activate MFA key",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://cdn.emnify.net/api/v1/user/mfa/:key_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "key_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the MFA key to activate.\nThis ID is returned when you [create the MFA key](/developers/api/authentication/post-mfa).\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Activates a pending MFA key for the authenticated user.\n\nAfter you [create an MFA key](/developers/api/authentication/post-mfa), the key has status `Activation Pending`.\nTo complete setup, call this endpoint with the MFA key ID and a valid 6-digit time-based one-time password (TOTP) generated from the `secret_key` or `otpauth` URI returned during creation.\n\nOnce activated, the MFA key status changes to `Active`, and MFA is enforced on subsequent logins with [user credentials](/developers/auth/us"
+        },
+        {
+          "info": {
+            "name": "List trusted devices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/user/:user_id/mfa/trusted_device",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "Returns the list of trusted devices for a given user.\n\nThe list of one's own trusted devices can also be retrieved with a call to either\n`/api/v1/user/my/mfa/trusted_device` or `/api/v1/user/mfa/trusted_device`\n"
+        },
+        {
+          "info": {
+            "name": "Delete a trusted device",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/user/:user_id/mfa/trusted_device/:device_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              },
+              {
+                "name": "device_id",
+                "value": "",
+                "type": "path",
+                "description": "Device ID"
+              }
+            ]
+          },
+          "docs": "Deletes a trusted device.\n\nRemoving one's own trusted device can also be performed at either `/api/v1/user/my/mfa/trusted_device/{id}` or `/api/v1/user/mfa/trusted_device/{id}`\n"
+        },
+        {
+          "info": {
+            "name": "Delete an MFA key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/user/:user_id/mfa/:key_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "key_id",
+                "value": "",
+                "type": "path",
+                "description": "Key ID"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "Delete an MFA key for a given user.\n\nAn own MFA key can also be deleted with a call to `/api/v1/user/my/mfa/{key_id}`\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

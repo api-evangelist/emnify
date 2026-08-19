@@ -1,0 +1,146 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "emnify REST subpackage_applicationTokens subpackage_simOperation API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_simOperation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List SIM operations for organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/sim/operation",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-based)."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Filter parameter in `<field>:<criteria>` format.\nExpects a comma-separated list from the allowed fields:\n\n- `id`\n- `action`\n- `status`\n"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort properties according to a comma separated list from the allowed fields (prefix with `-` for descending):\n\n- `id`\n- `action`\n- `status`\n- `creation_date`\n- `finalization_date`\n"
+              }
+            ]
+          },
+          "docs": "List all SIM operations for your organization.\n"
+        },
+        {
+          "info": {
+            "name": "Trigger SIM operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/sim/operation",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Trigger a SIM operation.\n"
+        },
+        {
+          "info": {
+            "name": "List SIM operation actions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/sim/operation/action",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "List possible SIM operation action objects used in responses and requests.\n"
+        },
+        {
+          "info": {
+            "name": "List SIM operation status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/sim/operation/status",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "List possible SIM operation status objects used in responses.\n"
+        },
+        {
+          "info": {
+            "name": "Get SIM operation details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/sim/operation/:operation_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "operation_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get details of a specific SIM operation.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

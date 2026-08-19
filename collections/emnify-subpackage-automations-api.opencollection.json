@@ -1,0 +1,229 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "emnify REST subpackage_applicationTokens subpackage_automations API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_automations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List configured automations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/automation",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns a list of all configured automations for the organization.\n"
+        },
+        {
+          "info": {
+            "name": "Create an automation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/automation",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an automation with the configured event and selected actions, respecting the configured targets.\n"
+        },
+        {
+          "info": {
+            "name": "List available actions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/automation/action",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns a list of all available actions, as well as their possible configuration parameters and required fields.\nAvailability depends on the parent organization.\n"
+        },
+        {
+          "info": {
+            "name": "Get an action by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/automation/action/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves a specified available actions, as well as the possible configuration parameters and required fields.\nAvailability depends on the parent organization.\n"
+        },
+        {
+          "info": {
+            "name": "List action logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/automation/log",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "automationId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "automationExecutionNumber",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of all action logs for this organization.\n"
+        },
+        {
+          "info": {
+            "name": "Verify an automation recipient's email address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/automation/recipient/email/verification",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Verifies the email address of an automation recipient using the verification token sent to the recipient via email.\n"
+        },
+        {
+          "info": {
+            "name": "Get configured automation by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/automation/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves the specified configured automation.\n"
+        },
+        {
+          "info": {
+            "name": "Update an automation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://cdn.emnify.net/api/v1/automation/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an automation with the configured event and selected actions, respecting the configured targets.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a configured automation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/automation/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes the specified configured automation.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

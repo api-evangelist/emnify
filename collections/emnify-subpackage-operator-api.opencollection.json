@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "emnify REST subpackage_applicationTokens subpackage_operator API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_operator",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List operators",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/operator",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns a collection of existing operators.\n\nIt will return an array of items with following properties:\n\n* `id`: identifier of this operator\n* `name`: the official name of the operator\n* `name_and_country`: Name / Country (for easy access in the UI)\n* `country`: country object with the nested country `id`\n* `mnc`: Array of Mobile Network Codes (MNCs)\n* `tapcode`: Array of TAP Codes\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

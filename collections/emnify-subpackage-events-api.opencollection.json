@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "emnify REST subpackage_applicationTokens subpackage_events API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/event",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page number"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Defines the number of items per page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort properties according to a comma separated list of accepted fields. Valid fields are:\n\n* `id` - (**event id**)\n* `timestamp` - (**event timestamp**)\n* `source` - (**event source**)\n* `severity` - (**event severity**)\n* `alert` - (**alert status**)\n* `organisation` - (**organisation name**)\n* `user` - (**user id**)\n* `endpoint` - (**endpoint name**)\n* `tags` - (**endpoint tags**)\n* `ip_address` - (**endpoint ip_address**)\n* `iccid` - (**sim iccid**)\n* `imsi` - (**sim imsi**)\n* `type` - (**event type**)\n"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Filter parameter in `<filter>:<value>` format.\nMultiple filters must be a comma-separated list of the following fields:\n\n* `from` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, **only valid with until**)\n* `until` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, **only valid with from**)\n* `type` (**event_type**, numerical)\n* `source` (**event_type**, numerical, e.g. 0 = Network), 1 = Policy Control, 2 = API)\n* `severity` (**event_severity**, numerical, e.g. 0 = Info, 1 = Warn), 2 = Critical)\n* `alert` (boolean, e.g. true, false)\n* `description` (**event description**, string)\n* `organisation` (**organisation name**, string)\n* `user` (**user name**, string)\n* `endpoint` (**endpoint name**, string)\n* `tags` (**endpoint tags**, string)\n* `ip_address` (**endpoint IP address**, valid IPv4/IPv6 address)\n* `imei` (**endpoint imei**, numerical string)\n* `iccid` (**sim iccid**, numerical string)\n* `imsi` (**sim imsi**, numerical string)\n* `timestamp` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, for querying events of 1 day, deprecated in future)\n* `iccid_with_luhn` (**sim iccid with Luhn**, numerical string)\n* `network` (**endpoint network**, string, e.g. Telekom)\n* `rat` (**event pdp context rat type**, numerical string, e.g. 6)\n* `country` (**endpoint country**, string, e.g. Germany)\n\nSome filters can accept up to 6 values which must be separated by the pipe symbol (`|`) or url-encoded as (`%7C`):\n\n* `iccid` (q: iccid:1234567890123456789|8988303000123456789)\n* `iccid_with_luhn` (q: iccid:12345678901234567891|89883030001234567891)\n* `endpoint` (q: endpoint:example_endpoint_name|another_endpoint_name)\n* `type` (q: type:example_event_type|another_event_type)\n* `network` (q: network:example_network|another_network)\n* `rat` (q: rat:example_rat|another_rat)\n* `country` (q: country:example_country|another_country)\n"
+              }
+            ]
+          },
+          "docs": "Returns the list of events, filtered, sorted and paged according to query parameters."
+        },
+        {
+          "info": {
+            "name": "List event types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/event/type",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Provides the list of event_types (lookup)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

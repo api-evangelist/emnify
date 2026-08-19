@@ -1,0 +1,398 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "emnify REST subpackage_applicationTokens subpackage_serviceProfiles API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_serviceProfiles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List service profiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/service_profile",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieves a collection of all service profiles for your organization.\n\nReturned service profiles contain just the total count of associated services, so this is the short view.\n"
+        },
+        {
+          "info": {
+            "name": "Create service profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/service_profile",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new Service Profile. A `name` must be specified for the Service Profile and all other fields are optional.\n\nEditable fields:\n* `name` (String required)\n* `description` (String optional)\n* `allowed_3g` (boolean optional, defaults to true)\n* `allowed_4g` (boolean optional, defaults to true). Allows or restricts connectivity for 4G/LTE and LTE-M networks.\n* `allowed_nb_iot` (boolean optional, defaults to true)\n* `allowed_nb_iot_geo` (boolean optional, defaults to false). Allows or restric"
+        },
+        {
+          "info": {
+            "name": "Retrieve a service profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/service_profile/:profile_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a service profile with a given id."
+        },
+        {
+          "info": {
+            "name": "Update service profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://cdn.emnify.net/api/v1/service_profile/:profile_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a service profile with a given id.\n\nEditable fields:\n* `name` (String optional)\n* `description` (String optional)\n* `allowed_3g` (boolean optional)\n* `allowed_4g` (boolean optional). Allows or restricts connectivity for 4G/LTE and LTE-M networks.\n* `allowed_nb_iot` (boolean optional)\n* `allowed_nb_iot_geo` (boolean optional). Allows or restricts NB-IoT connectivity over satellite networks.\n* **DEPRECATED** `apply_quota` (boolean optional, defaults to false). Use `apply_data_quota` instead"
+        },
+        {
+          "info": {
+            "name": "Delete a service profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/service_profile/:profile_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes a service profile and all its associations with services and traffic limits.\nA service profile can only be deleted if it is **not** selected on an endpoint.\nIf it is not selected on an endpoint, the used_count is 0.\n"
+        },
+        {
+          "info": {
+            "name": "Remove all quotas of assigned endpoints",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/service_profile/:profile_id/quota/:quota_type",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "quota_type",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Remove all quotas of endpoints which are assigned to this profile. Notice that `apply_data_quota` and/or\n`apply_sms_quota` have to be patched to false before, otherwise the endpoints will get blocked\nfor having no quota left.\nThis call will also return successfully if no endpoint is assigned or no quotas are set.\n"
+        },
+        {
+          "info": {
+            "name": "Add a service to a service profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://cdn.emnify.net/api/v1/service_profile/:profile_id/service/:service_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "service_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Add service to the collection of services associated to a profile.\nMultiple services can be assigned, but each only once.\n\n<Warning>\n  Adding the voice service with an id of `3` to a service profile will be successful, but this feature **isn't enabled** by the platform.\n</Warning>\n"
+        },
+        {
+          "info": {
+            "name": "Remove a service from a service profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/service_profile/:profile_id/service/:service_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "service_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Remove service from the collection of services associated to a profile. A service can only be removed if it has no assigned traffic limits."
+        },
+        {
+          "info": {
+            "name": "Add SMS limit to service profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://cdn.emnify.net/api/v1/service_profile/:profile_id/service/:service_id/traffic_limit/:limit_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "service_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Add SMS limit to a service policy."
+        },
+        {
+          "info": {
+            "name": "Remove SMS limit from a service profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/service_profile/:profile_id/service/:service_id/traffic_limit/:limit_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "service_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Removes the SMS Limit (if any) from a given service profile."
+        },
+        {
+          "info": {
+            "name": "List data limits of service profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/service_profile/:profile_id/traffic_limit",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List data limits of the service profile. These have the possibility to add\ncustom `volume` values per data limit, as well if they apply only to data traffic over\nsatellite rat type, which incurs higher cost, or to cellular.\n\nThese data limits will not disable any other traffic limits, but can be used to achieve the\nsame outcome.\n"
+        },
+        {
+          "info": {
+            "name": "Add data limit to service profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/service_profile/:profile_id/traffic_limit",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This API endpoint allows you to add a data limit to a service profile.\nA data limit is a rule that defines how much data a service can consume within a certain period.\nThis is useful for managing your data usage and avoiding overage charges.\n\nYou can use this API to customize the data limit for your service profile by specifying the service type, time period, volume threshold, and warning percentage.\nYou can also choose to apply the data limit only to satellite radio access technology (RAT) type"
+        },
+        {
+          "info": {
+            "name": "Delete all data limits of a service profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/service_profile/:profile_id/traffic_limit",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete all data limits. This will not influence the assignment style limits.\n"
+        },
+        {
+          "info": {
+            "name": "Remove data limit from a service profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/service_profile/:profile_id/traffic_limit/:limit_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Remove data limit from a service profile"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

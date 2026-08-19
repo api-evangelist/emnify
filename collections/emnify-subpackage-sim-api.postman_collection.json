@@ -1,0 +1,2328 @@
+{
+  "item": [
+    {
+      "id": "e3b5d673-bc4f-445b-a57f-f4671a9c4927",
+      "name": "subpackage_sim",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "03c07b44-c96e-4523-9fe3-c081323af317",
+          "name": "List SIMs",
+          "request": {
+            "name": "List SIMs",
+            "description": {
+              "content": "Returns a list of SIMs filtered, sorted, and paged according to query parameters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sim"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Filter parameter in `<field>:<criteria>` format.\nExpects a comma-separated list from the allowed fields:\n\n* `id`\n* `issuer_org`\n* `reseller_org`\n* `customer_org`\n* `iccid`\n* `iccid_with_luhn`\n* `status`\n* `production_date`\n* `imsi`\n* `msisdn`\n* `endpoint`\n* `model`\n* `eid`\n* `satellite_capable`\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Sort parameter in `<operator><field>` format.\nSort properties according to a comma-separated list from the allowed fields:\n\n* `id`\n* `issuer_org`\n* `reseller_org`\n* `customer_org`\n* `iccid`\n* `eid`\n* `status`\n* `production_date`\n* `endpoint`\n* `model`\n\nIf no sorting options are specified, the response will be sorted by `id`.\n\nSupported operators:\n* `-`: Descending order\n* `+`: Ascending order\n\nThe response will be shown in ascending order if no operator is specified.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Current page number"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "2000",
+                  "description": "Defines the number of items per page (max. 2500)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cc6adb3f-5bae-4562-ba29-b9c1ebe30dd2",
+              "name": "Successfully returned a list of SIMs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "2000"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 2987,\n    \"iccid\": \"string\",\n    \"eid\": \"string\",\n    \"production_date\": \"1988-04-13T19:38:45.628Z\",\n    \"activation_date\": \"1950-12-13T22:12:28.649Z\",\n    \"status\": {\n      \"id\": 6152,\n      \"description\": \"string\"\n    },\n    \"customer_org\": {\n      \"id\": 984,\n      \"name\": \"string\",\n      \"country\": {\n        \"id\": 1544,\n        \"name\": \"string\",\n        \"country_code\": 8240,\n        \"mcc\": 3249,\n        \"iso_code\": \"string\",\n        \"latitude\": 8736.56096575834,\n        \"longitude\": 9147.897454418782\n      }\n    },\n    \"issuer_org\": {\n      \"id\": 6354,\n      \"name\": \"string\",\n      \"country\": {\n        \"id\": 8455,\n        \"name\": \"string\",\n        \"country_code\": 6049,\n        \"mcc\": 2602,\n        \"iso_code\": \"string\",\n        \"latitude\": 7670.301027224045,\n        \"longitude\": 4135.067124680343\n      }\n    },\n    \"reseller_org\": {\n      \"id\": 1312,\n      \"name\": \"string\",\n      \"country\": {\n        \"id\": 253,\n        \"name\": \"string\",\n        \"country_code\": 1439,\n        \"mcc\": 9900,\n        \"iso_code\": \"string\",\n        \"latitude\": 9559.740776110577,\n        \"longitude\": 8695.808187651974\n      }\n    },\n    \"endpoint\": {\n      \"id\": 26\n    },\n    \"imsi\": \"string\",\n    \"msisdn\": \"string\",\n    \"model\": {\n      \"id\": 6048,\n      \"description\": \"string\",\n      \"memory_size\": 6284,\n      \"formfactor\": {\n        \"id\": 3814,\n        \"name\": \"string\"\n      },\n      \"manufacturer\": {\n        \"id\": 8852,\n        \"name\": \"string\"\n      }\n    }\n  },\n  {\n    \"id\": 2977,\n    \"iccid\": \"string\",\n    \"eid\": \"string\",\n    \"production_date\": \"1964-06-25T12:06:39.518Z\",\n    \"activation_date\": \"2002-08-02T13:56:04.578Z\",\n    \"status\": {\n      \"id\": 7557,\n      \"description\": \"string\"\n    },\n    \"customer_org\": {\n      \"id\": 3973,\n      \"name\": \"string\",\n      \"country\": {\n        \"id\": 6215,\n        \"name\": \"string\",\n        \"country_code\": 1446,\n        \"mcc\": 4839,\n        \"iso_code\": \"string\",\n        \"latitude\": 8819.222250524046,\n        \"longitude\": 9615.69037457979\n      }\n    },\n    \"issuer_org\": {\n      \"id\": 2823,\n      \"name\": \"string\",\n      \"country\": {\n        \"id\": 196,\n        \"name\": \"string\",\n        \"country_code\": 6357,\n        \"mcc\": 640,\n        \"iso_code\": \"string\",\n        \"latitude\": 206.50518979745124,\n        \"longitude\": 5806.280550386159\n      }\n    },\n    \"reseller_org\": {\n      \"id\": 293,\n      \"name\": \"string\",\n      \"country\": {\n        \"id\": 5603,\n        \"name\": \"string\",\n        \"country_code\": 4444,\n        \"mcc\": 3409,\n        \"iso_code\": \"string\",\n        \"latitude\": 3669.594830735231,\n        \"longitude\": 5580.853852629254\n      }\n    },\n    \"endpoint\": {\n      \"id\": 918\n    },\n    \"imsi\": \"string\",\n    \"msisdn\": \"string\",\n    \"model\": {\n      \"id\": 5990,\n      \"description\": \"string\",\n      \"memory_size\": 884,\n      \"formfactor\": {\n        \"id\": 7192,\n        \"name\": \"string\"\n      },\n      \"manufacturer\": {\n        \"id\": 4807,\n        \"name\": \"string\"\n      }\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0729dfb9-7ba4-46ad-9f07-79d64d2de1d5",
+          "name": "Migrate SIMs between Workspaces",
+          "request": {
+            "name": "Migrate SIMs between Workspaces",
+            "description": {
+              "content": "Migrate SIMs from one Workspace to another.\n\n## Requirements\n\n- The calling user must have **Administrator** permissions on both the target and source Workspaces\n- The target Workspace must be an enterprise Workspace\n- Only 500 SIMs can be migrated per request\n- You must provide exactly one of: `sims`, `iccids`, or `iccid_range`\n\n<Note>\n  This endpoint requires authentication with [user credentials](/developers/auth/user-credentials), as application tokens are scoped to a single Workspace.\n</Note>\n\n## Behavior\n\n- **Dry run mode**: The `dry_run` parameter defaults to `true`.\n  Set it to `false` to execute the migration.\n- **Activated SIMs**: SIMs in status `ACTIVATED` are automatically suspended during migration.\n- **Attached devices**: If SIMs are attached to devices, set `auto_detach_devices: true` or the request fails.\n\n<Warning>\n  The request fails if one or more SIMs don't meet the requirements for migration.\n  Check the `errors` array in the response for details.\n</Warning>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sim",
+                "migration",
+                "workspace"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"target_workspace\": {\n    \"id\": \"<double>\"\n  },\n  \"sims\": [\n    {\n      \"id\": \"<double>\"\n    },\n    {\n      \"id\": \"<double>\"\n    }\n  ],\n  \"iccids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"iccid_range\": {\n    \"start\": \"<string>\",\n    \"end\": \"<string>\"\n  },\n  \"allowed_sim_statuses\": [\n    {\n      \"id\": \"<double>\"\n    },\n    {\n      \"id\": \"<double>\"\n    }\n  ],\n  \"dry_run\": true,\n  \"auto_detach_devices\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "85f231ac-4a01-4936-a421-414d8a5c3247",
+              "name": "Successful migration request.\nIf `dry_run` was set to `false`, the migration is processed.\nIf `dry_run` was set to `true`, the response contains a summary of the changes that would be executed.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim",
+                    "migration",
+                    "workspace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target_workspace\": {\n    \"id\": 3581.699251919976\n  },\n  \"sims\": [\n    {\n      \"id\": 4335.06514852945\n    },\n    {\n      \"id\": 5454.323382342714\n    }\n  ],\n  \"iccids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"iccid_range\": {\n    \"start\": \"string\",\n    \"end\": \"string\"\n  },\n  \"allowed_sim_statuses\": [\n    {\n      \"id\": 1011.3095271357942\n    },\n    {\n      \"id\": 6557.374168632574\n    }\n  ],\n  \"dry_run\": true,\n  \"auto_detach_devices\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sim_count\": 1096.9682372329426,\n  \"dry_run\": true,\n  \"target_workspace\": {\n    \"id\": 3842.032147007497,\n    \"name\": \"string\"\n  },\n  \"auto_detach_devices\": true,\n  \"sims\": [\n    {\n      \"status\": {\n        \"id\": 9288.689867323554,\n        \"description\": \"string\"\n      },\n      \"id\": 5069.908123006504,\n      \"iccid\": \"string\",\n      \"iccid_with_luhn\": \"string\",\n      \"endpoint\": {\n        \"id\": 3377.591668034661,\n        \"name\": \"string\"\n      },\n      \"source_workspace\": {\n        \"id\": 8972.144981249075,\n        \"name\": \"string\"\n      }\n    },\n    {\n      \"status\": {\n        \"id\": 5499.368162917089,\n        \"description\": \"string\"\n      },\n      \"id\": 7113.004523172076,\n      \"iccid\": \"string\",\n      \"iccid_with_luhn\": \"string\",\n      \"endpoint\": {\n        \"id\": 7109.143389343685,\n        \"name\": \"string\"\n      },\n      \"source_workspace\": {\n        \"id\": 2801.6409037002086,\n        \"name\": \"string\"\n      }\n    }\n  ],\n  \"allowed_sim_statuses\": [\n    {\n      \"id\": 2997.173576763558,\n      \"description\": \"string\"\n    },\n    {\n      \"id\": 6518.024945689951,\n      \"description\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0590df94-f7e8-438f-b858-16d424a3f4d6",
+              "name": "The request is malformed.\n\nCommon causes:\n\n- Exceeds the maximum count of 500 SIMs\n- Multiple SIM identifiers provided (only one of `sims`, `iccids`, or `iccid_range` is allowed)\n- Invalid ICCID format (must be exactly 19 digits)\n- ICCID range `end` value is less than `start`\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim",
+                    "migration",
+                    "workspace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target_workspace\": {\n    \"id\": 3581.699251919976\n  },\n  \"sims\": [\n    {\n      \"id\": 4335.06514852945\n    },\n    {\n      \"id\": 5454.323382342714\n    }\n  ],\n  \"iccids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"iccid_range\": {\n    \"start\": \"string\",\n    \"end\": \"string\"\n  },\n  \"allowed_sim_statuses\": [\n    {\n      \"id\": 1011.3095271357942\n    },\n    {\n      \"id\": 6557.374168632574\n    }\n  ],\n  \"dry_run\": true,\n  \"auto_detach_devices\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8dc107c7-8dc5-4a89-b32d-d2dc936bd5cd",
+              "name": "One or more SIMs or the target Workspace couldn't be found or are inaccessible.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim",
+                    "migration",
+                    "workspace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target_workspace\": {\n    \"id\": 3581.699251919976\n  },\n  \"sims\": [\n    {\n      \"id\": 4335.06514852945\n    },\n    {\n      \"id\": 5454.323382342714\n    }\n  ],\n  \"iccids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"iccid_range\": {\n    \"start\": \"string\",\n    \"end\": \"string\"\n  },\n  \"allowed_sim_statuses\": [\n    {\n      \"id\": 1011.3095271357942\n    },\n    {\n      \"id\": 6557.374168632574\n    }\n  ],\n  \"dry_run\": true,\n  \"auto_detach_devices\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f87b9e23-5533-48b9-bb87-b94648bd7efd",
+              "name": "One or more SIMs don't meet the requirements for migration.\n\nThe response includes an `errors` array with details about which SIMs failed and why.\n\n| Error Code | Message | Resolution |\n|------------|---------|------------|\n| 1502 | SIM(s) attached to devices | Set `auto_detach_devices: true` to automatically detach SIMs before migration |\n| 1503 | SIM(s) in disallowed status | Adjust the `allowed_sim_statuses` filter or change the SIM status before migrating |\n| 1504 | No admin access on source workspace | Request **Administrator** permissions on the source Workspace |\n| 1505 | Migration between Brazilian and non-Brazilian workspaces is not allowed | This is a regulatory restriction and cannot be bypassed |\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim",
+                    "migration",
+                    "workspace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target_workspace\": {\n    \"id\": 3581.699251919976\n  },\n  \"sims\": [\n    {\n      \"id\": 4335.06514852945\n    },\n    {\n      \"id\": 5454.323382342714\n    }\n  ],\n  \"iccids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"iccid_range\": {\n    \"start\": \"string\",\n    \"end\": \"string\"\n  },\n  \"allowed_sim_statuses\": [\n    {\n      \"id\": 1011.3095271357942\n    },\n    {\n      \"id\": 6557.374168632574\n    }\n  ],\n  \"dry_run\": true,\n  \"auto_detach_devices\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 5652.957709792292,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error_code\": 9857.296476035772,\n      \"message\": \"string\",\n      \"sims\": [\n        {\n          \"id\": 4814.493674494747,\n          \"iccid\": \"string\",\n          \"iccid_with_luhn\": \"string\",\n          \"endpoint\": {\n            \"id\": 102.95334325664652,\n            \"name\": \"string\"\n          },\n          \"status\": {\n            \"id\": 9189.68955351002,\n            \"description\": \"string\"\n          },\n          \"source_workspace\": {\n            \"id\": 721.1997403737414,\n            \"name\": \"string\"\n          }\n        },\n        {\n          \"id\": 4241.321022209749,\n          \"iccid\": \"string\",\n          \"iccid_with_luhn\": \"string\",\n          \"endpoint\": {\n            \"id\": 3518.954271996785,\n            \"name\": \"string\"\n          },\n          \"status\": {\n            \"id\": 1397.9784875422408,\n            \"description\": \"string\"\n          },\n          \"source_workspace\": {\n            \"id\": 6184.515633052202,\n            \"name\": \"string\"\n          }\n        }\n      ]\n    },\n    {\n      \"error_code\": 2116.0181943994826,\n      \"message\": \"string\",\n      \"sims\": [\n        {\n          \"id\": 9154.40983812211,\n          \"iccid\": \"string\",\n          \"iccid_with_luhn\": \"string\",\n          \"endpoint\": {\n            \"id\": 6240.044230518741,\n            \"name\": \"string\"\n          },\n          \"status\": {\n            \"id\": 84.74638956052604,\n            \"description\": \"string\"\n          },\n          \"source_workspace\": {\n            \"id\": 7444.109655255677,\n            \"name\": \"string\"\n          }\n        },\n        {\n          \"id\": 4654.270181738782,\n          \"iccid\": \"string\",\n          \"iccid_with_luhn\": \"string\",\n          \"endpoint\": {\n            \"id\": 9800.607600133104,\n            \"name\": \"string\"\n          },\n          \"status\": {\n            \"id\": 237.07201438275317,\n            \"description\": \"string\"\n          },\n          \"source_workspace\": {\n            \"id\": 2545.3369390205494,\n            \"name\": \"string\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c3b838e1-4072-420c-a080-317b8e3f5551",
+          "name": "Bulk delete SIMs",
+          "request": {
+            "name": "Bulk delete SIMs",
+            "description": {
+              "content": "Deletes multiple SIMs based on the provided list of IDs.\n\n<Error>\n  Deleted SIMs cannot be recovered.\n</Error>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sim",
+                "multi"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"id\": \"<double>\"\n  },\n  {\n    \"id\": \"<double>\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6090ea96-e2de-47a0-8a24-f1c3899ddb9b",
+              "name": "SIMs deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim",
+                    "multi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": 159.6898108895628\n  },\n  {\n    \"id\": 6861.558274732858\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "215df92b-fad6-4fb7-a127-611ebd20b904",
+              "name": "Request body is malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim",
+                    "multi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": 159.6898108895628\n  },\n  {\n    \"id\": 6861.558274732858\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f6bb5d78-148f-4246-b41c-9d4698bcb99e",
+              "name": "User doesn't have permission to bulk delete SIMs\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim",
+                    "multi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": 159.6898108895628\n  },\n  {\n    \"id\": 6861.558274732858\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e0162ea3-0340-4a74-9f6b-7d9c524dc01e",
+              "name": "A given SIM ID isn't found\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim",
+                    "multi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": 159.6898108895628\n  },\n  {\n    \"id\": 6861.558274732858\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8a17ffb0-bde7-4b2e-8041-d667a366f9dc",
+          "name": "List SIM statuses",
+          "request": {
+            "name": "List SIM statuses",
+            "description": {
+              "content": "Returns a list of available [SIM statuses](/developers/reference/sim#sim-statuses).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sim",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2a7163c6-76a8-4793-be5a-b5ffa8d90659",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 3084,\n    \"description\": \"string\"\n  },\n  {\n    \"id\": 9719,\n    \"description\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6156574a-69bf-4291-852b-62c19e98f89a",
+          "name": "SIM details",
+          "request": {
+            "name": "SIM details",
+            "description": {
+              "content": "Retrieves SIM details for a given ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sim",
+                ":sim_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sim_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b232c2ef-9043-47c4-b086-f7ca77264c1c",
+              "name": "Successfully returned the SIM details associated with the provided `id`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim",
+                    ":sim_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sim_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 2445,\n  \"iccid\": \"string\",\n  \"eid\": \"string\",\n  \"production_date\": \"1992-07-26T03:58:50.355Z\",\n  \"activation_date\": \"2003-01-10T08:53:32.861Z\",\n  \"status\": {\n    \"id\": 7613,\n    \"description\": \"string\"\n  },\n  \"customer_org\": {\n    \"id\": 2619,\n    \"name\": \"string\",\n    \"country\": {\n      \"id\": 6823,\n      \"name\": \"string\",\n      \"country_code\": 7423,\n      \"mcc\": 7049,\n      \"iso_code\": \"string\",\n      \"latitude\": 9642.941850292558,\n      \"longitude\": 846.5467067502885\n    }\n  },\n  \"issuer_org\": {\n    \"id\": 1184,\n    \"name\": \"string\",\n    \"country\": {\n      \"id\": 114,\n      \"name\": \"string\",\n      \"country_code\": 7062,\n      \"mcc\": 5903,\n      \"iso_code\": \"string\",\n      \"latitude\": 2556.521153807357,\n      \"longitude\": 9651.344210123127\n    }\n  },\n  \"reseller_org\": {\n    \"id\": 5626,\n    \"name\": \"string\",\n    \"country\": {\n      \"id\": 5829,\n      \"name\": \"string\",\n      \"country_code\": 2056,\n      \"mcc\": 739,\n      \"iso_code\": \"string\",\n      \"latitude\": 3800.0339012535824,\n      \"longitude\": 950.8363072335712\n    }\n  },\n  \"endpoint\": {\n    \"id\": 9883\n  },\n  \"imsi\": \"string\",\n  \"msisdn\": \"string\",\n  \"model\": {\n    \"id\": 1806,\n    \"description\": \"string\",\n    \"memory_size\": 4773,\n    \"formfactor\": {\n      \"id\": 2182,\n      \"name\": \"string\"\n    },\n    \"manufacturer\": {\n      \"id\": 5401,\n      \"name\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d4aca4bf-4e77-49b4-ab6f-ce45a1b9b4b3",
+          "name": "Delete a SIM",
+          "request": {
+            "name": "Delete a SIM",
+            "description": {
+              "content": "<Error>\n  Deleted SIMs cannot be recovered.\n</Error>\n\nDeletes a SIM.\n\nThe following restrictions apply when deleting SIMs:\n* SIMs with an assigned endpoint cannot be deleted.\n* Resellers cannot delete SIMs they have sold.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sim",
+                ":sim_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sim_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0f4baad4-7ffd-4147-b9fa-95140fbcee9c",
+              "name": "Successfully fulfilled the request with no additional content to send in the response payload body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim",
+                    ":sim_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sim_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82ef4a93-b449-44c7-8f0c-3de1117eb08b",
+              "name": "Request couldn't be satisfied. Typically happens when the `reseller_org_id` field isn't `null` and the value matches the organization ID making the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim",
+                    ":sim_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sim_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "66b06c62-8527-4c17-9c14-dd4903538e2f",
+          "name": "Update a SIM",
+          "request": {
+            "name": "Update a SIM",
+            "description": {
+              "content": "Updates a SIM resource.\n\nYou can provide the following fields with this request:\n* `issuer_org` (Object optional) - change to a direct child organization of the appropriate type\n* `reseller_org` (Object optional) - change to a direct child organization of the appropriate type or empty (`\"reseller_org\": { \"id\": null }` or `\"reseller_org\": {}`)\n* `customer_org` (Object optional) - change to own organization or a direct child organization of type \"Enterprise\" or empty (`\"customer_org\": { \"id\": null }` or `\"customer_org\": {}`)\n* `status` (Object optional) - update the SIM status\n\nThe following restrictions apply when updating SIMs:\n* Users from the issuer organization can change any updatable field\n* Users from the reseller organization can update the `reseller_org` or `customer_org` fields\n* Users from the customer organization can only update the `status` field\n* `issuer_org` can change to a child organization of the type \"Mobile Network Operator\" or \"Service Provider\"\n* `reseller_org` can change to child organization of the following types: \"Mobile Network Operator\", \"Service Provider\", or \"Reseller\"\n* `customer_org` can change to a child organization of an \"Enterprise\" type\n* `status` can update from \"Issued\" (`\"id\": 0`) to either \"Activated\" (`\"id\": 1`) or \"Factory Test\" (`\"id\": 4`)\n* `status` can only update from \"Factory Test\" (`\"id\": 4`) to \"Activated\" (`\"id\": 1`)\n* `status` can switch between \"Activated\" (`\"id\": 1`) and \"Suspended\" (`\"id\": 2`)\n\n<Warning>\n  emnify charges for activated SIMs. To avoid accruing unexpected charges, update the SIM `status` to \"Suspended\" (`\"id\": 2`).\n</Warning>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sim",
+                ":sim_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sim_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"issuer_org\": {\n    \"id\": \"<integer>\"\n  },\n  \"reseller_org\": {\n    \"id\": \"<integer>\"\n  },\n  \"customer_org\": {\n    \"id\": \"<integer>\"\n  },\n  \"status\": {\n    \"id\": \"<integer>\",\n    \"description\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "be5e3be0-f6a2-4144-8929-a02bddeb1c78",
+              "name": "Successfully fulfilled the request with no additional content to send in the response payload body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim",
+                    ":sim_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sim_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"issuer_org\": {\n    \"id\": 1244\n  },\n  \"reseller_org\": {\n    \"id\": 1013\n  },\n  \"customer_org\": {\n    \"id\": 6699\n  },\n  \"status\": {\n    \"id\": 9174,\n    \"description\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "78f9ac14-2a06-44f5-a5f0-ebfe11fca634",
+              "name": "Unexpected error in the API call. See the HTTP response body for details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim",
+                    ":sim_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sim_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"issuer_org\": {\n    \"id\": 1244\n  },\n  \"reseller_org\": {\n    \"id\": 1013\n  },\n  \"customer_org\": {\n    \"id\": 6699\n  },\n  \"status\": {\n    \"id\": 9174,\n    \"description\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 9041,\n  \"error_token\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "24327373-8cb2-4127-80bd-096ab221d6a0",
+          "name": "List SIM events",
+          "request": {
+            "name": "List SIM events",
+            "description": {
+              "content": "Returns the list of events, filtered, sorted and paged according to query parameters.\n\n<Error>\n  This API endpoint deviates from the specified conventions and may not return the same HTTP Codes as the higher layer call (`/api/v1/sim/{sim_id}`).\n\n  In case the requested `{sim_id}` doesn't exist or is not accessible for the user, **HTTP 200** will be returned with empty **[]** as long as the provided `{sim_id}` is a number and all parameters are valid.\n\n  Please take that into consideration when building automation on top of the error behavior of this endpoint.\n</Error>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sim",
+                ":sim_id",
+                "event"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Current page number"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "<integer>",
+                  "description": "Defines the number of items per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Sort properties according to a comma separated list of accepted fields. Valid fields are:\n\n* `id` - (**event id**)\n* `timestamp` - (**event timestamp**)\n* `source` - (**event source**)\n* `severity` - (**event severity**)\n* `alert` - (**alert status**)\n* `organisation` - (**organisation name**)\n* `user` - (**user id**)\n* `endpoint` - (**endpoint name**)\n* `tags` - (**endpoint tags**)\n* `ip_address` - (**endpoint ip_address**)\n* `iccid` - (**sim iccid**)\n* `imsi` - (**sim imsi**)\n* `type` - (**event type**)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Filter parameter in `<filter>:<value>` format.\nMultiple filters must be a comma-separated list of the following fields:\n\n* `from` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, **only valid with until**)\n* `until` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, **only valid with from**)\n* `type` (**event_type**, numerical)\n* `source` (**event_type**, numerical, e.g. 0 = Network), 1 = Policy Control, 2 = API)\n* `severity` (**event_severity**, numerical, e.g. 0 = Info, 1 = Warn), 2 = Critical)\n* `alert` (boolean, e.g. true, false)\n* `description` (**event description**, string)\n* `organisation` (**organisation name**, string)\n* `user` (**user name**, string)\n* `endpoint` (**endpoint name**, string)\n* `tags` (**endpoint tags**, string)\n* `ip_address` (**endpoint IP address**, valid IPv4/IPv6 address)\n* `imei` (**endpoint imei**, numerical string)\n* `iccid` (**sim iccid**, numerical string)\n* `imsi` (**sim imsi**, numerical string)\n* `timestamp` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, for querying events of 1 day, deprecated in future)\n* `iccid_with_luhn` (**sim iccid with Luhn**, numerical string)\n* `network` (**endpoint network**, string, e.g. Telekom)\n* `rat` (**event pdp context rat type**, numerical string, e.g. 6)\n* `country` (**endpoint country**, string, e.g. Germany)\n\nSome filters can accept up to 6 values which must be separated by the pipe symbol (`|`) or url-encoded as (`%7C`):\n\n* `iccid` (q: iccid:1234567890123456789|8988303000123456789)\n* `iccid_with_luhn` (q: iccid:12345678901234567891|89883030001234567891)\n* `endpoint` (q: endpoint:example_endpoint_name|another_endpoint_name)\n* `type` (q: type:example_event_type|another_event_type)\n* `network` (q: network:example_network|another_network)\n* `rat` (q: rat:example_rat|another_rat)\n* `country` (q: country:example_country|another_country)\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "sim_id",
+                  "description": "(Required) Numeric ID of a SIM"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "adaf0b02-33ba-4ad9-97de-98fcbe754a05",
+              "name": "Successfully returned a list of SIM events",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim",
+                    ":sim_id",
+                    "event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "sim_id",
+                      "description": "(Required) Numeric ID of a SIM"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"timestamp\": \"string\",\n    \"alert\": true,\n    \"description\": \"string\",\n    \"id\": 4817,\n    \"event_type\": {},\n    \"event_source\": {},\n    \"event_severity\": {},\n    \"organisation\": {},\n    \"endpoint\": {},\n    \"sim\": {},\n    \"imsi\": {}\n  },\n  {\n    \"timestamp\": \"string\",\n    \"alert\": false,\n    \"description\": \"string\",\n    \"id\": 7756,\n    \"event_type\": {},\n    \"event_source\": {},\n    \"event_severity\": {},\n    \"organisation\": {},\n    \"endpoint\": {},\n    \"sim\": {},\n    \"imsi\": {}\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b53f22b2-e192-42b1-902f-c7f0bdfd2924",
+              "name": "**Bad Request** due to incorrect **Paging** Parameters, **Sorting** Parameter or incorrect `{sim_id}`\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim",
+                    ":sim_id",
+                    "event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "sim_id",
+                      "description": "(Required) Numeric ID of a SIM"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "78b9de45-546d-42c5-8f42-830e13e750c2",
+              "name": "**Unprocessable Entity** due to incorrect **Query** parameters\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim",
+                    ":sim_id",
+                    "event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "sim_id",
+                      "description": "(Required) Numeric ID of a SIM"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "72d48dda-2e32-45c4-a0a1-eaf23110ed80",
+          "name": "SIM usage and cost statistics",
+          "request": {
+            "name": "SIM usage and cost statistics",
+            "description": {
+              "content": "<Warning>\n  You can only retrieve data traffic costs for organizations without multi-inclusive volumes.\n</Warning>\n\nRetrieves SIM usage and cost statistics for a given ID.\nUsage statistics are sorted by `data` and `sms`.\n\nReturns statistics from the following periods:\n* `last_month`: Previous billing month, from the first to last day (for example, February 1-29, 2024, when you send the request in March 2024).\n* `current_month`: Current month, with statistics calculated up to and including the date requested (for example, March 1-8, 2024, when you sent the request on March 8, 2024).\n* `last_hour`: Previous 60 minutes, accumulated per minute and organized by data or SMS received by the device (`rx`) and transmitted by the device (`tx`).\n\n<Info>\n  `last_month` and `current_month` are only included in the responses if traffic exists.\n  Those responses include a generated `id` value that's comprised of the SIM ID, year, month, and traffic type ID (`5` for data and `6` for SMS).\n\n  For example, if you send a request in March 2024 for SIM ID `123456`, the `id` for data in the current month is `1234562024035`.\n</Info>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sim",
+                ":sim_id",
+                "stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sim_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "39c428e1-cc97-44c4-9090-8b1a02e33513",
+              "name": "Successfully returned the SIM statistics associated with the provided `id`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim",
+                    ":sim_id",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sim_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"last_month\": {\n      \"data\": {\n        \"sim_id\": 7254.421624239751,\n        \"month\": \"1948-12-01\",\n        \"volume\": 4616.053869902093,\n        \"volume_tx\": 6318.840244173915,\n        \"volume_rx\": 4700.15221423637,\n        \"traffic_type_id\": 2370.752021283117,\n        \"last_updated\": \"2025-01-04T20:56:11.051Z\",\n        \"cost\": 8151.096391469043,\n        \"currency_id\": 748.6834161488465,\n        \"id\": 1708.9168050195747,\n        \"traffic_type\": {\n          \"description\": \"string\",\n          \"unit\": \"string\",\n          \"id\": 2579.4947853114113\n        },\n        \"currency\": {\n          \"code\": \"string\",\n          \"symbol\": \"string\",\n          \"id\": 5778.4445064011425\n        }\n      },\n      \"sms\": {\n        \"sim_id\": 4365.971112312122,\n        \"month\": \"2002-07-17\",\n        \"volume\": 6388.857878537506,\n        \"volume_tx\": 8522.396162854551,\n        \"volume_rx\": 9172.030724654047,\n        \"traffic_type_id\": 7984.471481909838,\n        \"last_updated\": \"1963-03-14T06:04:03.297Z\",\n        \"cost\": 7129.5397710272755,\n        \"currency_id\": 445.0387351207752,\n        \"id\": 2461.6777607232852,\n        \"traffic_type\": {\n          \"description\": \"string\",\n          \"unit\": \"string\",\n          \"id\": 5050.848615175087\n        },\n        \"currency\": {\n          \"code\": \"string\",\n          \"symbol\": \"string\",\n          \"id\": 6808.58679635293\n        }\n      }\n    },\n    \"current_month\": {\n      \"data\": {\n        \"sim_id\": 4589.007355116235,\n        \"month\": \"1983-07-20\",\n        \"volume\": 6778.458149025553,\n        \"volume_tx\": 3305.3083655090863,\n        \"volume_rx\": 3479.594425161112,\n        \"traffic_type_id\": 681.2938412066361,\n        \"last_updated\": \"1986-05-04T02:04:43.952Z\",\n        \"cost\": 4686.388545545863,\n        \"currency_id\": 2871.503020669105,\n        \"id\": 4259.714424875481,\n        \"traffic_type\": {\n          \"description\": \"string\",\n          \"unit\": \"string\",\n          \"id\": 4114.893901448894\n        },\n        \"currency\": {\n          \"code\": \"string\",\n          \"symbol\": \"string\",\n          \"id\": 7654.122116411714\n        }\n      },\n      \"sms\": {\n        \"sim_id\": 6057.009452458463,\n        \"month\": \"1985-07-15\",\n        \"volume\": 3057.89770616018,\n        \"volume_tx\": 3388.568706366717,\n        \"volume_rx\": 4388.91650552304,\n        \"traffic_type_id\": 8001.31545980365,\n        \"last_updated\": \"2000-07-19T10:31:18.123Z\",\n        \"cost\": 9562.996904511283,\n        \"currency_id\": 3665.6048622190106,\n        \"id\": 5313.1923687788285,\n        \"traffic_type\": {\n          \"description\": \"string\",\n          \"unit\": \"string\",\n          \"id\": 616.5929555232608\n        },\n        \"currency\": {\n          \"code\": \"string\",\n          \"symbol\": \"string\",\n          \"id\": 617.1771946761339\n        }\n      }\n    },\n    \"last_hour\": {\n      \"data\": {\n        \"sim_id\": 6159.825664450585,\n        \"month\": \"1980-05-16\",\n        \"volume\": 5498.198119073896,\n        \"volume_tx\": 3055.1101027774675,\n        \"volume_rx\": 6728.06172850896,\n        \"traffic_type_id\": 6854.07934987889,\n        \"last_updated\": \"1969-02-25T03:31:33.120Z\",\n        \"cost\": 2597.1171904468392,\n        \"currency_id\": 8380.491294172136,\n        \"id\": 1835.1938796111533,\n        \"traffic_type\": {\n          \"description\": \"string\",\n          \"unit\": \"string\",\n          \"id\": 9081.783395024757\n        },\n        \"currency\": {\n          \"code\": \"string\",\n          \"symbol\": \"string\",\n          \"id\": 9546.534739468474\n        }\n      },\n      \"sms\": {\n        \"sim_id\": 8815.527623184718,\n        \"month\": \"1997-11-24\",\n        \"volume\": 500.0092741973094,\n        \"volume_tx\": 5637.300627568213,\n        \"volume_rx\": 3525.1453036835646,\n        \"traffic_type_id\": 7464.400105044082,\n        \"last_updated\": \"2017-01-05T08:52:11.712Z\",\n        \"cost\": 1593.766913537713,\n        \"currency_id\": 4063.807965127,\n        \"id\": 653.5367462029195,\n        \"traffic_type\": {\n          \"description\": \"string\",\n          \"unit\": \"string\",\n          \"id\": 8464.355787621505\n        },\n        \"currency\": {\n          \"code\": \"string\",\n          \"symbol\": \"string\",\n          \"id\": 209.93735526033896\n        }\n      }\n    }\n  },\n  {\n    \"last_month\": {\n      \"data\": {\n        \"sim_id\": 580.8122058781673,\n        \"month\": \"1996-05-08\",\n        \"volume\": 3573.1222543997965,\n        \"volume_tx\": 7346.483180832024,\n        \"volume_rx\": 3492.2513369990183,\n        \"traffic_type_id\": 9888.872762193378,\n        \"last_updated\": \"1994-04-11T05:11:03.123Z\",\n        \"cost\": 2871.4317309103253,\n        \"currency_id\": 4829.123734803169,\n        \"id\": 7462.893506030929,\n        \"traffic_type\": {\n          \"description\": \"string\",\n          \"unit\": \"string\",\n          \"id\": 8555.513974005926\n        },\n        \"currency\": {\n          \"code\": \"string\",\n          \"symbol\": \"string\",\n          \"id\": 6382.425912148874\n        }\n      },\n      \"sms\": {\n        \"sim_id\": 1132.904515604618,\n        \"month\": \"1986-12-18\",\n        \"volume\": 5246.902024074998,\n        \"volume_tx\": 5525.08634070568,\n        \"volume_rx\": 7566.939919830872,\n        \"traffic_type_id\": 3732.8145668762036,\n        \"last_updated\": \"2017-01-30T02:47:33.232Z\",\n        \"cost\": 4631.579798387762,\n        \"currency_id\": 659.3305468239563,\n        \"id\": 2877.683146925678,\n        \"traffic_type\": {\n          \"description\": \"string\",\n          \"unit\": \"string\",\n          \"id\": 9779.641871920046\n        },\n        \"currency\": {\n          \"code\": \"string\",\n          \"symbol\": \"string\",\n          \"id\": 3529.480117420627\n        }\n      }\n    },\n    \"current_month\": {\n      \"data\": {\n        \"sim_id\": 182.6392016182754,\n        \"month\": \"1977-11-27\",\n        \"volume\": 7066.110848278066,\n        \"volume_tx\": 9130.64268727198,\n        \"volume_rx\": 9611.509910311348,\n        \"traffic_type_id\": 5524.502963316806,\n        \"last_updated\": \"1949-02-03T10:09:33.856Z\",\n        \"cost\": 3935.8640951834277,\n        \"currency_id\": 7597.505139448161,\n        \"id\": 3921.1010295580118,\n        \"traffic_type\": {\n          \"description\": \"string\",\n          \"unit\": \"string\",\n          \"id\": 8874.065711379675\n        },\n        \"currency\": {\n          \"code\": \"string\",\n          \"symbol\": \"string\",\n          \"id\": 3174.662379597363\n        }\n      },\n      \"sms\": {\n        \"sim_id\": 1355.2239141564803,\n        \"month\": \"2024-01-19\",\n        \"volume\": 4984.8094075332465,\n        \"volume_tx\": 4019.1858134816925,\n        \"volume_rx\": 2440.4836074379964,\n        \"traffic_type_id\": 2041.8153304622033,\n        \"last_updated\": \"2007-05-14T14:24:32.996Z\",\n        \"cost\": 6716.722789647169,\n        \"currency_id\": 1628.7888104762737,\n        \"id\": 5441.572710927383,\n        \"traffic_type\": {\n          \"description\": \"string\",\n          \"unit\": \"string\",\n          \"id\": 1792.2521251909961\n        },\n        \"currency\": {\n          \"code\": \"string\",\n          \"symbol\": \"string\",\n          \"id\": 5003.2030171075185\n        }\n      }\n    },\n    \"last_hour\": {\n      \"data\": {\n        \"sim_id\": 7851.850879180422,\n        \"month\": \"1978-02-09\",\n        \"volume\": 4098.161300650747,\n        \"volume_tx\": 3157.392587667156,\n        \"volume_rx\": 3675.1648705138073,\n        \"traffic_type_id\": 6522.925962974713,\n        \"last_updated\": \"2023-09-16T00:21:11.001Z\",\n        \"cost\": 1234.0958036721895,\n        \"currency_id\": 9368.708835637233,\n        \"id\": 6221.226870555633,\n        \"traffic_type\": {\n          \"description\": \"string\",\n          \"unit\": \"string\",\n          \"id\": 6412.136275040291\n        },\n        \"currency\": {\n          \"code\": \"string\",\n          \"symbol\": \"string\",\n          \"id\": 5186.322940096831\n        }\n      },\n      \"sms\": {\n        \"sim_id\": 734.9910951195782,\n        \"month\": \"2002-08-01\",\n        \"volume\": 8364.443229564175,\n        \"volume_tx\": 4610.645841929071,\n        \"volume_rx\": 5411.9888723524955,\n        \"traffic_type_id\": 7077.406084789854,\n        \"last_updated\": \"1980-07-02T13:13:22.133Z\",\n        \"cost\": 6994.105828643477,\n        \"currency_id\": 6699.863138095049,\n        \"id\": 213.7939801471156,\n        \"traffic_type\": {\n          \"description\": \"string\",\n          \"unit\": \"string\",\n          \"id\": 5391.212570440832\n        },\n        \"currency\": {\n          \"code\": \"string\",\n          \"symbol\": \"string\",\n          \"id\": 2671.0831586784366\n        }\n      }\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "050bdd33-7aec-4d28-933a-e8123415eb75",
+          "name": "Daily SIM usage statistics",
+          "request": {
+            "name": "Daily SIM usage statistics",
+            "description": {
+              "content": "<Warning>\n  Data traffic cost statistics (`cost` field in the `data` object) have been deprecated.\n</Warning>\n\nRetrieves SIM usage statistics accumulated per day.\nBy default, the response includes statistics for the current month.\n\n`start_date` and an `end_date` can be provided as query parameters to retrieve statistics for a specific time frame.\n\nExample request: `/api/v1/sim/123/stats/daily?end_date=2019-03-21&start_date=2019-03-01`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sim",
+                ":sim_id",
+                "stats",
+                "daily"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sim_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4e016577-fbb9-462e-b53a-2d856dda1985",
+              "name": "Successfully returned the daily SIM statistics for the provided dates and ID.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim",
+                    ":sim_id",
+                    "stats",
+                    "daily"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sim_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9c3c7ea4-dd78-4835-9054-89ebd2d95ed7",
+          "name": "Validate SIM batch by BIC",
+          "request": {
+            "name": "Validate SIM batch by BIC",
+            "description": {
+              "content": "Checks the given BIC code and the contained SIMs if they can be registered.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sim_batch",
+                "bic",
+                ":bic"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bic",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d33116ec-daab-4370-9a30-814d87207f00",
+              "name": "Batch is valid and can be registered",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim_batch",
+                    "bic",
+                    ":bic"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bic",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sim_batch_status_id\": \"string\",\n  \"bsn\": \"string\",\n  \"bic\": \"string\",\n  \"quantity\": \"string\",\n  \"sim_model_id\": \"string\",\n  \"issuer_org_id\": \"string\",\n  \"customer_org_id\": 6096,\n  \"reseller_org_id\": 8825,\n  \"activated\": \"string\",\n  \"logistic_center_id\": \"string\",\n  \"article_id\": \"string\",\n  \"id\": 945,\n  \"status\": {\n    \"id\": 7662,\n    \"description\": \"string\"\n  },\n  \"model\": {\n    \"id\": 820,\n    \"description\": \"string\",\n    \"memory_size\": 8777,\n    \"formfactor\": {\n      \"id\": 2852,\n      \"name\": \"string\"\n    },\n    \"manufacturer\": {\n      \"id\": 2473,\n      \"name\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "402fe9a9-899f-417f-9cb9-df1326e5b0ef",
+              "name": "Batch is already registered",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim_batch",
+                    "bic",
+                    ":bic"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bic",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ecb2f3e0-85d0-4468-a31c-510dc0d9e43e",
+              "name": "No Batch with the given BIC found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim_batch",
+                    "bic",
+                    ":bic"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bic",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83af19e8-74e4-4d5d-8cb1-9cbe145a3640",
+              "name": "Batch contains SIMs registered to another organisation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim_batch",
+                    "bic",
+                    ":bic"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bic",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9730f240-b758-44c4-b4ae-5be9d8fdd3b3",
+          "name": "Register a given batch by BIC",
+          "request": {
+            "name": "Register a given batch by BIC",
+            "description": {
+              "content": "Registers the given SIM batch, assigns all SIMs to the organisation,\nand sets the status of all contained SIMs to the given value.\n\nIf the `factory_test_mode_allowed` flag is set to true on the tariff plan assignment\nor it is enabled in the tariff plan, the SIM batch can be also registered with an initial\nstatus of `4 = Factory Test`, thus setting all of the contained SIMs to factory test\nstatus. In turn, the `activation_date` of these SIMs will not be set yet, but when the factory\ntest volume is consumed, the auto activation date is reached or they are patched to `Activated`\nstate afterwards.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sim_batch",
+                "bic",
+                ":bic"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bic",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sim_status\": {\n    \"id\": \"<integer>\",\n    \"description\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7619ed2f-2211-48d3-8609-6c09fcc1b184",
+              "name": "Batch successfully registered and assigned all SIMS",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim_batch",
+                    "bic",
+                    ":bic"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bic",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sim_status\": {\n    \"id\": 5083,\n    \"description\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sim\": [\n    {\n      \"id\": 6733,\n      \"iccid\": \"string\",\n      \"eid\": \"string\",\n      \"production_date\": \"1971-10-27T03:34:42.085Z\",\n      \"activation_date\": \"2005-09-12T12:27:11.150Z\",\n      \"status\": {\n        \"id\": 4880,\n        \"description\": \"string\"\n      },\n      \"customer_org\": {\n        \"id\": 7643,\n        \"name\": \"string\",\n        \"country\": {\n          \"id\": 7748,\n          \"name\": \"string\",\n          \"country_code\": 7116,\n          \"mcc\": 1841,\n          \"iso_code\": \"string\",\n          \"latitude\": 2385.8232603938454,\n          \"longitude\": 1949.93632493091\n        }\n      },\n      \"issuer_org\": {\n        \"id\": 6478,\n        \"name\": \"string\",\n        \"country\": {\n          \"id\": 1199,\n          \"name\": \"string\",\n          \"country_code\": 8958,\n          \"mcc\": 9970,\n          \"iso_code\": \"string\",\n          \"latitude\": 6200.514224132608,\n          \"longitude\": 7014.51628424264\n        }\n      },\n      \"reseller_org\": {\n        \"id\": 1332,\n        \"name\": \"string\",\n        \"country\": {\n          \"id\": 6339,\n          \"name\": \"string\",\n          \"country_code\": 6662,\n          \"mcc\": 8307,\n          \"iso_code\": \"string\",\n          \"latitude\": 9510.84349265377,\n          \"longitude\": 1455.072647836001\n        }\n      },\n      \"endpoint\": {\n        \"id\": 5121\n      },\n      \"imsi\": \"string\",\n      \"msisdn\": \"string\",\n      \"model\": {\n        \"id\": 2171,\n        \"description\": \"string\",\n        \"memory_size\": 833,\n        \"formfactor\": {\n          \"id\": 610,\n          \"name\": \"string\"\n        },\n        \"manufacturer\": {\n          \"id\": 6333,\n          \"name\": \"string\"\n        }\n      }\n    },\n    {\n      \"id\": 9501,\n      \"iccid\": \"string\",\n      \"eid\": \"string\",\n      \"production_date\": \"1953-06-25T23:20:57.184Z\",\n      \"activation_date\": \"1985-08-29T17:45:29.494Z\",\n      \"status\": {\n        \"id\": 2813,\n        \"description\": \"string\"\n      },\n      \"customer_org\": {\n        \"id\": 4746,\n        \"name\": \"string\",\n        \"country\": {\n          \"id\": 7662,\n          \"name\": \"string\",\n          \"country_code\": 3347,\n          \"mcc\": 2259,\n          \"iso_code\": \"string\",\n          \"latitude\": 5218.057159947467,\n          \"longitude\": 3512.5614570365115\n        }\n      },\n      \"issuer_org\": {\n        \"id\": 1522,\n        \"name\": \"string\",\n        \"country\": {\n          \"id\": 1431,\n          \"name\": \"string\",\n          \"country_code\": 5001,\n          \"mcc\": 4443,\n          \"iso_code\": \"string\",\n          \"latitude\": 1093.1958440935075,\n          \"longitude\": 4104.79451093221\n        }\n      },\n      \"reseller_org\": {\n        \"id\": 6272,\n        \"name\": \"string\",\n        \"country\": {\n          \"id\": 5178,\n          \"name\": \"string\",\n          \"country_code\": 801,\n          \"mcc\": 7223,\n          \"iso_code\": \"string\",\n          \"latitude\": 1306.8621867006236,\n          \"longitude\": 7659.045869963386\n        }\n      },\n      \"endpoint\": {\n        \"id\": 5123\n      },\n      \"imsi\": \"string\",\n      \"msisdn\": \"string\",\n      \"model\": {\n        \"id\": 1967,\n        \"description\": \"string\",\n        \"memory_size\": 690,\n        \"formfactor\": {\n          \"id\": 6382,\n          \"name\": \"string\"\n        },\n        \"manufacturer\": {\n          \"id\": 97,\n          \"name\": \"string\"\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b708a61f-6a19-4481-8c5c-41dffbc837a5",
+              "name": "Could not register the given batch. Reasons may be:\n* Could find no batch with that BIC\n* Batch already registered\n* Batch contains SIMs registered to other organisations\n* Attempted to register to `Factory Test` status when it is disabled in tariff plan\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sim_batch",
+                    "bic",
+                    ":bic"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bic",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sim_status\": {\n    \"id\": 5083,\n    \"description\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://cdn.emnify.net",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e6f0a1dc-5624-4e2d-8e16-77e1d4e3d868",
+    "name": "emnify REST subpackage_applicationTokens subpackage_sim API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.\n\nSource: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.\n\nContact Support:\n Name: emnify Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,351 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "emnify REST subpackage_applicationTokens subpackage_sim API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_sim",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List SIMs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/sim",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Filter parameter in `<field>:<criteria>` format.\nExpects a comma-separated list from the allowed fields:\n\n* `id`\n* `issuer_org`\n* `reseller_org`\n* `customer_org`\n* `iccid`\n* `iccid_with_luhn`\n* `status`\n* `production_date`\n* `imsi`\n* `msisdn`\n* `endpoint`\n* `model`\n* `eid`\n* `satellite_capable`\n"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort parameter in `<operator><field>` format.\nSort properties according to a comma-separated list from the allowed fields:\n\n* `id`\n* `issuer_org`\n* `reseller_org`\n* `customer_org`\n* `iccid`\n* `eid`\n* `status`\n* `production_date`\n* `endpoint`\n* `model`\n\nIf no sorting options are specified, the response will be sorted by `id`.\n\nSupported operators:\n* `-`: Descending order\n* `+`: Ascending order\n\nThe response will be shown in ascending order if no operator is specified.\n"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page number"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Defines the number of items per page (max. 2500)"
+              }
+            ]
+          },
+          "docs": "Returns a list of SIMs filtered, sorted, and paged according to query parameters."
+        },
+        {
+          "info": {
+            "name": "Migrate SIMs between Workspaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/sim/migration/workspace",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Migrate SIMs from one Workspace to another.\n\n## Requirements\n\n- The calling user must have **Administrator** permissions on both the target and source Workspaces\n- The target Workspace must be an enterprise Workspace\n- Only 500 SIMs can be migrated per request\n- You must provide exactly one of: `sims`, `iccids`, or `iccid_range`\n\n<Note>\n  This endpoint requires authentication with [user credentials](/developers/auth/user-credentials), as application tokens are scoped to a single Workspace.\n</Not"
+        },
+        {
+          "info": {
+            "name": "Bulk delete SIMs",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/sim/multi",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deletes multiple SIMs based on the provided list of IDs.\n\n<Error>\n  Deleted SIMs cannot be recovered.\n</Error>\n"
+        },
+        {
+          "info": {
+            "name": "List SIM statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/sim/status",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns a list of available [SIM statuses](/developers/reference/sim#sim-statuses).\n"
+        },
+        {
+          "info": {
+            "name": "SIM details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/sim/:sim_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sim_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves SIM details for a given ID."
+        },
+        {
+          "info": {
+            "name": "Update a SIM",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://cdn.emnify.net/api/v1/sim/:sim_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sim_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a SIM resource.\n\nYou can provide the following fields with this request:\n* `issuer_org` (Object optional) - change to a direct child organization of the appropriate type\n* `reseller_org` (Object optional) - change to a direct child organization of the appropriate type or empty (`\"reseller_org\": { \"id\": null }` or `\"reseller_org\": {}`)\n* `customer_org` (Object optional) - change to own organization or a direct child organization of type \"Enterprise\" or empty (`\"customer_org\": { \"id\": null"
+        },
+        {
+          "info": {
+            "name": "Delete a SIM",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/sim/:sim_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sim_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Error>\n  Deleted SIMs cannot be recovered.\n</Error>\n\nDeletes a SIM.\n\nThe following restrictions apply when deleting SIMs:\n* SIMs with an assigned endpoint cannot be deleted.\n* Resellers cannot delete SIMs they have sold.\n"
+        },
+        {
+          "info": {
+            "name": "List SIM events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/sim/:sim_id/event",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sim_id",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of a SIM"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page number"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Defines the number of items per page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort properties according to a comma separated list of accepted fields. Valid fields are:\n\n* `id` - (**event id**)\n* `timestamp` - (**event timestamp**)\n* `source` - (**event source**)\n* `severity` - (**event severity**)\n* `alert` - (**alert status**)\n* `organisation` - (**organisation name**)\n* `user` - (**user id**)\n* `endpoint` - (**endpoint name**)\n* `tags` - (**endpoint tags**)\n* `ip_address` - (**endpoint ip_address**)\n* `iccid` - (**sim iccid**)\n* `imsi` - (**sim imsi**)\n* `type` - (**event type**)\n"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Filter parameter in `<filter>:<value>` format.\nMultiple filters must be a comma-separated list of the following fields:\n\n* `from` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, **only valid with until**)\n* `until` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, **only valid with from**)\n* `type` (**event_type**, numerical)\n* `source` (**event_type**, numerical, e.g. 0 = Network), 1 = Policy Control, 2 = API)\n* `severity` (**event_severity**, numerical, e.g. 0 = Info, 1 = Warn), 2 = Critical)\n* `alert` (boolean, e.g. true, false)\n* `description` (**event description**, string)\n* `organisation` (**organisation name**, string)\n* `user` (**user name**, string)\n* `endpoint` (**endpoint name**, string)\n* `tags` (**endpoint tags**, string)\n* `ip_address` (**endpoint IP address**, valid IPv4/IPv6 address)\n* `imei` (**endpoint imei**, numerical string)\n* `iccid` (**sim iccid**, numerical string)\n* `imsi` (**sim imsi**, numerical string)\n* `timestamp` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, for querying events of 1 day, deprecated in future)\n* `iccid_with_luhn` (**sim iccid with Luhn**, numerical string)\n* `network` (**endpoint network**, string, e.g. Telekom)\n* `rat` (**event pdp context rat type**, numerical string, e.g. 6)\n* `country` (**endpoint country**, string, e.g. Germany)\n\nSome filters can accept up to 6 values which must be separated by the pipe symbol (`|`) or url-encoded as (`%7C`):\n\n* `iccid` (q: iccid:1234567890123456789|8988303000123456789)\n* `iccid_with_luhn` (q: iccid:12345678901234567891|89883030001234567891)\n* `endpoint` (q: endpoint:example_endpoint_name|another_endpoint_name)\n* `type` (q: type:example_event_type|another_event_type)\n* `network` (q: network:example_network|another_network)\n* `rat` (q: rat:example_rat|another_rat)\n* `country` (q: country:example_country|another_country)\n"
+              }
+            ]
+          },
+          "docs": "Returns the list of events, filtered, sorted and paged according to query parameters.\n\n<Error>\n  This API endpoint deviates from the specified conventions and may not return the same HTTP Codes as the higher layer call (`/api/v1/sim/{sim_id}`).\n\n  In case the requested `{sim_id}` doesn't exist or is not accessible for the user, **HTTP 200** will be returned with empty **[]** as long as the provided `{sim_id}` is a number and all parameters are valid.\n\n  Please take that into consideration when b"
+        },
+        {
+          "info": {
+            "name": "SIM usage and cost statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/sim/:sim_id/stats",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sim_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Warning>\n  You can only retrieve data traffic costs for organizations without multi-inclusive volumes.\n</Warning>\n\nRetrieves SIM usage and cost statistics for a given ID.\nUsage statistics are sorted by `data` and `sms`.\n\nReturns statistics from the following periods:\n* `last_month`: Previous billing month, from the first to last day (for example, February 1-29, 2024, when you send the request in March 2024).\n* `current_month`: Current month, with statistics calculated up to and including the da"
+        },
+        {
+          "info": {
+            "name": "Daily SIM usage statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/sim/:sim_id/stats/daily",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sim_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Warning>\n  Data traffic cost statistics (`cost` field in the `data` object) have been deprecated.\n</Warning>\n\nRetrieves SIM usage statistics accumulated per day.\nBy default, the response includes statistics for the current month.\n\n`start_date` and an `end_date` can be provided as query parameters to retrieve statistics for a specific time frame.\n\nExample request: `/api/v1/sim/123/stats/daily?end_date=2019-03-21&start_date=2019-03-01`\n"
+        },
+        {
+          "info": {
+            "name": "Validate SIM batch by BIC",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/sim_batch/bic/:bic",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bic",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Checks the given BIC code and the contained SIMs if they can be registered.\n"
+        },
+        {
+          "info": {
+            "name": "Register a given batch by BIC",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://cdn.emnify.net/api/v1/sim_batch/bic/:bic",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bic",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Registers the given SIM batch, assigns all SIMs to the organisation,\nand sets the status of all contained SIMs to the given value.\n\nIf the `factory_test_mode_allowed` flag is set to true on the tariff plan assignment\nor it is enabled in the tariff plan, the SIM batch can be also registered with an initial\nstatus of `4 = Factory Test`, thus setting all of the contained SIMs to factory test\nstatus. In turn, the `activation_date` of these SIMs will not be set yet, but when the factory\ntest volume i"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

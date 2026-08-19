@@ -1,0 +1,1495 @@
+{
+  "item": [
+    {
+      "id": "34017b84-7254-446a-bac0-aff0e7139d83",
+      "name": "subpackage_cloudConnect",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "381f2fc2-ce8a-4abb-a8e4-14d746f6c7a6",
+          "name": "List all Cloud Connect attachments of an organization",
+          "request": {
+            "name": "List all Cloud Connect attachments of an organization",
+            "description": {
+              "content": "Lists all Cloud Connect attachments of the logged in organisation if it is an Enterprise. For Master organisations\nit lists all attachments of the direct child organisations. Deleted attachments are left out by default.\n\nAdditionally the attachments can be filtered by status and type.\nMaster organisations can also filter by organisation ID of their direct child organisations.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "cnc",
+                "breakout"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Numerical ID of the Cloud Connect attachment status\n\n* `1` - Pending Customer Action\n* `2` - Pending AWS Activation\n* `3` - Pending EGN Activation\n* `4` - Pending CRG Activation\n* `5` - Active\n* `6` - Deactivation Pending\n* `7` - Deactivated\n* `8` - Rolling Back\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Numerical ID of the Cloud Connect attachment type\n\n* `1` - Transit Gateway\n* `2` - IPSec VPN\n* `3` - IPSec VPN BGP\n* `4` - IPSec VPN BGP High Availability\n* `5` - Direct Connect\n* `6` - Shared\n* `7` - Transit Gateway (Classic)\n* `8` - IPSec VPN (Classic)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "organisation",
+                  "value": "<double>",
+                  "description": "Numerical ID of an Organization"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "85d737b5-9999-4e29-8560-0d2ef173f93a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cnc",
+                    "breakout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "5"
+                    },
+                    {
+                      "key": "type",
+                      "value": "4"
+                    },
+                    {
+                      "key": "organisation",
+                      "value": "<double>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 4473,\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"user_id\": 3000,\n    \"creation_date\": \"string\",\n    \"accept_attachment_expiry_date\": \"string\",\n    \"termination_date\": \"string\",\n    \"aws_transit_gateway_attachment_id\": \"string\",\n    \"aws_vpn_connection_id\": \"string\",\n    \"status\": {\n      \"id\": 5169.051374881196,\n      \"description\": \"string\"\n    },\n    \"type\": {\n      \"id\": 8566.750992191068,\n      \"description\": \"string\"\n    },\n    \"region\": \"string\"\n  },\n  {\n    \"id\": 7670,\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"user_id\": 3680,\n    \"creation_date\": \"string\",\n    \"accept_attachment_expiry_date\": \"string\",\n    \"termination_date\": \"string\",\n    \"aws_transit_gateway_attachment_id\": \"string\",\n    \"aws_vpn_connection_id\": \"string\",\n    \"status\": {\n      \"id\": 9114.570070114261,\n      \"description\": \"string\"\n    },\n    \"type\": {\n      \"id\": 7885.169598904056,\n      \"description\": \"string\"\n    },\n    \"region\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "301bc113-f979-4bd8-a4c0-3e52c42b385a",
+              "name": "Authentication token is valid, but user has no access permissions to the request resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cnc",
+                    "breakout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "5"
+                    },
+                    {
+                      "key": "type",
+                      "value": "4"
+                    },
+                    {
+                      "key": "organisation",
+                      "value": "<double>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5e0c4b00-feef-42ac-93bf-005a4cfe955c",
+          "name": "Create a Cloud Connect attachment via Transit Gateway",
+          "request": {
+            "name": "Create a Cloud Connect attachment via Transit Gateway",
+            "description": {
+              "content": "Creates a Transit Gateway breakout towards the customer AWS account.\n\nAfter the creation the following steps have to be made from the customer's AWS account:\n\n1. Accept the resource share about the 'CloudConnect' TransitGateway\n2. Create a Transit Gateway Attachment to the own VPC with the services to connect to\n\nMore Information about this can be found on the Cloud Connect Knowledge Base article.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "cnc",
+                "breakout",
+                "tgw"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"vpc_cidr\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"region\": \"<string>\",\n  \"aws_account_id\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6fff27ff-230b-4054-b9c1-80a2157a9254",
+              "name": "Response to a POST that results in a creation, usually will return a Location header pointing to the location of the new resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cnc",
+                    "breakout",
+                    "tgw"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"1\",\n  \"name\": \"<string>\",\n  \"vpc_cidr\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"region\": \"<string>\",\n  \"aws_account_id\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ec2e978-d2c9-4bca-b8af-3448fdaee215",
+              "name": "The request is malformed, e.g. the body cannot be parsed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cnc",
+                    "breakout",
+                    "tgw"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"1\",\n  \"name\": \"<string>\",\n  \"vpc_cidr\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"region\": \"<string>\",\n  \"aws_account_id\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f839237-2f8b-4d33-a83d-4fdda1981c30",
+              "name": "Authentication token is valid, but user has no access permissions to the request resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cnc",
+                    "breakout",
+                    "tgw"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"1\",\n  \"name\": \"<string>\",\n  \"vpc_cidr\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"region\": \"<string>\",\n  \"aws_account_id\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "66b09dbf-39aa-4e5f-ad4a-aed1161ea6ae",
+          "name": "Create a Cloud Connect attachment via IPSec VPN",
+          "request": {
+            "name": "Create a Cloud Connect attachment via IPSec VPN",
+            "description": {
+              "content": "Creates a Cloud Connect attachment via a specified VPN server.\nCurrently two attachment types are available:\n\n- **Static VPN** (type `2`): Basic IPSec VPN connection\n- **Dynamic VPN with BGP** (type `3`): IPSec VPN with BGP routing.\n  Requires `asn` (Autonomous System Number), otherwise dynamic routing is disabled.\n  Optionally accepts `inside_cidr` for BGP tunnel interfaces.\n\nThe `on_prem_cidr` parameter specifies the CIDR ranges of your backend network (up to 3).\nThe `public_ip` is the public IP address of your VPN server.\n\nA `psk` (Pre-Shared Key) can be configured with 8-64 alphanumeric characters, periods (`.`), and underscores (`_`).\nIt must not begin with `0`.\nIf left empty, it generates automatically and can be retrieved via [`GET /api/v1/cnc/breakout/{cloudconnect_attachment_id}`](/developers/api/cloud-connect/get-cloud-connect-attachment-by-id).\n\n<Success>\n  The created connection is available within 3-5 minutes.\n</Success>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "cnc",
+                "breakout",
+                "vpn"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": {\n    \"id\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"public_ip\": \"<string>\",\n  \"on_prem_cidr\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"region\": \"<string>\",\n  \"psk\": \"<string>\",\n  \"asn\": \"<integer>\",\n  \"inside_cidr\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2f558b1d-5f53-4fc2-ae5a-973906a54c17",
+              "name": "Attachment created successfully.\nThe `Location` header contains the URL of the new resource.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cnc",
+                    "breakout",
+                    "vpn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": {\n    \"id\": \"2\"\n  },\n  \"name\": \"<string>\",\n  \"public_ip\": \"<string>\",\n  \"on_prem_cidr\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"region\": \"<string>\",\n  \"psk\": \"<string>\",\n  \"asn\": \"<integer>\",\n  \"inside_cidr\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5eed4910-06bd-4f27-ae01-b99bc59c3dd4",
+              "name": "The request body is malformed or missing required fields.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cnc",
+                    "breakout",
+                    "vpn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": {\n    \"id\": \"2\"\n  },\n  \"name\": \"<string>\",\n  \"public_ip\": \"<string>\",\n  \"on_prem_cidr\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"region\": \"<string>\",\n  \"psk\": \"<string>\",\n  \"asn\": \"<integer>\",\n  \"inside_cidr\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "28f70475-0a41-42ef-8e6f-7bcd16bc1745",
+              "name": "Your authentication token is valid, but you don't have permission to access the requested resource.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cnc",
+                    "breakout",
+                    "vpn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": {\n    \"id\": \"2\"\n  },\n  \"name\": \"<string>\",\n  \"public_ip\": \"<string>\",\n  \"on_prem_cidr\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"region\": \"<string>\",\n  \"psk\": \"<string>\",\n  \"asn\": \"<integer>\",\n  \"inside_cidr\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9fa4981a-134c-4417-9f18-66f0d2af2a45",
+          "name": "View details of a Cloud Connect attachment",
+          "request": {
+            "name": "View details of a Cloud Connect attachment",
+            "description": {
+              "content": "Displays the details including configured CIDR blocks of a Cloud Connect Attachment.\n\nFor active IPSec VPN attachments, the tunnel information (public IP, outisde address, inside CIDR, PSK, ASN)\nincluding metrics over the last hour (tunnel state, bytes in/out) will be displayed as well.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "cnc",
+                "breakout",
+                ":cloudconnect_attachment_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cloudconnect_attachment_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9acaa86e-51b7-4b4e-bc86-3c84aaa0bb83",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cnc",
+                    "breakout",
+                    ":cloudconnect_attachment_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cloudconnect_attachment_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 3359,\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"user_id\": 9795,\n    \"creation_date\": \"string\",\n    \"accept_attachment_expiry_date\": \"string\",\n    \"termination_date\": \"string\",\n    \"aws_transit_gateway_attachment_id\": \"string\",\n    \"aws_vpn_connection_id\": \"string\",\n    \"status\": {\n      \"id\": 4305.897876859773,\n      \"description\": \"string\"\n    },\n    \"type\": {\n      \"id\": 6417.523835208989,\n      \"description\": \"string\"\n    },\n    \"region\": \"string\",\n    \"tunnel_information\": {\n      \"outside_address\": \"string\",\n      \"inside_cidr\": \"string\",\n      \"metrics\": {\n        \"tunnel_state\": \"string\",\n        \"bytes_in\": {\n          \"key_0\": 9280.407510397252\n        },\n        \"bytes_out\": {\n          \"key_0\": 7904.928142824303,\n          \"key_1\": 5121.718550497244\n        }\n      },\n      \"asn\": 4397.226610304167,\n      \"public_ip\": \"string\"\n    }\n  },\n  {\n    \"id\": 7500,\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"user_id\": 9963,\n    \"creation_date\": \"string\",\n    \"accept_attachment_expiry_date\": \"string\",\n    \"termination_date\": \"string\",\n    \"aws_transit_gateway_attachment_id\": \"string\",\n    \"aws_vpn_connection_id\": \"string\",\n    \"status\": {\n      \"id\": 6283.512402435598,\n      \"description\": \"string\"\n    },\n    \"type\": {\n      \"id\": 4299.997977621012,\n      \"description\": \"string\"\n    },\n    \"region\": \"string\",\n    \"tunnel_information\": {\n      \"outside_address\": \"string\",\n      \"inside_cidr\": \"string\",\n      \"metrics\": {\n        \"tunnel_state\": \"string\",\n        \"bytes_in\": {\n          \"key_0\": 3956.9884168633694\n        },\n        \"bytes_out\": {\n          \"key_0\": 2491.5417072051105,\n          \"key_1\": 1920.9203166548716,\n          \"key_2\": 1073.183239384251,\n          \"key_3\": 2497.7794864444922\n        }\n      },\n      \"asn\": 1228.6593869250473,\n      \"public_ip\": \"string\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7af2a7cb-72d4-4c2a-b7f4-8933f3428a96",
+          "name": "Delete a specific Cloud Connect attachment",
+          "request": {
+            "name": "Delete a specific Cloud Connect attachment",
+            "description": {
+              "content": "Deletes the specified Cloud Connect attachment.\n\nAttachments cannot be deleted if they are in the state `7 (Deactivated)` or `8 (Rolling Back)` or if they are Classic attachments.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "cnc",
+                "breakout",
+                ":cloudconnect_attachment_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cloudconnect_attachment_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5bc3b2c5-6101-4e5b-953d-2d9715a2b1a7",
+              "name": "Response to a successful GET, also used for a POST if it does not result in a creation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cnc",
+                    "breakout",
+                    ":cloudconnect_attachment_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cloudconnect_attachment_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e640c7e5-290e-43fd-8a2b-83642797a927",
+              "name": "The request is malformed, e.g. the body cannot be parsed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cnc",
+                    "breakout",
+                    ":cloudconnect_attachment_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cloudconnect_attachment_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f402a023-13b7-45c1-8c98-18127f9dc2fa",
+              "name": "Authentication token is valid, but user has no access permissions to the request resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cnc",
+                    "breakout",
+                    ":cloudconnect_attachment_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cloudconnect_attachment_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "370129cc-83cd-43cd-8e4b-6d1aa1eb83c0",
+          "name": "Retry creation of an expired TGW breakout",
+          "request": {
+            "name": "Retry creation of an expired TGW breakout",
+            "description": {
+              "content": "Retries the creation of a Transit Gateway breakout where the accept attachment state has expired, meaning the\nattachment on the customer's side has not been created in time.\n\nRetry is only allowed if:\n- The breakout is of type `Transit Gateway (type_id: 1)`\n- The breakout is in status `Pending AWS Activation (status_id: 2)`\n- The accept attachment state has expired (7 days after creation)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "cnc",
+                "breakout",
+                ":cloudconnect_attachment_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cloudconnect_attachment_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f7445b3b-0283-4ebc-8728-8f3834632a7a",
+              "name": "Response to a successful GET, also used for a POST if it does not result in a creation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cnc",
+                    "breakout",
+                    ":cloudconnect_attachment_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cloudconnect_attachment_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8bd75ecb-e7d7-4d2d-8f7e-6ea721bdd4f7",
+              "name": "A non-existent resource is requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cnc",
+                    "breakout",
+                    ":cloudconnect_attachment_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cloudconnect_attachment_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "52681a8e-30e4-40c0-8d90-58a290aa3097",
+          "name": "List Cloud Connect breakout types",
+          "request": {
+            "name": "List Cloud Connect breakout types",
+            "description": {
+              "content": "Lists all Cloud Connect breakout types.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "cnc",
+                "breakout_type"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0227f2ff-7d6c-456c-b62f-381c03523520",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cnc",
+                    "breakout_type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 3746.1777146344343,\n    \"description\": \"string\"\n  },\n  {\n    \"id\": 7423.072667773968,\n    \"description\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ca419c6e-7ddb-49bd-96fc-649d318aa73d",
+          "name": "Get list of available Cloud Connect regions by breakout type",
+          "request": {
+            "name": "Get list of available Cloud Connect regions by breakout type",
+            "description": {
+              "content": "Returns a list of regions available for use when creating new Cloud Connect breakouts of the selected breakout type.\n\nIf the attachment region is peered to another one, the device breakout region will also be returned.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "cnc",
+                "breakout_type",
+                ":breakout_type_id",
+                "available_region"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "breakout_type_id",
+                  "description": "(Required) ID of a Cloud Connect breakout type. Possible values can be retrieved with `GET /api/v1/cnc/breakout_type`.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0ae149f7-ce34-4c3f-b3b5-b7d5378fb997",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cnc",
+                    "breakout_type",
+                    ":breakout_type_id",
+                    "available_region"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "breakout_type_id",
+                      "description": "(Required) ID of a Cloud Connect breakout type. Possible values can be retrieved with `GET /api/v1/cnc/breakout_type`.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"attachment_region\": \"string\",\n    \"device_breakout_region\": \"string\"\n  },\n  {\n    \"attachment_region\": \"string\",\n    \"device_breakout_region\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3887904b-1500-4e3e-b748-df4b980950b1",
+          "name": "List Cloud Connect prices",
+          "request": {
+            "name": "List Cloud Connect prices",
+            "description": {
+              "content": "Returns a list of the configured monthly prices for Cloud Connect breakouts.\n\nMaster organisation, Mobile Network Operators and Resellers will get the list of prices they have configured\nfor their child organisations.\n\nEnterprise organisations will get the list of prices that apply for them.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "cnc",
+                "pricing"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c33e50a4-76ae-4908-83c0-24483bf0b9af",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cnc",
+                    "pricing"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 4062,\n    \"breakout_type_id\": 2800,\n    \"amount\": 1090.901963250971,\n    \"currency\": {\n      \"id\": 3506\n    }\n  },\n  {\n    \"id\": 1927,\n    \"breakout_type_id\": 8291,\n    \"amount\": 9582.162402937598,\n    \"currency\": {\n      \"id\": 4599\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://cdn.emnify.net",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1bd1e698-8547-4a9b-95af-a6e4104d2230",
+    "name": "emnify REST subpackage_applicationTokens subpackage_cloudConnect API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.\n\nSource: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.\n\nContact Support:\n Name: emnify Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

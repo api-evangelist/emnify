@@ -1,0 +1,359 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "emnify REST subpackage_applicationTokens subpackage_userManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_userManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List user accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/user",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page number"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Filter parameter in `<filter>:<value>` format. Multiple filters must be in the format of a comma separated list of the following fields:\n\n* `id`\n* `status`\n* `name`\n* `username`\n* `organisation`\n"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Defines the number of items per page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort parameter in `<operator><field>` format.\nExpects a comma-separated list from the allowed fields:\n\n* `id`\n* `status`\n* `name`\n* `username`\n* `organisation`\n* `created`\n"
+              }
+            ]
+          },
+          "docs": "Retrieves the collection of user accounts, filtered, sorted and paged accourding to query parameters.\n"
+        },
+        {
+          "info": {
+            "name": "Create user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/user",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a user which is *not active and has no password assigned*.\nThe URL to get the user details is provided as Location Header in the response.\n\n#### ACTIVATION\n\nUpon creation, the user account undergoes an activation process (see services below ) in which she receives an email with activation link.\nFollowing this link the user is asked to set the password and upon successful completion of this process, the account becomes active and operational.\n\nProvided fields:\n\n* `username` (String requir"
+        },
+        {
+          "info": {
+            "name": "List user roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/user/role",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieves the collection of available user roles"
+        },
+        {
+          "info": {
+            "name": "List user statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/user/status",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Provides the list of available user status (lookup)."
+        },
+        {
+          "info": {
+            "name": "Get user by ID or username",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/user/:user_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "Get a specific user by ID  provided the user is within this requesting user's organisation or the organisation's immediate child organisations.\n\n`id` may be one of:\n\n* The numeric ID of the user, e.g. \"123\". This is the top-level `id` object returned by each item in `GET /api/v1/user`\n* Username (email), e.g. \"exampleuser@org.de\". This is the top-level `username` object returned by each item in `GET /api/v1/user`\n"
+        },
+        {
+          "info": {
+            "name": "Update user by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://cdn.emnify.net/api/v1/user/:user_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Provided fields\n* `username` (String optional) - has to be user's email\n* `name` (String optional)\n* `status` (Object optional)\n* `organisation` (Object optional) - must be the current organisation or not to be provided\n\n#### Notes\n\n* Password is not provided. Separate calls provide password management.\n* The organisation is not modifiable. A user can be updated, if belonging to the same organisation as the requesting user,\nor to an organisation which is a direct child of the requesting user's o"
+        },
+        {
+          "info": {
+            "name": "Delete user by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/user/:user_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Error>\n  **This call is deprecated.**\n  Please use DELETE `/api/v2/user/:id` instead.\n</Error>\n\n<Info>\n  A user can be deleted, if belonging to the same organization as the requesting user, or to an organization which is a direct child of the requesting user's organization.\n</Info>\n"
+        },
+        {
+          "info": {
+            "name": "List user events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/user/:user_id/event",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page number"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Defines the number of items per page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort properties according to a comma separated list of accepted fields. Valid fields are:\n\n* `id` - (**event id**)\n* `timestamp` - (**event timestamp**)\n* `source` - (**event source**)\n* `severity` - (**event severity**)\n* `alert` - (**alert status**)\n* `organisation` - (**organisation name**)\n* `user` - (**user id**)\n* `endpoint` - (**endpoint name**)\n* `tags` - (**endpoint tags**)\n* `ip_address` - (**endpoint ip_address**)\n* `iccid` - (**sim iccid**)\n* `imsi` - (**sim imsi**)\n* `type` - (**event type**)\n"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Filter parameter in `<filter>:<value>` format.\nMultiple filters must be a comma-separated list of the following fields:\n\n* `from` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, **only valid with until**)\n* `until` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, **only valid with from**)\n* `type` (**event_type**, numerical)\n* `source` (**event_type**, numerical, e.g. 0 = Network), 1 = Policy Control, 2 = API)\n* `severity` (**event_severity**, numerical, e.g. 0 = Info, 1 = Warn), 2 = Critical)\n* `alert` (boolean, e.g. true, false)\n* `description` (**event description**, string)\n* `organisation` (**organisation name**, string)\n* `user` (**user name**, string)\n* `endpoint` (**endpoint name**, string)\n* `tags` (**endpoint tags**, string)\n* `ip_address` (**endpoint IP address**, valid IPv4/IPv6 address)\n* `imei` (**endpoint imei**, numerical string)\n* `iccid` (**sim iccid**, numerical string)\n* `imsi` (**sim imsi**, numerical string)\n* `timestamp` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, for querying events of 1 day, deprecated in future)\n* `iccid_with_luhn` (**sim iccid with Luhn**, numerical string)\n* `network` (**endpoint network**, string, e.g. Telekom)\n* `rat` (**event pdp context rat type**, numerical string, e.g. 6)\n* `country` (**endpoint country**, string, e.g. Germany)\n\nSome filters can accept up to 6 values which must be separated by the pipe symbol (`|`) or url-encoded as (`%7C`):\n\n* `iccid` (q: iccid:1234567890123456789|8988303000123456789)\n* `iccid_with_luhn` (q: iccid:12345678901234567891|89883030001234567891)\n* `endpoint` (q: endpoint:example_endpoint_name|another_endpoint_name)\n* `type` (q: type:example_event_type|another_event_type)\n* `network` (q: network:example_network|another_network)\n* `rat` (q: rat:example_rat|another_rat)\n* `country` (q: country:example_country|another_country)\n"
+              }
+            ]
+          },
+          "docs": "Returns the list of events, filtered, sorted and paged according to query parameters.\n\nOnly an administrator or observer may be allowed to see events of other users, provided they belong to an organisation he/she has access to.\n\nAny user can retrieve their own events at `/api/v1/user/my/event`.\n\n<Error>\n  This API endpoint deviates from the specified conventions and may not return the same HTTP Codes as the higher layer call (`/api/v1/user/{user_id|my}`).\n\n  In case the requested `{user_id}` doe"
+        },
+        {
+          "info": {
+            "name": "List user role permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/user/:user_id/role/permission",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "Role permissions available to this user.\n\nOnly an administrator or observer is allowed to see the role permissions of other users, provided they belong to an organisation he/she has access to.<br/>\n\nAny user can also retrieve one's own role permissions at:\n`/api/v1/user/my/role/permission`.\n"
+        },
+        {
+          "info": {
+            "name": "Assign role to user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://cdn.emnify.net/api/v1/user/:user_id/role/:role_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "role_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Role is assigned to this user."
+        },
+        {
+          "info": {
+            "name": "Delete user role",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/user/:user_id/role/:role_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "role_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Release a Role from association with this user.\n\n<Info>\n  A role can only be removed if it's not the last role of this user.\n</Info>\n"
+        },
+        {
+          "info": {
+            "name": "Create support access token for given user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v2/user/:user_id/support_token",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a bearer token that can be used to acces the portal as the target user. Additionally\nadmin or observer role can be selected. The role will not be applied to the user, only to the token.\n\nThe access can be made through cannel-partner hierarchies as well.\nAn event will be generated on the accessed organisation.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

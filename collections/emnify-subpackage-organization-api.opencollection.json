@@ -1,0 +1,262 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "emnify REST subpackage_applicationTokens subpackage_organization API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_organization",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "My organization details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/organisation/my",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "You can retrieve details about your own organisation"
+        },
+        {
+          "info": {
+            "name": "List organization statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/organisation/status",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Provides a list of available organisation status (lookup)."
+        },
+        {
+          "info": {
+            "name": "Get list of active organization inclusive volumes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/organisation/:org_id_or_my/inclusive_volume/active",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id_or_my",
+                "value": "",
+                "type": "path",
+                "description": "Numerical ID of an Organization or the string `my` to use the currently authorized organisation"
+              }
+            ]
+          },
+          "docs": "Returns of a list of inclusive volumes that are currently active in the current billing period for the selected organisation.\nThis will not inclusive volumes that are already expired or have the start date set for a future billing period.\n\nOnly inclusive volumes for the own organisation or direct child organisations are accessible.\n"
+        },
+        {
+          "info": {
+            "name": "Assign a ratezone inclusive volume to an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://cdn.emnify.net/api/v1/organisation/:org_id_or_my/inclusive_volume/:inclusive_volume_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id_or_my",
+                "value": "",
+                "type": "path",
+                "description": "Numerical ID of an Organization or the string `my` to use the currently authorized organisation"
+              },
+              {
+                "name": "inclusive_volume_id",
+                "value": "",
+                "type": "path",
+                "description": "Numerical ID of a ratezone inclusive volume.\nCan be retrieved using `GET /api/v1/tariff/{tariff_id}/ratezone/{ratezone_id}/inclusive_volume`.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Assigns a pre-configured ratezone inclusive volume to the specified organization.\n\nThis can be done in self-service as well as for direct child organizations.\nOnly postpaid customers can assign\ninclusive volumes in self-service, while parent organizations can assign inclusive volumes for both postpaid and prepaid child organizations.\nThe inclusive volume is charged and calculated against traffic charges accordingly in every bill\nthat is refreshed from that point on.\nInclusive volume is counted p"
+        },
+        {
+          "info": {
+            "name": "Monthly organization traffic and cost statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/organisation/:org_id_or_my/stats",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id_or_my",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves traffic and cost statistics for the selected organization.\n\nTraffic statistics accumulate for the `current_month` and `last_month` of the selected organization and all child organizations.\nAll other returned values (SIM statistics, user counts, etc.) are only for the selected organization.\n"
+        },
+        {
+          "info": {
+            "name": "Daily organization traffic and cost statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/organisation/:org_id_or_my/stats/daily",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id_or_my",
+                "value": "",
+                "type": "path",
+                "description": "Numerical ID of an organization or the string `my` to use the currently authorized organization.\n"
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Filters results to data collected on or after this date.\nIf `end_date` isn't specified, the response includes data through the end of the selected month.\n"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "Filters results to data collected before this date.\nMust be used with `start_date`.\n"
+              }
+            ]
+          },
+          "docs": "Retrieves traffic and cost statistics for the selected organization and all child organizations, accumulated per day.\n\n<Info>\n  By default, this call returns statistics for the current month.\n</Info>\n"
+        },
+        {
+          "info": {
+            "name": "Hourly organization traffic statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/organisation/:org_id_or_my/stats/hourly",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id_or_my",
+                "value": "",
+                "type": "path",
+                "description": "Numerical ID of an organization or the string `my` to use the currently authorized organization.\n"
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Filters results to data collected on or after this timestamp.\nIf not specified, the response includes data from the past three hours up to the current time.\n"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "Filters results to data collected before this timestamp.\nMust be used with `start_date`.\nIf not specified, defaults to one hour after the current time.\n"
+              }
+            ]
+          },
+          "docs": "Retrieves traffic statistics for the selected organization and all child organizations, accumulated per hour.\n\n<Info>\n  By default, this call returns statistics for the last three hours.\n</Info>\n"
+        },
+        {
+          "info": {
+            "name": "Update assigned tariff",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://cdn.emnify.net/api/v1/organisation/:org_id/tariff",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Numerical ID of an organization"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Allows an organisation to change their assigned tariff.\n\nThe following restrictions apply:\n* The organisation must not have more than one tariff assigned.\n* The tariff can be changed only for the own organisation and direct child organisations. The organisation status must be \"ACTIVE\".\n* If performing the change in self-service, the organisation needs to be in evaluation. Parent organisations are allowed to change the tariffs of production organisations.\n* The selected tariff must be active, vis"
+        },
+        {
+          "info": {
+            "name": "Organization usage and costs statistics per day for the current month",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/stats/daily",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieve usage and costs statistics for the currently logged in organization and all child organizations, accumulated per days from beginning of the month until today.\n\n<Info>\n  Data traffic costs aren't returned for enterprise organizations with inclusive volume.\n</Info>\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

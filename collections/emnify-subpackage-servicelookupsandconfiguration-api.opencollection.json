@@ -1,0 +1,145 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "emnify REST subpackage_applicationTokens subpackage_serviceLookupsAndConfiguration API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_serviceLookupsAndConfiguration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List DNS configs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/dns",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieves a list of DNS configurations.\nDNS settings can be applied to a service profile and endpoints which use this service profile will have the associated DNS settings applied.\n"
+        },
+        {
+          "info": {
+            "name": "Create DNS config",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/dns",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a DNS configuration object. The DNS config can be applied to a service profile and all endpoints which use that service profile will have the associated DNS settings applied.\nDNS changes are instantly applied to any **new PDP context**.\nConnected devices with previously established PDPs will continue to use the previous nameserver config until the next time they reconnect.\n\nPrimary and secondary nameservers and IP version (`4` for IPV4 or `6` for IPV6) must be specified with this request"
+        },
+        {
+          "info": {
+            "name": "Delete DNS config",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/dns/:dns_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "dns_id",
+                "value": "",
+                "type": "path",
+                "description": "DNS configuration ID"
+              }
+            ]
+          },
+          "docs": "Delete a DNS configuration object by ID.\n\n<Note>\n  A DNS config object cannot be deleted if it is in use by at least one Service Profile.\n</Note>\n"
+        },
+        {
+          "info": {
+            "name": "List services",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/service",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieves a collection of available services. Services are read only objects.\n\nService objects contain expanded traffic limit nested objects.\n"
+        },
+        {
+          "info": {
+            "name": "Get service SMS limit",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/service/:service_id/traffic_limit",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "service_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "SMS limits are system configuration parameters defined for a single service.\nSMS limits do not have direct effect, but have to be explicitly assigned to an endpoint or a service profile.\n"
+        },
+        {
+          "info": {
+            "name": "List traffic limits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/traffic_limit",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieves a list of available traffic limits."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

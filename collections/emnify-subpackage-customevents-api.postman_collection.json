@@ -1,0 +1,662 @@
+{
+  "item": [
+    {
+      "id": "a5efa926-3088-4bb9-a61d-4586f291dfc2",
+      "name": "subpackage_customEvents",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f9140639-1e7a-4013-90dc-6967f28bd617",
+          "name": "List custom events",
+          "request": {
+            "name": "List custom events",
+            "description": {
+              "content": "Returns a list of all available custom events and their supported targeting options.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "event",
+                "custom",
+                "configuration"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6aa46323-2fe6-4ac9-9927-5bcc3129470b",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "event",
+                    "custom",
+                    "configuration"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"organisation\": {\n      \"id\": 966.0032722264289\n    },\n    \"template\": {\n      \"id\": 521.3821446032896\n    },\n    \"configuration_properties\": [\n      {\n        \"property\": \"string\",\n        \"value\": \"string\",\n        \"value_array\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"property\": \"string\",\n        \"value\": \"string\",\n        \"value_array\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ],\n    \"name\": \"string\",\n    \"id\": \"string\",\n    \"supportedTargetingParameters\": [\n      \"string\",\n      \"string\"\n    ],\n    \"supportedActions\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  {\n    \"organisation\": {\n      \"id\": 1796.7344011252117\n    },\n    \"template\": {\n      \"id\": 8873.851572088844\n    },\n    \"configuration_properties\": [\n      {\n        \"property\": \"string\",\n        \"value\": \"string\",\n        \"value_array\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"property\": \"string\",\n        \"value\": \"string\",\n        \"value_array\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ],\n    \"name\": \"string\",\n    \"id\": \"string\",\n    \"supportedTargetingParameters\": [\n      \"string\",\n      \"string\"\n    ],\n    \"supportedActions\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1b172890-fd94-4c0a-bc43-f753e388f81d",
+          "name": "Deploy custom event",
+          "request": {
+            "name": "Deploy custom event",
+            "description": {
+              "content": "Deploys a custom event with the specified configuration.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "event",
+                "custom",
+                "configuration"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"organisation\": {\n    \"id\": \"<double>\"\n  },\n  \"template\": {\n    \"id\": \"<double>\"\n  },\n  \"configuration_properties\": [\n    {\n      \"property\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_array\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"property\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_array\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2e2f2f8f-9567-48f4-9ac3-77fe6ee92551",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "event",
+                    "custom",
+                    "configuration"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organisation\": {\n    \"id\": 7326.520456407745\n  },\n  \"template\": {\n    \"id\": 2159.3908855782875\n  },\n  \"configuration_properties\": [\n    {\n      \"property\": \"string\",\n      \"value\": \"string\",\n      \"value_array\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"property\": \"string\",\n      \"value\": \"string\",\n      \"value_array\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"organisation\": {\n    \"id\": 5615.6673765726355\n  },\n  \"template\": {\n    \"id\": 5695.985770195152\n  },\n  \"configuration_properties\": [\n    {\n      \"property\": \"string\",\n      \"value\": \"string\",\n      \"value_array\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"property\": \"string\",\n      \"value\": \"string\",\n      \"value_array\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"name\": \"string\",\n  \"id\": \"string\",\n  \"supportedTargetingParameters\": [\n    \"string\",\n    \"string\"\n  ],\n  \"supportedActions\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "98ca9d8a-b355-4ef1-8de0-ab6eca3491f6",
+          "name": "Get a custom event by ID",
+          "request": {
+            "name": "Get a custom event by ID",
+            "description": {
+              "content": "Retrieves a specific custom event and its supported targeting options.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "event",
+                "custom",
+                "configuration",
+                ":custom_event_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "custom_event_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d0778ac7-5540-49ba-84c2-54c6f5952522",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "event",
+                    "custom",
+                    "configuration",
+                    ":custom_event_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "custom_event_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"organisation\": {\n    \"id\": 5615.6673765726355\n  },\n  \"template\": {\n    \"id\": 5695.985770195152\n  },\n  \"configuration_properties\": [\n    {\n      \"property\": \"string\",\n      \"value\": \"string\",\n      \"value_array\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"property\": \"string\",\n      \"value\": \"string\",\n      \"value_array\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"name\": \"string\",\n  \"id\": \"string\",\n  \"supportedTargetingParameters\": [\n    \"string\",\n    \"string\"\n  ],\n  \"supportedActions\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9d6ca0d8-f7d3-468c-b9a2-2499fd7a69ba",
+          "name": "Delete custom event",
+          "request": {
+            "name": "Delete custom event",
+            "description": {
+              "content": "Deletes a custom event with the specified configuration.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "event",
+                "custom",
+                "configuration",
+                ":custom_event_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "custom_event_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d1da8fdd-1786-4687-8a81-336e3c73d86e",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "event",
+                    "custom",
+                    "configuration",
+                    ":custom_event_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "custom_event_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a3fb1ae8-b879-4066-8c1c-3a21cc7fc66a",
+          "name": "List custom event templates",
+          "request": {
+            "name": "List custom event templates",
+            "description": {
+              "content": "Returns a list of all available custom event templates and their possible configuration parameters.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "event",
+                "custom",
+                "template"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4dbee7ac-b74d-4060-993a-384ca9413310",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "event",
+                    "custom",
+                    "template"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"parent_organisation\": {\n      \"id\": 4840.525375932976\n    },\n    \"name\": \"string\",\n    \"translationKeyName\": \"string\",\n    \"status\": \"string\",\n    \"description\": \"string\",\n    \"translationKeyDescription\": \"string\",\n    \"configuration_properties\": [\n      {\n        \"property\": \"string\",\n        \"type\": \"string\",\n        \"default\": \"string\",\n        \"required\": true,\n        \"description\": \"string\",\n        \"validators\": [\n          {\n            \"validator_type\": \"string\",\n            \"validator_value\": \"string\"\n          },\n          {\n            \"validator_type\": \"string\",\n            \"validator_value\": \"string\"\n          }\n        ]\n      },\n      {\n        \"property\": \"string\",\n        \"type\": \"string\",\n        \"default\": \"string\",\n        \"required\": false,\n        \"description\": \"string\",\n        \"validators\": [\n          {\n            \"validator_type\": \"string\",\n            \"validator_value\": \"string\"\n          },\n          {\n            \"validator_type\": \"string\",\n            \"validator_value\": \"string\"\n          }\n        ]\n      }\n    ],\n    \"supported_targeting_parameters\": [\n      {\n        \"parameter\": \"string\",\n        \"type\": \"string\",\n        \"description\": \"string\",\n        \"validators\": [\n          {\n            \"validator_type\": \"string\",\n            \"validator_value\": \"string\"\n          },\n          {\n            \"validator_type\": \"string\",\n            \"validator_value\": \"string\"\n          }\n        ]\n      },\n      {\n        \"parameter\": \"string\",\n        \"type\": \"string\",\n        \"description\": \"string\",\n        \"validators\": [\n          {\n            \"validator_type\": \"string\",\n            \"validator_value\": \"string\"\n          },\n          {\n            \"validator_type\": \"string\",\n            \"validator_value\": \"string\"\n          }\n        ]\n      }\n    ]\n  },\n  {\n    \"id\": \"string\",\n    \"parent_organisation\": {\n      \"id\": 7932.4084920923015\n    },\n    \"name\": \"string\",\n    \"translationKeyName\": \"string\",\n    \"status\": \"string\",\n    \"description\": \"string\",\n    \"translationKeyDescription\": \"string\",\n    \"configuration_properties\": [\n      {\n        \"property\": \"string\",\n        \"type\": \"string\",\n        \"default\": \"string\",\n        \"required\": true,\n        \"description\": \"string\",\n        \"validators\": [\n          {\n            \"validator_type\": \"string\",\n            \"validator_value\": \"string\"\n          },\n          {\n            \"validator_type\": \"string\",\n            \"validator_value\": \"string\"\n          }\n        ]\n      },\n      {\n        \"property\": \"string\",\n        \"type\": \"string\",\n        \"default\": \"string\",\n        \"required\": false,\n        \"description\": \"string\",\n        \"validators\": [\n          {\n            \"validator_type\": \"string\",\n            \"validator_value\": \"string\"\n          },\n          {\n            \"validator_type\": \"string\",\n            \"validator_value\": \"string\"\n          }\n        ]\n      }\n    ],\n    \"supported_targeting_parameters\": [\n      {\n        \"parameter\": \"string\",\n        \"type\": \"string\",\n        \"description\": \"string\",\n        \"validators\": [\n          {\n            \"validator_type\": \"string\",\n            \"validator_value\": \"string\"\n          },\n          {\n            \"validator_type\": \"string\",\n            \"validator_value\": \"string\"\n          }\n        ]\n      },\n      {\n        \"parameter\": \"string\",\n        \"type\": \"string\",\n        \"description\": \"string\",\n        \"validators\": [\n          {\n            \"validator_type\": \"string\",\n            \"validator_value\": \"string\"\n          },\n          {\n            \"validator_type\": \"string\",\n            \"validator_value\": \"string\"\n          }\n        ]\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d0d23626-0690-4825-a04c-772ad71c54f0",
+          "name": "Get a custom event template by ID",
+          "request": {
+            "name": "Get a custom event template by ID",
+            "description": {
+              "content": "Retrieves a specific custom event template and its possible configuration parameters.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "event",
+                "custom",
+                "template",
+                ":template_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "template_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "aeab4f56-ea49-4524-bfce-833238ba8134",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "event",
+                    "custom",
+                    "template",
+                    ":template_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "template_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"parent_organisation\": {\n    \"id\": 2932.3068452143243\n  },\n  \"name\": \"string\",\n  \"translationKeyName\": \"string\",\n  \"status\": \"string\",\n  \"description\": \"string\",\n  \"translationKeyDescription\": \"string\",\n  \"configuration_properties\": [\n    {\n      \"property\": \"string\",\n      \"type\": \"string\",\n      \"default\": \"string\",\n      \"required\": true,\n      \"description\": \"string\",\n      \"validators\": [\n        {\n          \"validator_type\": \"string\",\n          \"validator_value\": \"string\"\n        },\n        {\n          \"validator_type\": \"string\",\n          \"validator_value\": \"string\"\n        }\n      ]\n    },\n    {\n      \"property\": \"string\",\n      \"type\": \"string\",\n      \"default\": \"string\",\n      \"required\": true,\n      \"description\": \"string\",\n      \"validators\": [\n        {\n          \"validator_type\": \"string\",\n          \"validator_value\": \"string\"\n        },\n        {\n          \"validator_type\": \"string\",\n          \"validator_value\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"supported_targeting_parameters\": [\n    {\n      \"parameter\": \"string\",\n      \"type\": \"string\",\n      \"description\": \"string\",\n      \"validators\": [\n        {\n          \"validator_type\": \"string\",\n          \"validator_value\": \"string\"\n        },\n        {\n          \"validator_type\": \"string\",\n          \"validator_value\": \"string\"\n        }\n      ]\n    },\n    {\n      \"parameter\": \"string\",\n      \"type\": \"string\",\n      \"description\": \"string\",\n      \"validators\": [\n        {\n          \"validator_type\": \"string\",\n          \"validator_value\": \"string\"\n        },\n        {\n          \"validator_type\": \"string\",\n          \"validator_value\": \"string\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://cdn.emnify.net",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "57d6c99e-231d-4ff0-afe4-0ae96d04b76d",
+    "name": "emnify REST subpackage_applicationTokens subpackage_customEvents API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.\n\nSource: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.\n\nContact Support:\n Name: emnify Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

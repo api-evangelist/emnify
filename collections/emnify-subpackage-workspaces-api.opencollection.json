@@ -1,0 +1,286 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "emnify REST subpackage_applicationTokens subpackage_workspaces API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_workspaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Switch to an assigned Workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/authenticate/workspace",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Switch to an assigned Workspace and receive an authentication token for the target Workspace.\n\n<Note>\n  This endpoint requires authentication with [user credentials](/developers/auth/user-credentials) (not an application token), as application tokens are scoped to a single Workspace.\n\n  The returned `auth_token` is valid for the target Workspace.\n  Your original token remains valid for the source Workspace.\n</Note>\n"
+        },
+        {
+          "info": {
+            "name": "Accept user invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v2/user/activation",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accepts a user invitation to join a Workspace.\n\nThe following fields may be provided:\n- `activationKey` (String, required) - the JWT token received in the verification email\n- `password` (String) - only mandatory if the user is invited to an organization without single sign-on (SSO) and doesn't have a password yet\n- `name` (String) - name of the user\n"
+        },
+        {
+          "info": {
+            "name": "Update a user's default Workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://cdn.emnify.net/api/v2/user/:user_id/default_organisation/:workspace_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update a user's default Workspace.\n\n<Warning>\n  You must have **Administrator** access in both the old and new default Workspaces to execute this call.\n</Warning>\n"
+        },
+        {
+          "info": {
+            "name": "List assigned Workspaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v2/user/:user_id/workspace",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of the Workspaces assigned to a user.\n\n<Note>\n  Only returns Workspaces where you have **Administrator** access.\n</Note>\n"
+        },
+        {
+          "info": {
+            "name": "Update user status in a Workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://cdn.emnify.net/api/v2/user/:user_id/workspace/:workspace_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a user's status in the requested Workspace.\n\n- Allowed statuses: `ACTIVE` (1) and `SUSPENDED` (2)\n- If the user is suspended in their default Workspace, the next active Workspace is assigned as the default Workspace.\n\n<Warning>\n  You must have **Administrator** access in the requested Workspace to update user statuses.\n</Warning>\n"
+        },
+        {
+          "info": {
+            "name": "Unassign a Workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v2/user/:user_id/workspace/:workspace_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Unassign a Workspace from a user.\n\n- If the user is deleted from their default Workspace, the next active Workspace is assigned as the default Workspace.\n- **SuperAdmins** can't be removed unless you're logged in to the main organization.\n\n<Warning>\n  You must have **Administrator** access in the requested Workspace to remove users.\n</Warning>\n"
+        },
+        {
+          "info": {
+            "name": "Assign a role to a Workspace user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://cdn.emnify.net/api/v2/user/:user_id/workspace/:workspace_id/role/:role_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "role_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Assign a role to a user in the requested Workspace.\n\n<Warning>\n  You must have **Administrator** access in the requested Workspace to modify user roles.\n  **SuperAdmin** roles also can't be modified unless you're logged in to the main organization.\n</Warning>\n"
+        },
+        {
+          "info": {
+            "name": "Remove a role from a Workspace user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v2/user/:user_id/workspace/:workspace_id/role/:role_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "role_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Remove a user's role in the requested Workspace.\n\n<Warning>\n  You must have **Administrator** access in the requested Workspace to modify user roles.\n  **SuperAdmin** roles also can't be modified unless you're logged in to the main organization.\n</Warning>\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve Workspace daily stats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v2/workspace/stats/daily",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Filters by start date, provided in a `YYYY-MM-DD` format.\n\n<Info>\n  If you don't define an end date, the response will include 6 months of data, beginning on the current date.\n</Info>\n"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "Filters by end date, provided in an `YYYY-MM-DD` format.\n\n<Info>\n  If you don't define a start date, the response will only return data from the month indicated in your end date.\n</Info>\n"
+              },
+              {
+                "name": "workspace_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma separated list of workspace IDs to filter the results for.\nIf not provided, the response will include all Workspaces you have access to.\n"
+              }
+            ]
+          },
+          "docs": "Retrieve the daily stats for your Workspaces.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

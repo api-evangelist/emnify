@@ -1,0 +1,463 @@
+{
+  "item": [
+    {
+      "id": "7531f1e7-e109-4670-b3bd-d5ab9e4eeb42",
+      "name": "subpackage_tariffPlans",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4a89167a-4f43-457e-9da6-d2a4a6ff8e1a",
+          "name": "Get the active tariff plan for the given organization",
+          "request": {
+            "name": "Get the active tariff plan for the given organization",
+            "description": {
+              "content": "Retrieve detailed information about the currently assigned `tariff_plan` of the given organisation.\nIt can either be accessed for the own organisation or a direct child organisation.\nThe `applied_price` field is calculated using the currently active SIM cards for the month.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "organisation",
+                ":org_id_or_my",
+                "tariff_plan",
+                "active"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "org_id_or_my",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b57bcefc-16ba-4c30-a95a-1be154354efe",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "organisation",
+                    ":org_id_or_my",
+                    "tariff_plan",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "org_id_or_my",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"organisation_id\": 5869.7894824993955,\n  \"start_date\": \"string\",\n  \"expiry_date\": \"string\",\n  \"sim_activated_rate\": 231.43390879318716,\n  \"sim_activated_idle_rate\": 8104.478252556108,\n  \"sim_suspended_rate\": 6755.69308665708,\n  \"sim_suspended_active_rate\": 779.5264332985363,\n  \"sim_activated_amount\": 9578.05195616401,\n  \"applied_price\": {\n    \"sim_activated_rate\": [\n      {\n        \"scale_start\": 8514.83200281184,\n        \"rate\": 7327.034684268443,\n        \"volume\": 572\n      },\n      {\n        \"scale_start\": 4783.3181763356415,\n        \"rate\": 2950.393171394794,\n        \"volume\": 7038\n      }\n    ]\n  },\n  \"tariff_plan\": {\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"creation_date\": \"string\",\n    \"activation_date\": \"string\",\n    \"deprecation_date\": \"string\",\n    \"rate\": 4489.413816910338,\n    \"yearly_rate\": 5780.735351583088,\n    \"sim_activation_fee\": 1702.3123151481511,\n    \"max_active_sims\": 4894.615827335804,\n    \"add_active_sims_rate\": 3916.106895407725,\n    \"add_active_sim_batch\": 6508.621680532751,\n    \"max_service_profiles\": 7302.045859385407,\n    \"max_tariff_profiles\": 1106.7552496565836,\n    \"max_users\": 5936.197026692141,\n    \"minimum_runtime\": 2723.729149875699,\n    \"api_access_allowed\": true,\n    \"vpn_access\": false,\n    \"evaluation\": false,\n    \"expiry_time\": 7452.630630931524,\n    \"used_count\": 5435.826151007141,\n    \"id\": 7603.5500615524825,\n    \"price\": {\n      \"sim_activated_rate\": [\n        {\n          \"scale_start\": 3658.025057441363,\n          \"rate\": 9496.934805003622\n        },\n        {\n          \"scale_start\": 5877.275036468734,\n          \"rate\": 4246.839356064061\n        }\n      ]\n    },\n    \"currency\": {\n      \"code\": \"string\",\n      \"symbol\": \"string\",\n      \"id\": 6023.4757081948555\n    },\n    \"workspaces_enabled\": true\n  },\n  \"tariff_plan_runtime\": {\n    \"number_of_units\": 1714.3326501451472,\n    \"time_unit_id\": 9480.633749313047,\n    \"id\": 2770.7168371410708\n  },\n  \"active\": false,\n  \"applied_rate\": 4967.300595356306,\n  \"id\": 1867.631102380123,\n  \"service_level\": {\n    \"id\": 6445.827156931061,\n    \"name\": \"string\"\n  },\n  \"workspaces_enabled\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "60405da0-ad6d-418d-8ce0-ae4db2024487",
+              "name": "Organisation not found or no active tariff plan",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "organisation",
+                    ":org_id_or_my",
+                    "tariff_plan",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "org_id_or_my",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a2ce4df8-24d6-4886-a4aa-e6781920d1fc",
+          "name": "List organization tariff plans",
+          "request": {
+            "name": "List organization tariff plans",
+            "description": {
+              "content": "Retrieve a list of all Tariff Plans that are available for the given organisation.\nThe available tariff plans for one's own organisation can also be retrieved with a call to\n`/api/v1/organisation/my/tariff_plan`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "organisation",
+                ":org_id",
+                "tariff_plan"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<double>",
+                  "key": "org_id",
+                  "description": "(Required) Numerical ID of an organization"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "28cb0692-3ee2-48a2-a744-c5c462d224e6",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "organisation",
+                    ":org_id",
+                    "tariff_plan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<double>",
+                      "key": "org_id",
+                      "description": "(Required) Numerical ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 6714.240177610137,\n    \"organisation_id\": \"string\",\n    \"start_date\": \"string\",\n    \"expiry_date\": \"string\",\n    \"sim_activated_rate\": 6112.306485021679,\n    \"sim_activated_idle_rate\": 1748.2117029287847,\n    \"sim_suspended_rate\": 7559.262115026334,\n    \"sim_suspended_active_rate\": 2790.8472346105996,\n    \"currency_id\": \"string\",\n    \"federation_allowed\": false,\n    \"factory_test_mode_allowed\": true,\n    \"service_level\": {\n      \"id\": 2284.7636378130856,\n      \"name\": \"string\"\n    },\n    \"active\": true,\n    \"applied_rate\": 1846.0143982720979,\n    \"price_model\": \"string\",\n    \"tariff_plan\": {\n      \"organisation_id\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"tariff_plan_type_id\": \"string\",\n      \"min_tariff_plan_runtime_id\": \"string\",\n      \"level\": \"string\",\n      \"tariff_plan_runtime_id\": {},\n      \"owner_organisation_id\": \"string\",\n      \"public_for_child_organisations\": true,\n      \"creation_date\": \"string\",\n      \"activation_date\": \"string\",\n      \"deprecation_date\": \"string\",\n      \"notes\": {},\n      \"rate\": 5596.463286623755,\n      \"yearly_rate\": 7558.427196717889,\n      \"sim_activation_fee\": 2098.347298176544,\n      \"max_active_sims\": 7705.144315065394,\n      \"add_active_sims_rate\": 1016.1948716631297,\n      \"add_active_sim_batch\": 5207.292761686146,\n      \"max_service_profiles\": 1074.7888007898864,\n      \"max_tariff_profiles\": 1484.0281367725338,\n      \"max_users\": 3895.2566168617186,\n      \"minimum_runtime\": 2734.5102807351464,\n      \"api_access_allowed\": 1890.6416767642243,\n      \"vpn_access\": 7242.895666991942,\n      \"private\": 7939.862684245969,\n      \"dtype\": \"string\",\n      \"evaluation\": false,\n      \"expiry_time\": 6835.370334324561,\n      \"billing_disabled\": false,\n      \"used_count\": 7771.035494136457,\n      \"id\": 7899.0989481833885,\n      \"status\": {\n        \"description\": \"string\",\n        \"tariff_plan_status_enum_id\": \"string\",\n        \"id\": 8790.798043045748\n      },\n      \"currency\": {\n        \"code\": \"string\",\n        \"symbol\": \"string\",\n        \"id\": 9240.072369644811\n      },\n      \"visibility\": {\n        \"description\": \"string\",\n        \"id\": 2464.3319284334107\n      },\n      \"price\": {\n        \"sim_activated_rate\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      \"service_level\": {\n        \"id\": 9815.313916602136,\n        \"name\": \"string\"\n      },\n      \"federation_allowed\": false,\n      \"factory_test_mode_allowed\": false\n    }\n  },\n  {\n    \"id\": 1933.0732641779102,\n    \"organisation_id\": \"string\",\n    \"start_date\": \"string\",\n    \"expiry_date\": \"string\",\n    \"sim_activated_rate\": 4618.809653900044,\n    \"sim_activated_idle_rate\": 7527.94652824147,\n    \"sim_suspended_rate\": 5094.610435384178,\n    \"sim_suspended_active_rate\": 7522.531281841264,\n    \"currency_id\": \"string\",\n    \"federation_allowed\": false,\n    \"factory_test_mode_allowed\": false,\n    \"service_level\": {\n      \"id\": 982.1884246255719,\n      \"name\": \"string\"\n    },\n    \"active\": false,\n    \"applied_rate\": 9532.61491592749,\n    \"price_model\": \"string\",\n    \"tariff_plan\": {\n      \"organisation_id\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"tariff_plan_type_id\": \"string\",\n      \"min_tariff_plan_runtime_id\": \"string\",\n      \"level\": \"string\",\n      \"tariff_plan_runtime_id\": {},\n      \"owner_organisation_id\": \"string\",\n      \"public_for_child_organisations\": false,\n      \"creation_date\": \"string\",\n      \"activation_date\": \"string\",\n      \"deprecation_date\": \"string\",\n      \"notes\": {},\n      \"rate\": 7022.717074504775,\n      \"yearly_rate\": 2352.9368787539197,\n      \"sim_activation_fee\": 8903.239420827214,\n      \"max_active_sims\": 1444.9011621710927,\n      \"add_active_sims_rate\": 3875.2942484096043,\n      \"add_active_sim_batch\": 895.8186476829943,\n      \"max_service_profiles\": 7108.751195205514,\n      \"max_tariff_profiles\": 6011.9927615001125,\n      \"max_users\": 9544.420075123535,\n      \"minimum_runtime\": 898.4963670485224,\n      \"api_access_allowed\": 554.0956263097086,\n      \"vpn_access\": 9043.617206836936,\n      \"private\": 202.80365531233912,\n      \"dtype\": \"string\",\n      \"evaluation\": true,\n      \"expiry_time\": 7476.3753299434975,\n      \"billing_disabled\": true,\n      \"used_count\": 8595.41555380219,\n      \"id\": 5759.860032987476,\n      \"status\": {\n        \"description\": \"string\",\n        \"tariff_plan_status_enum_id\": \"string\",\n        \"id\": 5241.94368234245\n      },\n      \"currency\": {\n        \"code\": \"string\",\n        \"symbol\": \"string\",\n        \"id\": 4626.908943607934\n      },\n      \"visibility\": {\n        \"description\": \"string\",\n        \"id\": 787.5759238346835\n      },\n      \"price\": {\n        \"sim_activated_rate\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      \"service_level\": {\n        \"id\": 167.3332143213724,\n        \"name\": \"string\"\n      },\n      \"federation_allowed\": false,\n      \"factory_test_mode_allowed\": false\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "efdf18cd-34c7-433b-9da8-f6a24019dbfc",
+          "name": "Retrieve your organization's active tariff plan",
+          "request": {
+            "name": "Retrieve your organization's active tariff plan",
+            "description": {
+              "content": "Retrieve detailed information about your organization's assigned `tariff_plan`.\n\n<Info>\n  The `applied_price` field is calculated based on the active SIM cards for the current month.\n</Info>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "tariff_plan",
+                "active"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "099fa177-3f67-4abd-a322-d920144a74de",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "tariff_plan",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"organisation_id\": 8500.879831426195,\n  \"start_date\": \"string\",\n  \"expiry_date\": \"string\",\n  \"sim_activated_rate\": 4124.604641804458,\n  \"sim_activated_idle_rate\": 8495.804798743427,\n  \"sim_suspended_rate\": 2006.0065830191386,\n  \"sim_suspended_active_rate\": 3090.4464986884127,\n  \"sim_activated_amount\": 4807.178515750181,\n  \"applied_price\": {\n    \"sim_activated_rate\": [\n      {\n        \"scale_start\": 8436.845589101065,\n        \"rate\": 4472.205263679627,\n        \"volume\": 3785\n      },\n      {\n        \"scale_start\": 8872.493534237474,\n        \"rate\": 8965.930967531329,\n        \"volume\": 260\n      }\n    ]\n  },\n  \"tariff_plan\": {\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"creation_date\": \"string\",\n    \"activation_date\": \"string\",\n    \"deprecation_date\": \"string\",\n    \"rate\": 8766.675615546801,\n    \"yearly_rate\": 3461.886121134228,\n    \"sim_activation_fee\": 796.7975878370393,\n    \"max_active_sims\": 4962.868421836995,\n    \"add_active_sims_rate\": 4593.041106104288,\n    \"add_active_sim_batch\": 4041.6536418688056,\n    \"max_service_profiles\": 4680.907104461909,\n    \"max_tariff_profiles\": 3992.4876050151915,\n    \"max_users\": 3382.5133155436247,\n    \"minimum_runtime\": 9315.599832581902,\n    \"api_access_allowed\": false,\n    \"vpn_access\": true,\n    \"evaluation\": false,\n    \"expiry_time\": 9864.183070699122,\n    \"used_count\": 9339.387197508922,\n    \"id\": 6269.180858232751,\n    \"price\": {\n      \"sim_activated_rate\": [\n        {\n          \"scale_start\": 8324.170081207136,\n          \"rate\": 8692.348730249127\n        },\n        {\n          \"scale_start\": 4967.558301517807,\n          \"rate\": 1447.7187688097704\n        }\n      ]\n    },\n    \"currency\": {\n      \"code\": \"string\",\n      \"symbol\": \"string\",\n      \"id\": 1167.6531227229536\n    },\n    \"workspaces_enabled\": true\n  },\n  \"tariff_plan_runtime\": {\n    \"number_of_units\": 958.6741496798857,\n    \"time_unit_id\": 7928.920257687191,\n    \"id\": 5797.683243202461\n  },\n  \"active\": false,\n  \"applied_rate\": 3122.98443033711,\n  \"id\": 7606.770224561616,\n  \"service_level\": {\n    \"id\": 7996.680514706936,\n    \"name\": \"string\"\n  },\n  \"workspaces_enabled\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc15952c-ebab-47ab-b998-9c4a087c84e6",
+              "name": "Organization not found or  there's no active tariff plan",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "tariff_plan",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://cdn.emnify.net",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0a32f01b-eb1f-4ec1-95e4-b97c3291a016",
+    "name": "emnify REST subpackage_applicationTokens subpackage_tariffPlans API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.\n\nSource: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.\n\nContact Support:\n Name: emnify Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

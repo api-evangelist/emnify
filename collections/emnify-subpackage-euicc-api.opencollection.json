@@ -1,0 +1,146 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "emnify REST subpackage_applicationTokens subpackage_euicc API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_euicc",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List eUICCs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/euicc",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-based)."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Filter parameter in `<field>:<criteria>` format.\nExpects a comma-separated list from the allowed fields:\n\n- `id`\n- `eid`\n- `supported_profile_type`\n- `status`\n- `eim`\n"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort properties according to a comma separated list from the allowed fields (prefix with `-` for descending):\n\n- `id`\n- `eid`\n- `modified`\n- `supported_profile_type`\n- `status`\n- `eim`\n"
+              }
+            ]
+          },
+          "docs": "List all eUICCs for your organization.\nUse filter parameters to search for specific eUICCs and sort to order the response list.\n"
+        },
+        {
+          "info": {
+            "name": "List eUICC Profile status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/euicc/profile/status",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "List possible eUICC Profile statuses.\n"
+        },
+        {
+          "info": {
+            "name": "List eUICC status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/euicc/status",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "List possible eUICC statuses (reserved for future use).\n"
+        },
+        {
+          "info": {
+            "name": "Unlinked eUICC validation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/euicc/unlinked_validation",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validate whether the specified eUICCs do not have any existing profiles linked.\n"
+        },
+        {
+          "info": {
+            "name": "Get eUICC",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/euicc/:euicc_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "euicc_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List details on one specific eUICC within your organization.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

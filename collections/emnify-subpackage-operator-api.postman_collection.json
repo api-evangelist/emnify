@@ -1,0 +1,129 @@
+{
+  "item": [
+    {
+      "id": "3fa0e05d-e31e-43a5-90f4-ed885f2bdf84",
+      "name": "subpackage_operator",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3f741eca-566d-4340-8ea1-2135a5283f8c",
+          "name": "List operators",
+          "request": {
+            "name": "List operators",
+            "description": {
+              "content": "Returns a collection of existing operators.\n\nIt will return an array of items with following properties:\n\n* `id`: identifier of this operator\n* `name`: the official name of the operator\n* `name_and_country`: Name / Country (for easy access in the UI)\n* `country`: country object with the nested country `id`\n* `mnc`: Array of Mobile Network Codes (MNCs)\n* `tapcode`: Array of TAP Codes\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "operator"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c9f05460-dba1-42d2-9ad1-bb6f2e9efa82",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "operator"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An `auth_token` should be provided to authenticate a session.\n\nTo obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"string\",\n    \"country_name\": \"string\",\n    \"id\": 5638.658979030091,\n    \"country\": {\n      \"id\": 6266,\n      \"name\": \"string\",\n      \"country_code\": 9719,\n      \"mcc\": 4927,\n      \"iso_code\": \"string\",\n      \"latitude\": 7633.155933657696,\n      \"longitude\": 5147.720420967563\n    }\n  },\n  {\n    \"name\": \"string\",\n    \"country_name\": \"string\",\n    \"id\": 945.0531197884815,\n    \"country\": {\n      \"id\": 1818,\n      \"name\": \"string\",\n      \"country_code\": 5932,\n      \"mcc\": 9628,\n      \"iso_code\": \"string\",\n      \"latitude\": 9516.866405950304,\n      \"longitude\": 8127.330487131641\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://cdn.emnify.net",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b8ff3631-0b96-4ef5-b207-b31b5513283e",
+    "name": "emnify REST subpackage_applicationTokens subpackage_operator API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.\n\nSource: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.\n\nContact Support:\n Name: emnify Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "emnify REST subpackage_applicationTokens subpackage_simUnlinkedProductStatistics API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_simUnlinkedProductStatistics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get product statistics on unlinked eSIMs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/sim/unlinked_product_stats",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Receive statistics on how many eSIMs are unlinked (available profile status), grouped by products.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,90 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "emnify REST subpackage_applicationTokens subpackage_tariffPlans API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_tariffPlans",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the active tariff plan for the given organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/organisation/:org_id_or_my/tariff_plan/active",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id_or_my",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information about the currently assigned `tariff_plan` of the given organisation.\nIt can either be accessed for the own organisation or a direct child organisation.\nThe `applied_price` field is calculated using the currently active SIM cards for the month.\n"
+        },
+        {
+          "info": {
+            "name": "List organization tariff plans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/organisation/:org_id/tariff_plan",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Numerical ID of an organization"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of all Tariff Plans that are available for the given organisation.\nThe available tariff plans for one's own organisation can also be retrieved with a call to\n`/api/v1/organisation/my/tariff_plan`\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve your organization's active tariff plan",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/tariff_plan/active",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information about your organization's assigned `tariff_plan`.\n\n<Info>\n  The `applied_price` field is calculated based on the active SIM cards for the current month.\n</Info>\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

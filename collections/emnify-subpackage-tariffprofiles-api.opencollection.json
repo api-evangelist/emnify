@@ -1,0 +1,457 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "emnify REST subpackage_applicationTokens subpackage_tariffProfiles API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_tariffProfiles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List tariff profiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/tariff_profile",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns the list of tariff profiles of the user's own organisation."
+        },
+        {
+          "info": {
+            "name": "Create tariff profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/tariff_profile",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create the specified tariff profile\nID must not be specified, neither in query String, nor in JSON payload.\nYou can provide following fields with this request:\n\n* `name` (String required)\n* `description` (String optional)\n* `tariff` (Object required)\n"
+        },
+        {
+          "info": {
+            "name": "Tariff profile details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/tariff_profile/:tariff_profile_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tariff_profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns tariff profile specified by id. This tariff profile also contains information about the currently valid ratezones of the tariff in the tariff profile and if the ratezone is selected in the tariff profile.\nIt also contains applied custom rates for the included tariffs.\n"
+        },
+        {
+          "info": {
+            "name": "Update tariff profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://cdn.emnify.net/api/v1/tariff_profile/:tariff_profile_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tariff_profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Patch the specified tariff profile.\n\n<Warning>\n  The API doesn't provide feedback if you assign an incompatible tariff profile to a SIM.\n  See [Tariff profile](/developers/reference/tariff-profile) for more information.\n</Warning>\n\nYou can provide following fields with this request:\n\n* `name` (String optional)\n* `description` (String optional)\n* `tariff` (Object optional) If the tariff is changed, all selections of ratezones are removed.\n"
+        },
+        {
+          "info": {
+            "name": "Delete tariff profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/tariff_profile/:tariff_profile_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tariff_profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes tariff profile. Tariff profiles used by an endpoint (`used_count` > 0) cannot be deleted."
+        },
+        {
+          "info": {
+            "name": "List tariff profile coverage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/tariff_profile/:tariff_profile_id/coverage",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tariff_profile_id",
+                "value": "",
+                "type": "path",
+                "description": "tariff profile ID"
+              }
+            ]
+          },
+          "docs": "Provides the list of countries where that tariff profile can be used."
+        },
+        {
+          "info": {
+            "name": "Assign inclusive volume to tarriff profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://cdn.emnify.net/api/v1/tariff_profile/:tariff_profile_id/inclusive_volume/:inclusive_volume_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tariff_profile_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "inclusive_volume_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Assignes an inclusive volume to the selected tariff profile.\nIf no inclusive volume is assigned and the customer has multiple active inclusive volumes, the traffic for this tariff profile will be rated as \"Pay As You Go\".\n\nThe selected inclusive volume must not be expired and the tariff profile should not have an inclusive volume assigned yet.\nThe tariff of the tariff profile and the inclusive volume ratezone have to match.\n"
+        },
+        {
+          "info": {
+            "name": "Unassign inclusive volume from tariff profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/tariff_profile/:tariff_profile_id/inclusive_volume/:inclusive_volume_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tariff_profile_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "inclusive_volume_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Unassign the inclusive volume from the selected tariff profile. If the customer has multiple active inclusive volume, the traffic within that tariff profile\nwill be rated as \"Pay As You Go\" afterwards.\n"
+        },
+        {
+          "info": {
+            "name": "Assign ratezone to tarriff profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://cdn.emnify.net/api/v1/tariff_profile/:tariff_profile_id/ratezone_selection/:ratezone_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tariff_profile_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "ratezone_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Only currently valid and active ratezones can be selected for a tariff profile"
+        },
+        {
+          "info": {
+            "name": "Delete ratezone from tariff profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v1/tariff_profile/:tariff_profile_id/ratezone_selection/:ratezone_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tariff_profile_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "ratezone_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Remove previously selected ratezones from a tariff profile"
+        },
+        {
+          "info": {
+            "name": "Get the operator blocklist for a specific tariff profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v2/tariff_profile/:tariff_profile_id/operator_blocklist/operator",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tariff_profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve blocklist details for operators within a specific tariff profile"
+        },
+        {
+          "info": {
+            "name": "Get operator blocklist for a specific tariff profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v2/tariff_profile/:tariff_profile_id/operator_blocklist/operator/:operator_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tariff_profile_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "operator_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve blocklist details for an operator within a specific tariff profile"
+        },
+        {
+          "info": {
+            "name": "Block the operator completely for a given tariff profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://cdn.emnify.net/api/v2/tariff_profile/:tariff_profile_id/operator_blocklist/operator/:operator_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tariff_profile_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "operator_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Block the operator completely.\nIf there are already specific RAT types blocklisted, those entries **aren't** overridden.\n\n<Info>\n  You don't need a request body for this operation.\n</Info>\n"
+        },
+        {
+          "info": {
+            "name": "Remove an operator from the blocklist",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v2/tariff_profile/:tariff_profile_id/operator_blocklist/operator/:operator_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tariff_profile_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "operator_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Removes a specific operator from the blocklist of a given tariff profile.\nIf there are already specific RAT types blocklisted, the entries will NOT be overridden.\n"
+        },
+        {
+          "info": {
+            "name": "Block specific RAT types",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v2/tariff_profile/:tariff_profile_id/operator_blocklist/operator/:operator_id/rat_type",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tariff_profile_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "operator_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a specific operator to the blocklist of a given tariff profile.\nIf the operator is already blocked completely, it is still possible to block specific RAT types.\n"
+        },
+        {
+          "info": {
+            "name": "Unblock a specific RAT type",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://cdn.emnify.net/api/v2/tariff_profile/:tariff_profile_id/operator_blocklist/operator/:operator_id/rat_type/:rate_type_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tariff_profile_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "operator_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rate_type_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Unblock a specific RAT type for an operator within a tariff profile."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,91 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "emnify REST subpackage_applicationTokens API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_applicationTokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List application tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cdn.emnify.net/api/v1/application_token",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns the list of application tokens for the organisation of the requesting user."
+        },
+        {
+          "info": {
+            "name": "Create application token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cdn.emnify.net/api/v1/application_token",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new application token.\nID must not be specified, as it is auto-generated and returned in case of a successful JSON response.\nYou can provide following fields with this request:\n\n* `description` (String, optional)\n* `expiry_date` with optional time + time zone (String, optional)\n* `ip` - IP Address in CIDR notation (String, optional)\n"
+        },
+        {
+          "info": {
+            "name": "Update application token",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://cdn.emnify.net/api/v1/application_token/:app_token_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "app_token_id",
+                "value": "",
+                "type": "path",
+                "description": "application token ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The `description` of the token may be updated and the\nApplication Token can be revoked by updating the `status`.\nThe possible statuses of tokens are\n\n* `\"id\": 0` - Activated\n* `\"id\": 1` - Revoked\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
