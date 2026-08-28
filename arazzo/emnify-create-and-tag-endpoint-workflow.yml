@@ -10,8 +10,14 @@ info:
     the authenticate step.
   version: 1.0.0
 sourceDescriptions:
-- name: emnifyApi
-  url: ../openapi/emnify-api-openapi.yml
+- name: subpackageAuthenticationApi
+  url: ../openapi/emnify-subpackage-authentication-api-openapi.yml
+  type: openapi
+- name: subpackageEndpointApi
+  url: ../openapi/emnify-subpackage-endpoint-api-openapi.yml
+  type: openapi
+- name: subpackageTagmanagementApi
+  url: ../openapi/emnify-subpackage-tagmanagement-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: create-and-tag-endpoint

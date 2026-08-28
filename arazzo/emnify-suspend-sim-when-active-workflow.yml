@@ -11,8 +11,11 @@ info:
     authenticate step.
   version: 1.0.0
 sourceDescriptions:
-- name: emnifyApi
-  url: ../openapi/emnify-api-openapi.yml
+- name: subpackageAuthenticationApi
+  url: ../openapi/emnify-subpackage-authentication-api-openapi.yml
+  type: openapi
+- name: subpackageSimApi
+  url: ../openapi/emnify-subpackage-sim-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: suspend-sim-when-active
