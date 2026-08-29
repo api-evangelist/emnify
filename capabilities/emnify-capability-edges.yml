@@ -1,0 +1,36 @@
+slug: emnify
+provider: emnify
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Defense & Aerospace
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: subpackage_userManagement
+  spec_file: emnify-subpackage-usermanagement-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: PUT /api/v1/user/{user_id}/role/{role_id}  user-role-by-id-and-role-id-put  Assign role to
+    user; GET /api/v1/user/{user_id}/role/permission  List user role permissions
+  reason: Create/update/delete platform user accounts, statuses, MFA and role/permission assignment —
+    classic identity and access administration, not HR employee records.
+- tag: subpackage_workspaces
+  spec_file: emnify-subpackage-workspaces-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: PUT /api/v2/user/{user_id}/workspace/{workspace_id}/role/{role_id}  assign-user-role-by-id  Assign
+    a role to a Workspace user; POST /api/v2/user/activation  accept-user-invitation
+  reason: Mostly user-to-workspace membership, invitation acceptance, default workspace and per-workspace
+    role assignment — access administration across tenants. Confidence moderated because one endpoint
+    is workspace usage statistics rather than access control.
