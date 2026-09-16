@@ -17,9 +17,8 @@ apis:
     type: Documentation
   - url: graphql/emnify-graphql.md
     type: GraphQL
-  description: >-
-    emnify GraphQL API for flexible, single-request queries against the emnify data model with customizable
-    response shapes. An in-browser GraphiQL IDE supports interactive exploration and testing.
+  description: emnify GraphQL API for flexible, single-request queries against the emnify data model with
+    customizable response shapes. An in-browser GraphiQL IDE supports interactive exploration and testing.
 - aid: emnify:emnify-data-streamer
   name: emnify Data Streamer
   tags:
@@ -42,11 +41,10 @@ apis:
     type: Documentation
   - url: https://docs.emnify.com/developers/callbacks/sms
     type: Documentation
-  description: >-
-    Stream event and usage data to outbound destinations (AWS S3, AWS Kinesis, REST/webhook, Datadog,
-    Salesforce, Keen.io). Supports detailed object schemas for data types, traffic types, tariffs, operators,
-    and volume tracking. SMS and API callbacks deliver mobile-originated SMS and event payloads to your
-    infrastructure.
+  description: Stream event and usage data to outbound destinations (AWS S3, AWS Kinesis, REST/webhook,
+    Datadog, Salesforce, Keen.io). Supports detailed object schemas for data types, traffic types, tariffs,
+    operators, and volume tracking. SMS and API callbacks deliver mobile-originated SMS and event payloads
+    to your infrastructure.
 - aid: emnify:emnify-mcp-server
   name: emnify Documentation MCP Server
   tags:
@@ -63,13 +61,11 @@ apis:
     type: Documentation
   - url: https://docs.emnify.com/developers/developer-tools/ai-assistance
     type: Documentation
-  description: >-
-    Public MCP server for emnify documentation. Connect Claude Code, Cursor, or any MCP-aware client to
-    query emnify product, developer, and API reference content directly from your AI assistant.
+  description: Public MCP server for emnify documentation. Connect Claude Code, Cursor, or any MCP-aware
+    client to query emnify product, developer, and API reference content directly from your AI assistant.
 - aid: emnify:emnify-subpackage-applicationtokens-api
   name: emnify subpackage_applicationTokens API
-  description: >-
-    The subpackage_applicationTokens API from emnify — 2 operation(s) for subpackage_applicationtokens.
+  description: The subpackage_applicationTokens API from emnify — 2 operation(s) for subpackage_applicationtokens.
   humanURL: https://docs.emnify.com/developers
   tags:
   - subpackage_applicationTokens
@@ -108,8 +104,7 @@ apis:
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-authentication-api
   name: emnify subpackage_authentication API
-  description: >-
-    The subpackage_authentication API from emnify — 8 operation(s) for subpackage_authentication.
+  description: The subpackage_authentication API from emnify — 8 operation(s) for subpackage_authentication.
   humanURL: https://docs.emnify.com/developers
   tags: []
   tags_raw:
@@ -189,8 +184,7 @@ apis:
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-cloudconnect-api
   name: emnify subpackage_cloudConnect API
-  description: >-
-    The subpackage_cloudConnect API from emnify — 7 operation(s) for subpackage_cloudconnect.
+  description: The subpackage_cloudConnect API from emnify — 7 operation(s) for subpackage_cloudconnect.
   humanURL: https://docs.emnify.com/developers
   tags:
   - subpackage_cloudConnect
@@ -229,8 +223,7 @@ apis:
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-customevents-api
   name: emnify subpackage_customEvents API
-  description: >-
-    The subpackage_customEvents API from emnify — 4 operation(s) for subpackage_customevents.
+  description: The subpackage_customEvents API from emnify — 4 operation(s) for subpackage_customevents.
   humanURL: https://docs.emnify.com/developers
   tags:
   - subpackage_customEvents
@@ -349,8 +342,7 @@ apis:
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-euiccoperation-api
   name: emnify subpackage_euiccOperation API
-  description: >-
-    The subpackage_euiccOperation API from emnify — 4 operation(s) for subpackage_euiccoperation.
+  description: The subpackage_euiccOperation API from emnify — 4 operation(s) for subpackage_euiccoperation.
   humanURL: https://docs.emnify.com/developers
   tags:
   - subpackage_euiccOperation
@@ -429,8 +421,7 @@ apis:
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-integrations-api
   name: emnify subpackage_integrations API
-  description: >-
-    The subpackage_integrations API from emnify — 10 operation(s) for subpackage_integrations.
+  description: The subpackage_integrations API from emnify — 10 operation(s) for subpackage_integrations.
   humanURL: https://docs.emnify.com/developers
   tags: []
   tags_raw:
@@ -470,8 +461,7 @@ apis:
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-ipaddressspaces-api
   name: emnify subpackage_ipAddressSpaces API
-  description: >-
-    The subpackage_ipAddressSpaces API from emnify — 3 operation(s) for subpackage_ipaddressspaces.
+  description: The subpackage_ipAddressSpaces API from emnify — 3 operation(s) for subpackage_ipaddressspaces.
   humanURL: https://docs.emnify.com/developers
   tags:
   - subpackage_ipAddressSpaces
@@ -590,8 +580,7 @@ apis:
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-organization-api
   name: emnify subpackage_organization API
-  description: >-
-    The subpackage_organization API from emnify — 9 operation(s) for subpackage_organization.
+  description: The subpackage_organization API from emnify — 9 operation(s) for subpackage_organization.
   humanURL: https://docs.emnify.com/developers
   tags: []
   tags_raw:
@@ -631,8 +620,7 @@ apis:
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-passwordmanagementandactivation-api
   name: emnify subpackage_passwordManagementAndActivation API
-  description: >-
-    The subpackage_passwordManagementAndActivation API from emnify — 4 operation(s) for subpackage_passwordmanagementandactivation.
+  description: The subpackage_passwordManagementAndActivation API from emnify — 4 operation(s) for subpackage_passwordmanagementandactivation.
   humanURL: https://docs.emnify.com/developers
   tags:
   - subpackage_passwordManagementAndActivation
@@ -671,8 +659,7 @@ apis:
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-servicelookupsandconfiguration-api
   name: emnify subpackage_serviceLookupsAndConfiguration API
-  description: >-
-    The subpackage_serviceLookupsAndConfiguration API from emnify — 5 operation(s) for subpackage_servicelookupsandconfiguration.
+  description: The subpackage_serviceLookupsAndConfiguration API from emnify — 5 operation(s) for subpackage_servicelookupsandconfiguration.
   humanURL: https://docs.emnify.com/developers
   tags:
   - subpackage_serviceLookupsAndConfiguration
@@ -711,8 +698,7 @@ apis:
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-serviceprofiles-api
   name: emnify subpackage_serviceProfiles API
-  description: >-
-    The subpackage_serviceProfiles API from emnify — 7 operation(s) for subpackage_serviceprofiles.
+  description: The subpackage_serviceProfiles API from emnify — 7 operation(s) for subpackage_serviceprofiles.
   humanURL: https://docs.emnify.com/developers
   tags:
   - subpackage_serviceProfiles
@@ -791,8 +777,7 @@ apis:
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-simoperation-api
   name: emnify subpackage_simOperation API
-  description: >-
-    The subpackage_simOperation API from emnify — 4 operation(s) for subpackage_simoperation.
+  description: The subpackage_simOperation API from emnify — 4 operation(s) for subpackage_simoperation.
   humanURL: https://docs.emnify.com/developers
   tags:
   - subpackage_simOperation
@@ -831,8 +816,7 @@ apis:
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-simunlinkedproductstatistics-api
   name: emnify subpackage_simUnlinkedProductStatistics API
-  description: >-
-    The subpackage_simUnlinkedProductStatistics API from emnify — 1 operation(s) for subpackage_simunlinkedproductstatistics.
+  description: The subpackage_simUnlinkedProductStatistics API from emnify — 1 operation(s) for subpackage_simunlinkedproductstatistics.
   humanURL: https://docs.emnify.com/developers
   tags:
   - subpackage_simUnlinkedProductStatistics
@@ -871,8 +855,7 @@ apis:
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-systemevents-api
   name: emnify subpackage_systemEvents API
-  description: >-
-    The subpackage_systemEvents API from emnify — 2 operation(s) for subpackage_systemevents.
+  description: The subpackage_systemEvents API from emnify — 2 operation(s) for subpackage_systemevents.
   humanURL: https://docs.emnify.com/developers
   tags:
   - subpackage_systemEvents
@@ -911,8 +894,7 @@ apis:
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-tagmanagement-api
   name: emnify subpackage_tagManagement API
-  description: >-
-    The subpackage_tagManagement API from emnify — 8 operation(s) for subpackage_tagmanagement.
+  description: The subpackage_tagManagement API from emnify — 8 operation(s) for subpackage_tagmanagement.
   humanURL: https://docs.emnify.com/developers
   tags:
   - subpackage_tagManagement
@@ -990,8 +972,7 @@ apis:
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-tariffprofiles-api
   name: emnify subpackage_tariffProfiles API
-  description: >-
-    The subpackage_tariffProfiles API from emnify — 9 operation(s) for subpackage_tariffprofiles.
+  description: The subpackage_tariffProfiles API from emnify — 9 operation(s) for subpackage_tariffprofiles.
   humanURL: https://docs.emnify.com/developers
   tags:
   - subpackage_tariffProfiles
@@ -1030,8 +1011,7 @@ apis:
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-usermanagement-api
   name: emnify subpackage_userManagement API
-  description: >-
-    The subpackage_userManagement API from emnify — 8 operation(s) for subpackage_usermanagement.
+  description: The subpackage_userManagement API from emnify — 8 operation(s) for subpackage_usermanagement.
   humanURL: https://docs.emnify.com/developers
   tags:
   - subpackage_userManagement
@@ -1121,6 +1101,7 @@ tags:
 - NTN-IoT
 - Satellite
 - SuperNetwork
+- Machine-to-Machine
 kind: contract
 deliveryModel:
   model: saas
@@ -1310,30 +1291,30 @@ common:
   - Advanced IoT eSIM (SGP.32) for remote profile management on enterprise devices
   - Consumer eSIM profiles deployable via MDM or QR code
   - SGP.32 IoT eSIM operations — eUICC management, scheduled profile download/install/enable/disable/delete
-  - NTN-IoT satellite connectivity via Skylo (NB-IoT over GEO satellite, RAT 17) — SatPlus, SatSolo, CellSolo plans
-  - >-
-    REST API with 200+ operations across 150+ paths spanning SIM, Endpoint, eUICC, SMS, Event, Service Profile,
-    Tariff Profile, Organization, User, IP, Tag, Operator, and System resources
+  - NTN-IoT satellite connectivity via Skylo (NB-IoT over GEO satellite, RAT 17) — SatPlus, SatSolo, CellSolo
+    plans
+  - REST API with 200+ operations across 150+ paths spanning SIM, Endpoint, eUICC, SMS, Event, Service
+    Profile, Tariff Profile, Organization, User, IP, Tag, Operator, and System resources
   - GraphQL API with interactive GraphiQL IDE for flexible single-request queries
-  - >-
-    Data Streamer for outbound event/usage streaming to AWS S3, AWS Kinesis, REST/webhook, Datadog, Salesforce, and
-    Keen.io
-  - API callbacks for asynchronous Data Streamer delivery; SMS callbacks for mobile-originated SMS with JWT auth
+  - Data Streamer for outbound event/usage streaming to AWS S3, AWS Kinesis, REST/webhook, Datadog, Salesforce,
+    and Keen.io
+  - API callbacks for asynchronous Data Streamer delivery; SMS callbacks for mobile-originated SMS with
+    JWT auth
   - Application token authentication (M2M) plus user-credential auth for cross-workspace operations
   - Multi-factor authentication with trusted device fingerprinting (90-day skip window)
   - JWT short-lived bearer tokens with refresh-token rotation
   - Workspaces — multi-tenant logical containers under one organization for complex business structures
   - Single sign-on (SSO) for enterprise user administration
-  - Service profiles — traffic limits, operator blacklists, IMEI lock, callback configuration per device class
+  - Service profiles — traffic limits, operator blacklists, IMEI lock, callback configuration per device
+    class
   - Tariff profiles — geographic rate plans with per-MB, per-SMS, and per-SIM lifecycle fees
   - Device policies — service and coverage policies applied at the fleet level
   - Bulk endpoint operations (/api/v2/endpoint/multi) for fleet-scale create/update/delete
   - Factory Test Mode (FTM) — 100 KB data and 10 SMS free per SIM for pre-production validation
   - Data plans — fixed allowance, pooled allowance, pay-per-use, and volume commitment
   - Automations and no-code workflows in the Portal (Zapier, event/SMS/application triggers)
-  - >-
-    30+ Portal reports including CDRs, daily usage, live usage, monthly invoiced SIMs, satellite, network activity,
-    global distribution
+  - 30+ Portal reports including CDRs, daily usage, live usage, monthly invoiced SIMs, satellite, network
+    activity, global distribution
   - AWS Transit Gateway Cloud Connect for private VPC breakout; VPN breakout option
   - LTE-M and NB-IoT LPWAN support with Power Save Mode (PSM) and eDRX
   - Two officially supported SDKs (Python and Java) plus public MCP documentation server
@@ -1348,16 +1329,16 @@ common:
   - https://www.emnify.com/plans-and-packages
   updated: '2026-05-25'
 created: '2026-05-25T00:00:00.000Z'
-modified: '2026-05-25'
+modified: '2026-09-16'
 position: Consuming
-description: >-
-  emnify is a cloud-native global IoT cellular connectivity provider operating its own mobile core and SuperNetwork
-  across 540+ MNOs in 190+ countries. emnify supplies SIMs, eUICC-enabled multi-form-factor cards, and Consumer/Advanced
-  eSIM (SGP.32) profiles to enterprise IoT deployments — fleet tracking, EV charging, point-of-sale, smart buildings,
-  micromobility, airline crew tablets, and more. The emnify REST API, GraphQL API, and Data Streamer give programmatic
-  control over SIMs, endpoints, service and tariff profiles, eUICC profile operations, events, SMS, callbacks, and
-  outbound usage/event streaming to S3, Kinesis, and webhooks. NTN-IoT satellite connectivity via Skylo extends coverage
-  beyond terrestrial cellular.
+description: emnify is a cloud-native global IoT cellular connectivity provider operating its own mobile
+  core and SuperNetwork across 540+ MNOs in 190+ countries. emnify supplies SIMs, eUICC-enabled multi-form-factor
+  cards, and Consumer/Advanced eSIM (SGP.32) profiles to enterprise IoT deployments — fleet tracking,
+  EV charging, point-of-sale, smart buildings, micromobility, airline crew tablets, and more. The emnify
+  REST API, GraphQL API, and Data Streamer give programmatic control over SIMs, endpoints, service and
+  tariff profiles, eUICC profile operations, events, SMS, callbacks, and outbound usage/event streaming
+  to S3, Kinesis, and webhooks. NTN-IoT satellite connectivity via Skylo extends coverage beyond terrestrial
+  cellular.
 maintainers:
 - FN: Kin Lane
   email: info@apievangelist.com
