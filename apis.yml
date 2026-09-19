@@ -1091,6 +1091,18 @@ apis:
 name: emnify
 tags:
 - IoT
+- Cellular Connectivity
+- IoT SIM
+- eSIM
+- Consumer eSIM
+- SGP.32
+- M2M
+- NTN-IoT
+- Satellite
+- SuperNetwork
+- Machine-to-Machine
+tags_raw:
+- IoT
 - Internet of Things
 - Cellular Connectivity
 - IoT SIM
