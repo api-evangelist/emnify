@@ -1,11 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: emnify REST subpackage_applicationTokens API
+  title: emnify REST Subpackage Application Tokens API
   version: 1.0.0
-  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
-
-
-    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  description: The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices.
   contact:
     name: emnify Developer Support
     url: https://docs.emnify.com/developers
@@ -63,9 +60,7 @@ paths:
 
         * `expiry_date` with optional time + time zone (String, optional)
 
-        * `ip` - IP Address in CIDR notation (String, optional)
-
-        '
+        * `ip` - IP Address in CIDR notation (String, optional)'
       tags:
       - subpackage_applicationTokens
       parameters:
@@ -86,7 +81,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Application tokens_ApplicationTokenPost_Response_200'
+                $ref: '#/components/schemas/Application_tokens_ApplicationTokenPost_Response_200'
         '422':
           description: Unprocessable Entity. See HTTP response body for details.
           content:
@@ -118,9 +113,7 @@ paths:
 
         * `"id": 0` - Activated
 
-        * `"id": 1` - Revoked
-
-        '
+        * `"id": 1` - Revoked'
       tags:
       - subpackage_applicationTokens
       parameters:
@@ -162,16 +155,10 @@ paths:
                   $ref: '#/components/schemas/ApiV1ApplicationTokenAppTokenIdPatchRequestBodyContentApplicationJsonSchemaStatus'
 components:
   schemas:
-    ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsStatus:
+    ApiV1ApplicationTokenAppTokenIdPatchRequestBodyContentApplicationJsonSchemaStatus:
       type: object
       properties: {}
-      title: ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsStatus
-    Application tokens_ApplicationTokenPost_Response_200:
-      type: object
-      properties:
-        application_token:
-          type: string
-      title: Application tokens_ApplicationTokenPost_Response_200
+      title: ApiV1ApplicationTokenAppTokenIdPatchRequestBodyContentApplicationJsonSchemaStatus
     ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -190,14 +177,6 @@ components:
         creator:
           $ref: '#/components/schemas/ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsCreator'
       title: ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItems
-    ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsCreator:
-      type: object
-      properties: {}
-      title: ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsCreator
-    ApiV1ApplicationTokenAppTokenIdPatchRequestBodyContentApplicationJsonSchemaStatus:
-      type: object
-      properties: {}
-      title: ApiV1ApplicationTokenAppTokenIdPatchRequestBodyContentApplicationJsonSchemaStatus
     ApplicationTokenPostRequestUnprocessableEntityError:
       type: object
       properties:
@@ -208,6 +187,20 @@ components:
         message:
           type: string
       title: ApplicationTokenPostRequestUnprocessableEntityError
+    ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsStatus:
+      type: object
+      properties: {}
+      title: ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsStatus
+    Application_tokens_ApplicationTokenPost_Response_200:
+      type: object
+      properties:
+        application_token:
+          type: string
+      title: Application tokens_ApplicationTokenPost_Response_200
+    ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsCreator:
+      type: object
+      properties: {}
+      title: ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsCreator
   securitySchemes:
     BearerAuth:
       type: http

@@ -1,11 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: emnify REST subpackage_applicationTokens subpackage_customEvents API
+  title: emnify REST Subpackage Custom Events API
   version: 1.0.0
-  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
-
-
-    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  description: The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices.
   contact:
     name: emnify Developer Support
     url: https://docs.emnify.com/developers
@@ -25,9 +22,7 @@ paths:
     get:
       operationId: get-custom-events
       summary: List custom events
-      description: 'Returns a list of all available custom events and their supported targeting options.
-
-        '
+      description: Returns a list of all available custom events and their supported targeting options.
       tags:
       - subpackage_customEvents
       parameters:
@@ -49,9 +44,7 @@ paths:
     post:
       operationId: create-custom-event-instance
       summary: Deploy custom event
-      description: 'Deploys a custom event with the specified configuration.
-
-        '
+      description: Deploys a custom event with the specified configuration.
       tags:
       - subpackage_customEvents
       parameters:
@@ -77,9 +70,7 @@ paths:
     get:
       operationId: get-custom-event
       summary: Get a custom event by ID
-      description: 'Retrieves a specific custom event and its supported targeting options.
-
-        '
+      description: Retrieves a specific custom event and its supported targeting options.
       tags:
       - subpackage_customEvents
       parameters:
@@ -104,9 +95,7 @@ paths:
     delete:
       operationId: delete-custom-event
       summary: Delete custom event
-      description: 'Deletes a custom event with the specified configuration.
-
-        '
+      description: Deletes a custom event with the specified configuration.
       tags:
       - subpackage_customEvents
       parameters:
@@ -127,14 +116,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Custom Events_deleteCustomEvent_Response_200'
+                $ref: '#/components/schemas/Custom_Events_deleteCustomEvent_Response_200'
   /api/v1/event/custom/template:
     get:
       operationId: get-custom-event-templates
       summary: List custom event templates
-      description: 'Returns a list of all available custom event templates and their possible configuration parameters.
-
-        '
+      description: Returns a list of all available custom event templates and their possible configuration parameters.
       tags:
       - subpackage_customEvents
       parameters:
@@ -157,9 +144,7 @@ paths:
     get:
       operationId: get-custom-event-template
       summary: Get a custom event template by ID
-      description: 'Retrieves a specific custom event template and its possible configuration parameters.
-
-        '
+      description: Retrieves a specific custom event template and its possible configuration parameters.
       tags:
       - subpackage_customEvents
       parameters:
@@ -183,6 +168,42 @@ paths:
                 $ref: '#/components/schemas/CustomEventTemplateOutputDto'
 components:
   schemas:
+    ValidatorDto:
+      type: object
+      properties:
+        validator_type:
+          type: string
+        validator_value:
+          type: string
+      required:
+      - validator_type
+      - validator_value
+      title: ValidatorDto
+    ConfigurationPropertiesDto:
+      type: object
+      properties:
+        property:
+          type: string
+        type:
+          type: string
+        default:
+          type: string
+        required:
+          type: boolean
+        description:
+          type: string
+        validators:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidatorDto'
+      required:
+      - property
+      - type
+      - default
+      - required
+      - description
+      - validators
+      title: ConfigurationPropertiesDto
     SupportedTargetingParametersDto:
       type: object
       properties:
@@ -202,67 +223,6 @@ components:
       - description
       - validators
       title: SupportedTargetingParametersDto
-    WithIdInputDto:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-      required:
-      - id
-      title: WithIdInputDto
-    Custom Events_deleteCustomEvent_Response_200:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Custom Events_deleteCustomEvent_Response_200
-    CustomEventTemplateOutputDto:
-      type: object
-      properties:
-        id:
-          type: string
-        parent_organisation:
-          $ref: '#/components/schemas/WithIdInputDto'
-        name:
-          type: string
-        translationKeyName:
-          type: string
-        status:
-          type: string
-        description:
-          type: string
-        translationKeyDescription:
-          type: string
-        configuration_properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConfigurationPropertiesDto'
-        supported_targeting_parameters:
-          type: array
-          items:
-            $ref: '#/components/schemas/SupportedTargetingParametersDto'
-      required:
-      - id
-      - parent_organisation
-      - name
-      - translationKeyName
-      - status
-      - description
-      - translationKeyDescription
-      - configuration_properties
-      - supported_targeting_parameters
-      title: CustomEventTemplateOutputDto
-    ValidatorDto:
-      type: object
-      properties:
-        validator_type:
-          type: string
-        validator_value:
-          type: string
-      required:
-      - validator_type
-      - validator_value
-      title: ValidatorDto
     ConfigurationInputPropertiesDto:
       type: object
       properties:
@@ -311,31 +271,6 @@ components:
       - supportedTargetingParameters
       - supportedActions
       title: CustomEventOutputDto
-    ConfigurationPropertiesDto:
-      type: object
-      properties:
-        property:
-          type: string
-        type:
-          type: string
-        default:
-          type: string
-        required:
-          type: boolean
-        description:
-          type: string
-        validators:
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidatorDto'
-      required:
-      - property
-      - type
-      - default
-      - required
-      - description
-      - validators
-      title: ConfigurationPropertiesDto
     CustomEventCreateDto:
       type: object
       properties:
@@ -355,6 +290,56 @@ components:
       - configuration_properties
       - name
       title: CustomEventCreateDto
+    WithIdInputDto:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: WithIdInputDto
+    CustomEventTemplateOutputDto:
+      type: object
+      properties:
+        id:
+          type: string
+        parent_organisation:
+          $ref: '#/components/schemas/WithIdInputDto'
+        name:
+          type: string
+        translationKeyName:
+          type: string
+        status:
+          type: string
+        description:
+          type: string
+        translationKeyDescription:
+          type: string
+        configuration_properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationPropertiesDto'
+        supported_targeting_parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupportedTargetingParametersDto'
+      required:
+      - id
+      - parent_organisation
+      - name
+      - translationKeyName
+      - status
+      - description
+      - translationKeyDescription
+      - configuration_properties
+      - supported_targeting_parameters
+      title: CustomEventTemplateOutputDto
+    Custom_Events_deleteCustomEvent_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Custom Events_deleteCustomEvent_Response_200
   securitySchemes:
     BearerAuth:
       type: http

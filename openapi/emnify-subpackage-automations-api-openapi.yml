@@ -1,11 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: emnify REST subpackage_applicationTokens subpackage_automations API
+  title: emnify REST Subpackage Automations API
   version: 1.0.0
-  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
-
-
-    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  description: The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices.
   contact:
     name: emnify Developer Support
     url: https://docs.emnify.com/developers
@@ -25,9 +22,7 @@ paths:
     get:
       operationId: list-automations
       summary: List configured automations
-      description: 'Returns a list of all configured automations for the organization.
-
-        '
+      description: Returns a list of all configured automations for the organization.
       tags:
       - subpackage_automations
       parameters:
@@ -49,9 +44,7 @@ paths:
     post:
       operationId: create-automation
       summary: Create an automation
-      description: 'Creates an automation with the configured event and selected actions, respecting the configured targets.
-
-        '
+      description: Creates an automation with the configured event and selected actions, respecting the configured targets.
       tags:
       - subpackage_automations
       parameters:
@@ -79,9 +72,7 @@ paths:
       summary: List available actions
       description: 'Returns a list of all available actions, as well as their possible configuration parameters and required fields.
 
-        Availability depends on the parent organization.
-
-        '
+        Availability depends on the parent organization.'
       tags:
       - subpackage_automations
       parameters:
@@ -106,9 +97,7 @@ paths:
       summary: Get an action by ID
       description: 'Retrieves a specified available actions, as well as the possible configuration parameters and required fields.
 
-        Availability depends on the parent organization.
-
-        '
+        Availability depends on the parent organization.'
       tags:
       - subpackage_automations
       parameters:
@@ -134,9 +123,7 @@ paths:
     get:
       operationId: list-action-logs
       summary: List action logs
-      description: 'Returns a list of all action logs for this organization.
-
-        '
+      description: Returns a list of all action logs for this organization.
       tags:
       - subpackage_automations
       parameters:
@@ -170,9 +157,7 @@ paths:
     post:
       operationId: verify-automation-recipient-email
       summary: Verify an automation recipient's email address
-      description: 'Verifies the email address of an automation recipient using the verification token sent to the recipient via email.
-
-        '
+      description: Verifies the email address of an automation recipient using the verification token sent to the recipient via email.
       tags:
       - subpackage_automations
       parameters:
@@ -198,9 +183,7 @@ paths:
     get:
       operationId: get-automation
       summary: Get configured automation by ID
-      description: 'Retrieves the specified configured automation.
-
-        '
+      description: Retrieves the specified configured automation.
       tags:
       - subpackage_automations
       parameters:
@@ -225,9 +208,7 @@ paths:
     delete:
       operationId: delete-automation
       summary: Delete a configured automation
-      description: 'Deletes the specified configured automation.
-
-        '
+      description: Deletes the specified configured automation.
       tags:
       - subpackage_automations
       parameters:
@@ -253,9 +234,7 @@ paths:
     patch:
       operationId: update-automation
       summary: Update an automation
-      description: 'Updates an automation with the configured event and selected actions, respecting the configured targets.
-
-        '
+      description: Updates an automation with the configured event and selected actions, respecting the configured targets.
       tags:
       - subpackage_automations
       parameters:
@@ -284,29 +263,16 @@ paths:
               $ref: '#/components/schemas/AutomationUpdateDto'
 components:
   schemas:
-    ConfiguredActionCreateDto:
+    ConfiguredActionRecipientOutputDto:
       type: object
       properties:
-        action:
-          $ref: '#/components/schemas/ConfiguredActionReferenceDto'
-        properties:
+        email:
           type: array
           items:
-            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
+            type: string
       required:
-      - action
-      - properties
-      title: ConfiguredActionCreateDto
-    ConfiguredActionReferenceDto:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-      required:
-      - id
-      title: ConfiguredActionReferenceDto
+      - email
+      title: ConfiguredActionRecipientOutputDto
     ConfigurationInputPropertiesDto:
       type: object
       properties:
@@ -323,31 +289,14 @@ components:
       - value
       - value_array
       title: ConfigurationInputPropertiesDto
-    ActionableEventOutputDto:
+    WithUuidInputDto:
       type: object
       properties:
-        custom_event:
-          $ref: '#/components/schemas/CustomEventOutputDto'
-        system_event:
-          $ref: '#/components/schemas/SystemEventOutputDto'
-      required:
-      - custom_event
-      - system_event
-      title: ActionableEventOutputDto
-    ConfigurationParameterDto:
-      type: object
-      properties:
-        parameter:
-          type: string
-        type:
-          type: string
-        description:
+        id:
           type: string
       required:
-      - parameter
-      - type
-      - description
-      title: ConfigurationParameterDto
+      - id
+      title: WithUuidInputDto
     AutomationCreateDto:
       type: object
       properties:
@@ -375,20 +324,30 @@ components:
       - configured_actions
       - targeting_properties
       title: AutomationCreateDto
-    WithIdInputDto:
+    AutomationUpdateDto:
       type: object
       properties:
-        id:
-          type: number
-          format: double
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+        configured_actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfiguredActionCreateDto'
+        targeting_properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
       required:
-      - id
-      title: WithIdInputDto
-    Automations_verifyAutomationRecipientEmail_Response_200:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Automations_verifyAutomationRecipientEmail_Response_200
+      - name
+      - description
+      - status
+      - configured_actions
+      - targeting_properties
+      title: AutomationUpdateDto
     AutomationOutputDto:
       type: object
       properties:
@@ -435,6 +394,95 @@ components:
       - configured_actions
       - targeting_properties
       title: AutomationOutputDto
+    ConfiguredActionOutputDto:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/WithUuidInputDto'
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
+        recipients:
+          $ref: '#/components/schemas/ConfiguredActionRecipientOutputDto'
+          description: 'Details of the email notification recipients configured for the action.
+
+            '
+      required:
+      - action
+      - properties
+      - recipients
+      title: ConfiguredActionOutputDto
+    ActionableEventCreateDto:
+      type: object
+      properties:
+        custom_event:
+          $ref: '#/components/schemas/WithUuidInputDto'
+        system_event:
+          $ref: '#/components/schemas/WithUuidInputDto'
+      required:
+      - custom_event
+      - system_event
+      title: ActionableEventCreateDto
+    WithStringIdInputDto:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+      - id
+      title: WithStringIdInputDto
+    ActionableEventOutputDto:
+      type: object
+      properties:
+        custom_event:
+          $ref: '#/components/schemas/CustomEventOutputDto'
+        system_event:
+          $ref: '#/components/schemas/SystemEventOutputDto'
+      required:
+      - custom_event
+      - system_event
+      title: ActionableEventOutputDto
+    Automations_verifyAutomationRecipientEmail_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Automations_verifyAutomationRecipientEmail_Response_200
+    ConfigurationParameterDto:
+      type: object
+      properties:
+        parameter:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+      required:
+      - parameter
+      - type
+      - description
+      title: ConfigurationParameterDto
+    ConfiguredActionCreateDto:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/ConfiguredActionReferenceDto'
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
+      required:
+      - action
+      - properties
+      title: ConfiguredActionCreateDto
+    AutomationRecipientEmailVerificationInputDto:
+      type: object
+      properties:
+        token:
+          type: string
+      required:
+      - token
+      title: AutomationRecipientEmailVerificationInputDto
     AutomationActionOutputDto:
       type: object
       properties:
@@ -471,33 +519,48 @@ components:
       - translationKeyDescription
       - requiredEventOutputParameters
       title: AutomationActionOutputDto
-    WithUuidInputDto:
+    CustomEventOutputDto:
+      type: object
+      properties:
+        organisation:
+          $ref: '#/components/schemas/WithIdInputDto'
+        template:
+          $ref: '#/components/schemas/WithIdInputDto'
+        configuration_properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
+        name:
+          type: string
+        id:
+          type: string
+        supportedTargetingParameters:
+          type: array
+          items:
+            type: string
+        supportedActions:
+          type: array
+          items:
+            type: string
+      required:
+      - organisation
+      - template
+      - configuration_properties
+      - name
+      - id
+      - supportedTargetingParameters
+      - supportedActions
+      title: CustomEventOutputDto
+    ConfiguredActionReferenceDto:
       type: object
       properties:
         id:
           type: string
-      required:
-      - id
-      title: WithUuidInputDto
-    AutomationRecipientEmailVerificationInputDto:
-      type: object
-      properties:
-        token:
+        type:
           type: string
       required:
-      - token
-      title: AutomationRecipientEmailVerificationInputDto
-    ActionableEventCreateDto:
-      type: object
-      properties:
-        custom_event:
-          $ref: '#/components/schemas/WithUuidInputDto'
-        system_event:
-          $ref: '#/components/schemas/WithUuidInputDto'
-      required:
-      - custom_event
-      - system_event
-      title: ActionableEventCreateDto
+      - id
+      title: ConfiguredActionReferenceDto
     SystemEventOutputDto:
       type: object
       properties:
@@ -539,25 +602,6 @@ components:
       - eventOutputParameters
       - supportedActions
       title: SystemEventOutputDto
-    ConfiguredActionOutputDto:
-      type: object
-      properties:
-        action:
-          $ref: '#/components/schemas/WithUuidInputDto'
-        properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
-        recipients:
-          $ref: '#/components/schemas/ConfiguredActionRecipientOutputDto'
-          description: 'Details of the email notification recipients configured for the action.
-
-            '
-      required:
-      - action
-      - properties
-      - recipients
-      title: ConfiguredActionOutputDto
     AutomationActionLogOutputDto:
       type: object
       properties:
@@ -594,80 +638,15 @@ components:
       - organisation
       - id
       title: AutomationActionLogOutputDto
-    CustomEventOutputDto:
-      type: object
-      properties:
-        organisation:
-          $ref: '#/components/schemas/WithIdInputDto'
-        template:
-          $ref: '#/components/schemas/WithIdInputDto'
-        configuration_properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
-        name:
-          type: string
-        id:
-          type: string
-        supportedTargetingParameters:
-          type: array
-          items:
-            type: string
-        supportedActions:
-          type: array
-          items:
-            type: string
-      required:
-      - organisation
-      - template
-      - configuration_properties
-      - name
-      - id
-      - supportedTargetingParameters
-      - supportedActions
-      title: CustomEventOutputDto
-    WithStringIdInputDto:
+    WithIdInputDto:
       type: object
       properties:
         id:
-          type: string
+          type: number
+          format: double
       required:
       - id
-      title: WithStringIdInputDto
-    ConfiguredActionRecipientOutputDto:
-      type: object
-      properties:
-        email:
-          type: array
-          items:
-            type: string
-      required:
-      - email
-      title: ConfiguredActionRecipientOutputDto
-    AutomationUpdateDto:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        status:
-          type: string
-        configured_actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConfiguredActionCreateDto'
-        targeting_properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
-      required:
-      - name
-      - description
-      - status
-      - configured_actions
-      - targeting_properties
-      title: AutomationUpdateDto
+      title: WithIdInputDto
   securitySchemes:
     BearerAuth:
       type: http

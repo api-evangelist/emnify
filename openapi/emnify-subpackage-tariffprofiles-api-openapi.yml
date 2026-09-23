@@ -1,11 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: emnify REST subpackage_applicationTokens subpackage_tariffProfiles API
+  title: emnify REST Subpackage Tariff Profiles API
   version: 1.0.0
-  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
-
-
-    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  description: The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices.
   contact:
     name: emnify Developer Support
     url: https://docs.emnify.com/developers
@@ -63,9 +60,7 @@ paths:
 
         * `description` (String optional)
 
-        * `tariff` (Object required)
-
-        '
+        * `tariff` (Object required)'
       tags:
       - subpackage_tariffProfiles
       parameters:
@@ -86,7 +81,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Tariff Profiles_TariffProfilePost_Response_201'
+                $ref: '#/components/schemas/Tariff_Profiles_TariffProfilePost_Response_201'
       requestBody:
         content:
           application/json:
@@ -109,9 +104,7 @@ paths:
       summary: Tariff profile details
       description: 'Returns tariff profile specified by id. This tariff profile also contains information about the currently valid ratezones of the tariff in the tariff profile and if the ratezone is selected in the tariff profile.
 
-        It also contains applied custom rates for the included tariffs.
-
-        '
+        It also contains applied custom rates for the included tariffs.'
       tags:
       - subpackage_tariffProfiles
       parameters:
@@ -137,7 +130,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Tariff Profiles_TariffProfileByIdGet_Response_200'
+                $ref: '#/components/schemas/Tariff_Profiles_TariffProfileByIdGet_Response_200'
     delete:
       operationId: tariff-profile-by-id-delete
       summary: Delete tariff profile
@@ -172,7 +165,22 @@ paths:
     patch:
       operationId: tariff-profile-by-id-patch
       summary: Update tariff profile
-      description: "Patch the specified tariff profile.\n\n<Warning>\n  The API doesn't provide feedback if you assign an incompatible tariff profile to a SIM.\n  See [Tariff profile](/developers/reference/tariff-profile) for more information.\n</Warning>\n\nYou can provide following fields with this request:\n\n* `name` (String optional)\n* `description` (String optional)\n* `tariff` (Object optional) If the tariff is changed, all selections of ratezones are removed.\n"
+      description: 'Patch the specified tariff profile.
+
+
+        The API doesn''t provide feedback if you assign an incompatible tariff profile to a SIM.
+
+        See Tariff profile for more information.
+
+
+        You can provide following fields with this request:
+
+
+        * `name` (String optional)
+
+        * `description` (String optional)
+
+        * `tariff` (Object optional) If the tariff is changed, all selections of ratezones are removed.'
       tags:
       - subpackage_tariffProfiles
       parameters:
@@ -262,9 +270,7 @@ paths:
 
         The selected inclusive volume must not be expired and the tariff profile should not have an inclusive volume assigned yet.
 
-        The tariff of the tariff profile and the inclusive volume ratezone have to match.
-
-        '
+        The tariff of the tariff profile and the inclusive volume ratezone have to match.'
       tags:
       - subpackage_tariffProfiles
       parameters:
@@ -320,9 +326,7 @@ paths:
       summary: Unassign inclusive volume from tariff profile
       description: 'Unassign the inclusive volume from the selected tariff profile. If the customer has multiple active inclusive volume, the traffic within that tariff profile
 
-        will be rated as "Pay As You Go" afterwards.
-
-        '
+        will be rated as "Pay As You Go" afterwards.'
       tags:
       - subpackage_tariffProfiles
       parameters:
@@ -470,7 +474,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Tariff Profiles_TariffProfileOperatorBlockListOperatorGet_Response_200'
+                $ref: '#/components/schemas/Tariff_Profiles_TariffProfileOperatorBlockListOperatorGet_Response_200'
   /api/v2/tariff_profile/{tariff_profile_id}/operator_blocklist/operator/{operator_id}:
     get:
       operationId: tariff-profile-operator-block-operator-by-id-get
@@ -506,11 +510,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Tariff Profiles_TariffProfileOperatorBlockOperatorByIDGet_Response_200'
+                $ref: '#/components/schemas/Tariff_Profiles_TariffProfileOperatorBlockOperatorByIDGet_Response_200'
     put:
       operationId: tariff-profile-operator-block-operator-by-id-put
       summary: Block the operator completely for a given tariff profile
-      description: "Block the operator completely.\nIf there are already specific RAT types blocklisted, those entries **aren't** overridden.\n\n<Info>\n  You don't need a request body for this operation.\n</Info>\n"
+      description: 'Block the operator completely.
+
+        If there are already specific RAT types blocklisted, those entries **aren''t** overridden.
+
+
+        You don''t need a request body for this operation.'
       tags:
       - subpackage_tariffProfiles
       parameters:
@@ -548,9 +557,7 @@ paths:
       summary: Remove an operator from the blocklist
       description: 'Removes a specific operator from the blocklist of a given tariff profile.
 
-        If there are already specific RAT types blocklisted, the entries will NOT be overridden.
-
-        '
+        If there are already specific RAT types blocklisted, the entries will NOT be overridden.'
       tags:
       - subpackage_tariffProfiles
       parameters:
@@ -589,9 +596,7 @@ paths:
       summary: Block specific RAT types
       description: 'Add a specific operator to the blocklist of a given tariff profile.
 
-        If the operator is already blocked completely, it is still possible to block specific RAT types.
-
-        '
+        If the operator is already blocked completely, it is still possible to block specific RAT types.'
       tags:
       - subpackage_tariffProfiles
       parameters:
@@ -680,189 +685,10 @@ paths:
                 properties: {}
 components:
   schemas:
-    ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaOperator:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaOperator
-    ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaBlocklist:
-      type: object
-      properties:
-        operator:
-          type: boolean
-          description: Will return true if the operator is blocked completely
-        rat_types:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaBlocklistRatTypesItems'
-      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaBlocklist
-    ? ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdRatTypePostRequestBodyContentApplicationJsonSchemaRatTypesItems
-    : type: object
-      properties:
-        id:
-          type: integer
-      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdRatTypePostRequestBodyContentApplicationJsonSchemaRatTypesItems
-    ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaTariffProfile:
-      type: object
-      properties:
-        id:
-          type: integer
-      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaTariffProfile
-    ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolumeCurrency:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        code:
-          type: string
-        symbol:
-          type: string
-      title: ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolumeCurrency
-    ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaInclusiveVolumeCurrency:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        code:
-          type: string
-        symbol:
-          type: string
-      title: ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaInclusiveVolumeCurrency
-    ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariffCurrency:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariffCurrencyId'
-        code:
-          type: string
-        symbol:
-          type: string
-      title: ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariffCurrency
-    ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolume:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        volume:
-          type: number
-          format: double
-        rate:
-          type: number
-          format: double
-        pooled:
-          type: boolean
-        start_date:
-          type: string
-        end_date:
-          type: string
-        ratezone:
-          $ref: '#/components/schemas/ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolumeRatezone'
-        currency:
-          $ref: '#/components/schemas/ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolumeCurrency'
-      description: If there is an inclusive volume assigned to the tariff profile, the details will be returned within this object
-      title: ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolume
-    ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaBlocklist:
-      type: object
-      properties:
-        operator:
-          type: boolean
-          description: Will return true if the operator is blocked completely
-        rat_types:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaBlocklistRatTypesItems'
-      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaBlocklist
-    Tariff Profiles_TariffProfileOperatorBlockListOperatorGet_Response_200:
-      type: object
-      properties:
-        operator:
-          $ref: '#/components/schemas/ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaOperator'
-        tariff_profile:
-          $ref: '#/components/schemas/ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaTariffProfile'
-        blocklist:
-          $ref: '#/components/schemas/ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaBlocklist'
-      title: Tariff Profiles_TariffProfileOperatorBlockListOperatorGet_Response_200
-    ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaTariffProfile:
-      type: object
-      properties:
-        id:
-          type: integer
-      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaTariffProfile
-    Tariff Profiles_TariffProfilePost_Response_201:
+    ApiV1TariffProfileTariffProfileIdPatchRequestBodyContentApplicationJsonSchemaTariff:
       type: object
       properties: {}
-      description: Empty response body
-      title: Tariff Profiles_TariffProfilePost_Response_201
-    ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsTariff:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        organisation_id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        created:
-          type: string
-        tariff_status_id:
-          type: string
-        currency_id:
-          type: string
-        default_sms_mt_rate:
-          type: number
-          format: double
-        default_sms_mo_rate:
-          type: number
-          format: double
-        sim_issued_rate:
-          type: number
-          format: double
-        sim_activated_rate:
-          type: number
-          format: double
-        sim_suspended_rate:
-          type: number
-          format: double
-        sim_activation_rate:
-          type: number
-          format: double
-        sim_reactivation_rate:
-          type: number
-          format: double
-        sim_suspension_rate:
-          type: number
-          format: double
-        sim_termination_rate:
-          type: number
-          format: double
-        data_throttle_id:
-          type: string
-        data_blocksize_id:
-          type: string
-        public:
-          type: string
-        tariff_category_id:
-          type: string
-        visibility_id:
-          type: string
-        tariff_currency_category_id:
-          type: string
-        used_count:
-          type: string
-        assigned_count:
-          type: string
-        currency:
-          $ref: '#/components/schemas/ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsTariffCurrency'
-      title: ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsTariff
+      title: ApiV1TariffProfileTariffProfileIdPatchRequestBodyContentApplicationJsonSchemaTariff
     ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsTariffCurrency:
       type: object
       properties:
@@ -873,18 +699,16 @@ components:
         symbol:
           type: string
       title: ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsTariffCurrency
-    ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsTariffCurrencyId:
-      type: object
-      properties: {}
-      title: ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsTariffCurrencyId
-    ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaBlocklistRatTypesItems:
+    ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaTariffProfile:
       type: object
       properties:
         id:
           type: integer
-        description:
-          type: string
-      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaBlocklistRatTypesItems
+      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaTariffProfile
+    ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariffCurrencyId:
+      type: object
+      properties: {}
+      title: ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariffCurrencyId
     ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolumeRatezone:
       type: object
       properties:
@@ -894,14 +718,6 @@ components:
         name:
           type: string
       title: ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolumeRatezone
-    ? ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaBlocklistRatTypesItems
-    : type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaBlocklistRatTypesItems
     ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -922,6 +738,14 @@ components:
           $ref: '#/components/schemas/ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolume'
           description: If there is an inclusive volume assigned to the tariff profile, the details will be returned within this object
       title: ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItems
+    ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaOperator:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaOperator
     ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariff:
       type: object
       properties:
@@ -986,55 +810,117 @@ components:
         currency:
           $ref: '#/components/schemas/ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariffCurrency'
       title: ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariff
-    ApiV1TariffProfileTariffProfileIdCoverageGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        country:
-          $ref: '#/components/schemas/ApiV1TariffProfileTariffProfileIdCoverageGetResponsesContentApplicationJsonSchemaItemsCountry'
-        redundancy_count:
-          type: integer
-      title: ApiV1TariffProfileTariffProfileIdCoverageGetResponsesContentApplicationJsonSchemaItems
-    ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaOperator:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaOperator
-    ApiV1TariffProfileTariffProfileIdCoverageGetResponsesContentApplicationJsonSchemaItemsCountry:
-      type: object
-      properties: {}
-      title: ApiV1TariffProfileTariffProfileIdCoverageGetResponsesContentApplicationJsonSchemaItemsCountry
-    Tariff Profiles_TariffProfileByIdGet_Response_200:
+    ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolume:
       type: object
       properties:
         id:
           type: number
           format: double
+        volume:
+          type: number
+          format: double
+        rate:
+          type: number
+          format: double
+        pooled:
+          type: boolean
+        start_date:
+          type: string
+        end_date:
+          type: string
+        ratezone:
+          $ref: '#/components/schemas/ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolumeRatezone'
+        currency:
+          $ref: '#/components/schemas/ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolumeCurrency'
+      description: If there is an inclusive volume assigned to the tariff profile, the details will be returned within this object
+      title: ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolume
+    ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsTariff:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        organisation_id:
+          type: string
         name:
           type: string
         description:
           type: string
+        created:
+          type: string
+        tariff_status_id:
+          type: string
+        currency_id:
+          type: string
+        default_sms_mt_rate:
+          type: number
+          format: double
+        default_sms_mo_rate:
+          type: number
+          format: double
+        sim_issued_rate:
+          type: number
+          format: double
+        sim_activated_rate:
+          type: number
+          format: double
+        sim_suspended_rate:
+          type: number
+          format: double
+        sim_activation_rate:
+          type: number
+          format: double
+        sim_reactivation_rate:
+          type: number
+          format: double
+        sim_suspension_rate:
+          type: number
+          format: double
+        sim_termination_rate:
+          type: number
+          format: double
+        data_throttle_id:
+          type: string
+        data_blocksize_id:
+          type: string
+        public:
+          type: string
+        tariff_category_id:
+          type: string
+        visibility_id:
+          type: string
+        tariff_currency_category_id:
+          type: string
         used_count:
           type: string
-        organisation_id:
+        assigned_count:
           type: string
-        tariff:
-          $ref: '#/components/schemas/ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariff'
-        inclusive_volume:
-          $ref: '#/components/schemas/ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaInclusiveVolume'
-          description: If there is an inclusive volume assigned to the tariff profile, the details will be returned within this object
-      title: Tariff Profiles_TariffProfileByIdGet_Response_200
-    ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariffCurrencyId:
+        currency:
+          $ref: '#/components/schemas/ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsTariffCurrency'
+      title: ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsTariff
+    ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaBlocklist:
       type: object
-      properties: {}
-      title: ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariffCurrencyId
-    ApiV1TariffProfilePostRequestBodyContentApplicationJsonSchemaTariff:
+      properties:
+        operator:
+          type: boolean
+          description: Will return true if the operator is blocked completely
+        rat_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaBlocklistRatTypesItems'
+      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaBlocklist
+    ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaBlocklist:
       type: object
-      properties: {}
-      title: ApiV1TariffProfilePostRequestBodyContentApplicationJsonSchemaTariff
-    Tariff Profiles_TariffProfileOperatorBlockOperatorByIDGet_Response_200:
+      properties:
+        operator:
+          type: boolean
+          description: Will return true if the operator is blocked completely
+        rat_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaBlocklistRatTypesItems'
+      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaBlocklist
+    Tariff_Profiles_TariffProfileOperatorBlockOperatorByIDGet_Response_200:
       type: object
       properties:
         operator:
@@ -1044,10 +930,14 @@ components:
         blocklist:
           $ref: '#/components/schemas/ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaBlocklist'
       title: Tariff Profiles_TariffProfileOperatorBlockOperatorByIDGet_Response_200
-    ApiV1TariffProfileTariffProfileIdPatchRequestBodyContentApplicationJsonSchemaTariff:
+    ApiV1TariffProfileTariffProfileIdCoverageGetResponsesContentApplicationJsonSchemaItems:
       type: object
-      properties: {}
-      title: ApiV1TariffProfileTariffProfileIdPatchRequestBodyContentApplicationJsonSchemaTariff
+      properties:
+        country:
+          $ref: '#/components/schemas/ApiV1TariffProfileTariffProfileIdCoverageGetResponsesContentApplicationJsonSchemaItemsCountry'
+        redundancy_count:
+          type: integer
+      title: ApiV1TariffProfileTariffProfileIdCoverageGetResponsesContentApplicationJsonSchemaItems
     ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaInclusiveVolumeRatezone:
       type: object
       properties:
@@ -1057,6 +947,62 @@ components:
         name:
           type: string
       title: ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaInclusiveVolumeRatezone
+    ? ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdRatTypePostRequestBodyContentApplicationJsonSchemaRatTypesItems
+    : type: object
+      properties:
+        id:
+          type: integer
+      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdRatTypePostRequestBodyContentApplicationJsonSchemaRatTypesItems
+    ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaInclusiveVolumeCurrency:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        code:
+          type: string
+        symbol:
+          type: string
+      title: ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaInclusiveVolumeCurrency
+    ApiV1TariffProfileTariffProfileIdCoverageGetResponsesContentApplicationJsonSchemaItemsCountry:
+      type: object
+      properties: {}
+      title: ApiV1TariffProfileTariffProfileIdCoverageGetResponsesContentApplicationJsonSchemaItemsCountry
+    Tariff_Profiles_TariffProfileOperatorBlockListOperatorGet_Response_200:
+      type: object
+      properties:
+        operator:
+          $ref: '#/components/schemas/ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaOperator'
+        tariff_profile:
+          $ref: '#/components/schemas/ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaTariffProfile'
+        blocklist:
+          $ref: '#/components/schemas/ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaBlocklist'
+      title: Tariff Profiles_TariffProfileOperatorBlockListOperatorGet_Response_200
+    ApiV1TariffProfilePostRequestBodyContentApplicationJsonSchemaTariff:
+      type: object
+      properties: {}
+      title: ApiV1TariffProfilePostRequestBodyContentApplicationJsonSchemaTariff
+    ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolumeCurrency:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        code:
+          type: string
+        symbol:
+          type: string
+      title: ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsInclusiveVolumeCurrency
+    ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariffCurrency:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariffCurrencyId'
+        code:
+          type: string
+        symbol:
+          type: string
+      title: ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariffCurrency
     ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaInclusiveVolume:
       type: object
       properties:
@@ -1081,6 +1027,65 @@ components:
           $ref: '#/components/schemas/ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaInclusiveVolumeCurrency'
       description: If there is an inclusive volume assigned to the tariff profile, the details will be returned within this object
       title: ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaInclusiveVolume
+    Tariff_Profiles_TariffProfilePost_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Tariff Profiles_TariffProfilePost_Response_201
+    ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaOperator:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaOperator
+    ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaTariffProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaTariffProfile
+    ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsTariffCurrencyId:
+      type: object
+      properties: {}
+      title: ApiV1TariffProfileGetResponsesContentApplicationJsonSchemaItemsTariffCurrencyId
+    Tariff_Profiles_TariffProfileByIdGet_Response_200:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+        description:
+          type: string
+        used_count:
+          type: string
+        organisation_id:
+          type: string
+        tariff:
+          $ref: '#/components/schemas/ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaTariff'
+        inclusive_volume:
+          $ref: '#/components/schemas/ApiV1TariffProfileTariffProfileIdGetResponsesContentApplicationJsonSchemaInclusiveVolume'
+          description: If there is an inclusive volume assigned to the tariff profile, the details will be returned within this object
+      title: Tariff Profiles_TariffProfileByIdGet_Response_200
+    ? ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaBlocklistRatTypesItems
+    : type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorOperatorIdGetResponsesContentApplicationJsonSchemaBlocklistRatTypesItems
+    ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaBlocklistRatTypesItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ApiV2TariffProfileTariffProfileIdOperatorBlocklistOperatorGetResponsesContentApplicationJsonSchemaBlocklistRatTypesItems
   securitySchemes:
     BearerAuth:
       type: http

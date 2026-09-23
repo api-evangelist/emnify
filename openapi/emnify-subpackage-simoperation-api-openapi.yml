@@ -1,11 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: emnify REST subpackage_applicationTokens subpackage_simOperation API
+  title: emnify REST Subpackage Sim Operation API
   version: 1.0.0
-  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
-
-
-    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  description: The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices.
   contact:
     name: emnify Developer Support
     url: https://docs.emnify.com/developers
@@ -25,9 +22,7 @@ paths:
     get:
       operationId: list-sim-operation
       summary: List SIM operations for organization
-      description: 'List all SIM operations for your organization.
-
-        '
+      description: List all SIM operations for your organization.
       tags:
       - subpackage_simOperation
       parameters:
@@ -133,9 +128,7 @@ paths:
     post:
       operationId: trigger-sim-operation
       summary: Trigger SIM operation
-      description: 'Trigger a SIM operation.
-
-        '
+      description: Trigger a SIM operation.
       tags:
       - subpackage_simOperation
       parameters:
@@ -195,9 +188,7 @@ paths:
     get:
       operationId: list-sim-operation-action
       summary: List SIM operation actions
-      description: 'List possible SIM operation action objects used in responses and requests.
-
-        '
+      description: List possible SIM operation action objects used in responses and requests.
       tags:
       - subpackage_simOperation
       parameters:
@@ -242,9 +233,7 @@ paths:
     get:
       operationId: list-sim-operation-status
       summary: List SIM operation status
-      description: 'List possible SIM operation status objects used in responses.
-
-        '
+      description: List possible SIM operation status objects used in responses.
       tags:
       - subpackage_simOperation
       parameters:
@@ -289,9 +278,7 @@ paths:
     get:
       operationId: get-sim-operation
       summary: Get SIM operation details
-      description: 'Get details of a specific SIM operation.
-
-        '
+      description: Get details of a specific SIM operation.
       tags:
       - subpackage_simOperation
       parameters:
@@ -344,6 +331,14 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    SimOperationResponseTargetSim:
+      type: object
+      properties:
+        id:
+          type: integer
+      required:
+      - id
+      title: SimOperationResponseTargetSim
     SimOperationResponseTarget:
       type: object
       properties:
@@ -354,6 +349,100 @@ components:
       required:
       - sim
       title: SimOperationResponseTarget
+    Eid:
+      type: string
+      title: Eid
+    OperationAction:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      required:
+      - id
+      - description
+      title: OperationAction
+    ProductRef:
+      type: object
+      properties:
+        id:
+          type: integer
+      required:
+      - id
+      title: ProductRef
+    Error:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      required:
+      - status_code
+      - message
+      title: Error
+    OperationStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      required:
+      - id
+      - description
+      title: OperationStatus
+    SimOperationRequestTargetSim:
+      type: object
+      properties:
+        id:
+          type: integer
+      required:
+      - id
+      title: SimOperationRequestTargetSim
+    SimOperationResponseErrorItems:
+      type: object
+      properties:
+        eid:
+          $ref: '#/components/schemas/Eid'
+        message:
+          type: string
+      required:
+      - eid
+      - message
+      title: SimOperationResponseErrorItems
+    SimOperationRequest:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/SimOperationActionRef'
+        product:
+          $ref: '#/components/schemas/ProductRef'
+        target:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimOperationRequestTarget'
+      required:
+      - action
+      - target
+      title: SimOperationRequest
+    SimOperationActionRef:
+      type: object
+      properties:
+        id:
+          type: integer
+      required:
+      - id
+      title: SimOperationActionRef
+    SimOperationRequestTarget:
+      type: object
+      properties:
+        sim:
+          $ref: '#/components/schemas/SimOperationRequestTargetSim'
+        eid:
+          $ref: '#/components/schemas/Eid'
+      title: SimOperationRequestTarget
     SimOperationResponse:
       type: object
       properties:
@@ -399,108 +488,6 @@ components:
       - creation_date
       - last_updated_at
       title: SimOperationResponse
-    SimOperationActionRef:
-      type: object
-      properties:
-        id:
-          type: integer
-      required:
-      - id
-      title: SimOperationActionRef
-    Error:
-      type: object
-      properties:
-        status_code:
-          type: integer
-        message:
-          type: string
-      required:
-      - status_code
-      - message
-      title: Error
-    SimOperationResponseTargetSim:
-      type: object
-      properties:
-        id:
-          type: integer
-      required:
-      - id
-      title: SimOperationResponseTargetSim
-    OperationStatus:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      required:
-      - id
-      - description
-      title: OperationStatus
-    SimOperationRequestTargetSim:
-      type: object
-      properties:
-        id:
-          type: integer
-      required:
-      - id
-      title: SimOperationRequestTargetSim
-    OperationAction:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      required:
-      - id
-      - description
-      title: OperationAction
-    ProductRef:
-      type: object
-      properties:
-        id:
-          type: integer
-      required:
-      - id
-      title: ProductRef
-    SimOperationResponseErrorItems:
-      type: object
-      properties:
-        eid:
-          $ref: '#/components/schemas/Eid'
-        message:
-          type: string
-      required:
-      - eid
-      - message
-      title: SimOperationResponseErrorItems
-    SimOperationRequest:
-      type: object
-      properties:
-        action:
-          $ref: '#/components/schemas/SimOperationActionRef'
-        product:
-          $ref: '#/components/schemas/ProductRef'
-        target:
-          type: array
-          items:
-            $ref: '#/components/schemas/SimOperationRequestTarget'
-      required:
-      - action
-      - target
-      title: SimOperationRequest
-    Eid:
-      type: string
-      title: Eid
-    SimOperationRequestTarget:
-      type: object
-      properties:
-        sim:
-          $ref: '#/components/schemas/SimOperationRequestTargetSim'
-        eid:
-          $ref: '#/components/schemas/Eid'
-      title: SimOperationRequestTarget
   securitySchemes:
     BearerAuth:
       type: http

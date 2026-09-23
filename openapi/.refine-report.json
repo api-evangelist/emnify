@@ -1,32 +1,7 @@
 {
   "provider": "emnify",
   "sources": [
-    "emnify-subpackage-applicationtokens-api-openapi.yml",
-    "emnify-subpackage-authentication-api-openapi.yml",
-    "emnify-subpackage-automations-api-openapi.yml",
-    "emnify-subpackage-cloudconnect-api-openapi.yml",
-    "emnify-subpackage-customevents-api-openapi.yml",
-    "emnify-subpackage-endpoint-api-openapi.yml",
-    "emnify-subpackage-euicc-api-openapi.yml",
-    "emnify-subpackage-euiccoperation-api-openapi.yml",
-    "emnify-subpackage-events-api-openapi.yml",
-    "emnify-subpackage-integrations-api-openapi.yml",
-    "emnify-subpackage-ipaddressspaces-api-openapi.yml",
-    "emnify-subpackage-lookups-api-openapi.yml",
-    "emnify-subpackage-operator-api-openapi.yml",
-    "emnify-subpackage-organization-api-openapi.yml",
-    "emnify-subpackage-passwordmanagementandactivation-api-openapi.yml",
-    "emnify-subpackage-servicelookupsandconfiguration-api-openapi.yml",
-    "emnify-subpackage-serviceprofiles-api-openapi.yml",
-    "emnify-subpackage-sim-api-openapi.yml",
-    "emnify-subpackage-simoperation-api-openapi.yml",
-    "emnify-subpackage-simunlinkedproductstatistics-api-openapi.yml",
-    "emnify-subpackage-systemevents-api-openapi.yml",
-    "emnify-subpackage-tagmanagement-api-openapi.yml",
-    "emnify-subpackage-tariffplans-api-openapi.yml",
-    "emnify-subpackage-tariffprofiles-api-openapi.yml",
-    "emnify-subpackage-usermanagement-api-openapi.yml",
-    "emnify-subpackage-workspaces-api-openapi.yml"
+    "_original/emnify-api-openapi.yml"
   ],
   "outputs": [
     "emnify-subpackage-applicationtokens-api-openapi.yml",
@@ -59,6 +34,37 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "emnify-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0; renamed 32 component key(s) illegal in 3.x (e.g. Application tokens_ApplicationTokenPost_Response_200)",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "emnify-subpackage-applicationtokens-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-automations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-cloudconnect-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-customevents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-endpoint-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-euicc-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-euiccoperation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-integrations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-ipaddressspaces-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-lookups-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-operator-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-organization-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-passwordmanagementandactivation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-servicelookupsandconfiguration-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-serviceprofiles-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-sim-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-simoperation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-simunlinkedproductstatistics-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-systemevents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-tagmanagement-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-tariffplans-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-tariffprofiles-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-usermanagement-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "emnify-subpackage-workspaces-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

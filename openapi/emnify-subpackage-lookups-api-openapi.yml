@@ -1,11 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: emnify REST subpackage_applicationTokens subpackage_lookups API
+  title: emnify REST Subpackage Lookups API
   version: 1.0.0
-  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
-
-
-    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  description: The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices.
   contact:
     name: emnify Developer Support
     url: https://docs.emnify.com/developers
@@ -203,9 +200,7 @@ paths:
     get:
       operationId: rat-type
       summary: List RAT types
-      description: 'Returns a list of supported RAT types.
-
-        '
+      description: Returns a list of supported RAT types.
       tags:
       - subpackage_lookups
       parameters:
@@ -237,9 +232,7 @@ paths:
 
         For non-enterprise organisations, only own service levels will be returned.
 
-        For enterprise organisations, only the service levels of the parent organisation will be returned.
-
-        '
+        For enterprise organisations, only the service levels of the parent organisation will be returned.'
       tags:
       - subpackage_lookups
       parameters:
@@ -265,6 +258,25 @@ paths:
                   $ref: '#/components/schemas/ApiV1ServiceLevelGetResponsesContentApplicationJsonSchemaItems'
 components:
   schemas:
+    ApiV1DataThrottleGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        octets:
+          type: string
+        description:
+          type: string
+      title: ApiV1DataThrottleGetResponsesContentApplicationJsonSchemaItems
+    ApiV1RatTypeGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1RatTypeGetResponsesContentApplicationJsonSchemaItems
     ApiV1ServiceLevelGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -277,27 +289,6 @@ components:
       - id
       description: The default service level of a tariff plan. Possible values can be fetched with GET `/api/v1/service_level`.
       title: ApiV1ServiceLevelGetResponsesContentApplicationJsonSchemaItems
-    ApiV1EsmeInterfaceTypeGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      required:
-      - id
-      - description
-      title: ApiV1EsmeInterfaceTypeGetResponsesContentApplicationJsonSchemaItems
-    ApiV1CurrencyGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        code:
-          type: string
-        symbol:
-          type: string
-      title: ApiV1CurrencyGetResponsesContentApplicationJsonSchemaItems
     ApiV1DataBlocksizeGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -308,15 +299,6 @@ components:
         description:
           type: string
       title: ApiV1DataBlocksizeGetResponsesContentApplicationJsonSchemaItems
-    ApiV1RatTypeGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        description:
-          type: string
-      title: ApiV1RatTypeGetResponsesContentApplicationJsonSchemaItems
     ApiV1CountryGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -341,16 +323,27 @@ components:
         ip_address:
           type: string
       title: ApiV1BreakoutRegionGetResponsesContentApplicationJsonSchemaItems
-    ApiV1DataThrottleGetResponsesContentApplicationJsonSchemaItems:
+    ApiV1CurrencyGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
         id:
           type: integer
-        octets:
+        code:
           type: string
+        symbol:
+          type: string
+      title: ApiV1CurrencyGetResponsesContentApplicationJsonSchemaItems
+    ApiV1EsmeInterfaceTypeGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
         description:
           type: string
-      title: ApiV1DataThrottleGetResponsesContentApplicationJsonSchemaItems
+      required:
+      - id
+      - description
+      title: ApiV1EsmeInterfaceTypeGetResponsesContentApplicationJsonSchemaItems
   securitySchemes:
     BearerAuth:
       type: http

@@ -1,11 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: emnify REST subpackage_applicationTokens subpackage_userManagement API
+  title: emnify REST Subpackage User Management API
   version: 1.0.0
-  description: 'The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with application tokens or user credentials; tokens are short-lived JWTs.
-
-
-    Source: emnify developer documentation (https://docs.emnify.com/developers/api). This spec is assembled from the per-operation OpenAPI fragments published in the emnify llms-full.txt feed.'
+  description: The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices.
   contact:
     name: emnify Developer Support
     url: https://docs.emnify.com/developers
@@ -25,9 +22,7 @@ paths:
     get:
       operationId: user-per-page-sort-by-q-and-page-get
       summary: List user accounts
-      description: 'Retrieves the collection of user accounts, filtered, sorted and paged accourding to query parameters.
-
-        '
+      description: Retrieves the collection of user accounts, filtered, sorted and paged accourding to query parameters.
       tags:
       - subpackage_userManagement
       parameters:
@@ -129,7 +124,7 @@ paths:
 
         * `name` (String required)
 
-        * `organisation` (Object optional) -  **may be provided** by regular user, but **is required** for master user.
+        * `organisation` (Object optional) - **may be provided** by regular user, but **is required** for master user.
 
         * `roles` (List of Objects optional) - List of one or more role Ids to be assigned at once. If missing, a default role is assigned
 
@@ -144,9 +139,7 @@ paths:
 
         A regular user is allowed to specify **only organisations which are direct children** of his/her own organisation, or his/her own organisation.
 
-        * The status field is not user editable at account creation time - the default imposed by server is ACTIVATION_PENDING.
-
-        '
+        * The status field is not user editable at account creation time - the default imposed by server is ACTIVATION_PENDING.'
       tags:
       - subpackage_userManagement
       parameters:
@@ -167,7 +160,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User Management_UserPerPageSortByQAndPagePost_Response_201'
+                $ref: '#/components/schemas/User_Management_UserPerPageSortByQAndPagePost_Response_201'
         '404':
           description: Unexpected error in API call. See HTTP response body for details.
           content:
@@ -261,7 +254,7 @@ paths:
     get:
       operationId: user-by-id-get
       summary: Get user by ID or username
-      description: 'Get a specific user by ID  provided the user is within this requesting user''s organisation or the organisation''s immediate child organisations.
+      description: 'Get a specific user by ID provided the user is within this requesting user''s organisation or the organisation''s immediate child organisations.
 
 
         `id` may be one of:
@@ -269,9 +262,7 @@ paths:
 
         * The numeric ID of the user, e.g. "123". This is the top-level `id` object returned by each item in `GET /api/v1/user`
 
-        * Username (email), e.g. "exampleuser@org.de". This is the top-level `username` object returned by each item in `GET /api/v1/user`
-
-        '
+        * Username (email), e.g. "exampleuser@org.de". This is the top-level `username` object returned by each item in `GET /api/v1/user`'
       tags:
       - subpackage_userManagement
       parameters:
@@ -299,7 +290,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User Management_UserByIdGet_Response_200'
+                $ref: '#/components/schemas/User_Management_UserByIdGet_Response_200'
         '404':
           description: Unexpected error in API call. See HTTP response body for details.
           content:
@@ -309,7 +300,12 @@ paths:
     delete:
       operationId: user-by-id-delete
       summary: Delete user by ID
-      description: "<Error>\n  **This call is deprecated.**\n  Please use DELETE `/api/v2/user/:id` instead.\n</Error>\n\n<Info>\n  A user can be deleted, if belonging to the same organization as the requesting user, or to an organization which is a direct child of the requesting user's organization.\n</Info>\n"
+      description: '**This call is deprecated.**
+
+        Please use DELETE `/api/v2/user/:id` instead.
+
+
+        A user can be deleted, if belonging to the same organization as the requesting user, or to an organization which is a direct child of the requesting user''s organization.'
       tags:
       - subpackage_userManagement
       parameters:
@@ -346,7 +342,30 @@ paths:
     patch:
       operationId: user-by-id-patch
       summary: Update user by ID
-      description: "Provided fields\n* `username` (String optional) - has to be user's email\n* `name` (String optional)\n* `status` (Object optional)\n* `organisation` (Object optional) - must be the current organisation or not to be provided\n\n#### Notes\n\n* Password is not provided. Separate calls provide password management.\n* The organisation is not modifiable. A user can be updated, if belonging to the same organisation as the requesting user,\nor to an organisation which is a direct child of the requesting user's organisation.\n* Status can be changed between ACTIVE (id: 1) and SUSPENDED (id: 2), and from ACTIVATION_PENDING (id: 0) to SUSPENDED.\n\n<Info>\n  Modifying the username invalidates account and triggers the activation procedure.\n</Info>\n"
+      description: 'Provided fields
+
+        * `username` (String optional) - has to be user''s email
+
+        * `name` (String optional)
+
+        * `status` (Object optional)
+
+        * `organisation` (Object optional) - must be the current organisation or not to be provided
+
+
+        #### Notes
+
+
+        * Password is not provided. Separate calls provide password management.
+
+        * The organisation is not modifiable. A user can be updated, if belonging to the same organisation as the requesting user,
+
+        or to an organisation which is a direct child of the requesting user''s organisation.
+
+        * Status can be changed between ACTIVE (id: 1) and SUSPENDED (id: 2), and from ACTIVATION_PENDING (id: 0) to SUSPENDED.
+
+
+        Modifying the username invalidates account and triggers the activation procedure.'
       tags:
       - subpackage_userManagement
       parameters:
@@ -400,7 +419,22 @@ paths:
     get:
       operationId: user-event-page-per-page-sort-by-user-id-and-q-get
       summary: List user events
-      description: "Returns the list of events, filtered, sorted and paged according to query parameters.\n\nOnly an administrator or observer may be allowed to see events of other users, provided they belong to an organisation he/she has access to.\n\nAny user can retrieve their own events at `/api/v1/user/my/event`.\n\n<Error>\n  This API endpoint deviates from the specified conventions and may not return the same HTTP Codes as the higher layer call (`/api/v1/user/{user_id|my}`).\n\n  In case the requested `{user_id}` does not exist or is not accessible for the user, **HTTP 200** will be returned with empty **[]** as long as the provided `{user_id}` is a number and all parameters are valid.\n\n  Please take that into consideration when building automation on top of the error behavior of this endpoint.\n</Error>\n"
+      description: 'Returns the list of events, filtered, sorted and paged according to query parameters.
+
+
+        Only an administrator or observer may be allowed to see events of other users, provided they belong to an organisation he/she has access to.
+
+
+        Any user can retrieve their own events at `/api/v1/user/my/event`.
+
+
+        This API endpoint deviates from the specified conventions and may not return the same HTTP Codes as the higher layer call (`/api/v1/user/{user_id|my}`).
+
+
+        In case the requested `{user_id}` does not exist or is not accessible for the user, **HTTP 200** will be returned with empty **[]** as long as the provided `{user_id}` is a number and all parameters are valid.
+
+
+        Please take that into consideration when building automation on top of the error behavior of this endpoint.'
       tags:
       - subpackage_userManagement
       parameters:
@@ -578,14 +612,12 @@ paths:
       description: 'Role permissions available to this user.
 
 
-        Only an administrator or observer is allowed to see the role permissions of other users, provided they belong to an organisation he/she has access to.<br/>
+        Only an administrator or observer is allowed to see the role permissions of other users, provided they belong to an organisation he/she has access to.
 
 
         Any user can also retrieve one''s own role permissions at:
 
-        `/api/v1/user/my/role/permission`.
-
-        '
+        `/api/v1/user/my/role/permission`.'
       tags:
       - subpackage_userManagement
       parameters:
@@ -613,7 +645,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User Management_UserRolePermissionByIdGet_Response_200'
+                $ref: '#/components/schemas/User_Management_UserRolePermissionByIdGet_Response_200'
   /api/v1/user/{user_id}/role/{role_id}:
     put:
       operationId: user-role-by-id-and-role-id-put
@@ -666,7 +698,10 @@ paths:
     delete:
       operationId: user-role-by-id-and-role-id-delete
       summary: Delete user role
-      description: "Release a Role from association with this user.\n\n<Info>\n  A role can only be removed if it's not the last role of this user.\n</Info>\n"
+      description: 'Release a Role from association with this user.
+
+
+        A role can only be removed if it''s not the last role of this user.'
       tags:
       - subpackage_userManagement
       parameters:
@@ -722,9 +757,7 @@ paths:
 
         The access can be made through cannel-partner hierarchies as well.
 
-        An event will be generated on the accessed organisation.
-
-        '
+        An event will be generated on the accessed organisation.'
       tags:
       - subpackage_userManagement
       parameters:
@@ -750,7 +783,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User Management_UserByIdV2CreateSupportToken_Response_201'
+                $ref: '#/components/schemas/User_Management_UserByIdV2CreateSupportToken_Response_201'
         '403':
           description: 'Will appear in these cases:
 
@@ -789,34 +822,17 @@ paths:
                   $ref: '#/components/schemas/ApiV2UserUserIdSupportTokenPostRequestBodyContentApplicationJsonSchemaRole'
 components:
   schemas:
-    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource:
+    User_Management_UserByIdV2CreateSupportToken_Response_201:
+      type: object
+      properties:
+        support_token:
+          type: string
+      title: User Management_UserByIdV2CreateSupportToken_Response_201
+    ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaStatus:
       type: object
       properties: {}
-      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource
-    ApiV1UserUserIdPatchResponsesContentApplicationJsonSchemaErrorsItems:
-      type: object
-      properties: {}
-      title: ApiV1UserUserIdPatchResponsesContentApplicationJsonSchemaErrorsItems
-    User Management_UserPerPageSortByQAndPagePost_Response_201:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: User Management_UserPerPageSortByQAndPagePost_Response_201
-    ApiV1UserUserIdPatchRequestBodyContentApplicationJsonSchemaStatus:
-      type: object
-      properties: {}
-      title: ApiV1UserUserIdPatchRequestBodyContentApplicationJsonSchemaStatus
-    ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaRolesItems:
-      type: object
-      properties: {}
-      title: ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaRolesItems
-    ApiV2UserUserIdSupportTokenPostRequestBodyContentApplicationJsonSchemaRole:
-      type: string
-      enum:
-      - '1'
-      - '3'
-      title: ApiV2UserUserIdSupportTokenPostRequestBodyContentApplicationJsonSchemaRole
-    UserRoleByIdAndRoleIdDeleteRequestNotFoundError:
+      title: ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaStatus
+    UserByIdDeleteRequestNotFoundError:
       type: object
       properties:
         error_code:
@@ -825,51 +841,21 @@ components:
           type: string
         message:
           type: string
-      title: UserRoleByIdAndRoleIdDeleteRequestNotFoundError
-    ApiV1UserPostResponsesContentApplicationJsonSchemaErrorsItems:
-      type: object
-      properties: {}
-      title: ApiV1UserPostResponsesContentApplicationJsonSchemaErrorsItems
-    ApiV1UserGetResponsesContentApplicationJsonSchemaItemsStatus:
+      title: UserByIdDeleteRequestNotFoundError
+    UserPerPageSortByQAndPagePostRequestNotFoundError:
       type: object
       properties:
-        id:
-          type: number
-          format: double
-        description:
-          type: string
-      title: ApiV1UserGetResponsesContentApplicationJsonSchemaItemsStatus
-    ApiV1UserStatusGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
+        error_code:
           type: integer
-        description:
+        error_token:
           type: string
-      title: ApiV1UserStatusGetResponsesContentApplicationJsonSchemaItems
+        message:
+          type: string
+      title: UserPerPageSortByQAndPagePostRequestNotFoundError
     ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaMfaItems:
       type: object
       properties: {}
       title: ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaMfaItems
-    UserRoleByIdAndRoleIdPutRequestNotFoundError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: UserRoleByIdAndRoleIdPutRequestNotFoundError
-    ApiV1UserRoleGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        name:
-          type: string
-      title: ApiV1UserRoleGetResponsesContentApplicationJsonSchemaItems
     ApiV1UserGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -886,30 +872,10 @@ components:
         organisation:
           $ref: '#/components/schemas/ApiV1UserGetResponsesContentApplicationJsonSchemaItemsOrganisation'
       title: ApiV1UserGetResponsesContentApplicationJsonSchemaItems
-    ApiV1UserPostRequestBodyContentApplicationJsonSchemaRolesItems:
+    ApiV1UserUserIdPatchResponsesContentApplicationJsonSchemaErrorsItems:
       type: object
       properties: {}
-      title: ApiV1UserPostRequestBodyContentApplicationJsonSchemaRolesItems
-    User Management_UserByIdV2CreateSupportToken_Response_201:
-      type: object
-      properties:
-        support_token:
-          type: string
-      title: User Management_UserByIdV2CreateSupportToken_Response_201
-    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsUser:
-      type: object
-      properties: {}
-      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsUser
-    UserRoleByIdAndRoleIdDeleteRequestConflictError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: UserRoleByIdAndRoleIdDeleteRequestConflictError
+      title: ApiV1UserUserIdPatchResponsesContentApplicationJsonSchemaErrorsItems
     UserByIdPatchRequestUnprocessableEntityError:
       type: object
       properties:
@@ -924,7 +890,7 @@ components:
           items:
             $ref: '#/components/schemas/ApiV1UserUserIdPatchResponsesContentApplicationJsonSchemaErrorsItems'
       title: UserByIdPatchRequestUnprocessableEntityError
-    UserPerPageSortByQAndPagePostRequestNotFoundError:
+    UserByIdGetRequestNotFoundError:
       type: object
       properties:
         error_code:
@@ -933,7 +899,57 @@ components:
           type: string
         message:
           type: string
-      title: UserPerPageSortByQAndPagePostRequestNotFoundError
+      title: UserByIdGetRequestNotFoundError
+    ApiV1UserUserIdPatchRequestBodyContentApplicationJsonSchemaStatus:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdPatchRequestBodyContentApplicationJsonSchemaStatus
+    ApiV1UserStatusGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ApiV1UserStatusGetResponsesContentApplicationJsonSchemaItems
+    ApiV1UserPostRequestBodyContentApplicationJsonSchemaRolesItems:
+      type: object
+      properties: {}
+      title: ApiV1UserPostRequestBodyContentApplicationJsonSchemaRolesItems
+    ApiV2UserUserIdSupportTokenPostRequestBodyContentApplicationJsonSchemaRole:
+      type: string
+      enum:
+      - '1'
+      - '3'
+      title: ApiV2UserUserIdSupportTokenPostRequestBodyContentApplicationJsonSchemaRole
+    User_Management_UserRolePermissionByIdGet_Response_200:
+      type: object
+      properties: {}
+      title: User Management_UserRolePermissionByIdGet_Response_200
+    ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaRolesItems:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaRolesItems
+    UserRoleByIdAndRoleIdPutRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserRoleByIdAndRoleIdPutRequestNotFoundError
+    UserRoleByIdAndRoleIdDeleteRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserRoleByIdAndRoleIdDeleteRequestConflictError
     UserPerPageSortByQAndPagePostRequestUnprocessableEntityError:
       type: object
       properties:
@@ -948,24 +964,10 @@ components:
           items:
             $ref: '#/components/schemas/ApiV1UserPostResponsesContentApplicationJsonSchemaErrorsItems'
       title: UserPerPageSortByQAndPagePostRequestUnprocessableEntityError
-    UserRoleByIdAndRoleIdPutRequestConflictError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: UserRoleByIdAndRoleIdPutRequestConflictError
-    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation:
+    ApiV1UserPostResponsesContentApplicationJsonSchemaErrorsItems:
       type: object
       properties: {}
-      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation
-    ApiV1UserPostRequestBodyContentApplicationJsonSchemaOrganisation:
-      type: object
-      properties: {}
-      title: ApiV1UserPostRequestBodyContentApplicationJsonSchemaOrganisation
+      title: ApiV1UserPostResponsesContentApplicationJsonSchemaErrorsItems
     ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -998,10 +1000,59 @@ components:
       - organisation
       - user
       title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItems
+    UserRoleByIdAndRoleIdDeleteRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserRoleByIdAndRoleIdDeleteRequestNotFoundError
+    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation
+    User_Management_UserPerPageSortByQAndPagePost_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: User Management_UserPerPageSortByQAndPagePost_Response_201
+    ApiV1UserRoleGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+      title: ApiV1UserRoleGetResponsesContentApplicationJsonSchemaItems
     ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity:
       type: object
       properties: {}
       title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity
+    ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaOrganisation:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaOrganisation
+    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsUser:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsUser
+    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventType:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventType
+    ApiV1UserGetResponsesContentApplicationJsonSchemaItemsStatus:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1UserGetResponsesContentApplicationJsonSchemaItemsStatus
     ApiV1UserGetResponsesContentApplicationJsonSchemaItemsOrganisation:
       type: object
       properties:
@@ -1011,17 +1062,7 @@ components:
         name:
           type: string
       title: ApiV1UserGetResponsesContentApplicationJsonSchemaItemsOrganisation
-    UserByIdDeleteRequestNotFoundError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: UserByIdDeleteRequestNotFoundError
-    User Management_UserByIdGet_Response_200:
+    User_Management_UserByIdGet_Response_200:
       type: object
       properties:
         id:
@@ -1045,15 +1086,15 @@ components:
           items:
             $ref: '#/components/schemas/ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaMfaItems'
       title: User Management_UserByIdGet_Response_200
-    ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaOrganisation:
+    ApiV1UserPostRequestBodyContentApplicationJsonSchemaOrganisation:
       type: object
       properties: {}
-      title: ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaOrganisation
-    ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaStatus:
+      title: ApiV1UserPostRequestBodyContentApplicationJsonSchemaOrganisation
+    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource:
       type: object
       properties: {}
-      title: ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaStatus
-    UserByIdGetRequestNotFoundError:
+      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource
+    UserRoleByIdAndRoleIdPutRequestConflictError:
       type: object
       properties:
         error_code:
@@ -1062,15 +1103,7 @@ components:
           type: string
         message:
           type: string
-      title: UserByIdGetRequestNotFoundError
-    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventType:
-      type: object
-      properties: {}
-      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventType
-    User Management_UserRolePermissionByIdGet_Response_200:
-      type: object
-      properties: {}
-      title: User Management_UserRolePermissionByIdGet_Response_200
+      title: UserRoleByIdAndRoleIdPutRequestConflictError
   securitySchemes:
     BearerAuth:
       type: http
