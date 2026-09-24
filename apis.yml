@@ -15,8 +15,6 @@ apis:
     type: Documentation
   - url: https://docs.emnify.com/developers/api-guidelines/conventions
     type: Documentation
-  - url: graphql/emnify-graphql.md
-    type: GraphQL
   description: emnify GraphQL API for flexible, single-request queries against the emnify data model with
     customizable response shapes. An in-browser GraphiQL IDE supports interactive exploration and testing.
 - aid: emnify:emnify-data-streamer
@@ -64,7 +62,7 @@ apis:
   description: Public MCP server for emnify documentation. Connect Claude Code, Cursor, or any MCP-aware
     client to query emnify product, developer, and API reference content directly from your AI assistant.
 - aid: emnify:emnify-subpackage-applicationtokens-api
-  name: emnify subpackage_applicationTokens API
+  name: emnify Subpackage Application Tokens API
   description: The subpackage_applicationTokens API from emnify — 2 operation(s) for subpackage_applicationtokens.
   humanURL: https://docs.emnify.com/developers
   tags:
@@ -103,7 +101,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-authentication-api
-  name: emnify subpackage_authentication API
+  name: emnify Subpackage Authentication API
   description: The subpackage_authentication API from emnify — 8 operation(s) for subpackage_authentication.
   humanURL: https://docs.emnify.com/developers
   tags: []
@@ -143,7 +141,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-automations-api
-  name: emnify subpackage_automations API
+  name: emnify Subpackage Automations API
   description: The subpackage_automations API from emnify — 6 operation(s) for subpackage_automations.
   humanURL: https://docs.emnify.com/developers
   tags: []
@@ -183,7 +181,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-cloudconnect-api
-  name: emnify subpackage_cloudConnect API
+  name: emnify Subpackage Cloud Connect API
   description: The subpackage_cloudConnect API from emnify — 7 operation(s) for subpackage_cloudconnect.
   humanURL: https://docs.emnify.com/developers
   tags:
@@ -222,7 +220,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-customevents-api
-  name: emnify subpackage_customEvents API
+  name: emnify Subpackage Custom Events API
   description: The subpackage_customEvents API from emnify — 4 operation(s) for subpackage_customevents.
   humanURL: https://docs.emnify.com/developers
   tags:
@@ -261,7 +259,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-endpoint-api
-  name: emnify subpackage_endpoint API
+  name: emnify Subpackage Endpoint API
   description: The subpackage_endpoint API from emnify — 16 operation(s) for subpackage_endpoint.
   humanURL: https://docs.emnify.com/developers
   tags: []
@@ -301,7 +299,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-euicc-api
-  name: emnify subpackage_euicc API
+  name: emnify Subpackage Euicc API
   description: The subpackage_euicc API from emnify — 5 operation(s) for subpackage_euicc.
   humanURL: https://docs.emnify.com/developers
   tags: []
@@ -341,7 +339,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-euiccoperation-api
-  name: emnify subpackage_euiccOperation API
+  name: emnify Subpackage Euicc Operation API
   description: The subpackage_euiccOperation API from emnify — 4 operation(s) for subpackage_euiccoperation.
   humanURL: https://docs.emnify.com/developers
   tags:
@@ -380,7 +378,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-events-api
-  name: emnify subpackage_events API
+  name: emnify Subpackage Events API
   description: The subpackage_events API from emnify — 2 operation(s) for subpackage_events.
   humanURL: https://docs.emnify.com/developers
   tags: []
@@ -420,7 +418,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-integrations-api
-  name: emnify subpackage_integrations API
+  name: emnify Subpackage Integrations API
   description: The subpackage_integrations API from emnify — 10 operation(s) for subpackage_integrations.
   humanURL: https://docs.emnify.com/developers
   tags: []
@@ -460,7 +458,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-ipaddressspaces-api
-  name: emnify subpackage_ipAddressSpaces API
+  name: emnify Subpackage Ip Address Spaces API
   description: The subpackage_ipAddressSpaces API from emnify — 3 operation(s) for subpackage_ipaddressspaces.
   humanURL: https://docs.emnify.com/developers
   tags:
@@ -499,7 +497,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-lookups-api
-  name: emnify subpackage_lookups API
+  name: emnify Subpackage Lookups API
   description: The subpackage_lookups API from emnify — 8 operation(s) for subpackage_lookups.
   humanURL: https://docs.emnify.com/developers
   tags: []
@@ -539,7 +537,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-operator-api
-  name: emnify subpackage_operator API
+  name: emnify Subpackage Operator API
   description: The subpackage_operator API from emnify — 1 operation(s) for subpackage_operator.
   humanURL: https://docs.emnify.com/developers
   tags: []
@@ -579,7 +577,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-organization-api
-  name: emnify subpackage_organization API
+  name: emnify Subpackage Organization API
   description: The subpackage_organization API from emnify — 9 operation(s) for subpackage_organization.
   humanURL: https://docs.emnify.com/developers
   tags: []
@@ -619,7 +617,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-passwordmanagementandactivation-api
-  name: emnify subpackage_passwordManagementAndActivation API
+  name: emnify Subpackage Password Management And Activation API
   description: The subpackage_passwordManagementAndActivation API from emnify — 4 operation(s) for subpackage_passwordmanagementandactivation.
   humanURL: https://docs.emnify.com/developers
   tags:
@@ -658,7 +656,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-servicelookupsandconfiguration-api
-  name: emnify subpackage_serviceLookupsAndConfiguration API
+  name: emnify Subpackage Service Lookups And Configuration API
   description: The subpackage_serviceLookupsAndConfiguration API from emnify — 5 operation(s) for subpackage_servicelookupsandconfiguration.
   humanURL: https://docs.emnify.com/developers
   tags:
@@ -697,7 +695,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-serviceprofiles-api
-  name: emnify subpackage_serviceProfiles API
+  name: emnify Subpackage Service Profiles API
   description: The subpackage_serviceProfiles API from emnify — 7 operation(s) for subpackage_serviceprofiles.
   humanURL: https://docs.emnify.com/developers
   tags:
@@ -736,7 +734,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-sim-api
-  name: emnify subpackage_sim API
+  name: emnify Subpackage Sim API
   description: The subpackage_sim API from emnify — 9 operation(s) for subpackage_sim.
   humanURL: https://docs.emnify.com/developers
   tags: []
@@ -776,7 +774,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-simoperation-api
-  name: emnify subpackage_simOperation API
+  name: emnify Subpackage Sim Operation API
   description: The subpackage_simOperation API from emnify — 4 operation(s) for subpackage_simoperation.
   humanURL: https://docs.emnify.com/developers
   tags:
@@ -815,7 +813,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-simunlinkedproductstatistics-api
-  name: emnify subpackage_simUnlinkedProductStatistics API
+  name: emnify Subpackage Sim Unlinked Product Statistics API
   description: The subpackage_simUnlinkedProductStatistics API from emnify — 1 operation(s) for subpackage_simunlinkedproductstatistics.
   humanURL: https://docs.emnify.com/developers
   tags:
@@ -854,7 +852,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-systemevents-api
-  name: emnify subpackage_systemEvents API
+  name: emnify Subpackage System Events API
   description: The subpackage_systemEvents API from emnify — 2 operation(s) for subpackage_systemevents.
   humanURL: https://docs.emnify.com/developers
   tags:
@@ -893,7 +891,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-tagmanagement-api
-  name: emnify subpackage_tagManagement API
+  name: emnify Subpackage Tag Management API
   description: The subpackage_tagManagement API from emnify — 8 operation(s) for subpackage_tagmanagement.
   humanURL: https://docs.emnify.com/developers
   tags:
@@ -932,7 +930,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-tariffplans-api
-  name: emnify subpackage_tariffPlans API
+  name: emnify Subpackage Tariff Plans API
   description: The subpackage_tariffPlans API from emnify — 3 operation(s) for subpackage_tariffplans.
   humanURL: https://docs.emnify.com/developers
   tags:
@@ -971,7 +969,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-tariffprofiles-api
-  name: emnify subpackage_tariffProfiles API
+  name: emnify Subpackage Tariff Profiles API
   description: The subpackage_tariffProfiles API from emnify — 9 operation(s) for subpackage_tariffprofiles.
   humanURL: https://docs.emnify.com/developers
   tags:
@@ -1010,7 +1008,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-usermanagement-api
-  name: emnify subpackage_userManagement API
+  name: emnify Subpackage User Management API
   description: The subpackage_userManagement API from emnify — 8 operation(s) for subpackage_usermanagement.
   humanURL: https://docs.emnify.com/developers
   tags:
@@ -1049,7 +1047,7 @@ apis:
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
 - aid: emnify:emnify-subpackage-workspaces-api
-  name: emnify subpackage_workspaces API
+  name: emnify Subpackage Workspaces API
   description: The subpackage_workspaces API from emnify — 7 operation(s) for subpackage_workspaces.
   humanURL: https://docs.emnify.com/developers
   tags: []
