@@ -333,14 +333,10 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    EuiccUnlinkedValidationResponseItems:
-      type: object
-      properties:
-        eid:
-          $ref: '#/components/schemas/Eid'
-      required:
-      - eid
-      title: EuiccUnlinkedValidationResponseItems
+    IccidWithLuhnRef:
+      type: string
+      description: Full ICCID including the Luhn check digit
+      title: IccidWithLuhnRef
     Endpoint:
       type: object
       properties:
@@ -349,6 +345,144 @@ components:
         name:
           type: string
       title: Endpoint
+    EuiccSupportedProfileType:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: EuiccSupportedProfileType
+    Error:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      required:
+      - status_code
+      - message
+      title: Error
+    ProfileProfileType:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ProfileProfileType
+    Eid:
+      type: string
+      title: Eid
+    EuiccUnlinkedValidationResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/EuiccUnlinkedValidationResponseItems'
+      title: EuiccUnlinkedValidationResponse
+    Profile:
+      type: object
+      properties:
+        iccid_with_luhn:
+          $ref: '#/components/schemas/IccidWithLuhnRef'
+        status:
+          $ref: '#/components/schemas/ProfileStatus'
+        customer_org:
+          oneOf:
+          - $ref: '#/components/schemas/Organisation'
+          - type: 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        operator:
+          oneOf:
+          - $ref: '#/components/schemas/IdName'
+          - type: 'null'
+        preloaded:
+          type:
+          - boolean
+          - 'null'
+        fallback_allowed:
+          type:
+          - boolean
+          - 'null'
+        fallback_attribute:
+          type:
+          - boolean
+          - 'null'
+        profile_type:
+          oneOf:
+          - $ref: '#/components/schemas/ProfileProfileType'
+          - type: 'null'
+        endpoint:
+          oneOf:
+          - $ref: '#/components/schemas/Endpoint'
+          - type: 'null'
+      required:
+      - iccid_with_luhn
+      title: Profile
+    Organisation:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: Organisation
+    IdName:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: IdName
+    EuiccUnlinkedValidationResponseItems:
+      type: object
+      properties:
+        eid:
+          $ref: '#/components/schemas/Eid'
+      required:
+      - eid
+      title: EuiccUnlinkedValidationResponseItems
+    EuiccUnlinkedValidationRequest:
+      type: object
+      properties:
+        target:
+          type: array
+          items:
+            $ref: '#/components/schemas/EuiccUnlinkedValidationRequestTargetItems'
+      required:
+      - target
+      title: EuiccUnlinkedValidationRequest
+    EuiccUnlinkedValidationRequestTargetItems:
+      type: object
+      properties:
+        eid:
+          $ref: '#/components/schemas/Eid'
+      required:
+      - eid
+      title: EuiccUnlinkedValidationRequestTargetItems
+    ProfileStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ProfileStatus
+    Status:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      required:
+      - id
+      - description
+      title: Status
     Euicc:
       type: object
       properties:
@@ -394,46 +528,6 @@ components:
       - created
       - profile
       title: Euicc
-    EuiccUnlinkedValidationRequestTargetItems:
-      type: object
-      properties:
-        eid:
-          $ref: '#/components/schemas/Eid'
-      required:
-      - eid
-      title: EuiccUnlinkedValidationRequestTargetItems
-    Eid:
-      type: string
-      title: Eid
-    EuiccUnlinkedValidationRequest:
-      type: object
-      properties:
-        target:
-          type: array
-          items:
-            $ref: '#/components/schemas/EuiccUnlinkedValidationRequestTargetItems'
-      required:
-      - target
-      title: EuiccUnlinkedValidationRequest
-    Error:
-      type: object
-      properties:
-        status_code:
-          type: integer
-        message:
-          type: string
-      required:
-      - status_code
-      - message
-      title: Error
-    EuiccSupportedProfileType:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      title: EuiccSupportedProfileType
     EuiccEim:
       type: object
       properties:
@@ -442,100 +536,6 @@ components:
         description:
           type: string
       title: EuiccEim
-    Status:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      required:
-      - id
-      - description
-      title: Status
-    ProfileStatus:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      title: ProfileStatus
-    Profile:
-      type: object
-      properties:
-        iccid_with_luhn:
-          $ref: '#/components/schemas/IccidWithLuhnRef'
-        status:
-          $ref: '#/components/schemas/ProfileStatus'
-        customer_org:
-          oneOf:
-          - $ref: '#/components/schemas/Organisation'
-          - type: 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        operator:
-          oneOf:
-          - $ref: '#/components/schemas/IdName'
-          - type: 'null'
-        preloaded:
-          type:
-          - boolean
-          - 'null'
-        fallback_allowed:
-          type:
-          - boolean
-          - 'null'
-        fallback_attribute:
-          type:
-          - boolean
-          - 'null'
-        profile_type:
-          oneOf:
-          - $ref: '#/components/schemas/ProfileProfileType'
-          - type: 'null'
-        endpoint:
-          oneOf:
-          - $ref: '#/components/schemas/Endpoint'
-          - type: 'null'
-      required:
-      - iccid_with_luhn
-      title: Profile
-    IccidWithLuhnRef:
-      type: string
-      description: Full ICCID including the Luhn check digit
-      title: IccidWithLuhnRef
-    EuiccUnlinkedValidationResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/EuiccUnlinkedValidationResponseItems'
-      title: EuiccUnlinkedValidationResponse
-    Organisation:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-      title: Organisation
-    ProfileProfileType:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      title: ProfileProfileType
-    IdName:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-      title: IdName
   securitySchemes:
     BearerAuth:
       type: http

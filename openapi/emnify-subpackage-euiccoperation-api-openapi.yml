@@ -422,6 +422,70 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        reason:
+          type: integer
+        message:
+          type: string
+      required:
+      - reason
+      - message
+      title: ErrorResponse
+    IccidWithLuhnRef:
+      type: string
+      description: Full ICCID including the Luhn check digit
+      title: IccidWithLuhnRef
+    EuiccOperationRequestList:
+      type: array
+      items:
+        $ref: '#/components/schemas/EuiccOperationRequest'
+      title: EuiccOperationRequestList
+    Error:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      required:
+      - status_code
+      - message
+      title: Error
+    OperationStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      required:
+      - id
+      - description
+      title: OperationStatus
+    EuiccOperationRequest:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/EuiccOperationActionRef'
+        validity_period:
+          $ref: '#/components/schemas/CommonValidity'
+          default: 86400
+        iccid_with_luhn:
+          $ref: '#/components/schemas/IccidWithLuhnRef'
+        activation_code:
+          type: string
+          description: Activation code
+        enable:
+          type: boolean
+          description: Flag whether downloaded profile should be enabled
+        rollback:
+          type: boolean
+          description: Flag whether rollback mechanism should be triggered
+      required:
+      - action
+      title: EuiccOperationRequest
     EuiccOperation:
       type: object
       properties:
@@ -458,81 +522,14 @@ components:
       - last_updated_at
       - user
       title: EuiccOperation
-    EuiccOperationRequest:
-      type: object
-      properties:
-        action:
-          $ref: '#/components/schemas/EuiccOperationActionRef'
-        validity_period:
-          $ref: '#/components/schemas/CommonValidity'
-          default: 86400
-        iccid_with_luhn:
-          $ref: '#/components/schemas/IccidWithLuhnRef'
-        activation_code:
-          type: string
-          description: Activation code
-        enable:
-          type: boolean
-          description: Flag whether downloaded profile should be enabled
-        rollback:
-          type: boolean
-          description: Flag whether rollback mechanism should be triggered
-      required:
-      - action
-      title: EuiccOperationRequest
-    OperationAction:
+    EuiccOperationActionRef:
       type: object
       properties:
         id:
           type: integer
-        description:
-          type: string
       required:
       - id
-      - description
-      title: OperationAction
-    Error:
-      type: object
-      properties:
-        status_code:
-          type: integer
-        message:
-          type: string
-      required:
-      - status_code
-      - message
-      title: Error
-    OperationStatus:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      required:
-      - id
-      - description
-      title: OperationStatus
-    ErrorResponse:
-      type: object
-      properties:
-        reason:
-          type: integer
-        message:
-          type: string
-      required:
-      - reason
-      - message
-      title: ErrorResponse
-    CommonValidity:
-      type: integer
-      default: 86400
-      description: Seconds until expiry
-      title: CommonValidity
-    IccidWithLuhnRef:
-      type: string
-      description: Full ICCID including the Luhn check digit
-      title: IccidWithLuhnRef
+      title: EuiccOperationActionRef
     UserResponse:
       type: object
       properties:
@@ -544,19 +541,22 @@ components:
       - id
       - name
       title: UserResponse
-    EuiccOperationRequestList:
-      type: array
-      items:
-        $ref: '#/components/schemas/EuiccOperationRequest'
-      title: EuiccOperationRequestList
-    EuiccOperationActionRef:
+    OperationAction:
       type: object
       properties:
         id:
           type: integer
+        description:
+          type: string
       required:
       - id
-      title: EuiccOperationActionRef
+      - description
+      title: OperationAction
+    CommonValidity:
+      type: integer
+      default: 86400
+      description: Seconds until expiry
+      title: CommonValidity
   securitySchemes:
     BearerAuth:
       type: http

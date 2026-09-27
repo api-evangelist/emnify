@@ -822,16 +822,64 @@ paths:
                   $ref: '#/components/schemas/ApiV2UserUserIdSupportTokenPostRequestBodyContentApplicationJsonSchemaRole'
 components:
   schemas:
+    ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaMfaItems:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaMfaItems
+    UserRoleByIdAndRoleIdPutRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserRoleByIdAndRoleIdPutRequestConflictError
+    ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaStatus:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaStatus
+    User_Management_UserRolePermissionByIdGet_Response_200:
+      type: object
+      properties: {}
+      title: User Management_UserRolePermissionByIdGet_Response_200
+    ApiV1UserRoleGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+      title: ApiV1UserRoleGetResponsesContentApplicationJsonSchemaItems
+    ApiV1UserStatusGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ApiV1UserStatusGetResponsesContentApplicationJsonSchemaItems
+    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsUser:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsUser
     User_Management_UserByIdV2CreateSupportToken_Response_201:
       type: object
       properties:
         support_token:
           type: string
       title: User Management_UserByIdV2CreateSupportToken_Response_201
-    ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaStatus:
+    User_Management_UserPerPageSortByQAndPagePost_Response_201:
       type: object
       properties: {}
-      title: ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaStatus
+      description: Empty response body
+      title: User Management_UserPerPageSortByQAndPagePost_Response_201
+    ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaRolesItems:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaRolesItems
     UserByIdDeleteRequestNotFoundError:
       type: object
       properties:
@@ -842,7 +890,15 @@ components:
         message:
           type: string
       title: UserByIdDeleteRequestNotFoundError
-    UserPerPageSortByQAndPagePostRequestNotFoundError:
+    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation
+    ApiV1UserPostResponsesContentApplicationJsonSchemaErrorsItems:
+      type: object
+      properties: {}
+      title: ApiV1UserPostResponsesContentApplicationJsonSchemaErrorsItems
+    UserRoleByIdAndRoleIdDeleteRequestNotFoundError:
       type: object
       properties:
         error_code:
@@ -851,31 +907,11 @@ components:
           type: string
         message:
           type: string
-      title: UserPerPageSortByQAndPagePostRequestNotFoundError
-    ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaMfaItems:
+      title: UserRoleByIdAndRoleIdDeleteRequestNotFoundError
+    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventType:
       type: object
       properties: {}
-      title: ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaMfaItems
-    ApiV1UserGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        username:
-          type: string
-        name:
-          type: string
-        created:
-          type: string
-        status:
-          $ref: '#/components/schemas/ApiV1UserGetResponsesContentApplicationJsonSchemaItemsStatus'
-        organisation:
-          $ref: '#/components/schemas/ApiV1UserGetResponsesContentApplicationJsonSchemaItemsOrganisation'
-      title: ApiV1UserGetResponsesContentApplicationJsonSchemaItems
-    ApiV1UserUserIdPatchResponsesContentApplicationJsonSchemaErrorsItems:
-      type: object
-      properties: {}
-      title: ApiV1UserUserIdPatchResponsesContentApplicationJsonSchemaErrorsItems
+      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventType
     UserByIdPatchRequestUnprocessableEntityError:
       type: object
       properties:
@@ -890,66 +926,27 @@ components:
           items:
             $ref: '#/components/schemas/ApiV1UserUserIdPatchResponsesContentApplicationJsonSchemaErrorsItems'
       title: UserByIdPatchRequestUnprocessableEntityError
-    UserByIdGetRequestNotFoundError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: UserByIdGetRequestNotFoundError
-    ApiV1UserUserIdPatchRequestBodyContentApplicationJsonSchemaStatus:
-      type: object
-      properties: {}
-      title: ApiV1UserUserIdPatchRequestBodyContentApplicationJsonSchemaStatus
-    ApiV1UserStatusGetResponsesContentApplicationJsonSchemaItems:
+    ApiV1UserGetResponsesContentApplicationJsonSchemaItemsStatus:
       type: object
       properties:
         id:
-          type: integer
+          type: number
+          format: double
         description:
           type: string
-      title: ApiV1UserStatusGetResponsesContentApplicationJsonSchemaItems
+      title: ApiV1UserGetResponsesContentApplicationJsonSchemaItemsStatus
+    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity
     ApiV1UserPostRequestBodyContentApplicationJsonSchemaRolesItems:
       type: object
       properties: {}
       title: ApiV1UserPostRequestBodyContentApplicationJsonSchemaRolesItems
-    ApiV2UserUserIdSupportTokenPostRequestBodyContentApplicationJsonSchemaRole:
-      type: string
-      enum:
-      - '1'
-      - '3'
-      title: ApiV2UserUserIdSupportTokenPostRequestBodyContentApplicationJsonSchemaRole
-    User_Management_UserRolePermissionByIdGet_Response_200:
+    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource:
       type: object
       properties: {}
-      title: User Management_UserRolePermissionByIdGet_Response_200
-    ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaRolesItems:
-      type: object
-      properties: {}
-      title: ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaRolesItems
-    UserRoleByIdAndRoleIdPutRequestNotFoundError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: UserRoleByIdAndRoleIdPutRequestNotFoundError
-    UserRoleByIdAndRoleIdDeleteRequestConflictError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: UserRoleByIdAndRoleIdDeleteRequestConflictError
+      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource
     UserPerPageSortByQAndPagePostRequestUnprocessableEntityError:
       type: object
       properties:
@@ -964,10 +961,74 @@ components:
           items:
             $ref: '#/components/schemas/ApiV1UserPostResponsesContentApplicationJsonSchemaErrorsItems'
       title: UserPerPageSortByQAndPagePostRequestUnprocessableEntityError
-    ApiV1UserPostResponsesContentApplicationJsonSchemaErrorsItems:
+    ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaOrganisation:
       type: object
       properties: {}
-      title: ApiV1UserPostResponsesContentApplicationJsonSchemaErrorsItems
+      title: ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaOrganisation
+    UserByIdGetRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserByIdGetRequestNotFoundError
+    UserPerPageSortByQAndPagePostRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserPerPageSortByQAndPagePostRequestNotFoundError
+    UserRoleByIdAndRoleIdDeleteRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserRoleByIdAndRoleIdDeleteRequestConflictError
+    UserRoleByIdAndRoleIdPutRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserRoleByIdAndRoleIdPutRequestNotFoundError
+    User_Management_UserByIdGet_Response_200:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        name:
+          type: string
+        created:
+          type: string
+        status:
+          $ref: '#/components/schemas/ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaStatus'
+        organisation:
+          $ref: '#/components/schemas/ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaOrganisation'
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaRolesItems'
+        mfa:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaMfaItems'
+      title: User Management_UserByIdGet_Response_200
     ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -1000,59 +1061,10 @@ components:
       - organisation
       - user
       title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItems
-    UserRoleByIdAndRoleIdDeleteRequestNotFoundError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: UserRoleByIdAndRoleIdDeleteRequestNotFoundError
-    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation:
+    ApiV1UserUserIdPatchRequestBodyContentApplicationJsonSchemaStatus:
       type: object
       properties: {}
-      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation
-    User_Management_UserPerPageSortByQAndPagePost_Response_201:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: User Management_UserPerPageSortByQAndPagePost_Response_201
-    ApiV1UserRoleGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        name:
-          type: string
-      title: ApiV1UserRoleGetResponsesContentApplicationJsonSchemaItems
-    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity:
-      type: object
-      properties: {}
-      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity
-    ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaOrganisation:
-      type: object
-      properties: {}
-      title: ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaOrganisation
-    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsUser:
-      type: object
-      properties: {}
-      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsUser
-    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventType:
-      type: object
-      properties: {}
-      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventType
-    ApiV1UserGetResponsesContentApplicationJsonSchemaItemsStatus:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        description:
-          type: string
-      title: ApiV1UserGetResponsesContentApplicationJsonSchemaItemsStatus
+      title: ApiV1UserUserIdPatchRequestBodyContentApplicationJsonSchemaStatus
     ApiV1UserGetResponsesContentApplicationJsonSchemaItemsOrganisation:
       type: object
       properties:
@@ -1062,7 +1074,11 @@ components:
         name:
           type: string
       title: ApiV1UserGetResponsesContentApplicationJsonSchemaItemsOrganisation
-    User_Management_UserByIdGet_Response_200:
+    ApiV1UserPostRequestBodyContentApplicationJsonSchemaOrganisation:
+      type: object
+      properties: {}
+      title: ApiV1UserPostRequestBodyContentApplicationJsonSchemaOrganisation
+    ApiV1UserGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
         id:
@@ -1074,36 +1090,20 @@ components:
         created:
           type: string
         status:
-          $ref: '#/components/schemas/ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaStatus'
+          $ref: '#/components/schemas/ApiV1UserGetResponsesContentApplicationJsonSchemaItemsStatus'
         organisation:
-          $ref: '#/components/schemas/ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaOrganisation'
-        roles:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaRolesItems'
-        mfa:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaMfaItems'
-      title: User Management_UserByIdGet_Response_200
-    ApiV1UserPostRequestBodyContentApplicationJsonSchemaOrganisation:
+          $ref: '#/components/schemas/ApiV1UserGetResponsesContentApplicationJsonSchemaItemsOrganisation'
+      title: ApiV1UserGetResponsesContentApplicationJsonSchemaItems
+    ApiV1UserUserIdPatchResponsesContentApplicationJsonSchemaErrorsItems:
       type: object
       properties: {}
-      title: ApiV1UserPostRequestBodyContentApplicationJsonSchemaOrganisation
-    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource:
-      type: object
-      properties: {}
-      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource
-    UserRoleByIdAndRoleIdPutRequestConflictError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: UserRoleByIdAndRoleIdPutRequestConflictError
+      title: ApiV1UserUserIdPatchResponsesContentApplicationJsonSchemaErrorsItems
+    ApiV2UserUserIdSupportTokenPostRequestBodyContentApplicationJsonSchemaRole:
+      type: string
+      enum:
+      - '1'
+      - '3'
+      title: ApiV2UserUserIdSupportTokenPostRequestBodyContentApplicationJsonSchemaRole
   securitySchemes:
     BearerAuth:
       type: http

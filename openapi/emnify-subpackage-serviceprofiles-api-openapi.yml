@@ -837,6 +837,165 @@ paths:
                 description: Any type
 components:
   schemas:
+    ApiV1ServiceProfileProfileIdTrafficLimitGetResponsesContentApplicationJsonSchemaItemsPeriod:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        time_units:
+          type: number
+          format: double
+        unit:
+          type: string
+      title: ApiV1ServiceProfileProfileIdTrafficLimitGetResponsesContentApplicationJsonSchemaItemsPeriod
+    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaApiSecret:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaApiSecret
+    ApiV1ServiceProfileProfileIdTrafficLimitGetResponsesContentApplicationJsonSchemaItemsService:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1ServiceProfileProfileIdTrafficLimitGetResponsesContentApplicationJsonSchemaItemsService
+    ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaServiceId:
+      type: string
+      enum:
+      - '38'
+      title: ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaServiceId
+    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaApiCallback:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaApiCallback
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaBreakoutRegion:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaBreakoutRegion
+    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaDns:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaDns
+    Service_Profiles_ServiceProfileByProfileIdPatch_Response_201:
+      type: object
+      properties: {}
+      title: Service Profiles_ServiceProfileByProfileIdPatch_Response_201
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaApiCallback:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaApiCallback
+    ServiceProfileByProfileIdDeleteRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ServiceProfileByProfileIdDeleteRequestConflictError
+    Service_Profiles_RemoveTrafficLimit_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Service Profiles_RemoveTrafficLimit_Response_200
+    Service_Profiles_AddTrafficLimit_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Service Profiles_AddTrafficLimit_Response_200
+    ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsIpFirewallRuleSet:
+      type: object
+      properties:
+        ip_firewall_profiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsIpFirewallRuleSetIpFirewallProfilesItems'
+        enforce:
+          type: boolean
+      title: ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsIpFirewallRuleSet
+    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaMocCallback:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaMocCallback
+    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaDns:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaDns
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaApiSecret:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaApiSecret
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaIpFirewallRuleSetIpFirewallProfilesItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        added:
+          type: string
+          format: date-time
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaIpFirewallRuleSetIpFirewallProfilesItems
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaEsmeInterfaceType:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaEsmeInterfaceType
+    ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsIpFirewallRuleSetIpFirewallProfilesItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        added:
+          type: string
+          format: date-time
+      title: ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsIpFirewallRuleSetIpFirewallProfilesItems
+    ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaPeriod:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaPeriodId'
+      description: 'Period of the limit.
+
+        The only supported period is `Monthly`, which uses calendar months and has an ID of `2`.
+
+        The limit resets at the beginning of each month 00:00 UTC.
+
+        '
+      title: ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaPeriod
+    Service_Profiles_ServiceProfilePost_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Service Profiles_ServiceProfilePost_Response_201
+    ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaPeriodId:
+      type: string
+      enum:
+      - '2'
+      title: ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaPeriodId
+    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaMocCallback:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaMocCallback
+    ServiceProfileServiceByProfileAndServicePutRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ServiceProfileServiceByProfileAndServicePutRequestConflictError
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaServiceItems:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaServiceItems
     ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaIpFirewallRuleSet:
       type: object
       properties:
@@ -847,14 +1006,6 @@ components:
         enforce:
           type: boolean
       title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaIpFirewallRuleSet
-    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaBreakoutRegion:
-      type: object
-      properties: {}
-      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaBreakoutRegion
-    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaApiCallback:
-      type: object
-      properties: {}
-      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaApiCallback
     Service_Profiles_ServiceProfileByProfileIdGet_Response_200:
       type: object
       properties:
@@ -905,50 +1056,6 @@ components:
         ip_firewall_rule_set:
           $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaIpFirewallRuleSet'
       title: Service Profiles_ServiceProfileByProfileIdGet_Response_200
-    ServiceProfileServiceByProfileAndServicePutRequestConflictError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: ServiceProfileServiceByProfileAndServicePutRequestConflictError
-    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaDns:
-      type: object
-      properties: {}
-      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaDns
-    Service_Profiles_ServiceProfileByProfileIdPatch_Response_201:
-      type: object
-      properties: {}
-      title: Service Profiles_ServiceProfileByProfileIdPatch_Response_201
-    ServiceProfileServiceByProfileAndServiceDeleteRequestConflictError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: ServiceProfileServiceByProfileAndServiceDeleteRequestConflictError
-    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaMocCallback:
-      type: object
-      properties: {}
-      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaMocCallback
-    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaApiCallback:
-      type: object
-      properties: {}
-      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaApiCallback
-    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaApiSecret:
-      type: object
-      properties: {}
-      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaApiSecret
-    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaEsmeInterfaceType:
-      type: object
-      properties: {}
-      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaEsmeInterfaceType
     ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaService:
       type: object
       properties:
@@ -960,76 +1067,10 @@ components:
 
         '
       title: ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaService
-    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaIpFirewallRuleSetIpFirewallProfilesItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        added:
-          type: string
-          format: date-time
-      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaIpFirewallRuleSetIpFirewallProfilesItems
-    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaMocCallback:
+    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaApiSecret:
       type: object
       properties: {}
-      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaMocCallback
-    Service_Profiles_AddServiceProfileTrafficLimit_Response_201:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Service Profiles_AddServiceProfileTrafficLimit_Response_201
-    Service_Profiles_AddTrafficLimit_Response_200:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Service Profiles_AddTrafficLimit_Response_200
-    ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaServiceId:
-      type: string
-      enum:
-      - '38'
-      title: ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaServiceId
-    ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaPeriod:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaPeriodId'
-      description: 'Period of the limit.
-
-        The only supported period is `Monthly`, which uses calendar months and has an ID of `2`.
-
-        The limit resets at the beginning of each month 00:00 UTC.
-
-        '
-      title: ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaPeriod
-    ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaPeriodId:
-      type: string
-      enum:
-      - '2'
-      title: ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaPeriodId
-    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaBreakoutRegion:
-      type: object
-      properties: {}
-      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaBreakoutRegion
-    ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsIpFirewallRuleSet:
-      type: object
-      properties:
-        ip_firewall_profiles:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsIpFirewallRuleSetIpFirewallProfilesItems'
-        enforce:
-          type: boolean
-      title: ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsIpFirewallRuleSet
-    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaDns:
-      type: object
-      properties: {}
-      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaDns
-    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaBreakoutRegion:
-      type: object
-      properties: {}
-      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaBreakoutRegion
+      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaApiSecret
     ApiV1ServiceProfileProfileIdTrafficLimitGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -1057,6 +1098,23 @@ components:
 
             '
       title: ApiV1ServiceProfileProfileIdTrafficLimitGetResponsesContentApplicationJsonSchemaItems
+    Service_Profiles_AddServiceProfileTrafficLimit_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Service Profiles_AddServiceProfileTrafficLimit_Response_201
+    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaApiCallback:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaApiCallback
+    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaBreakoutRegion:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaBreakoutRegion
+    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaEsmeInterfaceType:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaEsmeInterfaceType
     ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -1083,21 +1141,11 @@ components:
         ip_firewall_rule_set:
           $ref: '#/components/schemas/ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsIpFirewallRuleSet'
       title: ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItems
-    Service_Profiles_RemoveTrafficLimit_Response_200:
+    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaEsmeInterfaceType:
       type: object
       properties: {}
-      description: Empty response body
-      title: Service Profiles_RemoveTrafficLimit_Response_200
-    Service_Profiles_ServiceProfilePost_Response_201:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Service Profiles_ServiceProfilePost_Response_201
-    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaApiCallback:
-      type: object
-      properties: {}
-      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaApiCallback
-    ServiceProfileByProfileIdDeleteRequestConflictError:
+      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaEsmeInterfaceType
+    ServiceProfileServiceByProfileAndServiceDeleteRequestConflictError:
       type: object
       properties:
         error_code:
@@ -1106,63 +1154,15 @@ components:
           type: string
         message:
           type: string
-      title: ServiceProfileByProfileIdDeleteRequestConflictError
-    ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsIpFirewallRuleSetIpFirewallProfilesItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        added:
-          type: string
-          format: date-time
-      title: ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsIpFirewallRuleSetIpFirewallProfilesItems
-    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaEsmeInterfaceType:
+      title: ServiceProfileServiceByProfileAndServiceDeleteRequestConflictError
+    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaBreakoutRegion:
       type: object
       properties: {}
-      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaEsmeInterfaceType
-    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaMocCallback:
+      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaBreakoutRegion
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaMocCallback:
       type: object
       properties: {}
-      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaMocCallback
-    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaServiceItems:
-      type: object
-      properties: {}
-      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaServiceItems
-    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaApiSecret:
-      type: object
-      properties: {}
-      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaApiSecret
-    ApiV1ServiceProfileProfileIdTrafficLimitGetResponsesContentApplicationJsonSchemaItemsService:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        description:
-          type: string
-      title: ApiV1ServiceProfileProfileIdTrafficLimitGetResponsesContentApplicationJsonSchemaItemsService
-    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaEsmeInterfaceType:
-      type: object
-      properties: {}
-      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaEsmeInterfaceType
-    ApiV1ServiceProfileProfileIdTrafficLimitGetResponsesContentApplicationJsonSchemaItemsPeriod:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        time_units:
-          type: number
-          format: double
-        unit:
-          type: string
-      title: ApiV1ServiceProfileProfileIdTrafficLimitGetResponsesContentApplicationJsonSchemaItemsPeriod
-    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaApiSecret:
-      type: object
-      properties: {}
-      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaApiSecret
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaMocCallback
   securitySchemes:
     BearerAuth:
       type: http

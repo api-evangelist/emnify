@@ -208,6 +208,61 @@ paths:
                   $ref: '#/components/schemas/ApiV1EventTypeGetResponsesContentApplicationJsonSchemaItems'
 components:
   schemas:
+    ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventSource:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventSource
+    ApiV1EventTypeGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ApiV1EventTypeGetResponsesContentApplicationJsonSchemaItems
+    ApiV1EventGetResponsesContentApplicationJsonSchemaItemsUser:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        username:
+          type: string
+        name:
+          type: string
+      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsUser
+    ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventSeverity:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventSeverity
+    ApiV1EventGetResponsesContentApplicationJsonSchemaItemsOrganisation:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsOrganisation
+    ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventType:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventType
     ApiV1EventGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -230,61 +285,6 @@ components:
         user:
           $ref: '#/components/schemas/ApiV1EventGetResponsesContentApplicationJsonSchemaItemsUser'
       title: ApiV1EventGetResponsesContentApplicationJsonSchemaItems
-    ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventSeverity:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        description:
-          type: string
-      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventSeverity
-    ApiV1EventGetResponsesContentApplicationJsonSchemaItemsOrganisation:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        name:
-          type: string
-      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsOrganisation
-    ApiV1EventGetResponsesContentApplicationJsonSchemaItemsUser:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        username:
-          type: string
-        name:
-          type: string
-      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsUser
-    ApiV1EventTypeGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      title: ApiV1EventTypeGetResponsesContentApplicationJsonSchemaItems
-    ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventType:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        description:
-          type: string
-      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventType
-    ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventSource:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        description:
-          type: string
-      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventSource
   securitySchemes:
     BearerAuth:
       type: http

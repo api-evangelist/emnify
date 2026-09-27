@@ -71,6 +71,17 @@ components:
         name:
           type: string
       title: SimUnlinkedProductStatsResponseItemsProduct
+    Error:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      required:
+      - status_code
+      - message
+      title: Error
     SimUnlinkedProductStatsResponseItems:
       type: object
       properties:
@@ -87,17 +98,6 @@ components:
       items:
         $ref: '#/components/schemas/SimUnlinkedProductStatsResponseItems'
       title: SimUnlinkedProductStatsResponse
-    Error:
-      type: object
-      properties:
-        status_code:
-          type: integer
-        message:
-          type: string
-      required:
-      - status_code
-      - message
-      title: Error
   securitySchemes:
     BearerAuth:
       type: http

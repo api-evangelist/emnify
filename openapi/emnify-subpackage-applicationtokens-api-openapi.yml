@@ -155,10 +155,26 @@ paths:
                   $ref: '#/components/schemas/ApiV1ApplicationTokenAppTokenIdPatchRequestBodyContentApplicationJsonSchemaStatus'
 components:
   schemas:
-    ApiV1ApplicationTokenAppTokenIdPatchRequestBodyContentApplicationJsonSchemaStatus:
+    Application_tokens_ApplicationTokenPost_Response_200:
+      type: object
+      properties:
+        application_token:
+          type: string
+      title: Application tokens_ApplicationTokenPost_Response_200
+    ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsStatus:
       type: object
       properties: {}
-      title: ApiV1ApplicationTokenAppTokenIdPatchRequestBodyContentApplicationJsonSchemaStatus
+      title: ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsStatus
+    ApplicationTokenPostRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ApplicationTokenPostRequestUnprocessableEntityError
     ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -177,30 +193,14 @@ components:
         creator:
           $ref: '#/components/schemas/ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsCreator'
       title: ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItems
-    ApplicationTokenPostRequestUnprocessableEntityError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: ApplicationTokenPostRequestUnprocessableEntityError
-    ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsStatus:
-      type: object
-      properties: {}
-      title: ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsStatus
-    Application_tokens_ApplicationTokenPost_Response_200:
-      type: object
-      properties:
-        application_token:
-          type: string
-      title: Application tokens_ApplicationTokenPost_Response_200
     ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsCreator:
       type: object
       properties: {}
       title: ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsCreator
+    ApiV1ApplicationTokenAppTokenIdPatchRequestBodyContentApplicationJsonSchemaStatus:
+      type: object
+      properties: {}
+      title: ApiV1ApplicationTokenAppTokenIdPatchRequestBodyContentApplicationJsonSchemaStatus
   securitySchemes:
     BearerAuth:
       type: http

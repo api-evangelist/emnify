@@ -69,20 +69,15 @@ paths:
                 $ref: '#/components/schemas/SystemEventOutputDto'
 components:
   schemas:
-    ConfigurationParameterDto:
+    WithIdInputDto:
       type: object
       properties:
-        parameter:
-          type: string
-        type:
-          type: string
-        description:
-          type: string
+        id:
+          type: number
+          format: double
       required:
-      - parameter
-      - type
-      - description
-      title: ConfigurationParameterDto
+      - id
+      title: WithIdInputDto
     SystemEventOutputDto:
       type: object
       properties:
@@ -124,15 +119,20 @@ components:
       - eventOutputParameters
       - supportedActions
       title: SystemEventOutputDto
-    WithIdInputDto:
+    ConfigurationParameterDto:
       type: object
       properties:
-        id:
-          type: number
-          format: double
+        parameter:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
       required:
-      - id
-      title: WithIdInputDto
+      - parameter
+      - type
+      - description
+      title: ConfigurationParameterDto
   securitySchemes:
     BearerAuth:
       type: http
