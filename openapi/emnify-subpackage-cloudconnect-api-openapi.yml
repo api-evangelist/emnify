@@ -558,26 +558,11 @@ paths:
                   $ref: '#/components/schemas/ApiV1CncPricingGetResponsesContentApplicationJsonSchemaItems'
 components:
   schemas:
-    ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsTunnelInformation:
-      type: object
-      properties:
-        outside_address:
-          type: string
-        inside_cidr:
-          type: string
-        metrics:
-          $ref: '#/components/schemas/ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsTunnelInformationMetrics'
-        asn:
-          type: number
-          format: double
-        public_ip:
-          type: string
-      title: ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsTunnelInformation
-    Cloud_Connect_CreateCloudConnectAttachmentVPN_Response_201:
+    Cloud_Connect_RetryCloudConnectAttachment_Response_200:
       type: object
       properties: {}
       description: Empty response body
-      title: Cloud Connect_CreateCloudConnectAttachmentVPN_Response_201
+      title: Cloud Connect_RetryCloudConnectAttachment_Response_200
     ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -616,93 +601,6 @@ components:
         tunnel_information:
           $ref: '#/components/schemas/ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsTunnelInformation'
       title: ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItems
-    ApiV1CncBreakoutGetParametersType:
-      type: string
-      enum:
-      - '1'
-      - '2'
-      - '3'
-      - '4'
-      - '5'
-      - '6'
-      - '7'
-      - '8'
-      title: ApiV1CncBreakoutGetParametersType
-    ApiV1CncPricingGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        breakout_type_id:
-          type: integer
-        amount:
-          type: number
-          format: double
-        currency:
-          $ref: '#/components/schemas/ApiV1CncPricingGetResponsesContentApplicationJsonSchemaItemsCurrency'
-      title: ApiV1CncPricingGetResponsesContentApplicationJsonSchemaItems
-    ApiV1CncBreakoutVpnPostRequestBodyContentApplicationJsonSchemaTypeId:
-      type: string
-      enum:
-      - '2'
-      - '3'
-      description: Attachment type identifier.
-      title: ApiV1CncBreakoutVpnPostRequestBodyContentApplicationJsonSchemaTypeId
-    ApiV1CncPricingGetResponsesContentApplicationJsonSchemaItemsCurrency:
-      type: object
-      properties:
-        id:
-          type: integer
-      title: ApiV1CncPricingGetResponsesContentApplicationJsonSchemaItemsCurrency
-    ApiV1CncBreakoutVpnPostRequestBodyContentApplicationJsonSchemaType:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/ApiV1CncBreakoutVpnPostRequestBodyContentApplicationJsonSchemaTypeId'
-          description: Attachment type identifier.
-      required:
-      - id
-      description: 'Breakout type.
-
-        Use `2` for Static VPN or `3` for Dynamic VPN with BGP.
-
-        '
-      title: ApiV1CncBreakoutVpnPostRequestBodyContentApplicationJsonSchemaType
-    ApiV1CncBreakoutTypeGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        description:
-          type: string
-      title: ApiV1CncBreakoutTypeGetResponsesContentApplicationJsonSchemaItems
-    ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsType:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        description:
-          type: string
-      title: ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsType
-    ApiV1CncBreakoutTgwPostRequestBodyContentApplicationJsonSchemaType:
-      type: string
-      enum:
-      - '1'
-      title: ApiV1CncBreakoutTgwPostRequestBodyContentApplicationJsonSchemaType
-    ApiV1CncBreakoutGetParametersStatus:
-      type: string
-      enum:
-      - '1'
-      - '2'
-      - '3'
-      - '4'
-      - '5'
-      - '6'
-      - '7'
-      - '8'
-      title: ApiV1CncBreakoutGetParametersStatus
     ApiV1CncBreakoutGetResponsesContentApplicationJsonSchemaItemsStatus:
       type: object
       properties:
@@ -712,55 +610,6 @@ components:
         description:
           type: string
       title: ApiV1CncBreakoutGetResponsesContentApplicationJsonSchemaItemsStatus
-    ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsTunnelInformationMetrics:
-      type: object
-      properties:
-        tunnel_state:
-          type: string
-        bytes_in:
-          type: object
-          additionalProperties:
-            type: number
-            format: double
-        bytes_out:
-          type: object
-          additionalProperties:
-            type: number
-            format: double
-      title: ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsTunnelInformationMetrics
-    ApiV1CncBreakoutGetResponsesContentApplicationJsonSchemaItemsType:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        description:
-          type: string
-      title: ApiV1CncBreakoutGetResponsesContentApplicationJsonSchemaItemsType
-    ApiV1CncBreakoutTypeBreakoutTypeIdAvailableRegionGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        attachment_region:
-          type: string
-          description: The region the customer's attachment will reside in
-        device_breakout_region:
-          type: string
-          description: The region the traffic will be peered to
-      title: ApiV1CncBreakoutTypeBreakoutTypeIdAvailableRegionGetResponsesContentApplicationJsonSchemaItems
-    Cloud_Connect_CreateCloudConnectAttachmentTGW_Response_201:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Cloud Connect_CreateCloudConnectAttachmentTGW_Response_201
-    ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsStatus:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        description:
-          type: string
-      title: ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsStatus
     ApiV1CncBreakoutGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -797,16 +646,167 @@ components:
           type: string
           description: The customer region that this attachment belongs to
       title: ApiV1CncBreakoutGetResponsesContentApplicationJsonSchemaItems
-    Cloud_Connect_RetryCloudConnectAttachment_Response_200:
+    Cloud_Connect_CreateCloudConnectAttachmentVPN_Response_201:
       type: object
       properties: {}
       description: Empty response body
-      title: Cloud Connect_RetryCloudConnectAttachment_Response_200
+      title: Cloud Connect_CreateCloudConnectAttachmentVPN_Response_201
+    ApiV1CncBreakoutTgwPostRequestBodyContentApplicationJsonSchemaType:
+      type: string
+      enum:
+      - '1'
+      title: ApiV1CncBreakoutTgwPostRequestBodyContentApplicationJsonSchemaType
+    ApiV1CncPricingGetResponsesContentApplicationJsonSchemaItemsCurrency:
+      type: object
+      properties:
+        id:
+          type: integer
+      title: ApiV1CncPricingGetResponsesContentApplicationJsonSchemaItemsCurrency
+    ApiV1CncBreakoutVpnPostRequestBodyContentApplicationJsonSchemaTypeId:
+      type: string
+      enum:
+      - '2'
+      - '3'
+      description: Attachment type identifier.
+      title: ApiV1CncBreakoutVpnPostRequestBodyContentApplicationJsonSchemaTypeId
+    ApiV1CncBreakoutTypeGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1CncBreakoutTypeGetResponsesContentApplicationJsonSchemaItems
+    Cloud_Connect_CreateCloudConnectAttachmentTGW_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Cloud Connect_CreateCloudConnectAttachmentTGW_Response_201
+    ApiV1CncBreakoutGetParametersStatus:
+      type: string
+      enum:
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      - '5'
+      - '6'
+      - '7'
+      - '8'
+      title: ApiV1CncBreakoutGetParametersStatus
+    ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsTunnelInformationMetrics:
+      type: object
+      properties:
+        tunnel_state:
+          type: string
+        bytes_in:
+          type: object
+          additionalProperties:
+            type: number
+            format: double
+        bytes_out:
+          type: object
+          additionalProperties:
+            type: number
+            format: double
+      title: ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsTunnelInformationMetrics
+    ApiV1CncBreakoutVpnPostRequestBodyContentApplicationJsonSchemaType:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ApiV1CncBreakoutVpnPostRequestBodyContentApplicationJsonSchemaTypeId'
+          description: Attachment type identifier.
+      required:
+      - id
+      description: 'Breakout type.
+
+        Use `2` for Static VPN or `3` for Dynamic VPN with BGP.
+
+        '
+      title: ApiV1CncBreakoutVpnPostRequestBodyContentApplicationJsonSchemaType
+    ApiV1CncPricingGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        breakout_type_id:
+          type: integer
+        amount:
+          type: number
+          format: double
+        currency:
+          $ref: '#/components/schemas/ApiV1CncPricingGetResponsesContentApplicationJsonSchemaItemsCurrency'
+      title: ApiV1CncPricingGetResponsesContentApplicationJsonSchemaItems
     Cloud_Connect_DeleteCloudConnectAttachment_Response_200:
       type: object
       properties: {}
       description: Empty response body
       title: Cloud Connect_DeleteCloudConnectAttachment_Response_200
+    ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsType:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsType
+    ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsTunnelInformation:
+      type: object
+      properties:
+        outside_address:
+          type: string
+        inside_cidr:
+          type: string
+        metrics:
+          $ref: '#/components/schemas/ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsTunnelInformationMetrics'
+        asn:
+          type: number
+          format: double
+        public_ip:
+          type: string
+      title: ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsTunnelInformation
+    ApiV1CncBreakoutGetParametersType:
+      type: string
+      enum:
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      - '5'
+      - '6'
+      - '7'
+      - '8'
+      title: ApiV1CncBreakoutGetParametersType
+    ApiV1CncBreakoutGetResponsesContentApplicationJsonSchemaItemsType:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1CncBreakoutGetResponsesContentApplicationJsonSchemaItemsType
+    ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsStatus:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1CncBreakoutCloudconnectAttachmentIdGetResponsesContentApplicationJsonSchemaItemsStatus
+    ApiV1CncBreakoutTypeBreakoutTypeIdAvailableRegionGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        attachment_region:
+          type: string
+          description: The region the customer's attachment will reside in
+        device_breakout_region:
+          type: string
+          description: The region the traffic will be peered to
+      title: ApiV1CncBreakoutTypeBreakoutTypeIdAvailableRegionGetResponsesContentApplicationJsonSchemaItems
   securitySchemes:
     BearerAuth:
       type: http

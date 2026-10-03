@@ -217,14 +217,6 @@ components:
         description:
           type: string
       title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventSource
-    ApiV1EventTypeGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      title: ApiV1EventTypeGetResponsesContentApplicationJsonSchemaItems
     ApiV1EventGetResponsesContentApplicationJsonSchemaItemsUser:
       type: object
       properties:
@@ -245,15 +237,6 @@ components:
         description:
           type: string
       title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventSeverity
-    ApiV1EventGetResponsesContentApplicationJsonSchemaItemsOrganisation:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        name:
-          type: string
-      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsOrganisation
     ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventType:
       type: object
       properties:
@@ -263,6 +246,23 @@ components:
         description:
           type: string
       title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventType
+    ApiV1EventTypeGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ApiV1EventTypeGetResponsesContentApplicationJsonSchemaItems
+    ApiV1EventGetResponsesContentApplicationJsonSchemaItemsOrganisation:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsOrganisation
     ApiV1EventGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:

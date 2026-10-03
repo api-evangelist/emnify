@@ -528,76 +528,30 @@ paths:
                   description: Any type
 components:
   schemas:
-    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthSmsTrafficType:
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaInclusiveVolume:
       type: object
       properties:
-        description:
-          type: string
-        unit:
-          type: string
-        id:
+        unpooled:
           type: number
           format: double
-      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthSmsTrafficType
-    ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        date:
-          type: string
-          description: 'Date in `YYYY-MM-DD` format or `TOTAL` to indicate the total volume and cost of the traffic type
-
-            '
-        data:
-          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsData'
-        sms:
-          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSms'
-      title: ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItems
-    Organization_GetOrganisationHourlyStats_Response_200:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsHourlyGetResponsesContentApplicationJsonSchemaData'
-        sms:
-          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsHourlyGetResponsesContentApplicationJsonSchemaSms'
-      title: Organization_GetOrganisationHourlyStats_Response_200
-    ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsTrafficType:
-      type: object
-      properties:
-        description:
-          type: string
-        unit:
-          type: string
-        id:
+          description: Total cost of all unpooled inclusive volumes
+        pooled:
           type: number
           format: double
-      title: ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsTrafficType
-    ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsCurrency:
+          description: Total cost of all pooled inclusive volumes
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaInclusiveVolume
+    ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsCurrency:
       type: object
       properties:
-        id:
-          type: integer
         code:
           type: string
         symbol:
           type: string
-      title: ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsCurrency
-    ApiV1OrganisationStatusGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
         id:
-          type: integer
-        description:
-          type: string
-      title: ApiV1OrganisationStatusGetResponsesContentApplicationJsonSchemaItems
-    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonth:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthData'
-        sms:
-          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthSms'
-      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonth
-    ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSms:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsCurrency
+    ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsData:
       type: object
       properties:
         cost:
@@ -606,11 +560,11 @@ components:
         currency_id:
           type: string
         currency:
-          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsCurrency'
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataCurrency'
         traffic_type_id:
           type: string
         traffic_type:
-          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsTrafficType'
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataTrafficType'
         volume:
           type: string
           description: Total consumption (`volume_rx` + `volume_tx`)
@@ -628,130 +582,25 @@ components:
             * For traffic type `6` (`SMS`): SMS MO
 
             '
-      title: ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSms
-    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthDataTrafficType:
+      title: ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsData
+    ApiV1OrganisationOrgIdOrMyStatsHourlyGetResponsesContentApplicationJsonSchemaSms:
       type: object
       properties:
-        description:
-          type: string
-        unit:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthDataTrafficType
-    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthDataCurrency:
-      type: object
-      properties:
-        code:
-          type: string
-        symbol:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthDataCurrency
-    ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsTariff:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        tariff_status_id:
-          type: integer
-        ratezone:
-          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsTariffRatezone'
-      title: ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsTariff
-    ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataCurrency:
-      type: object
-      properties:
-        code:
-          type: string
-        symbol:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataCurrency
-    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthDataCurrency:
-      type: object
-      properties:
-        code:
-          type: string
-        symbol:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthDataCurrency
-    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaPrepaidBalance:
-      type: object
-      properties:
-        amount:
-          type: number
-          format: double
-          description: Remaining prepaid balance
-        currency:
-          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaPrepaidBalanceCurrency'
-        last_updated:
-          type: string
-      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaPrepaidBalance
-    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthSmsTrafficType:
-      type: object
-      properties:
-        description:
-          type: string
-        unit:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthSmsTrafficType
-    Organization_MyOrganisationGet_Response_200:
-      type: object
-      properties:
-        name:
-          type: string
-        organisation_type_id:
-          type: string
-        country_id:
-          type: string
-        organisation_status_id:
-          type: string
-        ext_reference:
-          type: string
-        monthly_cost_limit:
-          type:
-          - string
-          - 'null'
-        currency_id:
-          type: integer
-        organisation_class_id:
-          type: integer
-        created:
-          type: string
-          format: date-time
-        verification_type_id:
-          type:
-          - string
-          - 'null'
-        verification:
-          type: string
-        brand_id:
-          type: string
-        default_sms_routing_id:
-          type:
-          - string
-          - 'null'
-        id:
-          type: integer
-      title: Organization_MyOrganisationGet_Response_200
-    Organization_UpdateOrganisationTariff_Response_200:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Organization_UpdateOrganisationTariff_Response_200
+        rx:
+          type: array
+          items:
+            type: string
+          description: 'SMS MO - Array index `0`: Time as `HH:mm` string, index `1`: consumed volume
+
+            '
+        tx:
+          type: array
+          items:
+            type: string
+          description: 'SMS MT - Array index `0`: Time as `HH:mm` string, index `1`: consumed volume
+
+            '
+      title: ApiV1OrganisationOrgIdOrMyStatsHourlyGetResponsesContentApplicationJsonSchemaSms
     ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthData:
       type: object
       properties:
@@ -787,24 +636,6 @@ components:
 
             '
       title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthData
-    ApiV1OrganisationOrgIdOrMyStatsHourlyGetResponsesContentApplicationJsonSchemaData:
-      type: object
-      properties:
-        rx:
-          type: array
-          items:
-            type: string
-          description: 'Downloaded data - Array index `0`: Time as `HH:mm` string, index `1`: consumed volume
-
-            '
-        tx:
-          type: array
-          items:
-            type: string
-          description: 'Uploaded data - Array index `0`: Time as `HH:mm` string, index `1`: consumed volume
-
-            '
-      title: ApiV1OrganisationOrgIdOrMyStatsHourlyGetResponsesContentApplicationJsonSchemaData
     Organization_GetOrganisationMonthlyStats_Response_200:
       type: object
       properties:
@@ -844,7 +675,7 @@ components:
         prepaid_balance:
           $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaPrepaidBalance'
       title: Organization_GetOrganisationMonthlyStats_Response_200
-    ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataTrafficType:
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthSmsTrafficType:
       type: object
       properties:
         description:
@@ -854,41 +685,19 @@ components:
         id:
           type: number
           format: double
-      title: ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataTrafficType
-    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonth:
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthSmsTrafficType
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaPrepaidBalance:
       type: object
       properties:
-        data:
-          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthData'
-        sms:
-          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthSms'
-      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonth
-    Organization_AssignRatezoneInclusiveVolume_Response_201:
-      type: object
-      properties:
-        id:
-          type: integer
-        start_date:
-          type: string
-          format: date-time
-        end_date:
-          type: string
-          format: date-time
-        pooled:
-          type: boolean
-      title: Organization_AssignRatezoneInclusiveVolume_Response_201
-    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaInclusiveVolume:
-      type: object
-      properties:
-        unpooled:
+        amount:
           type: number
           format: double
-          description: Total cost of all unpooled inclusive volumes
-        pooled:
-          type: number
-          format: double
-          description: Total cost of all pooled inclusive volumes
-      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaInclusiveVolume
+          description: Remaining prepaid balance
+        currency:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaPrepaidBalanceCurrency'
+        last_updated:
+          type: string
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaPrepaidBalance
     ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthSms:
       type: object
       properties:
@@ -924,71 +733,14 @@ components:
 
             '
       title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthSms
-    ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsData:
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonth:
       type: object
       properties:
-        cost:
-          type: string
-          description: Total cost
-        currency_id:
-          type: string
-        currency:
-          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataCurrency'
-        traffic_type_id:
-          type: string
-        traffic_type:
-          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataTrafficType'
-        volume:
-          type: string
-          description: Total consumption (`volume_rx` + `volume_tx`)
-        volume_rx:
-          type: string
-          description: '* For traffic type `5` (`Data`): Downloaded data
-
-            * For traffic type `6` (`SMS`): SMS MT
-
-            '
-        volume_tx:
-          type: string
-          description: '* For traffic type `5` (`Data`): Uploaded data
-
-            * For traffic type `6` (`SMS`): SMS MO
-
-            '
-      title: ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsData
-    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthSmsCurrency:
-      type: object
-      properties:
-        code:
-          type: string
-        symbol:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthSmsCurrency
-    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaPrepaidBalanceCurrency:
-      type: object
-      properties:
-        code:
-          type: string
-        symbol:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaPrepaidBalanceCurrency
-    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthSmsCurrency:
-      type: object
-      properties:
-        code:
-          type: string
-        symbol:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthSmsCurrency
+        data:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthData'
+        sms:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthSms'
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonth
     ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthData:
       type: object
       properties:
@@ -1024,17 +776,45 @@ components:
 
             '
       title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthData
-    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthDataTrafficType:
+    Organization_MyOrganisationGet_Response_200:
       type: object
       properties:
-        description:
+        name:
           type: string
-        unit:
+        organisation_type_id:
           type: string
+        country_id:
+          type: string
+        organisation_status_id:
+          type: string
+        ext_reference:
+          type: string
+        monthly_cost_limit:
+          type:
+          - string
+          - 'null'
+        currency_id:
+          type: integer
+        organisation_class_id:
+          type: integer
+        created:
+          type: string
+          format: date-time
+        verification_type_id:
+          type:
+          - string
+          - 'null'
+        verification:
+          type: string
+        brand_id:
+          type: string
+        default_sms_routing_id:
+          type:
+          - string
+          - 'null'
         id:
-          type: number
-          format: double
-      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthDataTrafficType
+          type: integer
+      title: Organization_MyOrganisationGet_Response_200
     ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaSim:
       type: object
       properties:
@@ -1057,65 +837,14 @@ components:
 
         '
       title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaSim
-    ApiV1OrganisationOrgIdOrMyStatsHourlyGetResponsesContentApplicationJsonSchemaSms:
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonth:
       type: object
       properties:
-        rx:
-          type: array
-          items:
-            type: string
-          description: 'SMS MO - Array index `0`: Time as `HH:mm` string, index `1`: consumed volume
-
-            '
-        tx:
-          type: array
-          items:
-            type: string
-          description: 'SMS MT - Array index `0`: Time as `HH:mm` string, index `1`: consumed volume
-
-            '
-      title: ApiV1OrganisationOrgIdOrMyStatsHourlyGetResponsesContentApplicationJsonSchemaSms
-    ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsCurrency:
-      type: object
-      properties:
-        code:
-          type: string
-        symbol:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsCurrency
-    ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        volume:
-          type: number
-          format: double
-          description: The volume in MB
-        rate:
-          type: number
-          format: double
-        pooled:
-          type: boolean
-        start_date:
-          type: string
-          format: date-time
-        end_date:
-          type: string
-          format: date-time
-          description: 'End date will be omitted in the response, if it has been set to null.
-
-            This means the inclusive volume will run infinitely.
-
-            '
-        currency:
-          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsCurrency'
-        tariff:
-          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsTariff'
-      title: ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItems
+        data:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthData'
+        sms:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthSms'
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonth
     ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthSms:
       type: object
       properties:
@@ -1151,6 +880,263 @@ components:
 
             '
       title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthSms
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthDataTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthDataTrafficType
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaPrepaidBalanceCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaPrepaidBalanceCurrency
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthDataTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthDataTrafficType
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthSmsTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthSmsTrafficType
+    ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataTrafficType
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthSmsCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthSmsCurrency
+    ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataCurrency
+    ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsTariff:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        tariff_status_id:
+          type: integer
+        ratezone:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsTariffRatezone'
+      title: ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsTariff
+    ApiV1OrganisationStatusGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ApiV1OrganisationStatusGetResponsesContentApplicationJsonSchemaItems
+    ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsTrafficType
+    ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        date:
+          type: string
+          description: 'Date in `YYYY-MM-DD` format or `TOTAL` to indicate the total volume and cost of the traffic type
+
+            '
+        data:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsData'
+        sms:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSms'
+      title: ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItems
+    ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsCurrency:
+      type: object
+      properties:
+        id:
+          type: integer
+        code:
+          type: string
+        symbol:
+          type: string
+      title: ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsCurrency
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthDataCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaLastMonthDataCurrency
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthDataCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthDataCurrency
+    ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        volume:
+          type: number
+          format: double
+          description: The volume in MB
+        rate:
+          type: number
+          format: double
+        pooled:
+          type: boolean
+        start_date:
+          type: string
+          format: date-time
+        end_date:
+          type: string
+          format: date-time
+          description: 'End date will be omitted in the response, if it has been set to null.
+
+            This means the inclusive volume will run infinitely.
+
+            '
+        currency:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsCurrency'
+        tariff:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsTariff'
+      title: ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItems
+    Organization_GetOrganisationHourlyStats_Response_200:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsHourlyGetResponsesContentApplicationJsonSchemaData'
+        sms:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsHourlyGetResponsesContentApplicationJsonSchemaSms'
+      title: Organization_GetOrganisationHourlyStats_Response_200
+    Organization_UpdateOrganisationTariff_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Organization_UpdateOrganisationTariff_Response_200
+    ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthSmsCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyStatsGetResponsesContentApplicationJsonSchemaCurrentMonthSmsCurrency
+    ApiV1OrganisationOrgIdOrMyStatsHourlyGetResponsesContentApplicationJsonSchemaData:
+      type: object
+      properties:
+        rx:
+          type: array
+          items:
+            type: string
+          description: 'Downloaded data - Array index `0`: Time as `HH:mm` string, index `1`: consumed volume
+
+            '
+        tx:
+          type: array
+          items:
+            type: string
+          description: 'Uploaded data - Array index `0`: Time as `HH:mm` string, index `1`: consumed volume
+
+            '
+      title: ApiV1OrganisationOrgIdOrMyStatsHourlyGetResponsesContentApplicationJsonSchemaData
+    ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSms:
+      type: object
+      properties:
+        cost:
+          type: string
+          description: Total cost
+        currency_id:
+          type: string
+        currency:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsCurrency'
+        traffic_type_id:
+          type: string
+        traffic_type:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsTrafficType'
+        volume:
+          type: string
+          description: Total consumption (`volume_rx` + `volume_tx`)
+        volume_rx:
+          type: string
+          description: '* For traffic type `5` (`Data`): Downloaded data
+
+            * For traffic type `6` (`SMS`): SMS MT
+
+            '
+        volume_tx:
+          type: string
+          description: '* For traffic type `5` (`Data`): Uploaded data
+
+            * For traffic type `6` (`SMS`): SMS MO
+
+            '
+      title: ApiV1OrganisationOrgIdOrMyStatsDailyGetResponsesContentApplicationJsonSchemaItemsSms
     ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsTariffRatezone:
       type: object
       properties:
@@ -1161,6 +1147,20 @@ components:
         ratezone_status_id:
           type: integer
       title: ApiV1OrganisationOrgIdOrMyInclusiveVolumeActiveGetResponsesContentApplicationJsonSchemaItemsTariffRatezone
+    Organization_AssignRatezoneInclusiveVolume_Response_201:
+      type: object
+      properties:
+        id:
+          type: integer
+        start_date:
+          type: string
+          format: date-time
+        end_date:
+          type: string
+          format: date-time
+        pooled:
+          type: boolean
+      title: Organization_AssignRatezoneInclusiveVolume_Response_201
   securitySchemes:
     BearerAuth:
       type: http

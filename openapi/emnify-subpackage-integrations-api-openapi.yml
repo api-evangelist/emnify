@@ -850,41 +850,12 @@ paths:
                 description: Any type
 components:
   schemas:
-    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials2:
+    Integrations_DeleteDataStreamerV2_Response_202:
       type: object
-      properties:
-        url:
-          type: string
-          description: URL of your Webhook / RestAPI endpoint
-        method:
-          type: string
-          description: HTTP Method to use. Options are `POST` (default), `PUT` and `PATCH`
-        headers:
-          type: array
-          items:
-            type: string
-          description: Array containing additional header tuples. Expected Format is `["header1:value1, "header2:value2", ...]`. Headers are masked in GET request.
-        size:
-          type: integer
-          description: Number specifying of request should contain `1` message or an array of messages of the specified batch size. Default is `3000`. Valid sizes are between 1 and 10000.
-      required:
-      - url
-      description: Credential fields for Webhook
-      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials2
-    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaStatus:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-          description: Status identifier
-        description:
-          type: string
-          description: Status description
-      required:
-      - id
-      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaStatus
-    ApiV2DataStreamFilterFieldTypeGetResponsesContentApplicationJsonSchemaItems:
+      properties: {}
+      description: Empty response body
+      title: Integrations_DeleteDataStreamerV2_Response_202
+    ApiV2DataStreamTypeGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
         id:
@@ -894,182 +865,17 @@ components:
         description:
           type: string
           description: Enum item description
-      title: ApiV2DataStreamFilterFieldTypeGetResponsesContentApplicationJsonSchemaItems
-    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestination:
-      type: object
-      properties:
-        connection_type:
-          type: string
-        format:
-          type: string
-        credentials:
-          $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials'
-          description: Destination credentials
-      required:
-      - connection_type
-      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestination
+      title: ApiV2DataStreamTypeGetResponsesContentApplicationJsonSchemaItems
     Integrations_DeleteCallbackSecret_Response_200:
       type: object
       properties: {}
       description: Empty response body
       title: Integrations_DeleteCallbackSecret_Response_200
-    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaStatus:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-          description: Status identifier
-        description:
-          type: string
-          description: Status description
-      required:
-      - id
-      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaStatus
-    Integrations_CreateCallbackURL_Response_201:
+    Integrations_CreateCallbackSecret_Response_201:
       type: object
       properties: {}
       description: Empty response body
-      title: Integrations_CreateCallbackURL_Response_201
-    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials0:
-      type: object
-      properties:
-        region:
-          type: string
-          description: AWS Region of your Kinesis Data Stream
-        stream_name:
-          type: string
-          description: Name of your Kinesis Data Stream
-        role_arn:
-          type: string
-          description: Role ARN of IAM role with write permission for your Kinesis Stream
-      required:
-      - region
-      - stream_name
-      - role_arn
-      description: Credential fields for Amazon Kinesis Data Streams
-      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials0
-    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaFiltersItems:
-      type: object
-      properties:
-        field:
-          type: string
-          description: Field to filter on
-        value:
-          type: array
-          items:
-            type: string
-          description: Values to filter on
-      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaFiltersItems
-    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials4:
-      type: object
-      properties:
-        api_key:
-          type: string
-          description: Datadog API Key
-        region:
-          type: string
-          description: Datadog region. Options are `US` (default), `US3`, `EU` and `US1FED`
-      required:
-      - api_key
-      description: Credential fields for Datadog
-      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials4
-    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials2:
-      type: object
-      properties:
-        url:
-          type: string
-          description: URL of your Webhook / RestAPI endpoint
-        method:
-          type: string
-          description: HTTP Method to use. Options are `POST` (default), `PUT` and `PATCH`
-        headers:
-          type: array
-          items:
-            type: string
-          description: Array containing additional header tuples. Expected Format is `["header1:value1, "header2:value2", ...]`. Headers are masked in GET request.
-        size:
-          type: integer
-          description: Number specifying of request should contain `1` message or an array of messages of the specified batch size. Default is `3000`. Valid sizes are between 1 and 10000.
-      required:
-      - url
-      description: Credential fields for Webhook
-      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials2
-    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials:
-      oneOf:
-      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials0'
-      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials1'
-      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials2'
-      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials3'
-      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials4'
-      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials5'
-      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials6'
-      description: Destination credentials
-      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials
-    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestination:
-      type: object
-      properties:
-        connection_type:
-          type: string
-        format:
-          type: string
-        credentials:
-          $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials'
-          description: Destination credentials
-      required:
-      - connection_type
-      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestination
-    Integrations_GetDataStreamerByIdV2_Response_200:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Descriptive name or purpose of the data stream
-        destination:
-          $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestination'
-        filters:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaFiltersItems'
-        data_stream_type:
-          description: Any type
-        relation_resolution:
-          description: Any type
-        status:
-          $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaStatus'
-      description: Description of the status
-      title: Integrations_GetDataStreamerByIdV2_Response_200
-    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaFiltersItems:
-      type: object
-      properties:
-        field:
-          type: string
-          description: Field to filter on
-        value:
-          type: array
-          items:
-            type: string
-          description: Values to filter on
-      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaFiltersItems
-    CreateDataStreamerRequestUnprocessableEntityError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      required:
-      - error_code
-      - error_token
-      - message
-      title: CreateDataStreamerRequestUnprocessableEntityError
-    Integrations_DeleteCallbackURL_Response_200:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Integrations_DeleteCallbackURL_Response_200
+      title: Integrations_CreateCallbackSecret_Response_201
     ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials2:
       type: object
       properties:
@@ -1096,94 +902,32 @@ components:
       properties: {}
       description: Empty response body
       title: Integrations_PatchV2DataStream_Response_202
-    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials1:
+    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaFiltersItems:
       type: object
       properties:
-        region:
+        field:
           type: string
-          description: AWS Region of your Kinesis Data Stream
-        bucket_name:
+          description: Field to filter on
+        value:
+          type: array
+          items:
+            type: string
+          description: Values to filter on
+      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaFiltersItems
+    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestination:
+      type: object
+      properties:
+        connection_type:
           type: string
-          description: Name of your S3 bucket
-        role_arn:
+        format:
           type: string
-          description: Role ARN of IAM role with write permission for your S3 bucket
-        flush_size:
-          type: integer
-          description: Maximal number of entries in a single file. Default is `10000`. Valid flush sizes are between 10 and 100000.
-        rotate_interval:
-          type: integer
-          description: Maximal time in milliseconds between file writes. Default is `10000` ms. Valid rotation intervals are between 10000 ms and 900000 ms.
+        credentials:
+          $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials'
+          description: Destination credentials
       required:
-      - region
-      - bucket_name
-      - role_arn
-      description: Credential fields for Amazon S3
-      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials1
-    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials6:
-      type: object
-      properties:
-        cps_topic:
-          type: string
-          description: Topic name of PubSub topic
-        cps_project:
-          type: string
-          description: Project ID of the topic project.
-      required:
-      - cps_topic
-      - cps_project
-      description: Credential fields for Google Cloud Pub/Sub
-      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials6
-    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials4:
-      type: object
-      properties:
-        api_key:
-          type: string
-          description: Datadog API Key
-        region:
-          type: string
-          description: Datadog region. Options are `US` (default), `US3`, `EU` and `US1FED`
-      required:
-      - api_key
-      description: Credential fields for Datadog
-      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials4
-    Integrations_DataStreamerV2ByIdRestart_Response_202:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Integrations_DataStreamerV2ByIdRestart_Response_202
-    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials5:
-      type: object
-      properties:
-        connection_string:
-          type: string
-          description: Connection string with Access Key to your Event Hub.
-      required:
-      - connection_string
-      description: Credential fields for Microsoft Azure EventHub
-      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials5
-    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials5:
-      type: object
-      properties:
-        connection_string:
-          type: string
-          description: Connection string with Access Key to your Event Hub.
-      required:
-      - connection_string
-      description: Credential fields for Microsoft Azure EventHub
-      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials5
-    ApiV2DataStreamTypeGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-          description: Enum item identifier
-        description:
-          type: string
-          description: Enum item description
-      title: ApiV2DataStreamTypeGetResponsesContentApplicationJsonSchemaItems
-    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials3:
+      - connection_type
+      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestination
+    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials3:
       type: object
       properties:
         project_id:
@@ -1203,31 +947,89 @@ components:
       - write_key
       - collection_name
       description: Credential fields for KeenIO
-      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials3
-    ApiV2DataStreamStatusGetResponsesContentApplicationJsonSchemaItems:
+      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials3
+    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials3:
       type: object
       properties:
-        id:
-          type: number
-          format: double
-          description: Enum item identifier
-        description:
+        project_id:
           type: string
-          description: Enum item description
-      title: ApiV2DataStreamStatusGetResponsesContentApplicationJsonSchemaItems
-    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestination:
-      type: object
-      properties:
-        connection_type:
+          description: Project ID reported by KeenIO
+        write_key:
           type: string
-        format:
+          description: Write key of your KeenIO Project.
+        collection_name:
           type: string
-        credentials:
-          $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials'
-          description: Destination credentials
+          description: Collection Name that you want to stream your data to.
+        size:
+          type: integer
+          description: Number specifying of request should contain `1` message or an array of messages of the specified batch size. Default is `3000`. Valid sizes are between 1 and 10000.
       required:
-      - connection_type
-      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestination
+      - project_id
+      - write_key
+      - collection_name
+      description: Credential fields for KeenIO
+      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials3
+    Integrations_DeleteCallbackURL_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Integrations_DeleteCallbackURL_Response_200
+    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials:
+      oneOf:
+      - $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials0'
+      - $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials1'
+      - $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials2'
+      - $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials3'
+      - $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials4'
+      - $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials5'
+      - $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials6'
+      description: Destination credentials
+      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials
+    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials4:
+      type: object
+      properties:
+        api_key:
+          type: string
+          description: Datadog API Key
+        region:
+          type: string
+          description: Datadog region. Options are `US` (default), `US3`, `EU` and `US1FED`
+      required:
+      - api_key
+      description: Credential fields for Datadog
+      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials4
+    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials0:
+      type: object
+      properties:
+        region:
+          type: string
+          description: AWS Region of your Kinesis Data Stream
+        stream_name:
+          type: string
+          description: Name of your Kinesis Data Stream
+        role_arn:
+          type: string
+          description: Role ARN of IAM role with write permission for your Kinesis Stream
+      required:
+      - region
+      - stream_name
+      - role_arn
+      description: Credential fields for Amazon Kinesis Data Streams
+      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials0
+    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials6:
+      type: object
+      properties:
+        cps_topic:
+          type: string
+          description: Topic name of PubSub topic
+        cps_project:
+          type: string
+          description: Project ID of the topic project.
+      required:
+      - cps_topic
+      - cps_project
+      description: Credential fields for Google Cloud Pub/Sub
+      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials6
     Integrations_ListDataStreamerV2s_Response_200:
       type: object
       properties:
@@ -1247,7 +1049,62 @@ components:
         status:
           description: Any type
       title: Integrations_ListDataStreamerV2s_Response_200
-    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials0:
+    ApiV2DataStreamStatusGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+          description: Enum item identifier
+        description:
+          type: string
+          description: Enum item description
+      title: ApiV2DataStreamStatusGetResponsesContentApplicationJsonSchemaItems
+    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials4:
+      type: object
+      properties:
+        api_key:
+          type: string
+          description: Datadog API Key
+        region:
+          type: string
+          description: Datadog region. Options are `US` (default), `US3`, `EU` and `US1FED`
+      required:
+      - api_key
+      description: Credential fields for Datadog
+      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials4
+    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials2:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL of your Webhook / RestAPI endpoint
+        method:
+          type: string
+          description: HTTP Method to use. Options are `POST` (default), `PUT` and `PATCH`
+        headers:
+          type: array
+          items:
+            type: string
+          description: Array containing additional header tuples. Expected Format is `["header1:value1, "header2:value2", ...]`. Headers are masked in GET request.
+        size:
+          type: integer
+          description: Number specifying of request should contain `1` message or an array of messages of the specified batch size. Default is `3000`. Valid sizes are between 1 and 10000.
+      required:
+      - url
+      description: Credential fields for Webhook
+      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials2
+    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials5:
+      type: object
+      properties:
+        connection_string:
+          type: string
+          description: Connection string with Access Key to your Event Hub.
+      required:
+      - connection_string
+      description: Credential fields for Microsoft Azure EventHub
+      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials5
+    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials0:
       type: object
       properties:
         region:
@@ -1264,7 +1121,20 @@ components:
       - stream_name
       - role_arn
       description: Credential fields for Amazon Kinesis Data Streams
-      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials0
+      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials0
+    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials4:
+      type: object
+      properties:
+        api_key:
+          type: string
+          description: Datadog API Key
+        region:
+          type: string
+          description: Datadog region. Options are `US` (default), `US3`, `EU` and `US1FED`
+      required:
+      - api_key
+      description: Credential fields for Datadog
+      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials4
     ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials1:
       type: object
       properties:
@@ -1289,6 +1159,68 @@ components:
       - role_arn
       description: Credential fields for Amazon S3
       title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials1
+    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestination:
+      type: object
+      properties:
+        connection_type:
+          type: string
+        format:
+          type: string
+        credentials:
+          $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials'
+          description: Destination credentials
+      required:
+      - connection_type
+      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestination
+    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials1:
+      type: object
+      properties:
+        region:
+          type: string
+          description: AWS Region of your Kinesis Data Stream
+        bucket_name:
+          type: string
+          description: Name of your S3 bucket
+        role_arn:
+          type: string
+          description: Role ARN of IAM role with write permission for your S3 bucket
+        flush_size:
+          type: integer
+          description: Maximal number of entries in a single file. Default is `10000`. Valid flush sizes are between 10 and 100000.
+        rotate_interval:
+          type: integer
+          description: Maximal time in milliseconds between file writes. Default is `10000` ms. Valid rotation intervals are between 10000 ms and 900000 ms.
+      required:
+      - region
+      - bucket_name
+      - role_arn
+      description: Credential fields for Amazon S3
+      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials1
+    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaFiltersItems:
+      type: object
+      properties:
+        field:
+          type: string
+          description: Field to filter on
+        value:
+          type: array
+          items:
+            type: string
+          description: Values to filter on
+      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaFiltersItems
+    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+          description: Status identifier
+        description:
+          type: string
+          description: Status description
+      required:
+      - id
+      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaStatus
     ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials6:
       type: object
       properties:
@@ -1303,17 +1235,18 @@ components:
       - cps_project
       description: Credential fields for Google Cloud Pub/Sub
       title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials6
-    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials5:
+    ApiV2DataStreamFilterFieldTypeGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
-        connection_string:
+        id:
+          type: number
+          format: double
+          description: Enum item identifier
+        description:
           type: string
-          description: Connection string with Access Key to your Event Hub.
-      required:
-      - connection_string
-      description: Credential fields for Microsoft Azure EventHub
-      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials5
-    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials4:
+          description: Enum item description
+      title: ApiV2DataStreamFilterFieldTypeGetResponsesContentApplicationJsonSchemaItems
+    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials4:
       type: object
       properties:
         api_key:
@@ -1325,119 +1258,12 @@ components:
       required:
       - api_key
       description: Credential fields for Datadog
-      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials4
-    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials6:
-      type: object
-      properties:
-        cps_topic:
-          type: string
-          description: Topic name of PubSub topic
-        cps_project:
-          type: string
-          description: Project ID of the topic project.
-      required:
-      - cps_topic
-      - cps_project
-      description: Credential fields for Google Cloud Pub/Sub
-      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials6
-    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials3:
-      type: object
-      properties:
-        project_id:
-          type: string
-          description: Project ID reported by KeenIO
-        write_key:
-          type: string
-          description: Write key of your KeenIO Project.
-        collection_name:
-          type: string
-          description: Collection Name that you want to stream your data to.
-        size:
-          type: integer
-          description: Number specifying of request should contain `1` message or an array of messages of the specified batch size. Default is `3000`. Valid sizes are between 1 and 10000.
-      required:
-      - project_id
-      - write_key
-      - collection_name
-      description: Credential fields for KeenIO
-      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials3
-    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials2:
-      type: object
-      properties:
-        url:
-          type: string
-          description: URL of your Webhook / RestAPI endpoint
-        method:
-          type: string
-          description: HTTP Method to use. Options are `POST` (default), `PUT` and `PATCH`
-        headers:
-          type: array
-          items:
-            type: string
-          description: Array containing additional header tuples. Expected Format is `["header1:value1, "header2:value2", ...]`. Headers are masked in GET request.
-        size:
-          type: integer
-          description: Number specifying of request should contain `1` message or an array of messages of the specified batch size. Default is `3000`. Valid sizes are between 1 and 10000.
-      required:
-      - url
-      description: Credential fields for Webhook
-      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials2
-    Integrations_DeleteDataStreamerV2_Response_202:
+      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials4
+    Integrations_CreateCallbackURL_Response_201:
       type: object
       properties: {}
       description: Empty response body
-      title: Integrations_DeleteDataStreamerV2_Response_202
-    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials3:
-      type: object
-      properties:
-        project_id:
-          type: string
-          description: Project ID reported by KeenIO
-        write_key:
-          type: string
-          description: Write key of your KeenIO Project.
-        collection_name:
-          type: string
-          description: Collection Name that you want to stream your data to.
-        size:
-          type: integer
-          description: Number specifying of request should contain `1` message or an array of messages of the specified batch size. Default is `3000`. Valid sizes are between 1 and 10000.
-      required:
-      - project_id
-      - write_key
-      - collection_name
-      description: Credential fields for KeenIO
-      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials3
-    Integrations_GetCallbackSecretbyID_Response_200:
-      type: object
-      properties:
-        organisation_id:
-          type: string
-        purpose:
-          type: string
-        id:
-          type: integer
-      title: Integrations_GetCallbackSecretbyID_Response_200
-    ApiV1ApiSecretGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        organisation_id:
-          type: string
-        purpose:
-          type: string
-        id:
-          type: integer
-      title: ApiV1ApiSecretGetResponsesContentApplicationJsonSchemaItems
-    Integrations_CreateDataStreamer_Response_201:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Integrations_CreateDataStreamer_Response_201
-    Integrations_CreateCallbackSecret_Response_201:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Integrations_CreateCallbackSecret_Response_201
+      title: Integrations_CreateCallbackURL_Response_201
     ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials1:
       type: object
       properties:
@@ -1462,16 +1288,181 @@ components:
       - role_arn
       description: Credential fields for Amazon S3
       title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials1
-    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials5:
+    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials:
+      oneOf:
+      - $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials0'
+      - $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials1'
+      - $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials2'
+      - $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials3'
+      - $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials4'
+      - $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials5'
+      - $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials6'
+      description: Destination credentials
+      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials
+    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestination:
       type: object
       properties:
-        connection_string:
+        connection_type:
           type: string
-          description: Connection string with Access Key to your Event Hub.
+        format:
+          type: string
+        credentials:
+          $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials'
+          description: Destination credentials
       required:
-      - connection_string
-      description: Credential fields for Microsoft Azure EventHub
-      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials5
+      - connection_type
+      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestination
+    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials:
+      oneOf:
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials0'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials1'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials2'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials3'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials4'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials5'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials6'
+      description: Destination credentials
+      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials
+    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaFiltersItems:
+      type: object
+      properties:
+        field:
+          type: string
+          description: Field to filter on
+        value:
+          type: array
+          items:
+            type: string
+          description: Values to filter on
+      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaFiltersItems
+    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials3:
+      type: object
+      properties:
+        project_id:
+          type: string
+          description: Project ID reported by KeenIO
+        write_key:
+          type: string
+          description: Write key of your KeenIO Project.
+        collection_name:
+          type: string
+          description: Collection Name that you want to stream your data to.
+        size:
+          type: integer
+          description: Number specifying of request should contain `1` message or an array of messages of the specified batch size. Default is `3000`. Valid sizes are between 1 and 10000.
+      required:
+      - project_id
+      - write_key
+      - collection_name
+      description: Credential fields for KeenIO
+      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials3
+    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials3:
+      type: object
+      properties:
+        project_id:
+          type: string
+          description: Project ID reported by KeenIO
+        write_key:
+          type: string
+          description: Write key of your KeenIO Project.
+        collection_name:
+          type: string
+          description: Collection Name that you want to stream your data to.
+        size:
+          type: integer
+          description: Number specifying of request should contain `1` message or an array of messages of the specified batch size. Default is `3000`. Valid sizes are between 1 and 10000.
+      required:
+      - project_id
+      - write_key
+      - collection_name
+      description: Credential fields for KeenIO
+      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials3
+    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials6:
+      type: object
+      properties:
+        cps_topic:
+          type: string
+          description: Topic name of PubSub topic
+        cps_project:
+          type: string
+          description: Project ID of the topic project.
+      required:
+      - cps_topic
+      - cps_project
+      description: Credential fields for Google Cloud Pub/Sub
+      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials6
+    Integrations_CreateDataStreamer_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Integrations_CreateDataStreamer_Response_201
+    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials:
+      oneOf:
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials0'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials1'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials2'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials3'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials4'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials5'
+      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials6'
+      description: Destination credentials
+      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials
+    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaFiltersItems:
+      type: object
+      properties:
+        field:
+          type: string
+          description: Field to filter on
+        value:
+          type: array
+          items:
+            type: string
+          description: Values to filter on
+      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaFiltersItems
+    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials6:
+      type: object
+      properties:
+        cps_topic:
+          type: string
+          description: Topic name of PubSub topic
+        cps_project:
+          type: string
+          description: Project ID of the topic project.
+      required:
+      - cps_topic
+      - cps_project
+      description: Credential fields for Google Cloud Pub/Sub
+      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials6
+    ApiV1ApiSecretGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        organisation_id:
+          type: string
+        purpose:
+          type: string
+        id:
+          type: integer
+      title: ApiV1ApiSecretGetResponsesContentApplicationJsonSchemaItems
+    Integrations_GetDataStreamerByIdV2_Response_200:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Descriptive name or purpose of the data stream
+        destination:
+          $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestination'
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaFiltersItems'
+        data_stream_type:
+          description: Any type
+        relation_resolution:
+          description: Any type
+        status:
+          $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaStatus'
+      description: Description of the status
+      title: Integrations_GetDataStreamerByIdV2_Response_200
     ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials1:
       type: object
       properties:
@@ -1496,131 +1487,6 @@ components:
       - role_arn
       description: Credential fields for Amazon S3
       title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials1
-    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaFiltersItems:
-      type: object
-      properties:
-        field:
-          type: string
-          description: Field to filter on
-        value:
-          type: array
-          items:
-            type: string
-          description: Values to filter on
-      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaFiltersItems
-    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials3:
-      type: object
-      properties:
-        project_id:
-          type: string
-          description: Project ID reported by KeenIO
-        write_key:
-          type: string
-          description: Write key of your KeenIO Project.
-        collection_name:
-          type: string
-          description: Collection Name that you want to stream your data to.
-        size:
-          type: integer
-          description: Number specifying of request should contain `1` message or an array of messages of the specified batch size. Default is `3000`. Valid sizes are between 1 and 10000.
-      required:
-      - project_id
-      - write_key
-      - collection_name
-      description: Credential fields for KeenIO
-      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials3
-    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaFiltersItems:
-      type: object
-      properties:
-        field:
-          type: string
-          description: Field to filter on
-        value:
-          type: array
-          items:
-            type: string
-          description: Values to filter on
-      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaFiltersItems
-    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials0:
-      type: object
-      properties:
-        region:
-          type: string
-          description: AWS Region of your Kinesis Data Stream
-        stream_name:
-          type: string
-          description: Name of your Kinesis Data Stream
-        role_arn:
-          type: string
-          description: Role ARN of IAM role with write permission for your Kinesis Stream
-      required:
-      - region
-      - stream_name
-      - role_arn
-      description: Credential fields for Amazon Kinesis Data Streams
-      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials0
-    ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials:
-      oneOf:
-      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials0'
-      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials1'
-      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials2'
-      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials3'
-      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials4'
-      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials5'
-      - $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials6'
-      description: Destination credentials
-      title: ApiV2DataStreamDataStreamIdPatchRequestBodyContentApplicationJsonSchemaDestinationCredentials
-    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials6:
-      type: object
-      properties:
-        cps_topic:
-          type: string
-          description: Topic name of PubSub topic
-        cps_project:
-          type: string
-          description: Project ID of the topic project.
-      required:
-      - cps_topic
-      - cps_project
-      description: Credential fields for Google Cloud Pub/Sub
-      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials6
-    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials4:
-      type: object
-      properties:
-        api_key:
-          type: string
-          description: Datadog API Key
-        region:
-          type: string
-          description: Datadog region. Options are `US` (default), `US3`, `EU` and `US1FED`
-      required:
-      - api_key
-      description: Credential fields for Datadog
-      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials4
-    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestination:
-      type: object
-      properties:
-        connection_type:
-          type: string
-        format:
-          type: string
-        credentials:
-          $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials'
-          description: Destination credentials
-      required:
-      - connection_type
-      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestination
-    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials:
-      oneOf:
-      - $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials0'
-      - $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials1'
-      - $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials2'
-      - $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials3'
-      - $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials4'
-      - $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials5'
-      - $ref: '#/components/schemas/ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials6'
-      description: Destination credentials
-      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials
     ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials0:
       type: object
       properties:
@@ -1639,17 +1505,151 @@ components:
       - role_arn
       description: Credential fields for Amazon Kinesis Data Streams
       title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials0
-    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials:
-      oneOf:
-      - $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials0'
-      - $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials1'
-      - $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials2'
-      - $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials3'
-      - $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials4'
-      - $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials5'
-      - $ref: '#/components/schemas/ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials6'
-      description: Destination credentials
-      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials
+    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+          description: Status identifier
+        description:
+          type: string
+          description: Status description
+      required:
+      - id
+      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaStatus
+    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials5:
+      type: object
+      properties:
+        connection_string:
+          type: string
+          description: Connection string with Access Key to your Event Hub.
+      required:
+      - connection_string
+      description: Credential fields for Microsoft Azure EventHub
+      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials5
+    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials0:
+      type: object
+      properties:
+        region:
+          type: string
+          description: AWS Region of your Kinesis Data Stream
+        stream_name:
+          type: string
+          description: Name of your Kinesis Data Stream
+        role_arn:
+          type: string
+          description: Role ARN of IAM role with write permission for your Kinesis Stream
+      required:
+      - region
+      - stream_name
+      - role_arn
+      description: Credential fields for Amazon Kinesis Data Streams
+      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials0
+    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials5:
+      type: object
+      properties:
+        connection_string:
+          type: string
+          description: Connection string with Access Key to your Event Hub.
+      required:
+      - connection_string
+      description: Credential fields for Microsoft Azure EventHub
+      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials5
+    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials2:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL of your Webhook / RestAPI endpoint
+        method:
+          type: string
+          description: HTTP Method to use. Options are `POST` (default), `PUT` and `PATCH`
+        headers:
+          type: array
+          items:
+            type: string
+          description: Array containing additional header tuples. Expected Format is `["header1:value1, "header2:value2", ...]`. Headers are masked in GET request.
+        size:
+          type: integer
+          description: Number specifying of request should contain `1` message or an array of messages of the specified batch size. Default is `3000`. Valid sizes are between 1 and 10000.
+      required:
+      - url
+      description: Credential fields for Webhook
+      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials2
+    Integrations_DataStreamerV2ByIdRestart_Response_202:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Integrations_DataStreamerV2ByIdRestart_Response_202
+    CreateDataStreamerRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      required:
+      - error_code
+      - error_token
+      - message
+      title: CreateDataStreamerRequestUnprocessableEntityError
+    ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials2:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL of your Webhook / RestAPI endpoint
+        method:
+          type: string
+          description: HTTP Method to use. Options are `POST` (default), `PUT` and `PATCH`
+        headers:
+          type: array
+          items:
+            type: string
+          description: Array containing additional header tuples. Expected Format is `["header1:value1, "header2:value2", ...]`. Headers are masked in GET request.
+        size:
+          type: integer
+          description: Number specifying of request should contain `1` message or an array of messages of the specified batch size. Default is `3000`. Valid sizes are between 1 and 10000.
+      required:
+      - url
+      description: Credential fields for Webhook
+      title: ApiV2DataStreamGetResponsesContentApplicationJsonSchemaDestinationCredentials2
+    ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials5:
+      type: object
+      properties:
+        connection_string:
+          type: string
+          description: Connection string with Access Key to your Event Hub.
+      required:
+      - connection_string
+      description: Credential fields for Microsoft Azure EventHub
+      title: ApiV2DataStreamPostRequestBodyContentApplicationJsonSchemaDestinationCredentials5
+    Integrations_GetCallbackSecretbyID_Response_200:
+      type: object
+      properties:
+        organisation_id:
+          type: string
+        purpose:
+          type: string
+        id:
+          type: integer
+      title: Integrations_GetCallbackSecretbyID_Response_200
+    ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestination:
+      type: object
+      properties:
+        connection_type:
+          type: string
+        format:
+          type: string
+        credentials:
+          $ref: '#/components/schemas/ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestinationCredentials'
+          description: Destination credentials
+      required:
+      - connection_type
+      title: ApiV2DataStreamDataStreamIdGetResponsesContentApplicationJsonSchemaDestination
   securitySchemes:
     BearerAuth:
       type: http

@@ -232,14 +232,32 @@ paths:
                   $ref: '#/components/schemas/ApiV1TrafficLimitGetResponsesContentApplicationJsonSchemaItems'
 components:
   schemas:
-    ApiV1TrafficLimitGetResponsesContentApplicationJsonSchemaItemsPeriod:
+    ApiV1ServiceServiceIdTrafficLimitGetResponsesContentApplicationJsonSchemaItems:
       type: object
-      properties: {}
-      title: ApiV1TrafficLimitGetResponsesContentApplicationJsonSchemaItemsPeriod
+      properties:
+        id:
+          type: integer
+        volume:
+          type: integer
+        period:
+          $ref: '#/components/schemas/ApiV1ServiceServiceIdTrafficLimitGetResponsesContentApplicationJsonSchemaItemsPeriod'
+      title: ApiV1ServiceServiceIdTrafficLimitGetResponsesContentApplicationJsonSchemaItems
     ApiV1TrafficLimitGetResponsesContentApplicationJsonSchemaItemsService:
       type: object
       properties: {}
       title: ApiV1TrafficLimitGetResponsesContentApplicationJsonSchemaItemsService
+    ApiV1DnsGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        primary:
+          type: string
+        secondary:
+          type: string
+        ip_address_version:
+          type: integer
+      title: ApiV1DnsGetResponsesContentApplicationJsonSchemaItems
     Service_Lookups_and_Configuration_DnsPost_Response_201:
       type: object
       properties: {}
@@ -257,28 +275,6 @@ components:
         period:
           $ref: '#/components/schemas/ApiV1TrafficLimitGetResponsesContentApplicationJsonSchemaItemsPeriod'
       title: ApiV1TrafficLimitGetResponsesContentApplicationJsonSchemaItems
-    ApiV1DnsGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        primary:
-          type: string
-        secondary:
-          type: string
-        ip_address_version:
-          type: integer
-      title: ApiV1DnsGetResponsesContentApplicationJsonSchemaItems
-    ApiV1ServiceServiceIdTrafficLimitGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        volume:
-          type: integer
-        period:
-          $ref: '#/components/schemas/ApiV1ServiceServiceIdTrafficLimitGetResponsesContentApplicationJsonSchemaItemsPeriod'
-      title: ApiV1ServiceServiceIdTrafficLimitGetResponsesContentApplicationJsonSchemaItems
     ApiV1ServiceGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -295,10 +291,6 @@ components:
         traffic_type:
           $ref: '#/components/schemas/ApiV1ServiceGetResponsesContentApplicationJsonSchemaItemsTrafficType'
       title: ApiV1ServiceGetResponsesContentApplicationJsonSchemaItems
-    ApiV1ServiceGetResponsesContentApplicationJsonSchemaItemsTrafficType:
-      type: object
-      properties: {}
-      title: ApiV1ServiceGetResponsesContentApplicationJsonSchemaItemsTrafficType
     ApiV1ServiceServiceIdTrafficLimitGetResponsesContentApplicationJsonSchemaItemsPeriod:
       type: object
       properties:
@@ -309,6 +301,14 @@ components:
         unit:
           type: string
       title: ApiV1ServiceServiceIdTrafficLimitGetResponsesContentApplicationJsonSchemaItemsPeriod
+    ApiV1ServiceGetResponsesContentApplicationJsonSchemaItemsTrafficType:
+      type: object
+      properties: {}
+      title: ApiV1ServiceGetResponsesContentApplicationJsonSchemaItemsTrafficType
+    ApiV1TrafficLimitGetResponsesContentApplicationJsonSchemaItemsPeriod:
+      type: object
+      properties: {}
+      title: ApiV1TrafficLimitGetResponsesContentApplicationJsonSchemaItemsPeriod
   securitySchemes:
     BearerAuth:
       type: http

@@ -260,11 +260,17 @@ paths:
                 $ref: '#/components/schemas/IpAddressSpaceByIdDeleteRequestConflictError'
 components:
   schemas:
-    ApiV1IpAddressSpacePostResponsesContentApplicationJsonSchemaErrorsItems:
+    ApiV1IpAddressSpaceAvailableGetResponsesContentApplicationJsonSchemaItems:
       type: object
-      properties: {}
-      title: ApiV1IpAddressSpacePostResponsesContentApplicationJsonSchemaErrorsItems
-    IpAddressSpacePostRequestNotFoundError:
+      properties:
+        id:
+          type: integer
+        ip_address_space:
+          type: string
+        ip_address_version:
+          type: integer
+      title: ApiV1IpAddressSpaceAvailableGetResponsesContentApplicationJsonSchemaItems
+    IpAddressSpacePostRequestBadRequestError:
       type: object
       properties:
         error_code:
@@ -281,25 +287,21 @@ components:
       required:
       - error_token
       - message
-      title: IpAddressSpacePostRequestNotFoundError
-    IpAddressSpacePostRequestConflictError:
+      title: IpAddressSpacePostRequestBadRequestError
+    ApiV1IpAddressSpaceGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
-        error_code:
+        id:
           type: integer
-        error_token:
+        ip_address_space:
           type: string
-        message:
-          type: string
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV1IpAddressSpacePostResponsesContentApplicationJsonSchemaErrorsItems'
-          description: sub error descriptions
-      required:
-      - error_token
-      - message
-      title: IpAddressSpacePostRequestConflictError
+        ip_address_version:
+          type: integer
+        used_count:
+          type: integer
+        available_count:
+          type: integer
+      title: ApiV1IpAddressSpaceGetResponsesContentApplicationJsonSchemaItems
     IpAddressSpacePostRequestForbiddenError:
       type: object
       properties:
@@ -328,17 +330,7 @@ components:
         message:
           type: string
       title: IpAddressSpaceByIdPutRequestConflictError
-    ApiV1IpAddressSpaceAvailableGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        ip_address_space:
-          type: string
-        ip_address_version:
-          type: integer
-      title: ApiV1IpAddressSpaceAvailableGetResponsesContentApplicationJsonSchemaItems
-    IpAddressSpaceByIdDeleteRequestNotFoundError:
+    IpAddressSpacePostRequestConflictError:
       type: object
       properties:
         error_code:
@@ -347,7 +339,15 @@ components:
           type: string
         message:
           type: string
-      title: IpAddressSpaceByIdDeleteRequestNotFoundError
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1IpAddressSpacePostResponsesContentApplicationJsonSchemaErrorsItems'
+          description: sub error descriptions
+      required:
+      - error_token
+      - message
+      title: IpAddressSpacePostRequestConflictError
     IpAddressSpaceByIdPutRequestNotFoundError:
       type: object
       properties:
@@ -358,7 +358,35 @@ components:
         message:
           type: string
       title: IpAddressSpaceByIdPutRequestNotFoundError
-    ApiV1IpAddressSpaceGetResponsesContentApplicationJsonSchemaItems:
+    IpAddressSpacePostRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1IpAddressSpacePostResponsesContentApplicationJsonSchemaErrorsItems'
+          description: sub error descriptions
+      required:
+      - error_token
+      - message
+      title: IpAddressSpacePostRequestNotFoundError
+    IpAddressSpaceByIdDeleteRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: IpAddressSpaceByIdDeleteRequestNotFoundError
+    IP_Address_Spaces_IpAddressSpacePost_Response_201:
       type: object
       properties:
         id:
@@ -367,11 +395,11 @@ components:
           type: string
         ip_address_version:
           type: integer
-        used_count:
-          type: integer
-        available_count:
-          type: integer
-      title: ApiV1IpAddressSpaceGetResponsesContentApplicationJsonSchemaItems
+      title: IP Address Spaces_IpAddressSpacePost_Response_201
+    ApiV1IpAddressSpacePostResponsesContentApplicationJsonSchemaErrorsItems:
+      type: object
+      properties: {}
+      title: ApiV1IpAddressSpacePostResponsesContentApplicationJsonSchemaErrorsItems
     IpAddressSpacePostRequestUnprocessableEntityError:
       type: object
       properties:
@@ -390,34 +418,6 @@ components:
       - error_token
       - message
       title: IpAddressSpacePostRequestUnprocessableEntityError
-    IP_Address_Spaces_IpAddressSpacePost_Response_201:
-      type: object
-      properties:
-        id:
-          type: integer
-        ip_address_space:
-          type: string
-        ip_address_version:
-          type: integer
-      title: IP Address Spaces_IpAddressSpacePost_Response_201
-    IpAddressSpacePostRequestBadRequestError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV1IpAddressSpacePostResponsesContentApplicationJsonSchemaErrorsItems'
-          description: sub error descriptions
-      required:
-      - error_token
-      - message
-      title: IpAddressSpacePostRequestBadRequestError
     IpAddressSpaceByIdDeleteRequestConflictError:
       type: object
       properties:

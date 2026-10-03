@@ -64,19 +64,6 @@ paths:
                   $ref: '#/components/schemas/ApiV1OperatorGetResponsesContentApplicationJsonSchemaItems'
 components:
   schemas:
-    ApiV1OperatorGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        name:
-          type: string
-        country_name:
-          type: string
-        id:
-          type: number
-          format: double
-        country:
-          $ref: '#/components/schemas/ApiV1OperatorGetResponsesContentApplicationJsonSchemaItemsCountry'
-      title: ApiV1OperatorGetResponsesContentApplicationJsonSchemaItems
     ApiV1OperatorGetResponsesContentApplicationJsonSchemaItemsCountry:
       type: object
       properties:
@@ -97,6 +84,19 @@ components:
           type: number
           format: double
       title: ApiV1OperatorGetResponsesContentApplicationJsonSchemaItemsCountry
+    ApiV1OperatorGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        name:
+          type: string
+        country_name:
+          type: string
+        id:
+          type: number
+          format: double
+        country:
+          $ref: '#/components/schemas/ApiV1OperatorGetResponsesContentApplicationJsonSchemaItemsCountry'
+      title: ApiV1OperatorGetResponsesContentApplicationJsonSchemaItems
   securitySchemes:
     BearerAuth:
       type: http

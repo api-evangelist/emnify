@@ -168,30 +168,6 @@ paths:
                 $ref: '#/components/schemas/CustomEventTemplateOutputDto'
 components:
   schemas:
-    Custom_Events_deleteCustomEvent_Response_200:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Custom Events_deleteCustomEvent_Response_200
-    SupportedTargetingParametersDto:
-      type: object
-      properties:
-        parameter:
-          type: string
-        type:
-          type: string
-        description:
-          type: string
-        validators:
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidatorDto'
-      required:
-      - parameter
-      - type
-      - description
-      - validators
-      title: SupportedTargetingParametersDto
     ConfigurationInputPropertiesDto:
       type: object
       properties:
@@ -208,6 +184,11 @@ components:
       - value
       - value_array
       title: ConfigurationInputPropertiesDto
+    Custom_Events_deleteCustomEvent_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Custom Events_deleteCustomEvent_Response_200
     CustomEventOutputDto:
       type: object
       properties:
@@ -240,15 +221,6 @@ components:
       - supportedTargetingParameters
       - supportedActions
       title: CustomEventOutputDto
-    WithIdInputDto:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-      required:
-      - id
-      title: WithIdInputDto
     CustomEventCreateDto:
       type: object
       properties:
@@ -268,6 +240,15 @@ components:
       - configuration_properties
       - name
       title: CustomEventCreateDto
+    WithIdInputDto:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: WithIdInputDto
     ValidatorDto:
       type: object
       properties:
@@ -340,6 +321,25 @@ components:
       - configuration_properties
       - supported_targeting_parameters
       title: CustomEventTemplateOutputDto
+    SupportedTargetingParametersDto:
+      type: object
+      properties:
+        parameter:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        validators:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidatorDto'
+      required:
+      - parameter
+      - type
+      - description
+      - validators
+      title: SupportedTargetingParametersDto
   securitySchemes:
     BearerAuth:
       type: http

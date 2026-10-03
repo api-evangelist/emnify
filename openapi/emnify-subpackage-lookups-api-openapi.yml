@@ -268,35 +268,6 @@ components:
         ip_address:
           type: string
       title: ApiV1BreakoutRegionGetResponsesContentApplicationJsonSchemaItems
-    ApiV1RatTypeGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        description:
-          type: string
-      title: ApiV1RatTypeGetResponsesContentApplicationJsonSchemaItems
-    ApiV1DataThrottleGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        octets:
-          type: string
-        description:
-          type: string
-      title: ApiV1DataThrottleGetResponsesContentApplicationJsonSchemaItems
-    ApiV1CurrencyGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        code:
-          type: string
-        symbol:
-          type: string
-      title: ApiV1CurrencyGetResponsesContentApplicationJsonSchemaItems
     ApiV1CountryGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -311,7 +282,17 @@ components:
         iso_code:
           type: string
       title: ApiV1CountryGetResponsesContentApplicationJsonSchemaItems
-    ApiV1DataBlocksizeGetResponsesContentApplicationJsonSchemaItems:
+    ApiV1CurrencyGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        code:
+          type: string
+        symbol:
+          type: string
+      title: ApiV1CurrencyGetResponsesContentApplicationJsonSchemaItems
+    ApiV1DataThrottleGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
         id:
@@ -320,7 +301,7 @@ components:
           type: string
         description:
           type: string
-      title: ApiV1DataBlocksizeGetResponsesContentApplicationJsonSchemaItems
+      title: ApiV1DataThrottleGetResponsesContentApplicationJsonSchemaItems
     ApiV1ServiceLevelGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -333,6 +314,15 @@ components:
       - id
       description: The default service level of a tariff plan. Possible values can be fetched with GET `/api/v1/service_level`.
       title: ApiV1ServiceLevelGetResponsesContentApplicationJsonSchemaItems
+    ApiV1RatTypeGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1RatTypeGetResponsesContentApplicationJsonSchemaItems
     ApiV1EsmeInterfaceTypeGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -344,6 +334,16 @@ components:
       - id
       - description
       title: ApiV1EsmeInterfaceTypeGetResponsesContentApplicationJsonSchemaItems
+    ApiV1DataBlocksizeGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        octets:
+          type: string
+        description:
+          type: string
+      title: ApiV1DataBlocksizeGetResponsesContentApplicationJsonSchemaItems
   securitySchemes:
     BearerAuth:
       type: http
