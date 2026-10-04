@@ -1,5 +1,8 @@
 aid: emnify
 url: https://raw.githubusercontent.com/api-evangelist/emnify/refs/heads/main/apis.yml
+x-docs-platform: fern
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-10-03
 apis:
 - aid: emnify:emnify-graphql-api
   name: emnify GraphQL API
