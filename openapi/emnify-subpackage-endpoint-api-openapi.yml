@@ -2318,437 +2318,6 @@ paths:
                 $ref: '#/components/schemas/ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItems'
 components:
   schemas:
-    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsSim:
-      type: object
-      properties: {}
-      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsSim
-    ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionDescription:
-      type: string
-      enum:
-      - Block
-      title: ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionDescription
-    ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf2SubscriberInfo:
-      type: object
-      properties:
-        success:
-          type: boolean
-        error:
-          type: string
-      title: ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf2SubscriberInfo
-    ApiV2EndpointMultiDeleteRequestBodyContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-      required:
-      - id
-      title: ApiV2EndpointMultiDeleteRequestBodyContentApplicationJsonSchemaItems
-    Endpoint_EndpointSmsByIdPost_Response_201:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Endpoint_EndpointSmsByIdPost_Response_201
-    ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfo:
-      type: object
-      properties:
-        success:
-          type: boolean
-        state:
-          type: string
-        location:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfoLocation'
-      title: ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfo
-    ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: The endpoint ID to update
-        name:
-          type: string
-          description: The endpoint name
-        tags:
-          type: string
-          description: Comma-separated tags
-        imei:
-          type: string
-          description: The IMEI number
-        imei_lock:
-          type: boolean
-          description: Whether to lock the endpoint to this IMEI
-        ip_address:
-          type: string
-          description: The IP address to assign
-        ip_address_space:
-          $ref: '#/components/schemas/ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsIpAddressSpace'
-          description: Required when setting ip_address
-        service_profile:
-          $ref: '#/components/schemas/ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsServiceProfile'
-        tariff_profile:
-          $ref: '#/components/schemas/ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsTariffProfile'
-        status:
-          $ref: '#/components/schemas/ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsStatus'
-          description: 'Endpoint status: 0 (Enabled) or 1 (Disabled)'
-        sim:
-          $ref: '#/components/schemas/ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsSim'
-      required:
-      - id
-      title: ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItems
-    ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatusDescription:
-      type: string
-      enum:
-      - EXHAUSTED
-      - ACTIVE
-      - EXPIRED
-      title: ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatusDescription
-    ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItems:
-      type: object
-      properties:
-        name:
-          type: string
-        tags:
-          type: string
-        imei:
-          type: string
-          description: 'Must be unique across all endpoints in the array.
-
-            '
-        imei_lock:
-          type: boolean
-        sim:
-          $ref: '#/components/schemas/ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItemsSim'
-          description: 'If provided for any endpoint, it must include a valid `id` (cannot be empty).
-
-            '
-        ip_address:
-          type: string
-          description: 'Must be unique across all endpoints in the array.
-
-            If provided, you must provide `ip_address_space` at the root level.
-
-            '
-      description: 'Each item represents an endpoint to create.
-
-        '
-      title: ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItems
-    ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionId:
-      type: string
-      enum:
-      - '1'
-      title: ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionId
-    ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustion:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionId'
-        description:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionDescription'
-      required:
-      - id
-      title: ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustion
-    Endpoint_EndpointStatsByIdGet_Response_200:
-      type: object
-      properties:
-        last_month:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaLastMonth'
-        current_month:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaCurrentMonth'
-        last_hour:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaLastHour'
-      title: Endpoint_EndpointStatsByIdGet_Response_200
-    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        date:
-          type: string
-          format: date
-          description: The date for this statistics entry (YYYY-MM-DD format).
-        data:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsData'
-          description: Cellular data usage for this day.
-        sms:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSms'
-          description: SMS usage for this day.
-        sat_geo_data:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSatGeoData'
-          description: Satellite data usage for this day (if applicable).
-        sat_geo_sms:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSatGeoSms'
-          description: Satellite SMS usage for this day (if applicable).
-      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItems
-    ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsStatus:
-      type: object
-      properties: {}
-      title: ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsStatus
-    ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaLastHour:
-      type: object
-      properties: {}
-      title: ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaLastHour
-    ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaSimStatus:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: 'SIM status ID.
-
-            Valid values are `1` (Activated) or `4` (Factory Test).
-
-            '
-      required:
-      - id
-      description: Explicitly set the SIM status, overriding the default activation behavior.
-      title: ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaSimStatus
-    ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatusId:
-      type: string
-      enum:
-      - '1'
-      - '2'
-      - '3'
-      title: ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatusId
-    ApiV1EndpointEndpointIdTrafficLimitExtensionGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        endpoint_id:
-          type: number
-          format: double
-        traffic_limit_id:
-          type: number
-          format: double
-        volume:
-          type: number
-          format: double
-        expiration_date:
-          type: string
-          format: date-time
-        created_at:
-          type: string
-          format: date-time
-      required:
-      - id
-      - endpoint_id
-      - traffic_limit_id
-      - volume
-      - expiration_date
-      - created_at
-      title: ApiV1EndpointEndpointIdTrafficLimitExtensionGetResponsesContentApplicationJsonSchemaItems
-    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataCurrency:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Currency identifier.
-        code:
-          type: string
-          description: ISO 4217 currency code (for example, EUR, USD).
-        symbol:
-          type: string
-          description: Currency symbol (for example, €, $).
-      description: Currency used for cost calculations.
-      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataCurrency
-    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSms:
-      type: object
-      properties:
-        volume:
-          type: number
-          format: double
-          description: Total SMS count.
-        volume_tx:
-          type: number
-          format: double
-          description: SMS messages sent (Mobile Originated).
-        volume_rx:
-          type: number
-          format: double
-          description: SMS messages received (Mobile Terminated).
-        cost:
-          type: number
-          format: double
-          description: Cost of SMS usage.
-        traffic_type:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsTrafficType'
-          description: Information about the traffic type.
-        currency:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsCurrency'
-          description: Currency used for cost calculations.
-      description: SMS usage for this day.
-      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSms
-    ApiV1EndpointStatusGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      required:
-      - id
-      title: ApiV1EndpointStatusGetResponsesContentApplicationJsonSchemaItems
-    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsCurrency:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Currency identifier.
-        code:
-          type: string
-          description: ISO 4217 currency code (for example, EUR, USD).
-        symbol:
-          type: string
-          description: Currency symbol (for example, €, $).
-      description: Currency used for cost calculations.
-      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsCurrency
-    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventType:
-      type: object
-      properties: {}
-      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventType
-    EndpointOperatorBlacklistByEpIdAndOperatorIdDeleteRequestNotFoundError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: EndpointOperatorBlacklistByEpIdAndOperatorIdDeleteRequestNotFoundError
-    ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsIpAddressSpace:
-      type: object
-      properties: {}
-      title: ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsIpAddressSpace
-    ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatusDescription:
-      type: string
-      enum:
-      - EXHAUSTED
-      - ACTIVE
-      - EXPIRED
-      title: ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatusDescription
-    ApiV1EndpointEndpointIdPatchResponsesContentApplicationJsonSchemaErrorsItems:
-      type: object
-      properties:
-        error_code:
-          type: number
-          format: double
-        error_token:
-          type: string
-        message:
-          type: string
-      title: ApiV1EndpointEndpointIdPatchResponsesContentApplicationJsonSchemaErrorsItems
-    ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatusId:
-      type: string
-      enum:
-      - '1'
-      - '2'
-      - '3'
-      title: ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatusId
-    ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaErrorsItems:
-      type: object
-      properties:
-        error_code:
-          type: number
-          format: double
-        error_token:
-          type: string
-        message:
-          type: string
-      title: ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaErrorsItems
-    ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaSimStatus:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      required:
-      - id
-      title: ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaSimStatus
-    ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsServiceProfile:
-      type: object
-      properties:
-        id:
-          type: integer
-      title: ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsServiceProfile
-    Endpoint_CreateEndpoint_Response_201:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Unique identifier for the endpoint.
-        ip_address:
-          type: string
-          description: Private IP address assigned to this endpoint.
-        status:
-          $ref: '#/components/schemas/ApiV1EndpointPostResponsesContentApplicationJsonSchemaStatus'
-          description: Endpoint connectivity status.
-        name:
-          type: string
-          description: Display name for the endpoint.
-        tags:
-          type:
-          - string
-          - 'null'
-          description: Comma-separated list of tags.
-        imei:
-          type:
-          - string
-          - 'null'
-          description: IMEI with Software Version Number (IMEISV) (16 digits).
-        created:
-          type: string
-          format: date-time
-          description: Date and time when the endpoint was created (ISO 8601 format).
-        last_updated:
-          type: string
-          format: date-time
-          description: Date and time when the endpoint was last modified (ISO 8601 format).
-        imei_lock:
-          type: boolean
-          description: If `true`, this endpoint only allows connections from the device with the specified IMEI.
-        service_profile:
-          $ref: '#/components/schemas/ApiV1EndpointPostResponsesContentApplicationJsonSchemaServiceProfile'
-          description: Service profile assigned to this endpoint.
-        tariff_profile:
-          $ref: '#/components/schemas/ApiV1EndpointPostResponsesContentApplicationJsonSchemaTariffProfile'
-          description: Tariff profile assigned to this endpoint.
-        sim:
-          oneOf:
-          - $ref: '#/components/schemas/ApiV1EndpointPostResponsesContentApplicationJsonSchemaSim'
-          - type: 'null'
-          description: 'SIM card assigned to this endpoint.
-
-            `null` if no SIM is assigned.
-
-            '
-        ip_address_space:
-          $ref: '#/components/schemas/ApiV1EndpointPostResponsesContentApplicationJsonSchemaIpAddressSpace'
-          description: IP address space containing this endpoint's private IP address.
-        imei_with_luhn:
-          type:
-          - string
-          - 'null'
-          description: IMEI with Luhn checksum digit, without Software Version Number (15 digits).
-      required:
-      - id
-      - ip_address
-      - status
-      - name
-      - tags
-      - imei
-      - created
-      - last_updated
-      - imei_lock
-      - service_profile
-      - tariff_profile
-      - sim
-      - ip_address_space
-      - imei_with_luhn
-      title: Endpoint_CreateEndpoint_Response_201
-    ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsImeiWithLuhn:
-      type: object
-      properties: {}
-      title: ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsImeiWithLuhn
     Endpoint_CreateEndpointTrafficLimitExtension_Response_201:
       type: object
       properties:
@@ -2778,24 +2347,315 @@ components:
       - expiration_date
       - created_at
       title: Endpoint_CreateEndpointTrafficLimitExtension_Response_201
-    ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItems:
+    ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustionId:
+      type: string
+      enum:
+      - '1'
+      title: ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustionId
+    ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaServiceProfile:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      description: 'Applies to all endpoints.
+
+        '
+      title: ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaServiceProfile
+    ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      description: 'Applies to all endpoints.
+
+        '
+      title: ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaStatus
+    Endpoint_EndpointQuotaDataByEndpointIdGet_Response_200:
+      type: object
+      properties:
+        last_volume_added:
+          type: number
+          format: double
+        last_status_change_date:
+          type: string
+        auto_refill:
+          type: integer
+        threshold_volume:
+          type: number
+          format: double
+        threshold_percentage:
+          type: number
+          format: double
+        status:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatus'
+        volume:
+          type: number
+          format: double
+        expiry_date:
+          type: string
+        action_on_exhaustion:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustion'
+      required:
+      - status
+      - volume
+      - expiry_date
+      - action_on_exhaustion
+      title: Endpoint_EndpointQuotaDataByEndpointIdGet_Response_200
+    ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatusId:
+      type: string
+      enum:
+      - '1'
+      - '2'
+      - '3'
+      title: ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatusId
+    Endpoint_EndpointSmsByEndpointIdAndSmsIdGet_Response_200:
+      type: object
+      properties:
+        submit_date:
+          type: string
+        delivery_date:
+          type: string
+        expiry_date:
+          type: string
+        final_date:
+          type: string
+        retry_date:
+          type:
+          - string
+          - 'null'
+        last_delivery_attempt:
+          type: string
+        retry_count:
+          type: integer
+        gsm_map_error:
+          type: string
+        dcs:
+          type: integer
+        pid:
+          type: integer
+        source_address:
+          type: string
+        endpoint:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaEndpoint'
+        sim_id:
+          type: string
+        iccid:
+          type: string
+        msisdn:
+          type: string
+        imsi:
+          type: string
+        msc:
+          type: string
+        udh:
+          type: string
+        payload:
+          type: string
+        id:
+          type: integer
+        status:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaStatus'
+        sms_type:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaSmsType'
+        source_address_type:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaSourceAddressType'
+      title: Endpoint_EndpointSmsByEndpointIdAndSmsIdGet_Response_200
+    Endpoint_EndpointSmsByIdPost_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Endpoint_EndpointSmsByIdPost_Response_201
+    EndpointOperatorBlacklistByEpIdAndOperatorIdDeleteRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: EndpointOperatorBlacklistByEpIdAndOperatorIdDeleteRequestNotFoundError
+    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation
+    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsRuntimeData:
+      type: object
+      properties:
+        msc:
+          type: string
+          description: Mobile Switching Center identifier.
+        sgsn:
+          type: string
+          description: Serving GPRS Support Node identifier.
+        sgsn_ip_address:
+          type: string
+          description: IP address of the SGSN.
+      description: 'Real-time network attachment data.
+
+        Only present when the endpoint is connected.
+
+        '
+      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsRuntimeData
+    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataTrafficType:
       type: object
       properties:
         id:
           type: integer
-        name:
+          description: Traffic type identifier (5 = Data).
+        description:
           type: string
-        country:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsCountry'
-        tapcode:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsTapcodeItems'
-        mnc:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsMncItems'
-      title: ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItems
+          description: Human-readable traffic type name.
+        unit:
+          type: string
+          description: Unit of measurement (MB for data).
+      description: Information about the traffic type.
+      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataTrafficType
+    ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaSourceAddressType:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaSourceAddressType
+    ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustionDescription:
+      type: string
+      enum:
+      - Block
+      title: ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustionDescription
+    ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+      description: 'Endpoint status: 0 (Enabled) or 1 (Disabled)'
+      title: ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsStatus
+    ApiV2EndpointMultiDeleteRequestBodyContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: ApiV2EndpointMultiDeleteRequestBodyContentApplicationJsonSchemaItems
+    ApiV1EndpointEndpointIdTrafficLimitExtensionGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        endpoint_id:
+          type: number
+          format: double
+        traffic_limit_id:
+          type: number
+          format: double
+        volume:
+          type: number
+          format: double
+        expiration_date:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+      required:
+      - id
+      - endpoint_id
+      - traffic_limit_id
+      - volume
+      - expiration_date
+      - created_at
+      title: ApiV1EndpointEndpointIdTrafficLimitExtensionGetResponsesContentApplicationJsonSchemaItems
+    ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatusDescription:
+      type: string
+      enum:
+      - EXHAUSTED
+      - ACTIVE
+      - EXPIRED
+      title: ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatusDescription
+    ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustion:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionId'
+        description:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionDescription'
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustion
+    ApiV1EndpointPostResponsesContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Status ID (`0` = Enabled, `1` = Disabled).
+        description:
+          type: string
+          description: Human-readable status name.
+      required:
+      - id
+      - description
+      description: Endpoint connectivity status.
+      title: ApiV1EndpointPostResponsesContentApplicationJsonSchemaStatus
+    ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        submit_date:
+          type: string
+        delivery_date:
+          type: string
+        expiry_date:
+          type: string
+        final_date:
+          type: string
+        retry_date:
+          type:
+          - string
+          - 'null'
+        last_delivery_attempt:
+          type: string
+        retry_count:
+          type: integer
+        gsm_map_error:
+          type:
+          - string
+          - 'null'
+        dcs:
+          type: integer
+        pid:
+          type: integer
+        source_address:
+          type: string
+        endpoint:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsEndpoint'
+        sim_id:
+          type: string
+        iccid:
+          type: string
+        msisdn:
+          type: string
+        imsi:
+          type: string
+        msc:
+          type: string
+        udh:
+          type: string
+        payload:
+          type: string
+        id:
+          type: integer
+        status:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsStatus'
+        sms_type:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsSmsType'
+        source_address_type:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsSourceAddressType'
+      title: ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItems
     ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsStatus:
       type: object
       properties:
@@ -2813,115 +2673,92 @@ components:
 
         '
       title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsStatus
-    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataTrafficType:
+    ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaServiceProfile:
       type: object
       properties:
         id:
           type: integer
-          description: Traffic type identifier (5 = Data).
-        description:
-          type: string
-          description: Human-readable traffic type name.
-        unit:
-          type: string
-          description: Unit of measurement (MB for data).
-      description: Information about the traffic type.
-      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataTrafficType
-    ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfoLocation:
-      type: object
-      properties:
-        current_location_retrieved:
-          type: boolean
-        age_of_location:
-          type: number
-          format: double
-        cell_global_id:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfoLocationCellGlobalId'
-      title: ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfoLocation
-    Endpoint_EndpointConnectivityByIdGet_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaStatus'
-        location:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaLocation'
-        pdp_context:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaPdpContext'
-        services:
-          type: array
-          items:
-            type: string
-      title: Endpoint_EndpointConnectivityByIdGet_Response_200
-    ApiV1EndpointPostResponsesContentApplicationJsonSchemaIpAddressSpace:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: IP address space ID.
-      description: IP address space containing this endpoint's private IP address.
-      title: ApiV1EndpointPostResponsesContentApplicationJsonSchemaIpAddressSpace
-    ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfoLocationCellGlobalId:
-      type: object
-      properties:
-        mcc:
-          type: string
-        mnc:
-          type: string
-        lac:
-          type: number
-          format: double
-        cid:
-          type: number
-          format: double
-      title: ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfoLocationCellGlobalId
-    ApiV1EndpointPostResponsesContentApplicationJsonSchemaServiceProfile:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Service profile ID.
         name:
           type: string
-          description: Service profile name.
       required:
       - id
-      - name
-      description: Service profile assigned to this endpoint.
-      title: ApiV1EndpointPostResponsesContentApplicationJsonSchemaServiceProfile
-    EndpointByIdPatchRequestUnprocessableEntityError:
-      type: object
-      properties:
-        message:
-          type: string
-        error_code:
-          type: number
-          format: double
-        error_token:
-          type: string
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV1EndpointEndpointIdPatchResponsesContentApplicationJsonSchemaErrorsItems'
-      required:
-      - message
-      - error_code
-      - error_token
-      - errors
-      title: EndpointByIdPatchRequestUnprocessableEntityError
-    ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaStatus:
+      title: ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaServiceProfile
+    ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsTariffProfile:
       type: object
       properties:
         id:
           type: integer
-          description: 'Status ID.
-
-            Valid values are `0` (Enabled) or `1` (Disabled).
-
-            '
+      title: ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsTariffProfile
+    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSms:
+      type: object
+      properties:
+        volume:
+          type: number
+          format: double
+          description: Total SMS count.
+        volume_tx:
+          type: number
+          format: double
+          description: SMS messages sent (Mobile Originated).
+        volume_rx:
+          type: number
+          format: double
+          description: SMS messages received (Mobile Terminated).
+        cost:
+          type: number
+          format: double
+          description: Cost of SMS usage.
+        traffic_type:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsTrafficType'
+          description: Information about the traffic type.
+        currency:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsCurrency'
+          description: Currency used for cost calculations.
+      description: SMS usage for this day.
+      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSms
+    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSatGeoData:
+      type: object
+      properties:
+        volume:
+          type: number
+          format: double
+          description: Total satellite data volume in MB.
+        volume_tx:
+          type: number
+          format: double
+          description: Satellite data transmitted in MB.
+        volume_rx:
+          type: number
+          format: double
+          description: Satellite data received in MB.
+        cost:
+          type: number
+          format: double
+          description: Cost of satellite data usage.
+      description: Satellite data usage for this day (if applicable).
+      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSatGeoData
+    ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsSim:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: SIM ID to assign (set to null to unassign)
+        status:
+          $ref: '#/components/schemas/ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsSimStatus'
+          description: 'SIM status: 1 (Activated) or 5 (Factory Test)'
+      title: ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsSim
+    ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaTariffProfile:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
       required:
       - id
-      description: Initial endpoint status.
-      title: ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaStatus
+      description: 'Applies to all endpoints.
+
+        '
+      title: ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaTariffProfile
     ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaOrganisation:
       type: object
       properties:
@@ -2934,167 +2771,33 @@ components:
 
         '
       title: ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaOrganisation
-    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsTagAssignmentsItems:
+    ApiV1EndpointEndpointIdPatchResponsesContentApplicationJsonSchemaErrorsItems:
       type: object
       properties:
-        id:
-          type: integer
-          description: Tag ID.
-        name:
+        error_code:
+          type: number
+          format: double
+        error_token:
           type: string
-          description: Tag name.
-        tag_color:
-          $ref: '#/components/schemas/ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsTagAssignmentsItemsTagColor'
-          description: Color assigned to this tag for UI display.
-      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsTagAssignmentsItems
-    ApiV1EndpointEndpointIdSmsPostRequestBodyContentApplicationJsonSchemaSourceAddressType:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: 'The source address format:
-
-
-            - `145`: International number format (E.164)
-
-            - `161`: National number format
-
-            - `208`: Alphanumeric string (for example, "CompanyName")
-
-            '
-      description: 'Defines the format of `source_address`.
-
-        Required when using alphanumeric sender IDs.
-
-        '
-      title: ApiV1EndpointEndpointIdSmsPostRequestBodyContentApplicationJsonSchemaSourceAddressType
-    Endpoint_EndpointByIdGet_Response_200:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
+        message:
           type: string
-        tags:
-          type: string
-        created:
-          type: string
-          format: date-time
-        last_updated:
-          type: string
-          format: date-time
-        status:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaStatus'
-        service_profile:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaServiceProfile'
-        tariff_profile:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaTariffProfile'
-        ip_address:
-          type: string
-        ip_address_space:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaIpAddressSpace'
-        sim:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaSim'
-        imei:
-          type: string
-        imei_lock:
-          type: boolean
-        runtime_data:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaRuntimeData'
-      required:
-      - status
-      - service_profile
-      - tariff_profile
-      title: Endpoint_EndpointByIdGet_Response_200
-    ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsStatus:
-      type: object
-      properties:
-        id:
-          type: integer
-      description: 'Endpoint status: 0 (Enabled) or 1 (Disabled)'
-      title: ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsStatus
-    ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaTariffProfile:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: 'Tariff profile ID.
-
-            '
-      required:
-      - id
-      description: 'Tariff profile that determines pricing and data limits.
-
-        Must belong to your organization.
-
-        '
-      title: ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaTariffProfile
-    ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatus:
-      type: object
-      properties:
-        description:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatusDescription'
-        id:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatusId'
-      required:
-      - id
-      title: ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatus
-    ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaLocation:
+      title: ApiV1EndpointEndpointIdPatchResponsesContentApplicationJsonSchemaErrorsItems
+    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEndpoint:
       type: object
       properties: {}
-      title: ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaLocation
-    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSim:
+      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEndpoint
+    ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaEndpoint:
       type: object
-      properties:
-        id:
-          type: integer
-          description: Unique identifier for the SIM.
-        iccid:
-          type: string
-          description: Integrated Circuit Card Identifier without Luhn check digit (19 digits).
-        iccid_with_luhn:
-          type: string
-          description: Integrated Circuit Card Identifier with Luhn check digit (20 digits).
-        status:
-          $ref: '#/components/schemas/ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimStatus'
-          description: SIM activation status.
-        imsi:
-          type: string
-          description: 'International Mobile Subscriber Identity.
-
-            Identifies the SIM on the mobile network.
-
-            '
-        eid:
-          type: string
-          description: 'eUICC Identifier (32 digits).
-
-            Present only for eSIM-capable SIMs.
-
-            '
-        msisdn:
-          type: string
-          description: Phone number assigned to this SIM.
-        sim_profile_type:
-          $ref: '#/components/schemas/ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimSimProfileType'
-          description: Type of SIM profile.
-        euicc_profile_data:
-          oneOf:
-          - $ref: '#/components/schemas/ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimEuiccProfileData'
-          - type: 'null'
-          description: 'eSIM profile data.
-
-            Present only for eSIM-capable SIMs.
-
-            '
-      required:
-      - id
-      description: 'SIM card assigned to this endpoint.
-
-        `null` if no SIM is assigned.
-
-        '
-      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSim
+      properties: {}
+      title: ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaEndpoint
+    ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaLastMonth:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaLastMonth
+    ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsImeiWithLuhn:
+      type: object
+      properties: {}
+      title: ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsImeiWithLuhn
     ApiV1EndpointGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -3187,24 +2890,6 @@ components:
       - tariff_profile
       - service_profile
       title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItems
-    ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaIpAddressSpace:
-      type: object
-      properties:
-        id:
-          type: integer
-      title: ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaIpAddressSpace
-    ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsTapcodeItems:
-      type: object
-      properties: {}
-      title: ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsTapcodeItems
-    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimSimProfileType:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Profile type ID.
-      description: Type of SIM profile.
-      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimSimProfileType
     ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaOrganisation:
       type: object
       properties:
@@ -3219,549 +2904,70 @@ components:
 
         '
       title: ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaOrganisation
-    ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaStatus:
+    ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaCurrentMonth:
       type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      required:
-      - id
-      title: ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaStatus
-    ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaTariffProfile:
+      properties: {}
+      title: ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaCurrentMonth
+    ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsTariffProfile:
       type: object
       properties:
         id:
           type: number
           format: double
+        name:
+          type: string
+        satellite_capable:
+          type: boolean
       required:
       - id
-      description: 'Applies to all endpoints.
-
-        '
-      title: ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaTariffProfile
-    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsIpAddressSpace:
+      - name
+      - satellite_capable
+      title: ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsTariffProfile
+    ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionId:
+      type: string
+      enum:
+      - '1'
+      title: ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionId
+    ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItems:
       type: object
       properties:
-        id:
-          type: integer
-          description: IP address space ID.
-      description: IP address space that contains this endpoint's private IP address.
-      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsIpAddressSpace
+        name:
+          type: string
+        tags:
+          type: string
+        imei:
+          type: string
+          description: 'Must be unique across all endpoints in the array.
+
+            '
+        imei_lock:
+          type: boolean
+        sim:
+          $ref: '#/components/schemas/ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItemsSim'
+          description: 'If provided for any endpoint, it must include a valid `id` (cannot be empty).
+
+            '
+        ip_address:
+          type: string
+          description: 'Must be unique across all endpoints in the array.
+
+            If provided, you must provide `ip_address_space` at the root level.
+
+            '
+      description: 'Each item represents an endpoint to create.
+
+        '
+      title: ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItems
+    ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaPdpContext:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaPdpContext
     EndpointQuotaDataByEndpointIdPostRequestUnprocessableEntityError:
       type: object
       properties:
         message:
           type: string
       title: EndpointQuotaDataByEndpointIdPostRequestUnprocessableEntityError
-    ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaEndpoint:
-      type: object
-      properties: {}
-      title: ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaEndpoint
-    ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsMncItems:
-      type: object
-      properties: {}
-      title: ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsMncItems
-    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsImsi:
-      type: object
-      properties: {}
-      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsImsi
-    ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaStatus:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-      required:
-      - id
-      title: ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaStatus
-    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsTariffProfile:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Tariff profile ID.
-        name:
-          type: string
-          description: Tariff profile name.
-      required:
-      - id
-      description: Tariff profile that determines pricing and data limits for this endpoint.
-      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsTariffProfile
-    ApiV1EndpointPostResponsesContentApplicationJsonSchemaErrorsItems:
-      type: object
-      properties:
-        error_code:
-          type: integer
-          description: Application-specific error code.
-        error_token:
-          type: string
-          description: Error type identifier.
-        message:
-          type: string
-          description: Detailed error message.
-      title: ApiV1EndpointPostResponsesContentApplicationJsonSchemaErrorsItems
-    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity:
-      type: object
-      properties: {}
-      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity
-    ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaIpAddressSpace:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-      required:
-      - id
-      description: 'Required if any endpoint in the `endpoints` array has an `ip_address`.
-
-        '
-      title: ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaIpAddressSpace
-    EndpointOperatorBlacklistByEpIdAndOperatorIdPutRequestConflictError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: EndpointOperatorBlacklistByEpIdAndOperatorIdPutRequestConflictError
-    ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatus:
-      type: object
-      properties:
-        description:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatusDescription'
-        id:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatusId'
-      required:
-      - id
-      title: ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatus
-    ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionId:
-      type: string
-      enum:
-      - '1'
-      title: ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionId
-    ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsSimStatus:
-      type: object
-      properties:
-        id:
-          type: integer
-      description: 'SIM status: 1 (Activated) or 5 (Factory Test)'
-      title: ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsSimStatus
-    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSatGeoSms:
-      type: object
-      properties:
-        volume:
-          type: number
-          format: double
-          description: Total satellite SMS count.
-        volume_tx:
-          type: number
-          format: double
-          description: Satellite SMS messages sent.
-        volume_rx:
-          type: number
-          format: double
-          description: Satellite SMS messages received.
-        cost:
-          type: number
-          format: double
-          description: Cost of satellite SMS usage.
-      description: Satellite SMS usage for this day (if applicable).
-      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSatGeoSms
-    CreateEndpointRequestUnprocessableEntityError:
-      type: object
-      properties:
-        status_code:
-          type: integer
-          description: HTTP status code.
-        message:
-          type: string
-          description: Error summary.
-        error_code:
-          type: integer
-          description: Application-specific error code.
-        error_token:
-          type: string
-          description: Error type identifier.
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV1EndpointPostResponsesContentApplicationJsonSchemaErrorsItems'
-          description: List of validation errors.
-      required:
-      - message
-      - error_code
-      - error_token
-      - errors
-      title: CreateEndpointRequestUnprocessableEntityError
-    ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsStatus:
-      type: object
-      properties:
-        description:
-          type: string
-      required:
-      - description
-      title: ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsStatus
-    ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaSim:
-      type: object
-      properties:
-        id:
-          type: integer
-        iccid:
-          type: string
-        eid:
-          type: string
-        msisdn:
-          type: string
-        imsi:
-          type: string
-        status:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaSimStatus'
-      required:
-      - id
-      title: ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaSim
-    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimEuiccProfileData:
-      type: object
-      properties: {}
-      description: 'eSIM profile data.
-
-        Present only for eSIM-capable SIMs.
-
-        '
-      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimEuiccProfileData
-    ApiV1EndpointPostResponsesContentApplicationJsonSchemaTariffProfile:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Tariff profile ID.
-        name:
-          type: string
-          description: Tariff profile name.
-        satellite_capable:
-          type: boolean
-          description: If `true`, this tariff profile supports satellite connectivity.
-      required:
-      - id
-      - name
-      - satellite_capable
-      description: Tariff profile assigned to this endpoint.
-      title: ApiV1EndpointPostResponsesContentApplicationJsonSchemaTariffProfile
-    EndpointGetConnectivityInfoByEndpointIdResponse2000:
-      type: object
-      properties:
-        subscriber_info:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfo'
-        request_timestamp:
-          type: string
-          format: date-time
-        reply_timestamp:
-          type: string
-          format: date-time
-      title: EndpointGetConnectivityInfoByEndpointIdResponse2000
-    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEndpoint:
-      type: object
-      properties: {}
-      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEndpoint
-    ApiV1EndpointPostResponsesContentApplicationJsonSchemaStatus:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Status ID (`0` = Enabled, `1` = Disabled).
-        description:
-          type: string
-          description: Human-readable status name.
-      required:
-      - id
-      - description
-      description: Endpoint connectivity status.
-      title: ApiV1EndpointPostResponsesContentApplicationJsonSchemaStatus
-    ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaLastMonth:
-      type: object
-      properties: {}
-      title: ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaLastMonth
-    ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsCountry:
-      type: object
-      properties: {}
-      title: ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsCountry
-    ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsSmsType:
-      type: object
-      properties: {}
-      title: ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsSmsType
-    ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItemsSim:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-          description: 'Must be unique across all endpoints in the array.
-
-            '
-        activate:
-          type: boolean
-        status:
-          $ref: '#/components/schemas/ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItemsSimStatus'
-      required:
-      - id
-      description: 'If provided for any endpoint, it must include a valid `id` (cannot be empty).
-
-        '
-      title: ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItemsSim
-    ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaServiceProfile:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-      required:
-      - id
-      title: ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaServiceProfile
-    ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaSim:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        status:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaSimStatus'
-      required:
-      - id
-      - status
-      title: ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaSim
-    ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustion:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustionId'
-        description:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustionDescription'
-      required:
-      - id
-      title: ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustion
-    ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatus:
-      type: object
-      properties:
-        description:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatusDescription'
-        id:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatusId'
-      required:
-      - id
-      title: ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatus
-    ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaSim:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: 'SIM ID to assign.
-
-            The SIM must belong to your organization and not be assigned to another endpoint.
-
-            '
-        activate:
-          type: boolean
-          default: false
-          description: 'If `true`, activates the SIM after assignment.
-
-            If [factory test mode (FTM)](/developers/connectivity/factory-test-mode) is enabled for your organization, the SIM enters FTM instead of Activated.
-
-            '
-        status:
-          $ref: '#/components/schemas/ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaSimStatus'
-          description: Explicitly set the SIM status, overriding the default activation behavior.
-      required:
-      - id
-      description: 'SIM card to assign to this endpoint.
-
-        If omitted, no SIM is assigned.
-
-        '
-      title: ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaSim
-    ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustion:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionId'
-        description:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionDescription'
-      required:
-      - id
-      title: ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustion
-    GetConnectivityInfoByEndpointIdRequestNotFoundError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: GetConnectivityInfoByEndpointIdRequestNotFoundError
-    ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaSimStatus:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-      required:
-      - id
-      title: ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaSimStatus
-    ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaStatus:
-      type: object
-      properties: {}
-      title: ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaStatus
-    Endpoint_EndpointQuotaSmsByEndpointIdPost_Response_201:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Endpoint_EndpointQuotaSmsByEndpointIdPost_Response_201
-    Endpoint_EndpointSmsByEndpointIdAndSmsIdGet_Response_200:
-      type: object
-      properties:
-        submit_date:
-          type: string
-        delivery_date:
-          type: string
-        expiry_date:
-          type: string
-        final_date:
-          type: string
-        retry_date:
-          type:
-          - string
-          - 'null'
-        last_delivery_attempt:
-          type: string
-        retry_count:
-          type: integer
-        gsm_map_error:
-          type: string
-        dcs:
-          type: integer
-        pid:
-          type: integer
-        source_address:
-          type: string
-        endpoint:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaEndpoint'
-        sim_id:
-          type: string
-        iccid:
-          type: string
-        msisdn:
-          type: string
-        imsi:
-          type: string
-        msc:
-          type: string
-        udh:
-          type: string
-        payload:
-          type: string
-        id:
-          type: integer
-        status:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaStatus'
-        sms_type:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaSmsType'
-        source_address_type:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaSourceAddressType'
-      title: Endpoint_EndpointSmsByEndpointIdAndSmsIdGet_Response_200
-    Endpoint_EndpointQuotaDataByEndpointIdPost_Response_201:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Endpoint_EndpointQuotaDataByEndpointIdPost_Response_201
-    EndpointGetConnectivityInfoByEndpointIdResponse2001:
-      type: object
-      properties:
-        request_timestamp:
-          type: string
-          format: date-time
-        reply_timestamp:
-          type: string
-          format: date-time
-      title: EndpointGetConnectivityInfoByEndpointIdResponse2001
-    ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatusDescription:
-      type: string
-      enum:
-      - EXHAUSTED
-      - ACTIVE
-      - EXPIRED
-      title: ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatusDescription
-    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsRuntimeData:
-      type: object
-      properties:
-        msc:
-          type: string
-          description: Mobile Switching Center identifier.
-        sgsn:
-          type: string
-          description: Serving GPRS Support Node identifier.
-        sgsn_ip_address:
-          type: string
-          description: IP address of the SGSN.
-      description: 'Real-time network attachment data.
-
-        Only present when the endpoint is connected.
-
-        '
-      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsRuntimeData
-    ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsIpAddressSpace:
-      type: object
-      properties:
-        id:
-          type: integer
-      description: Required when setting ip_address
-      title: ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsIpAddressSpace
-    ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsTariffProfile:
-      type: object
-      properties:
-        id:
-          type: integer
-      title: ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsTariffProfile
-    EndpointGetConnectivityInfoByEndpointIdResponse2002:
-      type: object
-      properties:
-        subscriber_info:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf2SubscriberInfo'
-        request_timestamp:
-          type: string
-          format: date-time
-        reply_timestamp:
-          type: string
-          format: date-time
-      title: EndpointGetConnectivityInfoByEndpointIdResponse2002
-    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        timestamp:
-          type: string
-        alert:
-          type: boolean
-        description:
-          type: string
-        id:
-          type: integer
-        event_type:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventType'
-        event_source:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource'
-        event_severity:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity'
-        organisation:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation'
-        endpoint:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEndpoint'
-        sim:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsSim'
-        imsi:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsImsi'
-      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItems
     ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsData:
       type: object
       properties:
@@ -3789,37 +2995,246 @@ components:
           description: Currency used for cost calculations.
       description: Cellular data usage for this day.
       title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsData
-    Endpoint_EndpointQuotaDataByEndpointIdGet_Response_200:
+    ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsServiceProfile:
       type: object
       properties:
-        last_volume_added:
-          type: number
-          format: double
-        last_status_change_date:
-          type: string
-        auto_refill:
+        id:
           type: integer
-        threshold_volume:
-          type: number
-          format: double
-        threshold_percentage:
-          type: number
-          format: double
-        status:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatus'
-        volume:
-          type: number
-          format: double
-        expiry_date:
+      title: ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsServiceProfile
+    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsTagAssignmentsItems:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Tag ID.
+        name:
           type: string
-        action_on_exhaustion:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustion'
+          description: Tag name.
+        tag_color:
+          $ref: '#/components/schemas/ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsTagAssignmentsItemsTagColor'
+          description: Color assigned to this tag for UI display.
+      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsTagAssignmentsItems
+    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventType:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventType
+    ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaLastHour:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaLastHour
+    EndpointGetConnectivityInfoByEndpointIdResponse2002:
+      type: object
+      properties:
+        subscriber_info:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf2SubscriberInfo'
+        request_timestamp:
+          type: string
+          format: date-time
+        reply_timestamp:
+          type: string
+          format: date-time
+      title: EndpointGetConnectivityInfoByEndpointIdResponse2002
+    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsIpAddressSpace:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: IP address space ID.
+      description: IP address space that contains this endpoint's private IP address.
+      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsIpAddressSpace
+    ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaErrorsItems:
+      type: object
+      properties:
+        error_code:
+          type: number
+          format: double
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaErrorsItems
+    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity
+    ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionDescription:
+      type: string
+      enum:
+      - Block
+      title: ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionDescription
+    ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatusId:
+      type: string
+      enum:
+      - '1'
+      - '2'
+      - '3'
+      title: ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatusId
+    ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaSimStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'SIM status ID.
+
+            Valid values are `1` (Activated) or `4` (Factory Test).
+
+            '
       required:
-      - status
-      - volume
-      - expiry_date
-      - action_on_exhaustion
-      title: Endpoint_EndpointQuotaDataByEndpointIdGet_Response_200
+      - id
+      description: Explicitly set the SIM status, overriding the default activation behavior.
+      title: ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaSimStatus
+    ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsEndpoint:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsEndpoint
+    ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaIpAddressSpace:
+      type: object
+      properties:
+        id:
+          type: integer
+      title: ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaIpAddressSpace
+    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimSimProfileType:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Profile type ID.
+      description: Type of SIM profile.
+      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimSimProfileType
+    ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaSimStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaSimStatus
+    ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaIpAddressSpace:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      description: 'Required if any endpoint in the `endpoints` array has an `ip_address`.
+
+        '
+      title: ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaIpAddressSpace
+    ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfoLocationCellGlobalId:
+      type: object
+      properties:
+        mcc:
+          type: string
+        mnc:
+          type: string
+        lac:
+          type: number
+          format: double
+        cid:
+          type: number
+          format: double
+      title: ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfoLocationCellGlobalId
+    ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsCountry'
+        tapcode:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsTapcodeItems'
+        mnc:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsMncItems'
+      title: ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItems
+    BulkCreateEndpointRequestUnprocessableEntityError:
+      type: object
+      properties:
+        message:
+          type: string
+        error_code:
+          type: number
+          format: double
+        error_token:
+          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaErrorsItems'
+      required:
+      - message
+      - error_code
+      - error_token
+      - errors
+      title: BulkCreateEndpointRequestUnprocessableEntityError
+    ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaIpAddressSpace:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: IP address space ID.
+      required:
+      - id
+      description: "IP address space for the endpoint.\n\n<Info>\n  Required if `ip_address` is provided.\n</Info>\n"
+      title: ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaIpAddressSpace
+    ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItemsSim:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+          description: 'Must be unique across all endpoints in the array.
+
+            '
+        activate:
+          type: boolean
+        status:
+          $ref: '#/components/schemas/ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItemsSimStatus'
+      required:
+      - id
+      description: 'If provided for any endpoint, it must include a valid `id` (cannot be empty).
+
+        '
+      title: ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItemsSim
+    ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaSim:
+      type: object
+      properties:
+        id:
+          type: integer
+        iccid:
+          type: string
+        eid:
+          type: string
+        msisdn:
+          type: string
+        imsi:
+          type: string
+        status:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaSimStatus'
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaSim
+    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Status ID.
+        description:
+          type: string
+          description: Human-readable status name.
+      required:
+      - id
+      description: SIM activation status.
+      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimStatus
     ApiV1EndpointPostResponsesContentApplicationJsonSchemaSim:
       type: object
       properties:
@@ -3850,6 +3265,258 @@ components:
 
         '
       title: ApiV1EndpointPostResponsesContentApplicationJsonSchemaSim
+    ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaTariffProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaTariffProfile
+    EndpointGetConnectivityInfoByEndpointIdResponse2000:
+      type: object
+      properties:
+        subscriber_info:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfo'
+        request_timestamp:
+          type: string
+          format: date-time
+        reply_timestamp:
+          type: string
+          format: date-time
+      title: EndpointGetConnectivityInfoByEndpointIdResponse2000
+    ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaSimStatus:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaSimStatus
+    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimEuiccProfileData:
+      type: object
+      properties: {}
+      description: 'eSIM profile data.
+
+        Present only for eSIM-capable SIMs.
+
+        '
+      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimEuiccProfileData
+    ApiV1EndpointPostResponsesContentApplicationJsonSchemaSimStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Status ID.
+        description:
+          type: string
+          description: Human-readable status name.
+      description: SIM activation status.
+      title: ApiV1EndpointPostResponsesContentApplicationJsonSchemaSimStatus
+    ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatusDescription'
+        id:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatusId'
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatus
+    ApiV1EndpointPostResponsesContentApplicationJsonSchemaIpAddressSpace:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: IP address space ID.
+      description: IP address space containing this endpoint's private IP address.
+      title: ApiV1EndpointPostResponsesContentApplicationJsonSchemaIpAddressSpace
+    ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfo:
+      type: object
+      properties:
+        success:
+          type: boolean
+        state:
+          type: string
+        location:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfoLocation'
+      title: ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfo
+    Endpoint_EndpointByIdGet_Response_200:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        tags:
+          type: string
+        created:
+          type: string
+          format: date-time
+        last_updated:
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaStatus'
+        service_profile:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaServiceProfile'
+        tariff_profile:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaTariffProfile'
+        ip_address:
+          type: string
+        ip_address_space:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaIpAddressSpace'
+        sim:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaSim'
+        imei:
+          type: string
+        imei_lock:
+          type: boolean
+        runtime_data:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaRuntimeData'
+      required:
+      - status
+      - service_profile
+      - tariff_profile
+      title: Endpoint_EndpointByIdGet_Response_200
+    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSatGeoSms:
+      type: object
+      properties:
+        volume:
+          type: number
+          format: double
+          description: Total satellite SMS count.
+        volume_tx:
+          type: number
+          format: double
+          description: Satellite SMS messages sent.
+        volume_rx:
+          type: number
+          format: double
+          description: Satellite SMS messages received.
+        cost:
+          type: number
+          format: double
+          description: Cost of satellite SMS usage.
+      description: Satellite SMS usage for this day (if applicable).
+      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSatGeoSms
+    ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The endpoint ID to update
+        name:
+          type: string
+          description: The endpoint name
+        tags:
+          type: string
+          description: Comma-separated tags
+        imei:
+          type: string
+          description: The IMEI number
+        imei_lock:
+          type: boolean
+          description: Whether to lock the endpoint to this IMEI
+        ip_address:
+          type: string
+          description: The IP address to assign
+        ip_address_space:
+          $ref: '#/components/schemas/ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsIpAddressSpace'
+          description: Required when setting ip_address
+        service_profile:
+          $ref: '#/components/schemas/ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsServiceProfile'
+        tariff_profile:
+          $ref: '#/components/schemas/ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsTariffProfile'
+        status:
+          $ref: '#/components/schemas/ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsStatus'
+          description: 'Endpoint status: 0 (Enabled) or 1 (Disabled)'
+        sim:
+          $ref: '#/components/schemas/ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsSim'
+      required:
+      - id
+      title: ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItems
+    ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaRuntimeData:
+      type: object
+      properties:
+        msc:
+          type: string
+        sgsn:
+          type: string
+        sgsn_ip_address:
+          type: string
+      title: ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaRuntimeData
+    ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustion:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustionId'
+        description:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustionDescription'
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustion
+    ApiV1EndpointEndpointIdSmsPostRequestBodyContentApplicationJsonSchemaSourceAddressType:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'The source address format:
+
+
+            - `145`: International number format (E.164)
+
+            - `161`: National number format
+
+            - `208`: Alphanumeric string (for example, "CompanyName")
+
+            '
+      description: 'Defines the format of `source_address`.
+
+        Required when using alphanumeric sender IDs.
+
+        '
+      title: ApiV1EndpointEndpointIdSmsPostRequestBodyContentApplicationJsonSchemaSourceAddressType
+    ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsIpAddressSpace:
+      type: object
+      properties:
+        id:
+          type: integer
+      description: Required when setting ip_address
+      title: ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsIpAddressSpace
+    ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatusDescription'
+        id:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatusId'
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatus
+    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+          description: The date for this statistics entry (YYYY-MM-DD format).
+        data:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsData'
+          description: Cellular data usage for this day.
+        sms:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSms'
+          description: SMS usage for this day.
+        sat_geo_data:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSatGeoData'
+          description: Satellite data usage for this day (if applicable).
+        sat_geo_sms:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSatGeoSms'
+          description: Satellite SMS usage for this day (if applicable).
+      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItems
     ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -3900,228 +3567,219 @@ components:
       - ip_address_space
       - imei_with_luhn
       title: ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItems
-    ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaTariffProfile:
+    ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionDescription:
+      type: string
+      enum:
+      - Block
+      title: ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionDescription
+    Endpoint_EndpointQuotaDataByEndpointIdPost_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Endpoint_EndpointQuotaDataByEndpointIdPost_Response_201
+    EndpointOperatorBlacklistByEpIdAndOperatorIdPutRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: EndpointOperatorBlacklistByEpIdAndOperatorIdPutRequestConflictError
+    ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsIpAddressSpace:
+      type: object
+      properties: {}
+      title: ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsIpAddressSpace
+    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataCurrency:
       type: object
       properties:
         id:
           type: integer
-        name:
+          description: Currency identifier.
+        code:
           type: string
-      required:
-      - id
-      title: ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaTariffProfile
-    ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaStatus:
-      type: object
-      properties: {}
-      title: ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaStatus
-    ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaIpAddressSpace:
+          description: ISO 4217 currency code (for example, EUR, USD).
+        symbol:
+          type: string
+          description: Currency symbol (for example, €, $).
+      description: Currency used for cost calculations.
+      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsDataCurrency
+    ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaTariffProfile:
       type: object
       properties:
         id:
-          type: number
-          format: double
+          type: integer
+          description: 'Tariff profile ID.
+
+            '
       required:
       - id
-      title: ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaIpAddressSpace
-    ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaPdpContext:
-      type: object
-      properties: {}
-      title: ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaPdpContext
-    BulkCreateEndpointRequestUnprocessableEntityError:
+      description: 'Tariff profile that determines pricing and data limits.
+
+        Must belong to your organization.
+
+        '
+      title: ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaTariffProfile
+    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsTariffProfile:
       type: object
       properties:
+        id:
+          type: integer
+          description: Tariff profile ID.
+        name:
+          type: string
+          description: Tariff profile name.
+      required:
+      - id
+      description: Tariff profile that determines pricing and data limits for this endpoint.
+      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsTariffProfile
+    Endpoint_EndpointQuotaSmsByEndpointIdPost_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Endpoint_EndpointQuotaSmsByEndpointIdPost_Response_201
+    CreateEndpointRequestUnprocessableEntityError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: HTTP status code.
         message:
           type: string
+          description: Error summary.
         error_code:
-          type: number
-          format: double
+          type: integer
+          description: Application-specific error code.
         error_token:
           type: string
+          description: Error type identifier.
         errors:
           type: array
           items:
-            $ref: '#/components/schemas/ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaErrorsItems'
+            $ref: '#/components/schemas/ApiV1EndpointPostResponsesContentApplicationJsonSchemaErrorsItems'
+          description: List of validation errors.
       required:
       - message
       - error_code
       - error_token
       - errors
-      title: BulkCreateEndpointRequestUnprocessableEntityError
-    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource:
-      type: object
-      properties: {}
-      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource
-    ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsSim:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: SIM ID to assign (set to null to unassign)
-        status:
-          $ref: '#/components/schemas/ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsSimStatus'
-          description: 'SIM status: 1 (Activated) or 5 (Factory Test)'
-      title: ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsSim
-    ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsEndpoint:
-      type: object
-      properties: {}
-      title: ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsEndpoint
+      title: CreateEndpointRequestUnprocessableEntityError
     ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsSim:
       type: object
       properties: {}
       title: ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsSim
-    ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustionId:
-      type: string
-      enum:
-      - '1'
-      title: ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustionId
-    ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaIpAddressSpace:
+    Endpoint_EndpointConnectivityByIdGet_Response_200:
       type: object
       properties:
-        id:
-          type: integer
-          description: IP address space ID.
-      required:
-      - id
-      description: "IP address space for the endpoint.\n\n<Info>\n  Required if `ip_address` is provided.\n</Info>\n"
-      title: ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaIpAddressSpace
-    ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaServiceProfile:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-      required:
-      - id
-      description: 'Applies to all endpoints.
-
-        '
-      title: ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaServiceProfile
-    ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaTariffProfile:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-      required:
-      - id
-      title: ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaTariffProfile
-    ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        submit_date:
-          type: string
-        delivery_date:
-          type: string
-        expiry_date:
-          type: string
-        final_date:
-          type: string
-        retry_date:
-          type:
-          - string
-          - 'null'
-        last_delivery_attempt:
-          type: string
-        retry_count:
-          type: integer
-        gsm_map_error:
-          type:
-          - string
-          - 'null'
-        dcs:
-          type: integer
-        pid:
-          type: integer
-        source_address:
-          type: string
-        endpoint:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsEndpoint'
-        sim_id:
-          type: string
-        iccid:
-          type: string
-        msisdn:
-          type: string
-        imsi:
-          type: string
-        msc:
-          type: string
-        udh:
-          type: string
-        payload:
-          type: string
-        id:
-          type: integer
         status:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsStatus'
-        sms_type:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsSmsType'
-        source_address_type:
-          $ref: '#/components/schemas/ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsSourceAddressType'
-      title: ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItems
-    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsTrafficType:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Traffic type identifier (6 = SMS).
-        description:
-          type: string
-          description: Human-readable traffic type name.
-        unit:
-          type: string
-          description: Unit of measurement (SMS for messages).
-      description: Information about the traffic type.
-      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsTrafficType
-    ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaCurrentMonth:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaStatus'
+        location:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaLocation'
+        pdp_context:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaPdpContext'
+        services:
+          type: array
+          items:
+            type: string
+      title: Endpoint_EndpointConnectivityByIdGet_Response_200
+    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource:
       type: object
       properties: {}
-      title: ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaCurrentMonth
-    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimStatus:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Status ID.
-        description:
-          type: string
-          description: Human-readable status name.
-      required:
-      - id
-      description: SIM activation status.
-      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimStatus
-    ApiV2EndpointMultiPatchResponsesContentApplicationJsonSchemaErrorsItems:
+      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource
+    GetConnectivityInfoByEndpointIdRequestNotFoundError:
       type: object
       properties:
         error_code:
-          type: number
-          format: double
+          type: integer
         error_token:
           type: string
         message:
           type: string
-      title: ApiV2EndpointMultiPatchResponsesContentApplicationJsonSchemaErrorsItems
-    ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaRuntimeData:
+      title: GetConnectivityInfoByEndpointIdRequestNotFoundError
+    ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaStatus:
       type: object
       properties:
-        msc:
-          type: string
-        sgsn:
-          type: string
-        sgsn_ip_address:
-          type: string
-      title: ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaRuntimeData
-    ApiV1EndpointPostResponsesContentApplicationJsonSchemaSimStatus:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaStatus
+    ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfoLocation:
+      type: object
+      properties:
+        current_location_retrieved:
+          type: boolean
+        age_of_location:
+          type: number
+          format: double
+        cell_global_id:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfoLocationCellGlobalId'
+      title: ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf0SubscriberInfoLocation
+    ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsMncItems:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsMncItems
+    ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaStatus:
       type: object
       properties:
         id:
           type: integer
-          description: Status ID.
         description:
           type: string
-          description: Human-readable status name.
-      description: SIM activation status.
-      title: ApiV1EndpointPostResponsesContentApplicationJsonSchemaSimStatus
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaStatus
+    ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaSim:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'SIM ID to assign.
+
+            The SIM must belong to your organization and not be assigned to another endpoint.
+
+            '
+        activate:
+          type: boolean
+          default: false
+          description: 'If `true`, activates the SIM after assignment.
+
+            If [factory test mode (FTM)](/developers/connectivity/factory-test-mode) is enabled for your organization, the SIM enters FTM instead of Activated.
+
+            '
+        status:
+          $ref: '#/components/schemas/ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaSimStatus'
+          description: Explicitly set the SIM status, overriding the default activation behavior.
+      required:
+      - id
+      description: 'SIM card to assign to this endpoint.
+
+        If omitted, no SIM is assigned.
+
+        '
+      title: ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaSim
+    ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatusId:
+      type: string
+      enum:
+      - '1'
+      - '2'
+      - '3'
+      title: ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatusId
+    ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaStatus:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaStatus
+    ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItemsSimStatus:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItemsSimStatus
     BulkUpdateEndpointRequestUnprocessableEntityError:
       type: object
       properties:
@@ -4142,23 +3800,405 @@ components:
       - error_token
       - errors
       title: BulkUpdateEndpointRequestUnprocessableEntityError
-    ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaServiceProfile:
+    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsSim:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsSim
+    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsCurrency:
       type: object
       properties:
         id:
           type: integer
+          description: Currency identifier.
+        code:
+          type: string
+          description: ISO 4217 currency code (for example, EUR, USD).
+        symbol:
+          type: string
+          description: Currency symbol (for example, €, $).
+      description: Currency used for cost calculations.
+      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsCurrency
+    Endpoint_GetConnectivityInfoByEndpointId_Response_200:
+      oneOf:
+      - $ref: '#/components/schemas/EndpointGetConnectivityInfoByEndpointIdResponse2000'
+      - $ref: '#/components/schemas/EndpointGetConnectivityInfoByEndpointIdResponse2001'
+      - $ref: '#/components/schemas/EndpointGetConnectivityInfoByEndpointIdResponse2002'
+      title: Endpoint_GetConnectivityInfoByEndpointId_Response_200
+    ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatusDescription:
+      type: string
+      enum:
+      - EXHAUSTED
+      - ACTIVE
+      - EXPIRED
+      title: ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaStatusDescription
+    Endpoint_EndpointSmsByEndpointIdAndSmsIdDelete_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Endpoint_EndpointSmsByEndpointIdAndSmsIdDelete_Response_200
+    EndpointGetConnectivityInfoByEndpointIdResponse2001:
+      type: object
+      properties:
+        request_timestamp:
+          type: string
+          format: date-time
+        reply_timestamp:
+          type: string
+          format: date-time
+      title: EndpointGetConnectivityInfoByEndpointIdResponse2001
+    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsServiceProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Service profile ID.
         name:
           type: string
+          description: Service profile name.
       required:
       - id
-      title: ApiV1EndpointEndpointIdGetResponsesContentApplicationJsonSchemaServiceProfile
-    ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatusId:
+      description: Service profile that determines network access settings for this endpoint.
+      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsServiceProfile
+    ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionId:
       type: string
       enum:
       - '1'
-      - '2'
-      - '3'
-      title: ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaStatusId
+      title: ApiV1EndpointEndpointIdQuotaSmsPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionId
+    ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaStatus:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaStatus
+    ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf2SubscriberInfo:
+      type: object
+      properties:
+        success:
+          type: boolean
+        error:
+          type: string
+      title: ApiV1EndpointEndpointIdConnectivityInfoGetResponsesContentApplicationJsonSchemaOneOf2SubscriberInfo
+    ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsSourceAddressType:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsSourceAddressType
+    ApiV2EndpointMultiPatchResponsesContentApplicationJsonSchemaErrorsItems:
+      type: object
+      properties:
+        error_code:
+          type: number
+          format: double
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ApiV2EndpointMultiPatchResponsesContentApplicationJsonSchemaErrorsItems
+    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSim:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the SIM.
+        iccid:
+          type: string
+          description: Integrated Circuit Card Identifier without Luhn check digit (19 digits).
+        iccid_with_luhn:
+          type: string
+          description: Integrated Circuit Card Identifier with Luhn check digit (20 digits).
+        status:
+          $ref: '#/components/schemas/ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimStatus'
+          description: SIM activation status.
+        imsi:
+          type: string
+          description: 'International Mobile Subscriber Identity.
+
+            Identifies the SIM on the mobile network.
+
+            '
+        eid:
+          type: string
+          description: 'eUICC Identifier (32 digits).
+
+            Present only for eSIM-capable SIMs.
+
+            '
+        msisdn:
+          type: string
+          description: Phone number assigned to this SIM.
+        sim_profile_type:
+          $ref: '#/components/schemas/ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimSimProfileType'
+          description: Type of SIM profile.
+        euicc_profile_data:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSimEuiccProfileData'
+          - type: 'null'
+          description: 'eSIM profile data.
+
+            Present only for eSIM-capable SIMs.
+
+            '
+      required:
+      - id
+      description: 'SIM card assigned to this endpoint.
+
+        `null` if no SIM is assigned.
+
+        '
+      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsSim
+    ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsSimStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+      description: 'SIM status: 1 (Activated) or 5 (Factory Test)'
+      title: ApiV2EndpointMultiPatchRequestBodyContentApplicationJsonSchemaItemsSimStatus
+    ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsTapcodeItems:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsTapcodeItems
+    Endpoint_EndpointStatsByIdGet_Response_200:
+      type: object
+      properties:
+        last_month:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaLastMonth'
+        current_month:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaCurrentMonth'
+        last_hour:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdStatsGetResponsesContentApplicationJsonSchemaLastHour'
+      title: Endpoint_EndpointStatsByIdGet_Response_200
+    ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaSim:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        status:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaSimStatus'
+      required:
+      - id
+      - status
+      title: ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaSim
+    ApiV1EndpointPostResponsesContentApplicationJsonSchemaErrorsItems:
+      type: object
+      properties:
+        error_code:
+          type: integer
+          description: Application-specific error code.
+        error_token:
+          type: string
+          description: Error type identifier.
+        message:
+          type: string
+          description: Detailed error message.
+      title: ApiV1EndpointPostResponsesContentApplicationJsonSchemaErrorsItems
+    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsTrafficType:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Traffic type identifier (6 = SMS).
+        description:
+          type: string
+          description: Human-readable traffic type name.
+        unit:
+          type: string
+          description: Unit of measurement (SMS for messages).
+      description: Information about the traffic type.
+      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSmsTrafficType
+    ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsCountry:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdOperatorBlacklistGetResponsesContentApplicationJsonSchemaItemsCountry
+    ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaServiceProfile:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaServiceProfile
+    ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsSmsType:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsSmsType
+    Endpoint_CreateEndpoint_Response_201:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the endpoint.
+        ip_address:
+          type: string
+          description: Private IP address assigned to this endpoint.
+        status:
+          $ref: '#/components/schemas/ApiV1EndpointPostResponsesContentApplicationJsonSchemaStatus'
+          description: Endpoint connectivity status.
+        name:
+          type: string
+          description: Display name for the endpoint.
+        tags:
+          type:
+          - string
+          - 'null'
+          description: Comma-separated list of tags.
+        imei:
+          type:
+          - string
+          - 'null'
+          description: IMEI with Software Version Number (IMEISV) (16 digits).
+        created:
+          type: string
+          format: date-time
+          description: Date and time when the endpoint was created (ISO 8601 format).
+        last_updated:
+          type: string
+          format: date-time
+          description: Date and time when the endpoint was last modified (ISO 8601 format).
+        imei_lock:
+          type: boolean
+          description: If `true`, this endpoint only allows connections from the device with the specified IMEI.
+        service_profile:
+          $ref: '#/components/schemas/ApiV1EndpointPostResponsesContentApplicationJsonSchemaServiceProfile'
+          description: Service profile assigned to this endpoint.
+        tariff_profile:
+          $ref: '#/components/schemas/ApiV1EndpointPostResponsesContentApplicationJsonSchemaTariffProfile'
+          description: Tariff profile assigned to this endpoint.
+        sim:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV1EndpointPostResponsesContentApplicationJsonSchemaSim'
+          - type: 'null'
+          description: 'SIM card assigned to this endpoint.
+
+            `null` if no SIM is assigned.
+
+            '
+        ip_address_space:
+          $ref: '#/components/schemas/ApiV1EndpointPostResponsesContentApplicationJsonSchemaIpAddressSpace'
+          description: IP address space containing this endpoint's private IP address.
+        imei_with_luhn:
+          type:
+          - string
+          - 'null'
+          description: IMEI with Luhn checksum digit, without Software Version Number (15 digits).
+      required:
+      - id
+      - ip_address
+      - status
+      - name
+      - tags
+      - imei
+      - created
+      - last_updated
+      - imei_lock
+      - service_profile
+      - tariff_profile
+      - sim
+      - ip_address_space
+      - imei_with_luhn
+      title: Endpoint_CreateEndpoint_Response_201
+    ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsStatus:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsStatus
+    ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaIpAddressSpace:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaIpAddressSpace
+    ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaTariffProfile:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdPatchRequestBodyContentApplicationJsonSchemaTariffProfile
+    ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaSmsType:
+      type: object
+      properties: {}
+      title: ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaSmsType
+    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        timestamp:
+          type: string
+        alert:
+          type: boolean
+        description:
+          type: string
+        id:
+          type: integer
+        event_type:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventType'
+        event_source:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource'
+        event_severity:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity'
+        organisation:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation'
+        endpoint:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsEndpoint'
+        sim:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsSim'
+        imsi:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsImsi'
+      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItems
+    ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'Status ID.
+
+            Valid values are `0` (Enabled) or `1` (Disabled).
+
+            '
+      required:
+      - id
+      description: Initial endpoint status.
+      title: ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaStatus
+    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsTagAssignmentsItemsTagColor:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Color ID.
+      description: Color assigned to this tag for UI display.
+      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsTagAssignmentsItemsTagColor
+    EndpointByIdPatchRequestUnprocessableEntityError:
+      type: object
+      properties:
+        message:
+          type: string
+        error_code:
+          type: number
+          format: double
+        error_token:
+          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1EndpointEndpointIdPatchResponsesContentApplicationJsonSchemaErrorsItems'
+      required:
+      - message
+      - error_code
+      - error_token
+      - errors
+      title: EndpointByIdPatchRequestUnprocessableEntityError
+    ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatusDescription'
+        id:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatusId'
+      required:
+      - id
+      title: ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatus
     ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaServiceProfile:
       type: object
       properties:
@@ -4175,48 +4215,7 @@ components:
 
         '
       title: ApiV1EndpointPostRequestBodyContentApplicationJsonSchemaServiceProfile
-    ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsSourceAddressType:
-      type: object
-      properties: {}
-      title: ApiV1EndpointEndpointIdSmsGetResponsesContentApplicationJsonSchemaItemsSourceAddressType
-    ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaSmsType:
-      type: object
-      properties: {}
-      title: ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaSmsType
-    ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSatGeoData:
-      type: object
-      properties:
-        volume:
-          type: number
-          format: double
-          description: Total satellite data volume in MB.
-        volume_tx:
-          type: number
-          format: double
-          description: Satellite data transmitted in MB.
-        volume_rx:
-          type: number
-          format: double
-          description: Satellite data received in MB.
-        cost:
-          type: number
-          format: double
-          description: Cost of satellite data usage.
-      description: Satellite data usage for this day (if applicable).
-      title: ApiV1EndpointEndpointIdStatsDailyGetResponsesContentApplicationJsonSchemaItemsSatGeoData
-    ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaStatus:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-      required:
-      - id
-      description: 'Applies to all endpoints.
-
-        '
-      title: ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaStatus
-    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsServiceProfile:
+    ApiV1EndpointPostResponsesContentApplicationJsonSchemaServiceProfile:
       type: object
       properties:
         id:
@@ -4227,38 +4226,38 @@ components:
           description: Service profile name.
       required:
       - id
-      description: Service profile that determines network access settings for this endpoint.
-      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsServiceProfile
-    ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaSourceAddressType:
+      - name
+      description: Service profile assigned to this endpoint.
+      title: ApiV1EndpointPostResponsesContentApplicationJsonSchemaServiceProfile
+    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsImsi:
       type: object
       properties: {}
-      title: ApiV1EndpointEndpointIdSmsSmsIdGetResponsesContentApplicationJsonSchemaSourceAddressType
-    ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionDescription:
+      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsImsi
+    ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatusDescription:
       type: string
       enum:
-      - Block
-      title: ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionDescription
-    Endpoint_GetConnectivityInfoByEndpointId_Response_200:
-      oneOf:
-      - $ref: '#/components/schemas/EndpointGetConnectivityInfoByEndpointIdResponse2000'
-      - $ref: '#/components/schemas/EndpointGetConnectivityInfoByEndpointIdResponse2001'
-      - $ref: '#/components/schemas/EndpointGetConnectivityInfoByEndpointIdResponse2002'
-      title: Endpoint_GetConnectivityInfoByEndpointId_Response_200
-    ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsTariffProfile:
+      - EXHAUSTED
+      - ACTIVE
+      - EXPIRED
+      title: ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaStatusDescription
+    ApiV1EndpointPostResponsesContentApplicationJsonSchemaTariffProfile:
       type: object
       properties:
         id:
-          type: number
-          format: double
+          type: integer
+          description: Tariff profile ID.
         name:
           type: string
+          description: Tariff profile name.
         satellite_capable:
           type: boolean
+          description: If `true`, this tariff profile supports satellite connectivity.
       required:
       - id
       - name
       - satellite_capable
-      title: ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsTariffProfile
+      description: Tariff profile assigned to this endpoint.
+      title: ApiV1EndpointPostResponsesContentApplicationJsonSchemaTariffProfile
     ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsServiceProfile:
       type: object
       properties:
@@ -4271,37 +4270,38 @@ components:
       - id
       - name
       title: ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsServiceProfile
-    ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItemsSimStatus:
+    ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustion:
       type: object
       properties:
         id:
-          type: number
-          format: double
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionId'
+        description:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustionDescription'
       required:
       - id
-      title: ApiV2EndpointMultiPostRequestBodyContentApplicationJsonSchemaEndpointsItemsSimStatus
-    ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsTagAssignmentsItemsTagColor:
+      title: ApiV1EndpointEndpointIdQuotaDataPostRequestBodyContentApplicationJsonSchemaActionOnExhaustion
+    ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsStatus:
+      type: object
+      properties:
+        description:
+          type: string
+      required:
+      - description
+      title: ApiV2EndpointMultiPostResponsesContentApplicationJsonSchemaItemsStatus
+    ApiV1EndpointStatusGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
         id:
           type: integer
-          description: Color ID.
-      description: Color assigned to this tag for UI display.
-      title: ApiV1EndpointGetResponsesContentApplicationJsonSchemaItemsTagAssignmentsItemsTagColor
-    ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation:
+        description:
+          type: string
+      required:
+      - id
+      title: ApiV1EndpointStatusGetResponsesContentApplicationJsonSchemaItems
+    ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaLocation:
       type: object
       properties: {}
-      title: ApiV1EndpointEndpointIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation
-    Endpoint_EndpointSmsByEndpointIdAndSmsIdDelete_Response_200:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Endpoint_EndpointSmsByEndpointIdAndSmsIdDelete_Response_200
-    ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustionDescription:
-      type: string
-      enum:
-      - Block
-      title: ApiV1EndpointEndpointIdQuotaDataGetResponsesContentApplicationJsonSchemaActionOnExhaustionDescription
+      title: ApiV1EndpointEndpointIdConnectivityGetResponsesContentApplicationJsonSchemaLocation
   securitySchemes:
     BearerAuth:
       type: http

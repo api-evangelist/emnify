@@ -258,30 +258,6 @@ paths:
                   $ref: '#/components/schemas/ApiV1ServiceLevelGetResponsesContentApplicationJsonSchemaItems'
 components:
   schemas:
-    ApiV1BreakoutRegionGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        ip_address:
-          type: string
-      title: ApiV1BreakoutRegionGetResponsesContentApplicationJsonSchemaItems
-    ApiV1CountryGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        country_code:
-          type: string
-        mcc:
-          type: string
-        iso_code:
-          type: string
-      title: ApiV1CountryGetResponsesContentApplicationJsonSchemaItems
     ApiV1CurrencyGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -302,27 +278,20 @@ components:
         description:
           type: string
       title: ApiV1DataThrottleGetResponsesContentApplicationJsonSchemaItems
-    ApiV1ServiceLevelGetResponsesContentApplicationJsonSchemaItems:
+    ApiV1CountryGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
         id:
-          type: number
-          format: double
+          type: integer
         name:
           type: string
-      required:
-      - id
-      description: The default service level of a tariff plan. Possible values can be fetched with GET `/api/v1/service_level`.
-      title: ApiV1ServiceLevelGetResponsesContentApplicationJsonSchemaItems
-    ApiV1RatTypeGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        description:
+        country_code:
           type: string
-      title: ApiV1RatTypeGetResponsesContentApplicationJsonSchemaItems
+        mcc:
+          type: string
+        iso_code:
+          type: string
+      title: ApiV1CountryGetResponsesContentApplicationJsonSchemaItems
     ApiV1EsmeInterfaceTypeGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -344,6 +313,37 @@ components:
         description:
           type: string
       title: ApiV1DataBlocksizeGetResponsesContentApplicationJsonSchemaItems
+    ApiV1BreakoutRegionGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        ip_address:
+          type: string
+      title: ApiV1BreakoutRegionGetResponsesContentApplicationJsonSchemaItems
+    ApiV1ServiceLevelGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+      required:
+      - id
+      description: The default service level of a tariff plan. Possible values can be fetched with GET `/api/v1/service_level`.
+      title: ApiV1ServiceLevelGetResponsesContentApplicationJsonSchemaItems
+    ApiV1RatTypeGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1RatTypeGetResponsesContentApplicationJsonSchemaItems
   securitySchemes:
     BearerAuth:
       type: http

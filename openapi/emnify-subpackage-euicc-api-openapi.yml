@@ -333,14 +333,38 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    EuiccUnlinkedValidationResponseItems:
+    Eid:
+      type: string
+      title: Eid
+    Organisation:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: Organisation
+    EuiccUnlinkedValidationResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/EuiccUnlinkedValidationResponseItems'
+      title: EuiccUnlinkedValidationResponse
+    ProfileStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ProfileStatus
+    EuiccUnlinkedValidationRequestTargetItems:
       type: object
       properties:
         eid:
           $ref: '#/components/schemas/Eid'
       required:
       - eid
-      title: EuiccUnlinkedValidationResponseItems
+      title: EuiccUnlinkedValidationRequestTargetItems
     Profile:
       type: object
       properties:
@@ -383,40 +407,22 @@ components:
       required:
       - iccid_with_luhn
       title: Profile
-    ProfileProfileType:
+    EuiccEim:
       type: object
       properties:
         id:
           type: integer
         description:
           type: string
-      title: ProfileProfileType
-    Status:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      required:
-      - id
-      - description
-      title: Status
-    Eid:
-      type: string
-      title: Eid
-    Endpoint:
+      title: EuiccEim
+    IdName:
       type: object
       properties:
         id:
           type: integer
         name:
           type: string
-      title: Endpoint
-    IccidWithLuhnRef:
-      type: string
-      description: Full ICCID including the Luhn check digit
-      title: IccidWithLuhnRef
+      title: IdName
     Error:
       type: object
       properties:
@@ -428,16 +434,34 @@ components:
       - status_code
       - message
       title: Error
-    EuiccUnlinkedValidationRequest:
+    IccidWithLuhnRef:
+      type: string
+      description: Full ICCID including the Luhn check digit
+      title: IccidWithLuhnRef
+    EuiccUnlinkedValidationResponseItems:
       type: object
       properties:
-        target:
-          type: array
-          items:
-            $ref: '#/components/schemas/EuiccUnlinkedValidationRequestTargetItems'
+        eid:
+          $ref: '#/components/schemas/Eid'
       required:
-      - target
-      title: EuiccUnlinkedValidationRequest
+      - eid
+      title: EuiccUnlinkedValidationResponseItems
+    EuiccSupportedProfileType:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: EuiccSupportedProfileType
+    Endpoint:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: Endpoint
     Euicc:
       type: object
       properties:
@@ -483,59 +507,35 @@ components:
       - created
       - profile
       title: Euicc
-    EuiccEim:
+    EuiccUnlinkedValidationRequest:
       type: object
       properties:
-        id:
-          type: integer
-        description:
-          type: string
-      title: EuiccEim
-    EuiccSupportedProfileType:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      title: EuiccSupportedProfileType
-    IdName:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-      title: IdName
-    EuiccUnlinkedValidationRequestTargetItems:
-      type: object
-      properties:
-        eid:
-          $ref: '#/components/schemas/Eid'
+        target:
+          type: array
+          items:
+            $ref: '#/components/schemas/EuiccUnlinkedValidationRequestTargetItems'
       required:
-      - eid
-      title: EuiccUnlinkedValidationRequestTargetItems
-    Organisation:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-      title: Organisation
-    ProfileStatus:
+      - target
+      title: EuiccUnlinkedValidationRequest
+    ProfileProfileType:
       type: object
       properties:
         id:
           type: integer
         description:
           type: string
-      title: ProfileStatus
-    EuiccUnlinkedValidationResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/EuiccUnlinkedValidationResponseItems'
-      title: EuiccUnlinkedValidationResponse
+      title: ProfileProfileType
+    Status:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      required:
+      - id
+      - description
+      title: Status
   securitySchemes:
     BearerAuth:
       type: http

@@ -527,239 +527,6 @@ paths:
                 description: Any type
 components:
   schemas:
-    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolumeCurrency:
-      type: object
-      properties:
-        code:
-          type: string
-        symbol:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolumeCurrency
-    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSmsVolumeCurrency:
-      type: object
-      properties:
-        code:
-          type: string
-        symbol:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSmsVolumeCurrency
-    Workspaces_GetWorkspaceDailyStats_Response_200:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        days:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItems'
-        total:
-          oneOf:
-          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotal'
-          - type: 'null'
-      title: Workspaces_GetWorkspaceDailyStats_Response_200
-    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsDataVolumeTrafficType:
-      type: object
-      properties:
-        description:
-          type: string
-        unit:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsDataVolumeTrafficType
-    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolume:
-      type: object
-      properties:
-        volume:
-          type: number
-          format: double
-        volume_tx:
-          type: number
-          format: double
-        volume_rx:
-          type: number
-          format: double
-        cost:
-          type:
-          - number
-          - 'null'
-          format: double
-        traffic_type:
-          oneOf:
-          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolumeTrafficType'
-          - type: 'null'
-        currency:
-          oneOf:
-          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolumeCurrency'
-          - type: 'null'
-      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolume
-    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolume:
-      type: object
-      properties:
-        volume:
-          type: number
-          format: double
-        volume_tx:
-          type: number
-          format: double
-        volume_rx:
-          type: number
-          format: double
-        cost:
-          type:
-          - number
-          - 'null'
-          format: double
-        traffic_type:
-          oneOf:
-          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolumeTrafficType'
-          - type: 'null'
-        currency:
-          oneOf:
-          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolumeCurrency'
-          - type: 'null'
-      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolume
-    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsDataVolumeCurrency:
-      type: object
-      properties:
-        code:
-          type: string
-        symbol:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsDataVolumeCurrency
-    ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItemsRolesItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-      title: ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItemsRolesItems
-    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoDataVolume:
-      type: object
-      properties:
-        volume:
-          type: number
-          format: double
-        volume_tx:
-          type: number
-          format: double
-        volume_rx:
-          type: number
-          format: double
-        cost:
-          type:
-          - number
-          - 'null'
-          format: double
-        traffic_type:
-          oneOf:
-          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoDataVolumeTrafficType'
-          - type: 'null'
-        currency:
-          oneOf:
-          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoDataVolumeCurrency'
-          - type: 'null'
-      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoDataVolume
-    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolumeTrafficType:
-      type: object
-      properties:
-        description:
-          type: string
-        unit:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolumeTrafficType
-    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolume:
-      type: object
-      properties:
-        volume:
-          type: number
-          format: double
-        volume_tx:
-          type: number
-          format: double
-        volume_rx:
-          type: number
-          format: double
-        cost:
-          type:
-          - number
-          - 'null'
-          format: double
-        traffic_type:
-          oneOf:
-          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolumeTrafficType'
-          - type: 'null'
-        currency:
-          oneOf:
-          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolumeCurrency'
-          - type: 'null'
-      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolume
-    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSmsVolumeCurrency:
-      type: object
-      properties:
-        code:
-          type: string
-        symbol:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSmsVolumeCurrency
-    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolume:
-      type: object
-      properties:
-        volume:
-          type: number
-          format: double
-        volume_tx:
-          type: number
-          format: double
-        volume_rx:
-          type: number
-          format: double
-        cost:
-          type:
-          - number
-          - 'null'
-          format: double
-        traffic_type:
-          oneOf:
-          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolumeTrafficType'
-          - type: 'null'
-        currency:
-          oneOf:
-          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolumeCurrency'
-          - type: 'null'
-      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolume
-    ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItemsStatus:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItemsStatusStatus'
-      required:
-      - status
-      title: ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItemsStatus
-    ApiV1AuthenticateWorkspacePostRequestBodyContentApplicationJsonSchemaTargetOrganisation:
-      type: object
-      properties:
-        id:
-          type: integer
-      title: ApiV1AuthenticateWorkspacePostRequestBodyContentApplicationJsonSchemaTargetOrganisation
     ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSmsVolume:
       type: object
       properties:
@@ -786,7 +553,7 @@ components:
           - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSmsVolumeCurrency'
           - type: 'null'
       title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSmsVolume
-    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolumeTrafficType:
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsDataVolumeTrafficType:
       type: object
       properties:
         description:
@@ -796,7 +563,81 @@ components:
         id:
           type: number
           format: double
-      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolumeTrafficType
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsDataVolumeTrafficType
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsDataVolumeCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsDataVolumeCurrency
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSmsVolumeCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSmsVolumeCurrency
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolumeTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolumeTrafficType
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSmsVolumeTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSmsVolumeTrafficType
+    ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItemsStatus:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItemsStatusStatus'
+      required:
+      - status
+      title: ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItemsStatus
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolumeCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolumeCurrency
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolumeCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolumeCurrency
     ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolumeTrafficType:
       type: object
       properties:
@@ -808,21 +649,81 @@ components:
           type: number
           format: double
       title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolumeTrafficType
-    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotal:
+    ApiV1AuthenticateWorkspacePostRequestBodyContentApplicationJsonSchemaTargetOrganisation:
       type: object
       properties:
-        data_volume:
-          $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolume'
-        sms_volume:
-          $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSmsVolume'
-        sat_geo_data_volume:
-          $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolume'
-        sat_geo_sms_volume:
-          $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolume'
-      required:
-      - data_volume
-      - sms_volume
-      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotal
+        id:
+          type: integer
+      title: ApiV1AuthenticateWorkspacePostRequestBodyContentApplicationJsonSchemaTargetOrganisation
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolumeCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolumeCurrency
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoDataVolume:
+      type: object
+      properties:
+        volume:
+          type: number
+          format: double
+        volume_tx:
+          type: number
+          format: double
+        volume_rx:
+          type: number
+          format: double
+        cost:
+          type:
+          - number
+          - 'null'
+          format: double
+        traffic_type:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoDataVolumeTrafficType'
+          - type: 'null'
+        currency:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoDataVolumeCurrency'
+          - type: 'null'
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoDataVolume
+    Workspaces_GetWorkspaceDailyStats_Response_200:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        days:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItems'
+        total:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotal'
+          - type: 'null'
+      title: Workspaces_GetWorkspaceDailyStats_Response_200
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSmsVolumeTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSmsVolumeTrafficType
+    ApiV2UserUserIdWorkspaceWorkspaceIdPatchRequestBodyContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+      title: ApiV2UserUserIdWorkspaceWorkspaceIdPatchRequestBodyContentApplicationJsonSchemaStatus
     ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -846,17 +747,21 @@ components:
       - status
       - roles
       title: ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItems
-    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolumeCurrency:
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotal:
       type: object
       properties:
-        code:
-          type: string
-        symbol:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolumeCurrency
+        data_volume:
+          $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolume'
+        sms_volume:
+          $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSmsVolume'
+        sat_geo_data_volume:
+          $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolume'
+        sat_geo_sms_volume:
+          $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolume'
+      required:
+      - data_volume
+      - sms_volume
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotal
     ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsDataVolume:
       type: object
       properties:
@@ -883,17 +788,43 @@ components:
           - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsDataVolumeCurrency'
           - type: 'null'
       title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsDataVolume
-    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSmsVolumeTrafficType:
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoDataVolumeCurrency:
       type: object
       properties:
-        description:
+        code:
           type: string
-        unit:
+        symbol:
           type: string
         id:
           type: number
           format: double
-      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSmsVolumeTrafficType
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoDataVolumeCurrency
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolume:
+      type: object
+      properties:
+        volume:
+          type: number
+          format: double
+        volume_tx:
+          type: number
+          format: double
+        volume_rx:
+          type: number
+          format: double
+        cost:
+          type:
+          - number
+          - 'null'
+          format: double
+        traffic_type:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolumeTrafficType'
+          - type: 'null'
+        currency:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolumeCurrency'
+          - type: 'null'
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoSmsVolume
     ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSmsVolume:
       type: object
       properties:
@@ -920,28 +851,6 @@ components:
           - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSmsVolumeCurrency'
           - type: 'null'
       title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSmsVolume
-    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolumeTrafficType:
-      type: object
-      properties:
-        description:
-          type: string
-        unit:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolumeTrafficType
-    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolumeCurrency:
-      type: object
-      properties:
-        code:
-          type: string
-        symbol:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolumeCurrency
     ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolumeCurrency:
       type: object
       properties:
@@ -953,11 +862,82 @@ components:
           type: number
           format: double
       title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolumeCurrency
-    Workspaces_UpdateDefaultWorkspace_Response_200:
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolume:
       type: object
-      properties: {}
-      description: Empty response body
-      title: Workspaces_UpdateDefaultWorkspace_Response_200
+      properties:
+        volume:
+          type: number
+          format: double
+        volume_tx:
+          type: number
+          format: double
+        volume_rx:
+          type: number
+          format: double
+        cost:
+          type:
+          - number
+          - 'null'
+          format: double
+        traffic_type:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolumeTrafficType'
+          - type: 'null'
+        currency:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolumeCurrency'
+          - type: 'null'
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolume
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolume:
+      type: object
+      properties:
+        volume:
+          type: number
+          format: double
+        volume_tx:
+          type: number
+          format: double
+        volume_rx:
+          type: number
+          format: double
+        cost:
+          type:
+          - number
+          - 'null'
+          format: double
+        traffic_type:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolumeTrafficType'
+          - type: 'null'
+        currency:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolumeCurrency'
+          - type: 'null'
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSatGeoDataVolume
+    Workspaces_AuthenticateWorkspace_Response_200:
+      type: object
+      properties:
+        auth_token:
+          type: string
+          description: JWT authentication token valid for the target Workspace
+      title: Workspaces_AuthenticateWorkspace_Response_200
+    ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItemsStatusStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+      title: ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItemsStatusStatus
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSmsVolumeCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSmsVolumeCurrency
     ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoDataVolumeTrafficType:
       type: object
       properties:
@@ -984,7 +964,41 @@ components:
         sat_geo_sms_volume:
           $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolume'
       title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItems
-    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSmsVolumeTrafficType:
+    ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItemsRolesItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItemsRolesItems
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolume:
+      type: object
+      properties:
+        volume:
+          type: number
+          format: double
+        volume_tx:
+          type: number
+          format: double
+        volume_rx:
+          type: number
+          format: double
+        cost:
+          type:
+          - number
+          - 'null'
+          format: double
+        traffic_type:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolumeTrafficType'
+          - type: 'null'
+        currency:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolumeCurrency'
+          - type: 'null'
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolume
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolumeTrafficType:
       type: object
       properties:
         description:
@@ -994,37 +1008,23 @@ components:
         id:
           type: number
           format: double
-      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalSmsVolumeTrafficType
-    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoDataVolumeCurrency:
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoSmsVolumeTrafficType
+    ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolumeTrafficType:
       type: object
       properties:
-        code:
+        description:
           type: string
-        symbol:
+        unit:
           type: string
         id:
           type: number
           format: double
-      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaDaysItemsSatGeoDataVolumeCurrency
-    ApiV2UserUserIdWorkspaceWorkspaceIdPatchRequestBodyContentApplicationJsonSchemaStatus:
+      title: ApiV2WorkspaceStatsDailyGetResponsesContentApplicationJsonSchemaTotalDataVolumeTrafficType
+    Workspaces_UpdateDefaultWorkspace_Response_200:
       type: object
-      properties:
-        id:
-          type: integer
-      title: ApiV2UserUserIdWorkspaceWorkspaceIdPatchRequestBodyContentApplicationJsonSchemaStatus
-    ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItemsStatusStatus:
-      type: object
-      properties:
-        id:
-          type: integer
-      title: ApiV2UserUserIdWorkspaceGetResponsesContentApplicationJsonSchemaItemsStatusStatus
-    Workspaces_AuthenticateWorkspace_Response_200:
-      type: object
-      properties:
-        auth_token:
-          type: string
-          description: JWT authentication token valid for the target Workspace
-      title: Workspaces_AuthenticateWorkspace_Response_200
+      properties: {}
+      description: Empty response body
+      title: Workspaces_UpdateDefaultWorkspace_Response_200
   securitySchemes:
     BearerAuth:
       type: http

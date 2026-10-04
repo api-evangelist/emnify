@@ -63,30 +63,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    SimUnlinkedProductStatsResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/SimUnlinkedProductStatsResponseItems'
-      title: SimUnlinkedProductStatsResponse
-    SimUnlinkedProductStatsResponseItems:
-      type: object
-      properties:
-        product:
-          $ref: '#/components/schemas/SimUnlinkedProductStatsResponseItemsProduct'
-        quantity:
-          type: integer
-      required:
-      - product
-      - quantity
-      title: SimUnlinkedProductStatsResponseItems
-    SimUnlinkedProductStatsResponseItemsProduct:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-      title: SimUnlinkedProductStatsResponseItemsProduct
     Error:
       type: object
       properties:
@@ -98,6 +74,30 @@ components:
       - status_code
       - message
       title: Error
+    SimUnlinkedProductStatsResponseItemsProduct:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: SimUnlinkedProductStatsResponseItemsProduct
+    SimUnlinkedProductStatsResponseItems:
+      type: object
+      properties:
+        product:
+          $ref: '#/components/schemas/SimUnlinkedProductStatsResponseItemsProduct'
+        quantity:
+          type: integer
+      required:
+      - product
+      - quantity
+      title: SimUnlinkedProductStatsResponseItems
+    SimUnlinkedProductStatsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/SimUnlinkedProductStatsResponseItems'
+      title: SimUnlinkedProductStatsResponse
   securitySchemes:
     BearerAuth:
       type: http

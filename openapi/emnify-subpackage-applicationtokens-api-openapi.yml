@@ -161,10 +161,6 @@ components:
         application_token:
           type: string
       title: Application tokens_ApplicationTokenPost_Response_200
-    ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsCreator:
-      type: object
-      properties: {}
-      title: ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsCreator
     ApplicationTokenPostRequestUnprocessableEntityError:
       type: object
       properties:
@@ -201,6 +197,10 @@ components:
         creator:
           $ref: '#/components/schemas/ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsCreator'
       title: ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItems
+    ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsCreator:
+      type: object
+      properties: {}
+      title: ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsCreator
   securitySchemes:
     BearerAuth:
       type: http

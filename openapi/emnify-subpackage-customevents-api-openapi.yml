@@ -168,87 +168,6 @@ paths:
                 $ref: '#/components/schemas/CustomEventTemplateOutputDto'
 components:
   schemas:
-    ConfigurationInputPropertiesDto:
-      type: object
-      properties:
-        property:
-          type: string
-        value:
-          type: string
-        value_array:
-          type: array
-          items:
-            type: string
-      required:
-      - property
-      - value
-      - value_array
-      title: ConfigurationInputPropertiesDto
-    Custom_Events_deleteCustomEvent_Response_200:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Custom Events_deleteCustomEvent_Response_200
-    CustomEventOutputDto:
-      type: object
-      properties:
-        organisation:
-          $ref: '#/components/schemas/WithIdInputDto'
-        template:
-          $ref: '#/components/schemas/WithIdInputDto'
-        configuration_properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
-        name:
-          type: string
-        id:
-          type: string
-        supportedTargetingParameters:
-          type: array
-          items:
-            type: string
-        supportedActions:
-          type: array
-          items:
-            type: string
-      required:
-      - organisation
-      - template
-      - configuration_properties
-      - name
-      - id
-      - supportedTargetingParameters
-      - supportedActions
-      title: CustomEventOutputDto
-    CustomEventCreateDto:
-      type: object
-      properties:
-        organisation:
-          $ref: '#/components/schemas/WithIdInputDto'
-        template:
-          $ref: '#/components/schemas/WithIdInputDto'
-        configuration_properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
-        name:
-          type: string
-      required:
-      - organisation
-      - template
-      - configuration_properties
-      - name
-      title: CustomEventCreateDto
-    WithIdInputDto:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-      required:
-      - id
-      title: WithIdInputDto
     ValidatorDto:
       type: object
       properties:
@@ -285,6 +204,11 @@ components:
       - description
       - validators
       title: ConfigurationPropertiesDto
+    Custom_Events_deleteCustomEvent_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Custom Events_deleteCustomEvent_Response_200
     CustomEventTemplateOutputDto:
       type: object
       properties:
@@ -321,6 +245,38 @@ components:
       - configuration_properties
       - supported_targeting_parameters
       title: CustomEventTemplateOutputDto
+    CustomEventOutputDto:
+      type: object
+      properties:
+        organisation:
+          $ref: '#/components/schemas/WithIdInputDto'
+        template:
+          $ref: '#/components/schemas/WithIdInputDto'
+        configuration_properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
+        name:
+          type: string
+        id:
+          type: string
+        supportedTargetingParameters:
+          type: array
+          items:
+            type: string
+        supportedActions:
+          type: array
+          items:
+            type: string
+      required:
+      - organisation
+      - template
+      - configuration_properties
+      - name
+      - id
+      - supportedTargetingParameters
+      - supportedActions
+      title: CustomEventOutputDto
     SupportedTargetingParametersDto:
       type: object
       properties:
@@ -340,6 +296,50 @@ components:
       - description
       - validators
       title: SupportedTargetingParametersDto
+    WithIdInputDto:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: WithIdInputDto
+    CustomEventCreateDto:
+      type: object
+      properties:
+        organisation:
+          $ref: '#/components/schemas/WithIdInputDto'
+        template:
+          $ref: '#/components/schemas/WithIdInputDto'
+        configuration_properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
+        name:
+          type: string
+      required:
+      - organisation
+      - template
+      - configuration_properties
+      - name
+      title: CustomEventCreateDto
+    ConfigurationInputPropertiesDto:
+      type: object
+      properties:
+        property:
+          type: string
+        value:
+          type: string
+        value_array:
+          type: array
+          items:
+            type: string
+      required:
+      - property
+      - value
+      - value_array
+      title: ConfigurationInputPropertiesDto
   securitySchemes:
     BearerAuth:
       type: http
