@@ -1,3 +1,8 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (dated 2026-05-25 by the file itself), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
+generated: '2026-05-25'
 specification: API Commons Plans
 specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
@@ -184,3 +189,99 @@ plans:
     description: 24/7 support with 1-hour response SLA and dedicated technical account manager.
 notes: >-
   emnify publishes pricing categories but not list rates. All commercial plans require contact with sales for a custom quote. The Free Trial is publicly orderable from the website. Updated 2026-05-25.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - metered
+  - negotiated
+  - subscription
+  units:
+  - data
+  - message
+  - object
+  plans:
+  - name: emnify Trial
+    access: free
+    model: free
+    model_how: derived
+    units:
+    - object
+    periods:
+    - term
+  - name: Fixed Allowance
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - object
+    periods:
+    - month
+  - name: Pooled Allowance
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - other
+    periods:
+    - month
+  - name: Pay-Per-Use
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - data
+    - message
+    periods:
+    - per-use
+  - name: Volume Commitment
+    access: negotiated
+    model: negotiated
+    model_how: stated
+    units:
+    - data
+    periods:
+    - term
+  - name: SatPlus 10
+    access: addon
+    model: free
+    model_how: derived
+    units:
+    - message
+    periods:
+    - month
+  - name: SatPlus 30
+    access: addon
+    model: free
+    model_how: derived
+    units:
+    - message
+    periods:
+    - month
+  - name: SatPlus 60
+    access: addon
+    model: free
+    model_how: derived
+    units:
+    - message
+    periods:
+    - month
+  - name: Standard Support
+    access: free
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Business Support
+    access: addon
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Enterprise Support
+    access: addon
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
