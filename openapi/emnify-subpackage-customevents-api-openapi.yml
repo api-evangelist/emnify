@@ -168,6 +168,25 @@ paths:
                 $ref: '#/components/schemas/CustomEventTemplateOutputDto'
 components:
   schemas:
+    CustomEventCreateDto:
+      type: object
+      properties:
+        organisation:
+          $ref: '#/components/schemas/WithIdInputDto'
+        template:
+          $ref: '#/components/schemas/WithIdInputDto'
+        configuration_properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
+        name:
+          type: string
+      required:
+      - organisation
+      - template
+      - configuration_properties
+      - name
+      title: CustomEventCreateDto
     ValidatorDto:
       type: object
       properties:
@@ -179,36 +198,6 @@ components:
       - validator_type
       - validator_value
       title: ValidatorDto
-    ConfigurationPropertiesDto:
-      type: object
-      properties:
-        property:
-          type: string
-        type:
-          type: string
-        default:
-          type: string
-        required:
-          type: boolean
-        description:
-          type: string
-        validators:
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidatorDto'
-      required:
-      - property
-      - type
-      - default
-      - required
-      - description
-      - validators
-      title: ConfigurationPropertiesDto
-    Custom_Events_deleteCustomEvent_Response_200:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Custom Events_deleteCustomEvent_Response_200
     CustomEventTemplateOutputDto:
       type: object
       properties:
@@ -245,6 +234,30 @@ components:
       - configuration_properties
       - supported_targeting_parameters
       title: CustomEventTemplateOutputDto
+    SupportedTargetingParametersDto:
+      type: object
+      properties:
+        parameter:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        validators:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidatorDto'
+      required:
+      - parameter
+      - type
+      - description
+      - validators
+      title: SupportedTargetingParametersDto
+    Custom_Events_deleteCustomEvent_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Custom Events_deleteCustomEvent_Response_200
     CustomEventOutputDto:
       type: object
       properties:
@@ -277,25 +290,6 @@ components:
       - supportedTargetingParameters
       - supportedActions
       title: CustomEventOutputDto
-    SupportedTargetingParametersDto:
-      type: object
-      properties:
-        parameter:
-          type: string
-        type:
-          type: string
-        description:
-          type: string
-        validators:
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidatorDto'
-      required:
-      - parameter
-      - type
-      - description
-      - validators
-      title: SupportedTargetingParametersDto
     WithIdInputDto:
       type: object
       properties:
@@ -305,25 +299,6 @@ components:
       required:
       - id
       title: WithIdInputDto
-    CustomEventCreateDto:
-      type: object
-      properties:
-        organisation:
-          $ref: '#/components/schemas/WithIdInputDto'
-        template:
-          $ref: '#/components/schemas/WithIdInputDto'
-        configuration_properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
-        name:
-          type: string
-      required:
-      - organisation
-      - template
-      - configuration_properties
-      - name
-      title: CustomEventCreateDto
     ConfigurationInputPropertiesDto:
       type: object
       properties:
@@ -340,6 +315,31 @@ components:
       - value
       - value_array
       title: ConfigurationInputPropertiesDto
+    ConfigurationPropertiesDto:
+      type: object
+      properties:
+        property:
+          type: string
+        type:
+          type: string
+        default:
+          type: string
+        required:
+          type: boolean
+        description:
+          type: string
+        validators:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidatorDto'
+      required:
+      - property
+      - type
+      - default
+      - required
+      - description
+      - validators
+      title: ConfigurationPropertiesDto
   securitySchemes:
     BearerAuth:
       type: http

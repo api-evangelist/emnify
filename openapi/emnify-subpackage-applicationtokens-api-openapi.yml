@@ -161,24 +161,10 @@ components:
         application_token:
           type: string
       title: Application tokens_ApplicationTokenPost_Response_200
-    ApplicationTokenPostRequestUnprocessableEntityError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: ApplicationTokenPostRequestUnprocessableEntityError
     ApiV1ApplicationTokenAppTokenIdPatchRequestBodyContentApplicationJsonSchemaStatus:
       type: object
       properties: {}
       title: ApiV1ApplicationTokenAppTokenIdPatchRequestBodyContentApplicationJsonSchemaStatus
-    ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsStatus:
-      type: object
-      properties: {}
-      title: ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsStatus
     ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -197,10 +183,24 @@ components:
         creator:
           $ref: '#/components/schemas/ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsCreator'
       title: ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItems
+    ApplicationTokenPostRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ApplicationTokenPostRequestUnprocessableEntityError
     ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsCreator:
       type: object
       properties: {}
       title: ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsCreator
+    ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsStatus:
+      type: object
+      properties: {}
+      title: ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsStatus
   securitySchemes:
     BearerAuth:
       type: http

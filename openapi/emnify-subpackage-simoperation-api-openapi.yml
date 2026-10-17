@@ -341,9 +341,6 @@ components:
       required:
       - sim
       title: SimOperationResponseTarget
-    Eid:
-      type: string
-      title: Eid
     OperationStatus:
       type: object
       properties:
@@ -355,14 +352,6 @@ components:
       - id
       - description
       title: OperationStatus
-    SimOperationActionRef:
-      type: object
-      properties:
-        id:
-          type: integer
-      required:
-      - id
-      title: SimOperationActionRef
     SimOperationRequestTarget:
       type: object
       properties:
@@ -371,6 +360,44 @@ components:
         eid:
           $ref: '#/components/schemas/Eid'
       title: SimOperationRequestTarget
+    Error:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      required:
+      - status_code
+      - message
+      title: Error
+    SimOperationRequestTargetSim:
+      type: object
+      properties:
+        id:
+          type: integer
+      required:
+      - id
+      title: SimOperationRequestTargetSim
+    SimOperationResponseErrorItems:
+      type: object
+      properties:
+        eid:
+          $ref: '#/components/schemas/Eid'
+        message:
+          type: string
+      required:
+      - eid
+      - message
+      title: SimOperationResponseErrorItems
+    SimOperationResponseTargetSim:
+      type: object
+      properties:
+        id:
+          type: integer
+      required:
+      - id
+      title: SimOperationResponseTargetSim
     OperationAction:
       type: object
       properties:
@@ -382,22 +409,14 @@ components:
       - id
       - description
       title: OperationAction
-    ProductRef:
+    SimOperationActionRef:
       type: object
       properties:
         id:
           type: integer
       required:
       - id
-      title: ProductRef
-    SimOperationResponseTargetSim:
-      type: object
-      properties:
-        id:
-          type: integer
-      required:
-      - id
-      title: SimOperationResponseTargetSim
+      title: SimOperationActionRef
     SimOperationResponse:
       type: object
       properties:
@@ -443,6 +462,9 @@ components:
       - creation_date
       - last_updated_at
       title: SimOperationResponse
+    Eid:
+      type: string
+      title: Eid
     SimOperationRequest:
       type: object
       properties:
@@ -458,36 +480,14 @@ components:
       - action
       - target
       title: SimOperationRequest
-    Error:
-      type: object
-      properties:
-        status_code:
-          type: integer
-        message:
-          type: string
-      required:
-      - status_code
-      - message
-      title: Error
-    SimOperationRequestTargetSim:
+    ProductRef:
       type: object
       properties:
         id:
           type: integer
       required:
       - id
-      title: SimOperationRequestTargetSim
-    SimOperationResponseErrorItems:
-      type: object
-      properties:
-        eid:
-          $ref: '#/components/schemas/Eid'
-        message:
-          type: string
-      required:
-      - eid
-      - message
-      title: SimOperationResponseErrorItems
+      title: ProductRef
   securitySchemes:
     BearerAuth:
       type: http

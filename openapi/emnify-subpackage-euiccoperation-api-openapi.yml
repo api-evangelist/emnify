@@ -422,17 +422,18 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    ErrorResponse:
+    IccidWithLuhnRef:
+      type: string
+      description: Full ICCID including the Luhn check digit
+      title: IccidWithLuhnRef
+    EuiccOperationActionRef:
       type: object
       properties:
-        reason:
+        id:
           type: integer
-        message:
-          type: string
       required:
-      - reason
-      - message
-      title: ErrorResponse
+      - id
+      title: EuiccOperationActionRef
     OperationStatus:
       type: object
       properties:
@@ -444,19 +445,82 @@ components:
       - id
       - description
       title: OperationStatus
+    ErrorResponse:
+      type: object
+      properties:
+        reason:
+          type: integer
+        message:
+          type: string
+      required:
+      - reason
+      - message
+      title: ErrorResponse
+    EuiccOperationRequestList:
+      type: array
+      items:
+        $ref: '#/components/schemas/EuiccOperationRequest'
+      title: EuiccOperationRequestList
+    OperationAction:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      required:
+      - id
+      - description
+      title: OperationAction
     CommonValidity:
       type: integer
       default: 86400
       description: Seconds until expiry
       title: CommonValidity
-    EuiccOperationActionRef:
+    EuiccOperationRequest:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/EuiccOperationActionRef'
+        validity_period:
+          $ref: '#/components/schemas/CommonValidity'
+          default: 86400
+        iccid_with_luhn:
+          $ref: '#/components/schemas/IccidWithLuhnRef'
+        activation_code:
+          type: string
+          description: Activation code
+        enable:
+          type: boolean
+          description: Flag whether downloaded profile should be enabled
+        rollback:
+          type: boolean
+          description: Flag whether rollback mechanism should be triggered
+      required:
+      - action
+      title: EuiccOperationRequest
+    Error:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      required:
+      - status_code
+      - message
+      title: Error
+    UserResponse:
       type: object
       properties:
         id:
           type: integer
+        name:
+          type: string
       required:
       - id
-      title: EuiccOperationActionRef
+      - name
+      title: UserResponse
     EuiccOperation:
       type: object
       properties:
@@ -493,70 +557,6 @@ components:
       - last_updated_at
       - user
       title: EuiccOperation
-    OperationAction:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      required:
-      - id
-      - description
-      title: OperationAction
-    EuiccOperationRequestList:
-      type: array
-      items:
-        $ref: '#/components/schemas/EuiccOperationRequest'
-      title: EuiccOperationRequestList
-    UserResponse:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-      required:
-      - id
-      - name
-      title: UserResponse
-    IccidWithLuhnRef:
-      type: string
-      description: Full ICCID including the Luhn check digit
-      title: IccidWithLuhnRef
-    Error:
-      type: object
-      properties:
-        status_code:
-          type: integer
-        message:
-          type: string
-      required:
-      - status_code
-      - message
-      title: Error
-    EuiccOperationRequest:
-      type: object
-      properties:
-        action:
-          $ref: '#/components/schemas/EuiccOperationActionRef'
-        validity_period:
-          $ref: '#/components/schemas/CommonValidity'
-          default: 86400
-        iccid_with_luhn:
-          $ref: '#/components/schemas/IccidWithLuhnRef'
-        activation_code:
-          type: string
-          description: Activation code
-        enable:
-          type: boolean
-          description: Flag whether downloaded profile should be enabled
-        rollback:
-          type: boolean
-          description: Flag whether rollback mechanism should be triggered
-      required:
-      - action
-      title: EuiccOperationRequest
   securitySchemes:
     BearerAuth:
       type: http

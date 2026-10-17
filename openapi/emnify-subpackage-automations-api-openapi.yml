@@ -263,87 +263,68 @@ paths:
               $ref: '#/components/schemas/AutomationUpdateDto'
 components:
   schemas:
-    CustomEventOutputDto:
+    ConfigurationParameterDto:
       type: object
       properties:
-        organisation:
-          $ref: '#/components/schemas/WithIdInputDto'
-        template:
-          $ref: '#/components/schemas/WithIdInputDto'
-        configuration_properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
-        name:
+        parameter:
           type: string
-        id:
-          type: string
-        supportedTargetingParameters:
-          type: array
-          items:
-            type: string
-        supportedActions:
-          type: array
-          items:
-            type: string
-      required:
-      - organisation
-      - template
-      - configuration_properties
-      - name
-      - id
-      - supportedTargetingParameters
-      - supportedActions
-      title: CustomEventOutputDto
-    WithUuidInputDto:
-      type: object
-      properties:
-        id:
-          type: string
-      required:
-      - id
-      title: WithUuidInputDto
-    SystemEventOutputDto:
-      type: object
-      properties:
-        id:
-          type: string
-        parentOrg:
-          $ref: '#/components/schemas/WithIdInputDto'
-        eventType:
-          $ref: '#/components/schemas/WithIdInputDto'
-        name:
-          type: string
-        translationKeyName:
+        type:
           type: string
         description:
           type: string
-        translationKeyDescription:
+      required:
+      - parameter
+      - type
+      - description
+      title: ConfigurationParameterDto
+    ConfiguredActionOutputDto:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/WithUuidInputDto'
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
+        recipients:
+          $ref: '#/components/schemas/ConfiguredActionRecipientOutputDto'
+          description: 'Details of the email notification recipients configured for the action.
+
+            '
+      required:
+      - action
+      - properties
+      - recipients
+      title: ConfiguredActionOutputDto
+    ConfiguredActionReferenceDto:
+      type: object
+      properties:
+        id:
           type: string
-        supportedTargetingParameters:
-          type: array
-          items:
-            type: string
-        eventOutputParameters:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConfigurationParameterDto'
-        supportedActions:
+        type:
+          type: string
+      required:
+      - id
+      title: ConfiguredActionReferenceDto
+    ConfiguredActionRecipientOutputDto:
+      type: object
+      properties:
+        email:
           type: array
           items:
             type: string
       required:
+      - email
+      title: ConfiguredActionRecipientOutputDto
+    WithIdInputDto:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
       - id
-      - parentOrg
-      - eventType
-      - name
-      - translationKeyName
-      - description
-      - translationKeyDescription
-      - supportedTargetingParameters
-      - eventOutputParameters
-      - supportedActions
-      title: SystemEventOutputDto
+      title: WithIdInputDto
     AutomationActionOutputDto:
       type: object
       properties:
@@ -380,6 +361,137 @@ components:
       - translationKeyDescription
       - requiredEventOutputParameters
       title: AutomationActionOutputDto
+    ConfiguredActionCreateDto:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/ConfiguredActionReferenceDto'
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
+      required:
+      - action
+      - properties
+      title: ConfiguredActionCreateDto
+    AutomationUpdateDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+        configured_actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfiguredActionCreateDto'
+        targeting_properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
+      required:
+      - name
+      - description
+      - status
+      - configured_actions
+      - targeting_properties
+      title: AutomationUpdateDto
+    ActionableEventOutputDto:
+      type: object
+      properties:
+        custom_event:
+          $ref: '#/components/schemas/CustomEventOutputDto'
+        system_event:
+          $ref: '#/components/schemas/SystemEventOutputDto'
+      required:
+      - custom_event
+      - system_event
+      title: ActionableEventOutputDto
+    AutomationCreateDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+        actionable_event:
+          $ref: '#/components/schemas/ActionableEventCreateDto'
+        configured_actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfiguredActionCreateDto'
+        targeting_properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
+      required:
+      - name
+      - description
+      - status
+      - actionable_event
+      - configured_actions
+      - targeting_properties
+      title: AutomationCreateDto
+    ConfigurationInputPropertiesDto:
+      type: object
+      properties:
+        property:
+          type: string
+        value:
+          type: string
+        value_array:
+          type: array
+          items:
+            type: string
+      required:
+      - property
+      - value
+      - value_array
+      title: ConfigurationInputPropertiesDto
+    WithStringIdInputDto:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+      - id
+      title: WithStringIdInputDto
+    CustomEventOutputDto:
+      type: object
+      properties:
+        organisation:
+          $ref: '#/components/schemas/WithIdInputDto'
+        template:
+          $ref: '#/components/schemas/WithIdInputDto'
+        configuration_properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
+        name:
+          type: string
+        id:
+          type: string
+        supportedTargetingParameters:
+          type: array
+          items:
+            type: string
+        supportedActions:
+          type: array
+          items:
+            type: string
+      required:
+      - organisation
+      - template
+      - configuration_properties
+      - name
+      - id
+      - supportedTargetingParameters
+      - supportedActions
+      title: CustomEventOutputDto
     AutomationOutputDto:
       type: object
       properties:
@@ -426,20 +538,55 @@ components:
       - configured_actions
       - targeting_properties
       title: AutomationOutputDto
-    ConfigurationParameterDto:
+    SystemEventOutputDto:
       type: object
       properties:
-        parameter:
+        id:
           type: string
-        type:
+        parentOrg:
+          $ref: '#/components/schemas/WithIdInputDto'
+        eventType:
+          $ref: '#/components/schemas/WithIdInputDto'
+        name:
+          type: string
+        translationKeyName:
           type: string
         description:
           type: string
+        translationKeyDescription:
+          type: string
+        supportedTargetingParameters:
+          type: array
+          items:
+            type: string
+        eventOutputParameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationParameterDto'
+        supportedActions:
+          type: array
+          items:
+            type: string
       required:
-      - parameter
-      - type
+      - id
+      - parentOrg
+      - eventType
+      - name
+      - translationKeyName
       - description
-      title: ConfigurationParameterDto
+      - translationKeyDescription
+      - supportedTargetingParameters
+      - eventOutputParameters
+      - supportedActions
+      title: SystemEventOutputDto
+    AutomationRecipientEmailVerificationInputDto:
+      type: object
+      properties:
+        token:
+          type: string
+      required:
+      - token
+      title: AutomationRecipientEmailVerificationInputDto
     ActionableEventCreateDto:
       type: object
       properties:
@@ -451,30 +598,11 @@ components:
       - custom_event
       - system_event
       title: ActionableEventCreateDto
-    ConfigurationInputPropertiesDto:
+    Automations_verifyAutomationRecipientEmail_Response_200:
       type: object
-      properties:
-        property:
-          type: string
-        value:
-          type: string
-        value_array:
-          type: array
-          items:
-            type: string
-      required:
-      - property
-      - value
-      - value_array
-      title: ConfigurationInputPropertiesDto
-    AutomationRecipientEmailVerificationInputDto:
-      type: object
-      properties:
-        token:
-          type: string
-      required:
-      - token
-      title: AutomationRecipientEmailVerificationInputDto
+      properties: {}
+      description: Empty response body
+      title: Automations_verifyAutomationRecipientEmail_Response_200
     AutomationActionLogOutputDto:
       type: object
       properties:
@@ -511,142 +639,14 @@ components:
       - organisation
       - id
       title: AutomationActionLogOutputDto
-    AutomationUpdateDto:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        status:
-          type: string
-        configured_actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConfiguredActionCreateDto'
-        targeting_properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
-      required:
-      - name
-      - description
-      - status
-      - configured_actions
-      - targeting_properties
-      title: AutomationUpdateDto
-    WithIdInputDto:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-      required:
-      - id
-      title: WithIdInputDto
-    ConfiguredActionOutputDto:
-      type: object
-      properties:
-        action:
-          $ref: '#/components/schemas/WithUuidInputDto'
-        properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
-        recipients:
-          $ref: '#/components/schemas/ConfiguredActionRecipientOutputDto'
-          description: 'Details of the email notification recipients configured for the action.
-
-            '
-      required:
-      - action
-      - properties
-      - recipients
-      title: ConfiguredActionOutputDto
-    ConfiguredActionCreateDto:
-      type: object
-      properties:
-        action:
-          $ref: '#/components/schemas/ConfiguredActionReferenceDto'
-        properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
-      required:
-      - action
-      - properties
-      title: ConfiguredActionCreateDto
-    WithStringIdInputDto:
+    WithUuidInputDto:
       type: object
       properties:
         id:
           type: string
       required:
       - id
-      title: WithStringIdInputDto
-    AutomationCreateDto:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        status:
-          type: string
-        actionable_event:
-          $ref: '#/components/schemas/ActionableEventCreateDto'
-        configured_actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConfiguredActionCreateDto'
-        targeting_properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConfigurationInputPropertiesDto'
-      required:
-      - name
-      - description
-      - status
-      - actionable_event
-      - configured_actions
-      - targeting_properties
-      title: AutomationCreateDto
-    ConfiguredActionReferenceDto:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-      required:
-      - id
-      title: ConfiguredActionReferenceDto
-    ConfiguredActionRecipientOutputDto:
-      type: object
-      properties:
-        email:
-          type: array
-          items:
-            type: string
-      required:
-      - email
-      title: ConfiguredActionRecipientOutputDto
-    ActionableEventOutputDto:
-      type: object
-      properties:
-        custom_event:
-          $ref: '#/components/schemas/CustomEventOutputDto'
-        system_event:
-          $ref: '#/components/schemas/SystemEventOutputDto'
-      required:
-      - custom_event
-      - system_event
-      title: ActionableEventOutputDto
-    Automations_verifyAutomationRecipientEmail_Response_200:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Automations_verifyAutomationRecipientEmail_Response_200
+      title: WithUuidInputDto
   securitySchemes:
     BearerAuth:
       type: http

@@ -689,7 +689,21 @@ paths:
                   $ref: '#/components/schemas/ApiV2TagsTagIdPatchRequestBodyContentApplicationJsonSchemaColor'
 components:
   schemas:
-    AssignTagToEndpointRequestBadRequestError:
+    ApiV2TagsGetResponsesContentApplicationJsonSchemaDataItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+        resource_count:
+          type: number
+          format: double
+        tag_color:
+          $ref: '#/components/schemas/ApiV2TagsGetResponsesContentApplicationJsonSchemaDataItemsTagColor'
+      title: ApiV2TagsGetResponsesContentApplicationJsonSchemaDataItems
+    UpdateTagRequestUnprocessableEntityError:
       type: object
       properties:
         error_code:
@@ -698,8 +712,8 @@ components:
           type: string
         message:
           type: string
-      title: AssignTagToEndpointRequestBadRequestError
-    ListTagsRequestBadRequestError:
+      title: UpdateTagRequestUnprocessableEntityError
+    DeleteTagsInBulkRequestBadRequestError:
       type: object
       properties:
         error_code:
@@ -708,72 +722,27 @@ components:
           type: string
         message:
           type: string
-      title: ListTagsRequestBadRequestError
-    UnassignEndpointTagRequestUnprocessableEntityError:
+      title: DeleteTagsInBulkRequestBadRequestError
+    ApiV2TagsTagIdPatchRequestBodyContentApplicationJsonSchemaColor:
       type: object
       properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: UnassignEndpointTagRequestUnprocessableEntityError
-    AssignTagToEndpointRequestUnprocessableEntityError:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: ApiV2TagsTagIdPatchRequestBodyContentApplicationJsonSchemaColor
+    Tag_Management_CreateTag_Response_201:
       type: object
       properties:
-        error_code:
-          type: integer
-        error_token:
+        id:
+          type: number
+          format: double
+        name:
           type: string
-        message:
-          type: string
-      title: AssignTagToEndpointRequestUnprocessableEntityError
-    DeleteTagsInBulkRequestUnprocessableEntityError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: DeleteTagsInBulkRequestUnprocessableEntityError
-    CreateTagRequestBadRequestError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: CreateTagRequestBadRequestError
-    Tag_Management_AssignTagToEndpointsInBulk_Response_200:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Tag Management_AssignTagToEndpointsInBulk_Response_200
-    Tag_Management_UnassignEndpointTag_Response_200:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Tag Management_UnassignEndpointTag_Response_200
-    Tag_Management_AssignTagToEndpoint_Response_201:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Tag Management_AssignTagToEndpoint_Response_201
-    AssignTagToEndpointsInBulkRequestUnprocessableEntityError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: AssignTagToEndpointsInBulkRequestUnprocessableEntityError
+        tag_color:
+          $ref: '#/components/schemas/ApiV2TagsPostResponsesContentApplicationJsonSchemaTagColor'
+      title: Tag Management_CreateTag_Response_201
     CreateTagRequestUnprocessableEntityError:
       type: object
       properties:
@@ -784,6 +753,165 @@ components:
         message:
           type: string
       title: CreateTagRequestUnprocessableEntityError
+    AssignTagToEndpointsInBulkRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: AssignTagToEndpointsInBulkRequestConflictError
+    UnassignEndpointTagRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UnassignEndpointTagRequestUnprocessableEntityError
+    ListEndpointTagsRequestBadRequestError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ListEndpointTagsRequestBadRequestError
+    AssignTagToEndpointRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: AssignTagToEndpointRequestUnprocessableEntityError
+    Tag_Management_AssignTagToEndpointsInBulk_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Tag Management_AssignTagToEndpointsInBulk_Response_200
+    ApiV2TagsGetResponsesContentApplicationJsonSchemaDataItemsTagColor:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      title: ApiV2TagsGetResponsesContentApplicationJsonSchemaDataItemsTagColor
+    UnassignEndpointTagRequestBadRequestError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UnassignEndpointTagRequestBadRequestError
+    ApiV2TagColorsGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        hex_color:
+          type: string
+        description:
+          type: string
+      title: ApiV2TagColorsGetResponsesContentApplicationJsonSchemaItems
+    UnassignTagsFromEndpointsInBulkRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UnassignTagsFromEndpointsInBulkRequestUnprocessableEntityError
+    Tag_Management_AssignTagToEndpoint_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Tag Management_AssignTagToEndpoint_Response_201
+    ApiV2BulkOperationsTagDeleteTagsPostRequestBodyContentApplicationJsonSchemaTagsItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      title: ApiV2BulkOperationsTagDeleteTagsPostRequestBodyContentApplicationJsonSchemaTagsItems
+    UnassignTagsFromEndpointsInBulkRequestBadRequestError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UnassignTagsFromEndpointsInBulkRequestBadRequestError
+    CreateTagRequestBadRequestError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: CreateTagRequestBadRequestError
+    DeleteTagsInBulkRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: DeleteTagsInBulkRequestUnprocessableEntityError
+    AssignTagToEndpointRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: AssignTagToEndpointRequestConflictError
+    ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsTagsItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      title: ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsTagsItems
+    ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsEndpoint:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      title: ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsEndpoint
+    ApiV2BulkOperationsEndpointAddTagsPostRequestBodyContentApplicationJsonSchemaItemsItems:
+      type: object
+      properties:
+        endpoint:
+          $ref: '#/components/schemas/ApiV2BulkOperationsEndpointAddTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsEndpoint'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV2BulkOperationsEndpointAddTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsTagsItems'
+      title: ApiV2BulkOperationsEndpointAddTagsPostRequestBodyContentApplicationJsonSchemaItemsItems
     ApiV2EndpointEndpointIdTagsGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -798,43 +926,30 @@ components:
         tag_color:
           $ref: '#/components/schemas/ApiV2EndpointEndpointIdTagsGetResponsesContentApplicationJsonSchemaItemsTagColor'
       title: ApiV2EndpointEndpointIdTagsGetResponsesContentApplicationJsonSchemaItems
-    ApiV2BulkOperationsTagDeleteTagsPostRequestBodyContentApplicationJsonSchemaTagsItems:
+    ApiV2EndpointEndpointIdTagsGetResponsesContentApplicationJsonSchemaItemsTagColor:
       type: object
       properties:
         id:
           type: number
           format: double
-      title: ApiV2BulkOperationsTagDeleteTagsPostRequestBodyContentApplicationJsonSchemaTagsItems
-    ApiV2TagsPostResponsesContentApplicationJsonSchemaTagColor:
+      title: ApiV2EndpointEndpointIdTagsGetResponsesContentApplicationJsonSchemaItemsTagColor
+    Tag_Management_UnassignEndpointTag_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Tag Management_UnassignEndpointTag_Response_200
+    Tag_Management_UnassignTagsFromEndpointsInBulk_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Tag Management_UnassignTagsFromEndpointsInBulk_Response_200
+    ApiV2BulkOperationsEndpointAddTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsTagsItems:
       type: object
       properties:
         id:
           type: number
           format: double
-      required:
-      - id
-      title: ApiV2TagsPostResponsesContentApplicationJsonSchemaTagColor
-    DeleteTagsInBulkRequestBadRequestError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: DeleteTagsInBulkRequestBadRequestError
-    Tag_Management_CreateTag_Response_201:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        name:
-          type: string
-        tag_color:
-          $ref: '#/components/schemas/ApiV2TagsPostResponsesContentApplicationJsonSchemaTagColor'
-      title: Tag Management_CreateTag_Response_201
+      title: ApiV2BulkOperationsEndpointAddTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsTagsItems
     Tag_Management_ListTags_Response_200:
       type: object
       properties:
@@ -855,23 +970,6 @@ components:
           items:
             $ref: '#/components/schemas/ApiV2TagsGetResponsesContentApplicationJsonSchemaDataItems'
       title: Tag Management_ListTags_Response_200
-    ListEndpointTagsRequestBadRequestError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: ListEndpointTagsRequestBadRequestError
-    ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsEndpoint:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-      title: ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsEndpoint
     CreateTagRequestConflictError:
       type: object
       properties:
@@ -882,17 +980,7 @@ components:
         message:
           type: string
       title: CreateTagRequestConflictError
-    ApiV2BulkOperationsEndpointAddTagsPostRequestBodyContentApplicationJsonSchemaItemsItems:
-      type: object
-      properties:
-        endpoint:
-          $ref: '#/components/schemas/ApiV2BulkOperationsEndpointAddTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsEndpoint'
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV2BulkOperationsEndpointAddTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsTagsItems'
-      title: ApiV2BulkOperationsEndpointAddTagsPostRequestBodyContentApplicationJsonSchemaItemsItems
-    UnassignTagsFromEndpointsInBulkRequestUnprocessableEntityError:
+    ListTagsRequestBadRequestError:
       type: object
       properties:
         error_code:
@@ -901,27 +989,7 @@ components:
           type: string
         message:
           type: string
-      title: UnassignTagsFromEndpointsInBulkRequestUnprocessableEntityError
-    UpdateTagRequestUnprocessableEntityError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: UpdateTagRequestUnprocessableEntityError
-    AssignTagToEndpointsInBulkRequestConflictError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: AssignTagToEndpointsInBulkRequestConflictError
+      title: ListTagsRequestBadRequestError
     ApiV2TagsPostRequestBodyContentApplicationJsonSchemaColor:
       type: object
       properties:
@@ -931,18 +999,6 @@ components:
       required:
       - id
       title: ApiV2TagsPostRequestBodyContentApplicationJsonSchemaColor
-    Tag_Management_UnassignTagsFromEndpointsInBulk_Response_200:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Tag Management_UnassignTagsFromEndpointsInBulk_Response_200
-    ApiV2BulkOperationsEndpointAddTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsTagsItems:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-      title: ApiV2BulkOperationsEndpointAddTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsTagsItems
     UpdateTagRequestBadRequestError:
       type: object
       properties:
@@ -953,23 +1009,25 @@ components:
         message:
           type: string
       title: UpdateTagRequestBadRequestError
-    ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItems:
-      type: object
-      properties:
-        endpoint:
-          $ref: '#/components/schemas/ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsEndpoint'
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsTagsItems'
-      title: ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItems
-    ApiV2TagsGetResponsesContentApplicationJsonSchemaDataItemsTagColor:
+    ApiV2TagsPostResponsesContentApplicationJsonSchemaTagColor:
       type: object
       properties:
         id:
           type: number
           format: double
-      title: ApiV2TagsGetResponsesContentApplicationJsonSchemaDataItemsTagColor
+      required:
+      - id
+      title: ApiV2TagsPostResponsesContentApplicationJsonSchemaTagColor
+    AssignTagToEndpointsInBulkRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: AssignTagToEndpointsInBulkRequestUnprocessableEntityError
     AssignTagToEndpointsInBulkRequestBadRequestError:
       type: object
       properties:
@@ -980,53 +1038,6 @@ components:
         message:
           type: string
       title: AssignTagToEndpointsInBulkRequestBadRequestError
-    ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsTagsItems:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-      title: ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsTagsItems
-    UnassignEndpointTagRequestBadRequestError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: UnassignEndpointTagRequestBadRequestError
-    ApiV2EndpointEndpointIdTagsGetResponsesContentApplicationJsonSchemaItemsTagColor:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-      title: ApiV2EndpointEndpointIdTagsGetResponsesContentApplicationJsonSchemaItemsTagColor
-    ApiV2TagsGetResponsesContentApplicationJsonSchemaDataItems:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        name:
-          type: string
-        resource_count:
-          type: number
-          format: double
-        tag_color:
-          $ref: '#/components/schemas/ApiV2TagsGetResponsesContentApplicationJsonSchemaDataItemsTagColor'
-      title: ApiV2TagsGetResponsesContentApplicationJsonSchemaDataItems
-    ApiV2TagsTagIdPatchRequestBodyContentApplicationJsonSchemaColor:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-      required:
-      - id
-      title: ApiV2TagsTagIdPatchRequestBodyContentApplicationJsonSchemaColor
     ApiV2BulkOperationsEndpointAddTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsEndpoint:
       type: object
       properties:
@@ -1034,42 +1045,31 @@ components:
           type: number
           format: double
       title: ApiV2BulkOperationsEndpointAddTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsEndpoint
+    AssignTagToEndpointRequestBadRequestError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: AssignTagToEndpointRequestBadRequestError
     Tag_Management_DeleteTagsInBulk_Response_200:
       type: object
       properties: {}
       description: Empty response body
       title: Tag Management_DeleteTagsInBulk_Response_200
-    AssignTagToEndpointRequestConflictError:
+    ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItems:
       type: object
       properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: AssignTagToEndpointRequestConflictError
-    UnassignTagsFromEndpointsInBulkRequestBadRequestError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: UnassignTagsFromEndpointsInBulkRequestBadRequestError
-    ApiV2TagColorsGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        hex_color:
-          type: string
-        description:
-          type: string
-      title: ApiV2TagColorsGetResponsesContentApplicationJsonSchemaItems
+        endpoint:
+          $ref: '#/components/schemas/ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsEndpoint'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItemsTagsItems'
+      title: ApiV2BulkOperationsEndpointRemoveTagsPostRequestBodyContentApplicationJsonSchemaItemsItems
   securitySchemes:
     BearerAuth:
       type: http

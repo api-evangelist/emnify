@@ -958,855 +958,6 @@ paths:
                   $ref: '#/components/schemas/ApiV1SimBatchBicBicPatchRequestBodyContentApplicationJsonSchemaSimStatus'
 components:
   schemas:
-    ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaStatus:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      required:
-      - id
-      title: ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaStatus
-    ApiV1SimMigrationWorkspacePostRequestBodyContentApplicationJsonSchemaAllowedSimStatusesItems:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-      required:
-      - id
-      title: ApiV1SimMigrationWorkspacePostRequestBodyContentApplicationJsonSchemaAllowedSimStatusesItems
-    ApiV1SimGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        iccid:
-          type: string
-        eid:
-          type: string
-        production_date:
-          type: string
-          format: date-time
-        activation_date:
-          type: string
-          format: date-time
-        status:
-          $ref: '#/components/schemas/ApiV1SimGetResponsesContentApplicationJsonSchemaItemsStatus'
-        customer_org:
-          $ref: '#/components/schemas/ApiV1SimGetResponsesContentApplicationJsonSchemaItemsCustomerOrg'
-        issuer_org:
-          $ref: '#/components/schemas/ApiV1SimGetResponsesContentApplicationJsonSchemaItemsIssuerOrg'
-        reseller_org:
-          $ref: '#/components/schemas/ApiV1SimGetResponsesContentApplicationJsonSchemaItemsResellerOrg'
-        endpoint:
-          $ref: '#/components/schemas/ApiV1SimGetResponsesContentApplicationJsonSchemaItemsEndpoint'
-        imsi:
-          type: string
-        msisdn:
-          type: string
-        model:
-          $ref: '#/components/schemas/ApiV1SimGetResponsesContentApplicationJsonSchemaItemsModel'
-      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItems
-    ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaModel:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-        memory_size:
-          type: integer
-        formfactor:
-          $ref: '#/components/schemas/ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaModelFormfactor'
-        manufacturer:
-          $ref: '#/components/schemas/ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaModelManufacturer'
-      title: ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaModel
-    ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsEventType:
-      type: object
-      properties: {}
-      title: ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsEventType
-    ApiV1SimStatusGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      title: ApiV1SimStatusGetResponsesContentApplicationJsonSchemaItems
-    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthDataCurrency:
-      type: object
-      properties:
-        code:
-          type: string
-        symbol:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthDataCurrency
-    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHour:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourData'
-        sms:
-          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourSms'
-      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHour
-    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthDataCurrency:
-      type: object
-      properties:
-        code:
-          type: string
-        symbol:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthDataCurrency
-    ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsStatus:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      required:
-      - id
-      title: ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsStatus
-    ApiV1SimBatchBicBicPatchRequestBodyContentApplicationJsonSchemaSimStatus:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      required:
-      - id
-      title: ApiV1SimBatchBicBicPatchRequestBodyContentApplicationJsonSchemaSimStatus
-    ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItemsSimsItems:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        iccid:
-          type: string
-        iccid_with_luhn:
-          type: string
-        endpoint:
-          $ref: '#/components/schemas/ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItemsSimsItemsEndpoint'
-          description: 'The device currently attached to the SIM.
-
-            Only present if a device is attached.
-
-            '
-        status:
-          $ref: '#/components/schemas/ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItemsSimsItemsStatus'
-        source_workspace:
-          $ref: '#/components/schemas/ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItemsSimsItemsSourceWorkspace'
-          description: The source Workspace of the SIM
-      title: ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItemsSimsItems
-    ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItemsSimsItemsStatus:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        description:
-          type: string
-      title: ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItemsSimsItemsStatus
-    ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsEndpoint:
-      type: object
-      properties: {}
-      title: ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsEndpoint
-    ApiV1SimGetResponsesContentApplicationJsonSchemaItemsIssuerOrgCountry:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        country_code:
-          type: integer
-        mcc:
-          type: integer
-        iso_code:
-          type: string
-        latitude:
-          type: number
-          format: double
-        longitude:
-          type: number
-          format: double
-      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItemsIssuerOrgCountry
-    ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsIssuerOrgCountry:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        country_code:
-          type: integer
-        mcc:
-          type: integer
-        iso_code:
-          type: string
-        latitude:
-          type: number
-          format: double
-        longitude:
-          type: number
-          format: double
-      title: ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsIssuerOrgCountry
-    ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsEndpoint:
-      type: object
-      properties:
-        id:
-          type: integer
-      title: ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsEndpoint
-    ApiV1SimSimIdPatchRequestBodyContentApplicationJsonSchemaIssuerOrg:
-      type: object
-      properties:
-        id:
-          type: integer
-      title: ApiV1SimSimIdPatchRequestBodyContentApplicationJsonSchemaIssuerOrg
-    SIM_SimMigrationWorkspace_Response_200:
-      type: object
-      properties:
-        sim_count:
-          type: number
-          format: double
-          description: The amount of SIMs to be migrated
-        dry_run:
-          type: boolean
-          description: The `dry_run` option specified in the request
-        allowed_sim_statuses:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaAllowedSimStatusesItems'
-          description: The `allowed_sim_statuses` option specified in the request
-        target_workspace:
-          $ref: '#/components/schemas/ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaTargetWorkspace'
-          description: The `target_workspace` specified in the request
-        auto_detach_devices:
-          type: boolean
-          description: The `auto_detach_devices` option specified in the request
-        sims:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItems'
-          description: List of SIMs to be migrated
-      required:
-      - sim_count
-      - dry_run
-      - target_workspace
-      - auto_detach_devices
-      - sims
-      title: SIM_SimMigrationWorkspace_Response_200
-    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthSms:
-      type: object
-      properties:
-        sim_id:
-          type: number
-          format: double
-        month:
-          type: string
-          format: date
-        volume:
-          type: number
-          format: double
-        volume_tx:
-          type: number
-          format: double
-        volume_rx:
-          type: number
-          format: double
-        traffic_type_id:
-          type: number
-          format: double
-        last_updated:
-          type: string
-          format: date-time
-        cost:
-          type: number
-          format: double
-        currency_id:
-          type: number
-          format: double
-        id:
-          type: number
-          format: double
-        traffic_type:
-          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthSmsTrafficType'
-        currency:
-          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthSmsCurrency'
-      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthSms
-    ApiV1SimGetResponsesContentApplicationJsonSchemaItemsIssuerOrg:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        country:
-          $ref: '#/components/schemas/ApiV1SimGetResponsesContentApplicationJsonSchemaItemsIssuerOrgCountry'
-      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItemsIssuerOrg
-    SimByIdPatchRequestBadRequestError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: SimByIdPatchRequestBadRequestError
-    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourSmsTrafficType:
-      type: object
-      properties:
-        description:
-          type: string
-        unit:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourSmsTrafficType
-    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonth:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthData'
-        sms:
-          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthSms'
-      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonth
-    ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaResellerOrg:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        country:
-          $ref: '#/components/schemas/ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaResellerOrgCountry'
-      title: ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaResellerOrg
-    ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsModelFormfactor:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-      title: ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsModelFormfactor
-    SimMigrationWorkspaceRequestConflictError:
-      type: object
-      properties:
-        status_code:
-          type: number
-          format: double
-          description: HTTP status code (409)
-        message:
-          type: string
-          description: Summary error message
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItems'
-          description: List of specific errors grouped by error type
-      required:
-      - status_code
-      - message
-      - errors
-      title: SimMigrationWorkspaceRequestConflictError
-    ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaModel:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-        memory_size:
-          type: integer
-        formfactor:
-          $ref: '#/components/schemas/ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaModelFormfactor'
-        manufacturer:
-          $ref: '#/components/schemas/ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaModelManufacturer'
-      title: ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaModel
-    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthData:
-      type: object
-      properties:
-        sim_id:
-          type: number
-          format: double
-        month:
-          type: string
-          format: date
-        volume:
-          type: number
-          format: double
-        volume_tx:
-          type: number
-          format: double
-        volume_rx:
-          type: number
-          format: double
-        traffic_type_id:
-          type: number
-          format: double
-        last_updated:
-          type: string
-          format: date-time
-        cost:
-          type: number
-          format: double
-        currency_id:
-          type: number
-          format: double
-        id:
-          type: number
-          format: double
-        traffic_type:
-          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthDataTrafficType'
-        currency:
-          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthDataCurrency'
-      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthData
-    SIM_RegisterSIMBatchByBIC_Response_200:
-      type: object
-      properties:
-        sim:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItems'
-      title: SIM_RegisterSIMBatchByBIC_Response_200
-    ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsCustomerOrg:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        country:
-          $ref: '#/components/schemas/ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsCustomerOrgCountry'
-      title: ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsCustomerOrg
-    ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItemsSimsItemsSourceWorkspace:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        name:
-          type: string
-      description: The source Workspace of the SIM
-      title: ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItemsSimsItemsSourceWorkspace
-    ApiV1SimGetResponsesContentApplicationJsonSchemaItemsResellerOrgCountry:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        country_code:
-          type: integer
-        mcc:
-          type: integer
-        iso_code:
-          type: string
-        latitude:
-          type: number
-          format: double
-        longitude:
-          type: number
-          format: double
-      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItemsResellerOrgCountry
-    SIM_ValidateSIMBatchByBIC_Response_200:
-      type: object
-      properties:
-        sim_batch_status_id:
-          type: string
-        bsn:
-          type: string
-        bic:
-          type: string
-        quantity:
-          type: string
-        sim_model_id:
-          type: string
-        issuer_org_id:
-          type: string
-        customer_org_id:
-          type: integer
-        reseller_org_id:
-          type: integer
-        activated:
-          type: string
-        logistic_center_id:
-          type: string
-        article_id:
-          type: string
-        id:
-          type: integer
-        status:
-          $ref: '#/components/schemas/ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaStatus'
-        model:
-          $ref: '#/components/schemas/ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaModel'
-      title: SIM_ValidateSIMBatchByBIC_Response_200
-    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthSmsTrafficType:
-      type: object
-      properties:
-        description:
-          type: string
-        unit:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthSmsTrafficType
-    ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItems:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        iccid:
-          type: string
-        iccid_with_luhn:
-          type: string
-        endpoint:
-          $ref: '#/components/schemas/ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItemsEndpoint'
-          description: 'The device currently attached to the SIM.
-
-            Defaults to `undefined` if no device is attached.
-
-            '
-        status:
-          $ref: '#/components/schemas/ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItemsStatus'
-        source_workspace:
-          $ref: '#/components/schemas/ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItemsSourceWorkspace'
-          description: The source Workspace of the SIM
-      required:
-      - status
-      title: ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItems
-    ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaIssuerOrg:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        country:
-          $ref: '#/components/schemas/ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaIssuerOrgCountry'
-      title: ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaIssuerOrg
-    ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItemsSimsItemsEndpoint:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        name:
-          type: string
-      description: 'The device currently attached to the SIM.
-
-        Only present if a device is attached.
-
-        '
-      title: ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItemsSimsItemsEndpoint
-    ApiV1SimMigrationWorkspacePostRequestBodyContentApplicationJsonSchemaSimsItems:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-      required:
-      - id
-      title: ApiV1SimMigrationWorkspacePostRequestBodyContentApplicationJsonSchemaSimsItems
-    ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaModelFormfactor:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-      title: ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaModelFormfactor
-    ApiV1SimMultiDeleteRequestBodyContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-      required:
-      - id
-      title: ApiV1SimMultiDeleteRequestBodyContentApplicationJsonSchemaItems
-    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        last_month:
-          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonth'
-        current_month:
-          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonth'
-        last_hour:
-          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHour'
-      required:
-      - last_month
-      - current_month
-      - last_hour
-      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItems
-    ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsCustomerOrgCountry:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        country_code:
-          type: integer
-        mcc:
-          type: integer
-        iso_code:
-          type: string
-        latitude:
-          type: number
-          format: double
-        longitude:
-          type: number
-          format: double
-      title: ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsCustomerOrgCountry
-    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourSms:
-      type: object
-      properties:
-        sim_id:
-          type: number
-          format: double
-        month:
-          type: string
-          format: date
-        volume:
-          type: number
-          format: double
-        volume_tx:
-          type: number
-          format: double
-        volume_rx:
-          type: number
-          format: double
-        traffic_type_id:
-          type: number
-          format: double
-        last_updated:
-          type: string
-          format: date-time
-        cost:
-          type: number
-          format: double
-        currency_id:
-          type: number
-          format: double
-        id:
-          type: number
-          format: double
-        traffic_type:
-          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourSmsTrafficType'
-        currency:
-          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourSmsCurrency'
-      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourSms
-    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthData:
-      type: object
-      properties:
-        sim_id:
-          type: number
-          format: double
-        month:
-          type: string
-          format: date
-        volume:
-          type: number
-          format: double
-        volume_tx:
-          type: number
-          format: double
-        volume_rx:
-          type: number
-          format: double
-        traffic_type_id:
-          type: number
-          format: double
-        last_updated:
-          type: string
-          format: date-time
-        cost:
-          type: number
-          format: double
-        currency_id:
-          type: number
-          format: double
-        id:
-          type: number
-          format: double
-        traffic_type:
-          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthDataTrafficType'
-        currency:
-          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthDataCurrency'
-      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthData
-    ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource:
-      type: object
-      properties: {}
-      title: ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource
-    ApiV1SimGetResponsesContentApplicationJsonSchemaItemsStatus:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      required:
-      - id
-      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItemsStatus
-    ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsResellerOrgCountry:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        country_code:
-          type: integer
-        mcc:
-          type: integer
-        iso_code:
-          type: string
-        latitude:
-          type: number
-          format: double
-        longitude:
-          type: number
-          format: double
-      title: ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsResellerOrgCountry
-    ApiV1SimGetResponsesContentApplicationJsonSchemaItemsResellerOrg:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        country:
-          $ref: '#/components/schemas/ApiV1SimGetResponsesContentApplicationJsonSchemaItemsResellerOrgCountry'
-      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItemsResellerOrg
-    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonth:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthData'
-        sms:
-          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthSms'
-      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonth
-    ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaCustomerOrgCountry:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        country_code:
-          type: integer
-        mcc:
-          type: integer
-        iso_code:
-          type: string
-        latitude:
-          type: number
-          format: double
-        longitude:
-          type: number
-          format: double
-      title: ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaCustomerOrgCountry
-    ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItemsStatus:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        description:
-          type: string
-      required:
-      - id
-      - description
-      title: ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItemsStatus
-    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourDataTrafficType:
-      type: object
-      properties:
-        description:
-          type: string
-        unit:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourDataTrafficType
-    ApiV1SimGetResponsesContentApplicationJsonSchemaItemsModel:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-        memory_size:
-          type: integer
-        formfactor:
-          $ref: '#/components/schemas/ApiV1SimGetResponsesContentApplicationJsonSchemaItemsModelFormfactor'
-        manufacturer:
-          $ref: '#/components/schemas/ApiV1SimGetResponsesContentApplicationJsonSchemaItemsModelManufacturer'
-      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItemsModel
-    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthDataTrafficType:
-      type: object
-      properties:
-        description:
-          type: string
-        unit:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthDataTrafficType
-    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthSms:
-      type: object
-      properties:
-        sim_id:
-          type: number
-          format: double
-        month:
-          type: string
-          format: date
-        volume:
-          type: number
-          format: double
-        volume_tx:
-          type: number
-          format: double
-        volume_rx:
-          type: number
-          format: double
-        traffic_type_id:
-          type: number
-          format: double
-        last_updated:
-          type: string
-          format: date-time
-        cost:
-          type: number
-          format: double
-        currency_id:
-          type: number
-          format: double
-        id:
-          type: number
-          format: double
-        traffic_type:
-          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthSmsTrafficType'
-        currency:
-          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthSmsCurrency'
-      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthSms
     ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourData:
       type: object
       properties:
@@ -1845,72 +996,11 @@ components:
         currency:
           $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourDataCurrency'
       title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourData
-    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthSmsCurrency:
-      type: object
-      properties:
-        code:
-          type: string
-        symbol:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthSmsCurrency
-    ApiV1SimGetResponsesContentApplicationJsonSchemaItemsEndpoint:
-      type: object
-      properties:
-        id:
-          type: integer
-      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItemsEndpoint
-    ApiV1SimSimIdPatchRequestBodyContentApplicationJsonSchemaCustomerOrg:
-      type: object
-      properties:
-        id:
-          type: integer
-      title: ApiV1SimSimIdPatchRequestBodyContentApplicationJsonSchemaCustomerOrg
-    ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsResellerOrg:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        country:
-          $ref: '#/components/schemas/ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsResellerOrgCountry'
-      title: ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsResellerOrg
-    ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaModelFormfactor:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-      title: ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaModelFormfactor
     ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity:
       type: object
       properties: {}
       title: ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity
-    ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaResellerOrgCountry:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        country_code:
-          type: integer
-        mcc:
-          type: integer
-        iso_code:
-          type: string
-        latitude:
-          type: number
-          format: double
-        longitude:
-          type: number
-          format: double
-      title: ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaResellerOrgCountry
-    ApiV1SimSimIdPatchRequestBodyContentApplicationJsonSchemaStatus:
+    ApiV1SimGetResponsesContentApplicationJsonSchemaItemsStatus:
       type: object
       properties:
         id:
@@ -1919,238 +1009,7 @@ components:
           type: string
       required:
       - id
-      title: ApiV1SimSimIdPatchRequestBodyContentApplicationJsonSchemaStatus
-    ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        timestamp:
-          type: string
-        alert:
-          type: boolean
-        description:
-          type: string
-        id:
-          type: integer
-        event_type:
-          $ref: '#/components/schemas/ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsEventType'
-        event_source:
-          $ref: '#/components/schemas/ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource'
-        event_severity:
-          $ref: '#/components/schemas/ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity'
-        organisation:
-          $ref: '#/components/schemas/ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation'
-        endpoint:
-          $ref: '#/components/schemas/ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsEndpoint'
-        sim:
-          $ref: '#/components/schemas/ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsSim'
-        imsi:
-          $ref: '#/components/schemas/ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsImsi'
-      title: ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItems
-    ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaIssuerOrgCountry:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        country_code:
-          type: integer
-        mcc:
-          type: integer
-        iso_code:
-          type: string
-        latitude:
-          type: number
-          format: double
-        longitude:
-          type: number
-          format: double
-      title: ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaIssuerOrgCountry
-    ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaAllowedSimStatusesItems:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        description:
-          type: string
-      required:
-      - id
-      - description
-      title: ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaAllowedSimStatusesItems
-    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourSmsCurrency:
-      type: object
-      properties:
-        code:
-          type: string
-        symbol:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourSmsCurrency
-    ApiV1SimGetResponsesContentApplicationJsonSchemaItemsCustomerOrg:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        country:
-          $ref: '#/components/schemas/ApiV1SimGetResponsesContentApplicationJsonSchemaItemsCustomerOrgCountry'
-      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItemsCustomerOrg
-    ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItemsSourceWorkspace:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        name:
-          type: string
-      required:
-      - id
-      - name
-      description: The source Workspace of the SIM
-      title: ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItemsSourceWorkspace
-    ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsIssuerOrg:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        country:
-          $ref: '#/components/schemas/ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsIssuerOrgCountry'
-      title: ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsIssuerOrg
-    ApiV1SimGetResponsesContentApplicationJsonSchemaItemsCustomerOrgCountry:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        country_code:
-          type: integer
-        mcc:
-          type: integer
-        iso_code:
-          type: string
-        latitude:
-          type: number
-          format: double
-        longitude:
-          type: number
-          format: double
-      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItemsCustomerOrgCountry
-    ApiV1SimSimIdPatchRequestBodyContentApplicationJsonSchemaResellerOrg:
-      type: object
-      properties:
-        id:
-          type: integer
-      title: ApiV1SimSimIdPatchRequestBodyContentApplicationJsonSchemaResellerOrg
-    ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsModelManufacturer:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-      title: ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsModelManufacturer
-    ApiV1SimMigrationWorkspacePostRequestBodyContentApplicationJsonSchemaIccidRange:
-      type: object
-      properties:
-        start:
-          type: string
-          description: 'First ICCID in the range (19-digit format).
-
-            '
-        end:
-          type: string
-          description: 'Last ICCID in the range (19-digit format).
-
-            Must be greater than or equal to `start`.
-
-            '
-      required:
-      - start
-      - end
-      description: "ICCID range to migrate.\nAll SIMs within the range must belong to the source Workspace.\nThe range may include up to 500 ICCIDs.\nThe `end` value must be greater than or equal to the `start` value.\n\n<Info>\n  Cannot be used in combination with the `iccids` or the `sims` field.\n</Info>\n"
-      title: ApiV1SimMigrationWorkspacePostRequestBodyContentApplicationJsonSchemaIccidRange
-    ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsModel:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-        memory_size:
-          type: integer
-        formfactor:
-          $ref: '#/components/schemas/ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsModelFormfactor'
-        manufacturer:
-          $ref: '#/components/schemas/ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsModelManufacturer'
-      title: ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsModel
-    ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsSim:
-      type: object
-      properties: {}
-      title: ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsSim
-    ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaTargetWorkspace:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        name:
-          type: string
-      required:
-      - id
-      - name
-      description: The `target_workspace` specified in the request
-      title: ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaTargetWorkspace
-    ApiV1SimGetResponsesContentApplicationJsonSchemaItemsModelManufacturer:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItemsModelManufacturer
-    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthDataTrafficType:
-      type: object
-      properties:
-        description:
-          type: string
-        unit:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthDataTrafficType
-    ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItemsEndpoint:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        name:
-          type: string
-      required:
-      - id
-      - name
-      description: 'The device currently attached to the SIM.
-
-        Defaults to `undefined` if no device is attached.
-
-        '
-      title: ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItemsEndpoint
-    ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaModelManufacturer:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-      title: ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaModelManufacturer
+      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItemsStatus
     ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItems:
       type: object
       properties:
@@ -2194,10 +1053,553 @@ components:
           type: number
           format: double
       title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthSmsTrafficType
+    ApiV1SimGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        iccid:
+          type: string
+        eid:
+          type: string
+        production_date:
+          type: string
+          format: date-time
+        activation_date:
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/ApiV1SimGetResponsesContentApplicationJsonSchemaItemsStatus'
+        customer_org:
+          $ref: '#/components/schemas/ApiV1SimGetResponsesContentApplicationJsonSchemaItemsCustomerOrg'
+        issuer_org:
+          $ref: '#/components/schemas/ApiV1SimGetResponsesContentApplicationJsonSchemaItemsIssuerOrg'
+        reseller_org:
+          $ref: '#/components/schemas/ApiV1SimGetResponsesContentApplicationJsonSchemaItemsResellerOrg'
+        endpoint:
+          $ref: '#/components/schemas/ApiV1SimGetResponsesContentApplicationJsonSchemaItemsEndpoint'
+        imsi:
+          type: string
+        msisdn:
+          type: string
+        model:
+          $ref: '#/components/schemas/ApiV1SimGetResponsesContentApplicationJsonSchemaItemsModel'
+      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItems
+    SimByIdPatchRequestBadRequestError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: SimByIdPatchRequestBadRequestError
+    ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsIssuerOrg:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country:
+          $ref: '#/components/schemas/ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsIssuerOrgCountry'
+      title: ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsIssuerOrg
+    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthSmsCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthSmsCurrency
+    ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsResellerOrg:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country:
+          $ref: '#/components/schemas/ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsResellerOrgCountry'
+      title: ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsResellerOrg
+    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthData:
+      type: object
+      properties:
+        sim_id:
+          type: number
+          format: double
+        month:
+          type: string
+          format: date
+        volume:
+          type: number
+          format: double
+        volume_tx:
+          type: number
+          format: double
+        volume_rx:
+          type: number
+          format: double
+        traffic_type_id:
+          type: number
+          format: double
+        last_updated:
+          type: string
+          format: date-time
+        cost:
+          type: number
+          format: double
+        currency_id:
+          type: number
+          format: double
+        id:
+          type: number
+          format: double
+        traffic_type:
+          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthDataTrafficType'
+        currency:
+          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthDataCurrency'
+      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthData
+    ApiV1SimSimIdPatchRequestBodyContentApplicationJsonSchemaCustomerOrg:
+      type: object
+      properties:
+        id:
+          type: integer
+      title: ApiV1SimSimIdPatchRequestBodyContentApplicationJsonSchemaCustomerOrg
+    ApiV1SimGetResponsesContentApplicationJsonSchemaItemsCustomerOrgCountry:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country_code:
+          type: integer
+        mcc:
+          type: integer
+        iso_code:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItemsCustomerOrgCountry
+    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthSms:
+      type: object
+      properties:
+        sim_id:
+          type: number
+          format: double
+        month:
+          type: string
+          format: date
+        volume:
+          type: number
+          format: double
+        volume_tx:
+          type: number
+          format: double
+        volume_rx:
+          type: number
+          format: double
+        traffic_type_id:
+          type: number
+          format: double
+        last_updated:
+          type: string
+          format: date-time
+        cost:
+          type: number
+          format: double
+        currency_id:
+          type: number
+          format: double
+        id:
+          type: number
+          format: double
+        traffic_type:
+          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthSmsTrafficType'
+        currency:
+          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthSmsCurrency'
+      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthSms
+    ApiV1SimGetResponsesContentApplicationJsonSchemaItemsEndpoint:
+      type: object
+      properties:
+        id:
+          type: integer
+      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItemsEndpoint
+    ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        iccid:
+          type: string
+        iccid_with_luhn:
+          type: string
+        endpoint:
+          $ref: '#/components/schemas/ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItemsEndpoint'
+          description: 'The device currently attached to the SIM.
+
+            Defaults to `undefined` if no device is attached.
+
+            '
+        status:
+          $ref: '#/components/schemas/ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItemsStatus'
+        source_workspace:
+          $ref: '#/components/schemas/ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItemsSourceWorkspace'
+          description: The source Workspace of the SIM
+      required:
+      - status
+      title: ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItems
+    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourSmsCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourSmsCurrency
+    ApiV1SimSimIdPatchRequestBodyContentApplicationJsonSchemaResellerOrg:
+      type: object
+      properties:
+        id:
+          type: integer
+      title: ApiV1SimSimIdPatchRequestBodyContentApplicationJsonSchemaResellerOrg
+    ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsIssuerOrgCountry:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country_code:
+          type: integer
+        mcc:
+          type: integer
+        iso_code:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+      title: ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsIssuerOrgCountry
+    ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaResellerOrg:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country:
+          $ref: '#/components/schemas/ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaResellerOrgCountry'
+      title: ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaResellerOrg
+    ApiV1SimSimIdPatchRequestBodyContentApplicationJsonSchemaIssuerOrg:
+      type: object
+      properties:
+        id:
+          type: integer
+      title: ApiV1SimSimIdPatchRequestBodyContentApplicationJsonSchemaIssuerOrg
+    ApiV1SimMigrationWorkspacePostRequestBodyContentApplicationJsonSchemaIccidRange:
+      type: object
+      properties:
+        start:
+          type: string
+          description: 'First ICCID in the range (19-digit format).
+
+            '
+        end:
+          type: string
+          description: 'Last ICCID in the range (19-digit format).
+
+            Must be greater than or equal to `start`.
+
+            '
+      required:
+      - start
+      - end
+      description: "ICCID range to migrate.\nAll SIMs within the range must belong to the source Workspace.\nThe range may include up to 500 ICCIDs.\nThe `end` value must be greater than or equal to the `start` value.\n\n<Info>\n  Cannot be used in combination with the `iccids` or the `sims` field.\n</Info>\n"
+      title: ApiV1SimMigrationWorkspacePostRequestBodyContentApplicationJsonSchemaIccidRange
+    ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      required:
+      - id
+      title: ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaStatus
     ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsImsi:
       type: object
       properties: {}
       title: ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsImsi
+    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthSmsCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthSmsCurrency
+    ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource:
+      type: object
+      properties: {}
+      title: ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource
+    ApiV1SimGetResponsesContentApplicationJsonSchemaItemsIssuerOrg:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country:
+          $ref: '#/components/schemas/ApiV1SimGetResponsesContentApplicationJsonSchemaItemsIssuerOrgCountry'
+      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItemsIssuerOrg
+    ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsResellerOrgCountry:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country_code:
+          type: integer
+        mcc:
+          type: integer
+        iso_code:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+      title: ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsResellerOrgCountry
+    ApiV1SimStatusGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ApiV1SimStatusGetResponsesContentApplicationJsonSchemaItems
+    ApiV1SimGetResponsesContentApplicationJsonSchemaItemsCustomerOrg:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country:
+          $ref: '#/components/schemas/ApiV1SimGetResponsesContentApplicationJsonSchemaItemsCustomerOrgCountry'
+      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItemsCustomerOrg
+    ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation:
+      type: object
+      properties: {}
+      title: ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation
+    ApiV1SimMigrationWorkspacePostRequestBodyContentApplicationJsonSchemaTargetWorkspace:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      description: 'Target Workspace to migrate SIMs to.
+
+        Must be an enterprise Workspace.
+
+        The calling user must have **Administrator** permissions on the target Workspace.
+
+        '
+      title: ApiV1SimMigrationWorkspacePostRequestBodyContentApplicationJsonSchemaTargetWorkspace
+    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourSms:
+      type: object
+      properties:
+        sim_id:
+          type: number
+          format: double
+        month:
+          type: string
+          format: date
+        volume:
+          type: number
+          format: double
+        volume_tx:
+          type: number
+          format: double
+        volume_rx:
+          type: number
+          format: double
+        traffic_type_id:
+          type: number
+          format: double
+        last_updated:
+          type: string
+          format: date-time
+        cost:
+          type: number
+          format: double
+        currency_id:
+          type: number
+          format: double
+        id:
+          type: number
+          format: double
+        traffic_type:
+          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourSmsTrafficType'
+        currency:
+          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourSmsCurrency'
+      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourSms
+    ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaIssuerOrg:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country:
+          $ref: '#/components/schemas/ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaIssuerOrgCountry'
+      title: ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaIssuerOrg
+    ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsModelManufacturer:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsModelManufacturer
+    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthSmsTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthSmsTrafficType
+    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHour:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourData'
+        sms:
+          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourSms'
+      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHour
+    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthDataCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthDataCurrency
+    ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaEndpoint:
+      type: object
+      properties:
+        id:
+          type: integer
+      title: ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaEndpoint
+    ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsSim:
+      type: object
+      properties: {}
+      title: ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsSim
+    ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      required:
+      - id
+      title: ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaStatus
+    ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaResellerOrgCountry:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country_code:
+          type: integer
+        mcc:
+          type: integer
+        iso_code:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+      title: ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaResellerOrgCountry
+    ApiV1SimGetResponsesContentApplicationJsonSchemaItemsResellerOrg:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country:
+          $ref: '#/components/schemas/ApiV1SimGetResponsesContentApplicationJsonSchemaItemsResellerOrgCountry'
+      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItemsResellerOrg
+    ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItemsSourceWorkspace:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+      required:
+      - id
+      - name
+      description: The source Workspace of the SIM
+      title: ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItemsSourceWorkspace
+    ApiV1SimMigrationWorkspacePostRequestBodyContentApplicationJsonSchemaSimsItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: ApiV1SimMigrationWorkspacePostRequestBodyContentApplicationJsonSchemaSimsItems
+    ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaTargetWorkspace:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+      required:
+      - id
+      - name
+      description: The `target_workspace` specified in the request
+      title: ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaTargetWorkspace
     ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItems:
       type: object
       properties:
@@ -2218,7 +1620,76 @@ components:
       - message
       - sims
       title: ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItems
-    ApiV1SimMigrationWorkspacePostRequestBodyContentApplicationJsonSchemaTargetWorkspace:
+    ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        timestamp:
+          type: string
+        alert:
+          type: boolean
+        description:
+          type: string
+        id:
+          type: integer
+        event_type:
+          $ref: '#/components/schemas/ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsEventType'
+        event_source:
+          $ref: '#/components/schemas/ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource'
+        event_severity:
+          $ref: '#/components/schemas/ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity'
+        organisation:
+          $ref: '#/components/schemas/ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation'
+        endpoint:
+          $ref: '#/components/schemas/ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsEndpoint'
+        sim:
+          $ref: '#/components/schemas/ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsSim'
+        imsi:
+          $ref: '#/components/schemas/ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsImsi'
+      title: ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItems
+    ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItemsSimsItemsStatus:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItemsSimsItemsStatus
+    ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsEndpoint:
+      type: object
+      properties:
+        id:
+          type: integer
+      title: ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsEndpoint
+    ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaCustomerOrg:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country:
+          $ref: '#/components/schemas/ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaCustomerOrgCountry'
+      title: ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaCustomerOrg
+    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        last_month:
+          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonth'
+        current_month:
+          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonth'
+        last_hour:
+          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHour'
+      required:
+      - last_month
+      - current_month
+      - last_hour
+      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItems
+    ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsEventType:
+      type: object
+      properties: {}
+      title: ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsEventType
+    ApiV1SimMultiDeleteRequestBodyContentApplicationJsonSchemaItems:
       type: object
       properties:
         id:
@@ -2226,14 +1697,27 @@ components:
           format: double
       required:
       - id
-      description: 'Target Workspace to migrate SIMs to.
-
-        Must be an enterprise Workspace.
-
-        The calling user must have **Administrator** permissions on the target Workspace.
-
-        '
-      title: ApiV1SimMigrationWorkspacePostRequestBodyContentApplicationJsonSchemaTargetWorkspace
+      title: ApiV1SimMultiDeleteRequestBodyContentApplicationJsonSchemaItems
+    ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaCustomerOrgCountry:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country_code:
+          type: integer
+        mcc:
+          type: integer
+        iso_code:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+      title: ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaCustomerOrgCountry
     SIM_SimByIdGet_Response_200:
       type: object
       properties:
@@ -2266,35 +1750,113 @@ components:
         model:
           $ref: '#/components/schemas/ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaModel'
       title: SIM_SimByIdGet_Response_200
-    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthSmsCurrency:
-      type: object
-      properties:
-        code:
-          type: string
-        symbol:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthSmsCurrency
-    ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation:
-      type: object
-      properties: {}
-      title: ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation
-    ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaEndpoint:
-      type: object
-      properties:
-        id:
-          type: integer
-      title: ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaEndpoint
-    ApiV1SimGetResponsesContentApplicationJsonSchemaItemsModelFormfactor:
+    ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaModelFormfactor:
       type: object
       properties:
         id:
           type: integer
         name:
           type: string
-      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItemsModelFormfactor
+      title: ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaModelFormfactor
+    SIM_SimMigrationWorkspace_Response_200:
+      type: object
+      properties:
+        sim_count:
+          type: number
+          format: double
+          description: The amount of SIMs to be migrated
+        dry_run:
+          type: boolean
+          description: The `dry_run` option specified in the request
+        allowed_sim_statuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaAllowedSimStatusesItems'
+          description: The `allowed_sim_statuses` option specified in the request
+        target_workspace:
+          $ref: '#/components/schemas/ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaTargetWorkspace'
+          description: The `target_workspace` specified in the request
+        auto_detach_devices:
+          type: boolean
+          description: The `auto_detach_devices` option specified in the request
+        sims:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItems'
+          description: List of SIMs to be migrated
+      required:
+      - sim_count
+      - dry_run
+      - target_workspace
+      - auto_detach_devices
+      - sims
+      title: SIM_SimMigrationWorkspace_Response_200
+    ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaModelManufacturer:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaModelManufacturer
+    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthDataTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthDataTrafficType
+    ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaModelFormfactor:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaModelFormfactor
+    ApiV1SimGetResponsesContentApplicationJsonSchemaItemsModel:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+        memory_size:
+          type: integer
+        formfactor:
+          $ref: '#/components/schemas/ApiV1SimGetResponsesContentApplicationJsonSchemaItemsModelFormfactor'
+        manufacturer:
+          $ref: '#/components/schemas/ApiV1SimGetResponsesContentApplicationJsonSchemaItemsModelManufacturer'
+      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItemsModel
+    ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsCustomerOrg:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country:
+          $ref: '#/components/schemas/ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsCustomerOrgCountry'
+      title: ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsCustomerOrg
+    ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsEndpoint:
+      type: object
+      properties: {}
+      title: ApiV1SimSimIdEventGetResponsesContentApplicationJsonSchemaItemsEndpoint
+    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourDataTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourDataTrafficType
     ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourDataCurrency:
       type: object
       properties:
@@ -2306,25 +1868,96 @@ components:
           type: number
           format: double
       title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourDataCurrency
-    ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaCustomerOrg:
+    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthSms:
+      type: object
+      properties:
+        sim_id:
+          type: number
+          format: double
+        month:
+          type: string
+          format: date
+        volume:
+          type: number
+          format: double
+        volume_tx:
+          type: number
+          format: double
+        volume_rx:
+          type: number
+          format: double
+        traffic_type_id:
+          type: number
+          format: double
+        last_updated:
+          type: string
+          format: date-time
+        cost:
+          type: number
+          format: double
+        currency_id:
+          type: number
+          format: double
+        id:
+          type: number
+          format: double
+        traffic_type:
+          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthSmsTrafficType'
+        currency:
+          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthSmsCurrency'
+      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthSms
+    ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItemsEndpoint:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+      required:
+      - id
+      - name
+      description: 'The device currently attached to the SIM.
+
+        Defaults to `undefined` if no device is attached.
+
+        '
+      title: ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItemsEndpoint
+    ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaIssuerOrgCountry:
       type: object
       properties:
         id:
           type: integer
         name:
           type: string
-        country:
-          $ref: '#/components/schemas/ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaCustomerOrgCountry'
-      title: ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaCustomerOrg
-    ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaModelManufacturer:
+        country_code:
+          type: integer
+        mcc:
+          type: integer
+        iso_code:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+      title: ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaIssuerOrgCountry
+    ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaModel:
       type: object
       properties:
         id:
           type: integer
-        name:
+        description:
           type: string
-      title: ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaModelManufacturer
-    ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaStatus:
+        memory_size:
+          type: integer
+        formfactor:
+          $ref: '#/components/schemas/ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaModelFormfactor'
+        manufacturer:
+          $ref: '#/components/schemas/ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaModelManufacturer'
+      title: ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaModel
+    ApiV1SimSimIdPatchRequestBodyContentApplicationJsonSchemaStatus:
       type: object
       properties:
         id:
@@ -2333,7 +1966,374 @@ components:
           type: string
       required:
       - id
-      title: ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaStatus
+      title: ApiV1SimSimIdPatchRequestBodyContentApplicationJsonSchemaStatus
+    ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItemsSimsItemsEndpoint:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+      description: 'The device currently attached to the SIM.
+
+        Only present if a device is attached.
+
+        '
+      title: ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItemsSimsItemsEndpoint
+    ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaModelManufacturer:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: ApiV1SimSimIdGetResponsesContentApplicationJsonSchemaModelManufacturer
+    SIM_ValidateSIMBatchByBIC_Response_200:
+      type: object
+      properties:
+        sim_batch_status_id:
+          type: string
+        bsn:
+          type: string
+        bic:
+          type: string
+        quantity:
+          type: string
+        sim_model_id:
+          type: string
+        issuer_org_id:
+          type: string
+        customer_org_id:
+          type: integer
+        reseller_org_id:
+          type: integer
+        activated:
+          type: string
+        logistic_center_id:
+          type: string
+        article_id:
+          type: string
+        id:
+          type: integer
+        status:
+          $ref: '#/components/schemas/ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaStatus'
+        model:
+          $ref: '#/components/schemas/ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaModel'
+      title: SIM_ValidateSIMBatchByBIC_Response_200
+    ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItemsStatus:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      required:
+      - id
+      - description
+      title: ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaSimsItemsStatus
+    ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaModel:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+        memory_size:
+          type: integer
+        formfactor:
+          $ref: '#/components/schemas/ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaModelFormfactor'
+        manufacturer:
+          $ref: '#/components/schemas/ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaModelManufacturer'
+      title: ApiV1SimBatchBicBicGetResponsesContentApplicationJsonSchemaModel
+    ApiV1SimMigrationWorkspacePostRequestBodyContentApplicationJsonSchemaAllowedSimStatusesItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+      required:
+      - id
+      title: ApiV1SimMigrationWorkspacePostRequestBodyContentApplicationJsonSchemaAllowedSimStatusesItems
+    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonth:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthData'
+        sms:
+          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthSms'
+      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonth
+    SIM_RegisterSIMBatchByBIC_Response_200:
+      type: object
+      properties:
+        sim:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItems'
+      title: SIM_RegisterSIMBatchByBIC_Response_200
+    ApiV1SimBatchBicBicPatchRequestBodyContentApplicationJsonSchemaSimStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      required:
+      - id
+      title: ApiV1SimBatchBicBicPatchRequestBodyContentApplicationJsonSchemaSimStatus
+    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthData:
+      type: object
+      properties:
+        sim_id:
+          type: number
+          format: double
+        month:
+          type: string
+          format: date
+        volume:
+          type: number
+          format: double
+        volume_tx:
+          type: number
+          format: double
+        volume_rx:
+          type: number
+          format: double
+        traffic_type_id:
+          type: number
+          format: double
+        last_updated:
+          type: string
+          format: date-time
+        cost:
+          type: number
+          format: double
+        currency_id:
+          type: number
+          format: double
+        id:
+          type: number
+          format: double
+        traffic_type:
+          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthDataTrafficType'
+        currency:
+          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthDataCurrency'
+      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthData
+    ApiV1SimGetResponsesContentApplicationJsonSchemaItemsModelManufacturer:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItemsModelManufacturer
+    SimMigrationWorkspaceRequestConflictError:
+      type: object
+      properties:
+        status_code:
+          type: number
+          format: double
+          description: HTTP status code (409)
+        message:
+          type: string
+          description: Summary error message
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItems'
+          description: List of specific errors grouped by error type
+      required:
+      - status_code
+      - message
+      - errors
+      title: SimMigrationWorkspaceRequestConflictError
+    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonth:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthData'
+        sms:
+          $ref: '#/components/schemas/ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonthSms'
+      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastMonth
+    ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsCustomerOrgCountry:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country_code:
+          type: integer
+        mcc:
+          type: integer
+        iso_code:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+      title: ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsCustomerOrgCountry
+    ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItemsSimsItemsSourceWorkspace:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+      description: The source Workspace of the SIM
+      title: ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItemsSimsItemsSourceWorkspace
+    ApiV1SimGetResponsesContentApplicationJsonSchemaItemsModelFormfactor:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItemsModelFormfactor
+    ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItemsSimsItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        iccid:
+          type: string
+        iccid_with_luhn:
+          type: string
+        endpoint:
+          $ref: '#/components/schemas/ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItemsSimsItemsEndpoint'
+          description: 'The device currently attached to the SIM.
+
+            Only present if a device is attached.
+
+            '
+        status:
+          $ref: '#/components/schemas/ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItemsSimsItemsStatus'
+        source_workspace:
+          $ref: '#/components/schemas/ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItemsSimsItemsSourceWorkspace'
+          description: The source Workspace of the SIM
+      title: ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaErrorsItemsSimsItems
+    ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      required:
+      - id
+      title: ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsStatus
+    ApiV1SimGetResponsesContentApplicationJsonSchemaItemsIssuerOrgCountry:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country_code:
+          type: integer
+        mcc:
+          type: integer
+        iso_code:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItemsIssuerOrgCountry
+    ApiV1SimGetResponsesContentApplicationJsonSchemaItemsResellerOrgCountry:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country_code:
+          type: integer
+        mcc:
+          type: integer
+        iso_code:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+      title: ApiV1SimGetResponsesContentApplicationJsonSchemaItemsResellerOrgCountry
+    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthDataTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthDataTrafficType
+    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthDataCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsCurrentMonthDataCurrency
+    ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaAllowedSimStatusesItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      required:
+      - id
+      - description
+      title: ApiV1SimMigrationWorkspacePostResponsesContentApplicationJsonSchemaAllowedSimStatusesItems
+    ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsModel:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+        memory_size:
+          type: integer
+        formfactor:
+          $ref: '#/components/schemas/ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsModelFormfactor'
+        manufacturer:
+          $ref: '#/components/schemas/ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsModelManufacturer'
+      title: ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsModel
+    ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourSmsTrafficType:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1SimSimIdStatsGetResponsesContentApplicationJsonSchemaItemsLastHourSmsTrafficType
+    ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsModelFormfactor:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: ApiV1SimBatchBicBicPatchResponsesContentApplicationJsonSchemaSimItemsModelFormfactor
   securitySchemes:
     BearerAuth:
       type: http

@@ -63,17 +63,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        status_code:
-          type: integer
-        message:
-          type: string
-      required:
-      - status_code
-      - message
-      title: Error
     SimUnlinkedProductStatsResponseItemsProduct:
       type: object
       properties:
@@ -93,6 +82,17 @@ components:
       - product
       - quantity
       title: SimUnlinkedProductStatsResponseItems
+    Error:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      required:
+      - status_code
+      - message
+      title: Error
     SimUnlinkedProductStatsResponse:
       type: array
       items:

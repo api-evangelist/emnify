@@ -258,6 +258,16 @@ paths:
                   $ref: '#/components/schemas/ApiV1ServiceLevelGetResponsesContentApplicationJsonSchemaItems'
 components:
   schemas:
+    ApiV1BreakoutRegionGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        ip_address:
+          type: string
+      title: ApiV1BreakoutRegionGetResponsesContentApplicationJsonSchemaItems
     ApiV1CurrencyGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -313,16 +323,15 @@ components:
         description:
           type: string
       title: ApiV1DataBlocksizeGetResponsesContentApplicationJsonSchemaItems
-    ApiV1BreakoutRegionGetResponsesContentApplicationJsonSchemaItems:
+    ApiV1RatTypeGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
         id:
-          type: integer
-        name:
+          type: number
+          format: double
+        description:
           type: string
-        ip_address:
-          type: string
-      title: ApiV1BreakoutRegionGetResponsesContentApplicationJsonSchemaItems
+      title: ApiV1RatTypeGetResponsesContentApplicationJsonSchemaItems
     ApiV1ServiceLevelGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -335,15 +344,6 @@ components:
       - id
       description: The default service level of a tariff plan. Possible values can be fetched with GET `/api/v1/service_level`.
       title: ApiV1ServiceLevelGetResponsesContentApplicationJsonSchemaItems
-    ApiV1RatTypeGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        description:
-          type: string
-      title: ApiV1RatTypeGetResponsesContentApplicationJsonSchemaItems
   securitySchemes:
     BearerAuth:
       type: http

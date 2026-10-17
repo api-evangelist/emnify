@@ -135,33 +135,17 @@ paths:
                 description: Any type
 components:
   schemas:
-    ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanCurrency:
+    ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanStatus:
       type: object
       properties:
-        code:
+        description:
           type: string
-        symbol:
+        tariff_plan_status_enum_id:
           type: string
         id:
           type: number
           format: double
-      title: ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanCurrency
-    ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanPrice:
-      type: object
-      properties:
-        sim_activated_rate:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanPriceSimActivatedRateItems'
-      title: ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanPrice
-    ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPrice:
-      type: object
-      properties:
-        sim_activated_rate:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPriceSimActivatedRateItems'
-      title: ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPrice
+      title: ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanStatus
     ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaAppliedPriceSimActivatedRateItems:
       type: object
       properties:
@@ -174,18 +158,6 @@ components:
         volume:
           type: integer
       title: ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaAppliedPriceSimActivatedRateItems
-    ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaAppliedPriceSimActivatedRateItems:
-      type: object
-      properties:
-        scale_start:
-          type: number
-          format: double
-        rate:
-          type: number
-          format: double
-        volume:
-          type: integer
-      title: ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaAppliedPriceSimActivatedRateItems
     ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -244,33 +216,7 @@ components:
         tariff_plan:
           $ref: '#/components/schemas/ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlan'
       title: ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItems
-    ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanVisibility:
-      type: object
-      properties:
-        description:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanVisibility
-    ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaAppliedPrice:
-      type: object
-      properties:
-        sim_activated_rate:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaAppliedPriceSimActivatedRateItems'
-      description: 'the fees that apply for the current month according to the number of activated SIMs.
-
-        calculation follows volume pricing at the moment, but may be changed at any time.
-
-        the resulting price is the sum of each price line times the given volume. if it is a scaled
-
-        price, the rate object contains a `scale_start` field, otherwise it is fixed.
-
-        '
-      title: ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaAppliedPrice
-    ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPriceSimActivatedRateItems:
+    ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPriceSimActivatedRateItems:
       type: object
       properties:
         scale_start:
@@ -279,8 +225,8 @@ components:
         rate:
           type: number
           format: double
-      title: ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPriceSimActivatedRateItems
-    ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanServiceLevel:
+      title: ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPriceSimActivatedRateItems
+    ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaServiceLevel:
       type: object
       properties:
         id:
@@ -291,46 +237,8 @@ components:
       required:
       - id
       description: The default service level of a tariff plan. Possible values can be fetched with GET `/api/v1/service_level`.
-      title: ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanServiceLevel
-    ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanRuntime:
-      type: object
-      properties:
-        number_of_units:
-          type: number
-          format: double
-        time_unit_id:
-          type: number
-          format: double
-        id:
-          type: number
-          format: double
-      title: ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanRuntime
-    ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsServiceLevel:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        name:
-          type: string
-      description: 'Custom service level for the organisation.
-
-        If set to null, the default service level from the tariff plan will be applied.
-
-        '
-      title: ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsServiceLevel
-    ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanStatus:
-      type: object
-      properties:
-        description:
-          type: string
-        tariff_plan_status_enum_id:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanStatus
-    ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlan:
+      title: ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaServiceLevel
+    ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlan:
       type: object
       properties:
         name:
@@ -389,41 +297,85 @@ components:
           type: number
           format: double
         price:
-          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPrice'
+          $ref: '#/components/schemas/ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPrice'
         currency:
-          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanCurrency'
+          $ref: '#/components/schemas/ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanCurrency'
         workspaces_enabled:
           type: boolean
           description: The `workspaces_enabled` flag configured globally for the tariff plan
-      title: ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlan
-    ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanTariffPlanRuntimeId:
-      type: object
-      properties: {}
-      title: ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanTariffPlanRuntimeId
-    ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPrice:
-      type: object
-      properties:
-        sim_activated_rate:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPriceSimActivatedRateItems'
-      title: ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPrice
-    ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanCurrency:
-      type: object
-      properties:
-        code:
-          type: string
-        symbol:
-          type: string
-        id:
-          type: number
-          format: double
-      title: ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanCurrency
+      title: ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlan
     ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanNotes:
       type: object
       properties: {}
       title: ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanNotes
-    ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPriceSimActivatedRateItems:
+    Tariff_Plans_GetActiveTariffPlan_Response_200:
+      type: object
+      properties:
+        organisation_id:
+          type: number
+          format: double
+        start_date:
+          type: string
+        expiry_date:
+          type: string
+          description: 'the end date of the tariff_plan, or null if it is open end
+
+            '
+        sim_activated_rate:
+          type: number
+          format: double
+        sim_activated_idle_rate:
+          type: number
+          format: double
+        sim_suspended_rate:
+          type: number
+          format: double
+        sim_suspended_active_rate:
+          type: number
+          format: double
+        sim_activated_amount:
+          type: number
+          format: double
+          description: 'the number of activated SIMs this month
+
+            '
+        applied_price:
+          $ref: '#/components/schemas/ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaAppliedPrice'
+          description: 'the fees that apply for the current month according to the number of activated SIMs.
+
+            calculation follows volume pricing at the moment, but may be changed at any time.
+
+            the resulting price is the sum of each price line times the given volume. if it is a scaled
+
+            price, the rate object contains a `scale_start` field, otherwise it is fixed.
+
+            '
+        tariff_plan:
+          $ref: '#/components/schemas/ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlan'
+        tariff_plan_runtime:
+          $ref: '#/components/schemas/ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanRuntime'
+        active:
+          type: boolean
+        applied_rate:
+          type: number
+          format: double
+        id:
+          type: number
+          format: double
+        service_level:
+          $ref: '#/components/schemas/ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaServiceLevel'
+          description: The default service level of a tariff plan. Possible values can be fetched with GET `/api/v1/service_level`.
+        workspaces_enabled:
+          type: boolean
+          description: 'Determines if the organization is allowed to use the Workspace feature.
+
+            Returns the global value from the tariff plan, unless this value is overridden on the organization level.
+
+            If it''s set, the value configured on the organization level always takes priority.
+
+            '
+      title: Tariff Plans_GetActiveTariffPlan_Response_200
+    ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaAppliedPriceSimActivatedRateItems:
       type: object
       properties:
         scale_start:
@@ -432,61 +384,76 @@ components:
         rate:
           type: number
           format: double
-      title: ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPriceSimActivatedRateItems
-    ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaAppliedPrice:
+        volume:
+          type: integer
+      title: ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaAppliedPriceSimActivatedRateItems
+    Tariff_Plans_GetOrganisationActiveTariffPlan_Response_200:
       type: object
       properties:
+        organisation_id:
+          type: number
+          format: double
+        start_date:
+          type: string
+        expiry_date:
+          type: string
+          description: 'the end date of the tariff_plan, or null if it is open end
+
+            '
         sim_activated_rate:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaAppliedPriceSimActivatedRateItems'
-      description: 'the fees that apply for the current month according to the number of activated SIMs.
+          type: number
+          format: double
+        sim_activated_idle_rate:
+          type: number
+          format: double
+        sim_suspended_rate:
+          type: number
+          format: double
+        sim_suspended_active_rate:
+          type: number
+          format: double
+        sim_activated_amount:
+          type: number
+          format: double
+          description: 'the number of activated SIMs this month
 
-        calculation follows volume pricing at the moment, but may be changed at any time.
+            '
+        applied_price:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaAppliedPrice'
+          description: 'the fees that apply for the current month according to the number of activated SIMs.
 
-        the resulting price is the sum of each price line times the given volume. if it is a scaled
+            calculation follows volume pricing at the moment, but may be changed at any time.
 
-        price, the rate object contains a `scale_start` field, otherwise it is fixed.
+            the resulting price is the sum of each price line times the given volume. if it is a scaled
 
-        '
-      title: ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaAppliedPrice
-    ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaServiceLevel:
-      type: object
-      properties:
+            price, the rate object contains a `scale_start` field, otherwise it is fixed.
+
+            '
+        tariff_plan:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlan'
+        tariff_plan_runtime:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanRuntime'
+        active:
+          type: boolean
+        applied_rate:
+          type: number
+          format: double
         id:
           type: number
           format: double
-        name:
-          type: string
-      required:
-      - id
-      description: The default service level of a tariff plan. Possible values can be fetched with GET `/api/v1/service_level`.
-      title: ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaServiceLevel
-    ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanRuntime:
-      type: object
-      properties:
-        number_of_units:
-          type: number
-          format: double
-        time_unit_id:
-          type: number
-          format: double
-        id:
-          type: number
-          format: double
-      title: ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanRuntime
-    ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaServiceLevel:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        name:
-          type: string
-      required:
-      - id
-      description: The default service level of a tariff plan. Possible values can be fetched with GET `/api/v1/service_level`.
-      title: ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaServiceLevel
+        service_level:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaServiceLevel'
+          description: The default service level of a tariff plan. Possible values can be fetched with GET `/api/v1/service_level`.
+        workspaces_enabled:
+          type: boolean
+          description: 'Determines if the organization is allowed to use the Workspace feature.
+
+            Returns the global value from the tariff plan, unless this value is overridden on the organization level.
+
+            If it''s set, the value configured on the organization level always takes priority.
+
+            '
+      title: Tariff Plans_GetOrganisationActiveTariffPlan_Response_200
     ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlan:
       type: object
       properties:
@@ -586,145 +553,122 @@ components:
         factory_test_mode_allowed:
           type: boolean
       title: ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlan
+    ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanVisibility:
+      type: object
+      properties:
+        description:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanVisibility
+    ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanServiceLevel:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+      required:
+      - id
+      description: The default service level of a tariff plan. Possible values can be fetched with GET `/api/v1/service_level`.
+      title: ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanServiceLevel
+    ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanPrice:
+      type: object
+      properties:
+        sim_activated_rate:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanPriceSimActivatedRateItems'
+      title: ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanPrice
+    ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanRuntime:
+      type: object
+      properties:
+        number_of_units:
+          type: number
+          format: double
+        time_unit_id:
+          type: number
+          format: double
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanRuntime
+    ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaServiceLevel:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+      required:
+      - id
+      description: The default service level of a tariff plan. Possible values can be fetched with GET `/api/v1/service_level`.
+      title: ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaServiceLevel
+    ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaAppliedPrice:
+      type: object
+      properties:
+        sim_activated_rate:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaAppliedPriceSimActivatedRateItems'
+      description: 'the fees that apply for the current month according to the number of activated SIMs.
+
+        calculation follows volume pricing at the moment, but may be changed at any time.
+
+        the resulting price is the sum of each price line times the given volume. if it is a scaled
+
+        price, the rate object contains a `scale_start` field, otherwise it is fixed.
+
+        '
+      title: ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaAppliedPrice
     ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanPriceSimActivatedRateItems:
       oneOf:
       - $ref: '#/components/schemas/ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanPriceSimActivatedRateItems0'
       - $ref: '#/components/schemas/ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanPriceSimActivatedRateItems1'
       title: ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanPriceSimActivatedRateItems
-    Tariff_Plans_GetActiveTariffPlan_Response_200:
+    ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanPriceSimActivatedRateItems1:
       type: object
       properties:
-        organisation_id:
+        rate:
           type: number
           format: double
-        start_date:
+      title: ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanPriceSimActivatedRateItems1
+    ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanCurrency:
+      type: object
+      properties:
+        code:
           type: string
-        expiry_date:
+        symbol:
           type: string
-          description: 'the end date of the tariff_plan, or null if it is open end
-
-            '
-        sim_activated_rate:
-          type: number
-          format: double
-        sim_activated_idle_rate:
-          type: number
-          format: double
-        sim_suspended_rate:
-          type: number
-          format: double
-        sim_suspended_active_rate:
-          type: number
-          format: double
-        sim_activated_amount:
-          type: number
-          format: double
-          description: 'the number of activated SIMs this month
-
-            '
-        applied_price:
-          $ref: '#/components/schemas/ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaAppliedPrice'
-          description: 'the fees that apply for the current month according to the number of activated SIMs.
-
-            calculation follows volume pricing at the moment, but may be changed at any time.
-
-            the resulting price is the sum of each price line times the given volume. if it is a scaled
-
-            price, the rate object contains a `scale_start` field, otherwise it is fixed.
-
-            '
-        tariff_plan:
-          $ref: '#/components/schemas/ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlan'
-        tariff_plan_runtime:
-          $ref: '#/components/schemas/ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanRuntime'
-        active:
-          type: boolean
-        applied_rate:
-          type: number
-          format: double
         id:
           type: number
           format: double
-        service_level:
-          $ref: '#/components/schemas/ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaServiceLevel'
-          description: The default service level of a tariff plan. Possible values can be fetched with GET `/api/v1/service_level`.
-        workspaces_enabled:
-          type: boolean
-          description: 'Determines if the organization is allowed to use the Workspace feature.
-
-            Returns the global value from the tariff plan, unless this value is overridden on the organization level.
-
-            If it''s set, the value configured on the organization level always takes priority.
-
-            '
-      title: Tariff Plans_GetActiveTariffPlan_Response_200
-    Tariff_Plans_GetOrganisationActiveTariffPlan_Response_200:
+      title: ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanCurrency
+    ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPrice:
       type: object
       properties:
-        organisation_id:
-          type: number
-          format: double
-        start_date:
-          type: string
-        expiry_date:
-          type: string
-          description: 'the end date of the tariff_plan, or null if it is open end
-
-            '
         sim_activated_rate:
-          type: number
-          format: double
-        sim_activated_idle_rate:
-          type: number
-          format: double
-        sim_suspended_rate:
-          type: number
-          format: double
-        sim_suspended_active_rate:
-          type: number
-          format: double
-        sim_activated_amount:
-          type: number
-          format: double
-          description: 'the number of activated SIMs this month
-
-            '
-        applied_price:
-          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaAppliedPrice'
-          description: 'the fees that apply for the current month according to the number of activated SIMs.
-
-            calculation follows volume pricing at the moment, but may be changed at any time.
-
-            the resulting price is the sum of each price line times the given volume. if it is a scaled
-
-            price, the rate object contains a `scale_start` field, otherwise it is fixed.
-
-            '
-        tariff_plan:
-          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlan'
-        tariff_plan_runtime:
-          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanRuntime'
-        active:
-          type: boolean
-        applied_rate:
-          type: number
-          format: double
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPriceSimActivatedRateItems'
+      title: ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPrice
+    ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsServiceLevel:
+      type: object
+      properties:
         id:
           type: number
           format: double
-        service_level:
-          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaServiceLevel'
-          description: The default service level of a tariff plan. Possible values can be fetched with GET `/api/v1/service_level`.
-        workspaces_enabled:
-          type: boolean
-          description: 'Determines if the organization is allowed to use the Workspace feature.
+        name:
+          type: string
+      description: 'Custom service level for the organisation.
 
-            Returns the global value from the tariff plan, unless this value is overridden on the organization level.
+        If set to null, the default service level from the tariff plan will be applied.
 
-            If it''s set, the value configured on the organization level always takes priority.
-
-            '
-      title: Tariff Plans_GetOrganisationActiveTariffPlan_Response_200
+        '
+      title: ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsServiceLevel
     ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanPriceSimActivatedRateItems0:
       type: object
       properties:
@@ -738,7 +682,24 @@ components:
       - scale_start
       - rate
       title: ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanPriceSimActivatedRateItems0
-    ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlan:
+    ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaAppliedPrice:
+      type: object
+      properties:
+        sim_activated_rate:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaAppliedPriceSimActivatedRateItems'
+      description: 'the fees that apply for the current month according to the number of activated SIMs.
+
+        calculation follows volume pricing at the moment, but may be changed at any time.
+
+        the resulting price is the sum of each price line times the given volume. if it is a scaled
+
+        price, the rate object contains a `scale_start` field, otherwise it is fixed.
+
+        '
+      title: ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaAppliedPrice
+    ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlan:
       type: object
       properties:
         name:
@@ -797,21 +758,27 @@ components:
           type: number
           format: double
         price:
-          $ref: '#/components/schemas/ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPrice'
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPrice'
         currency:
-          $ref: '#/components/schemas/ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanCurrency'
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanCurrency'
         workspaces_enabled:
           type: boolean
           description: The `workspaces_enabled` flag configured globally for the tariff plan
-      title: ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlan
-    ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanPriceSimActivatedRateItems1:
+      title: ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlan
+    ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanRuntime:
       type: object
       properties:
-        rate:
+        number_of_units:
           type: number
           format: double
-      title: ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanPriceSimActivatedRateItems1
-    ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanCurrency:
+        time_unit_id:
+          type: number
+          format: double
+        id:
+          type: number
+          format: double
+      title: ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanRuntime
+    ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanCurrency:
       type: object
       properties:
         code:
@@ -821,7 +788,40 @@ components:
         id:
           type: number
           format: double
-      title: ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanCurrency
+      title: ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanCurrency
+    ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanCurrency:
+      type: object
+      properties:
+        code:
+          type: string
+        symbol:
+          type: string
+        id:
+          type: number
+          format: double
+      title: ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanCurrency
+    ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPrice:
+      type: object
+      properties:
+        sim_activated_rate:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPriceSimActivatedRateItems'
+      title: ApiV1OrganisationOrgIdOrMyTariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPrice
+    ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPriceSimActivatedRateItems:
+      type: object
+      properties:
+        scale_start:
+          type: number
+          format: double
+        rate:
+          type: number
+          format: double
+      title: ApiV1TariffPlanActiveGetResponsesContentApplicationJsonSchemaTariffPlanPriceSimActivatedRateItems
+    ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanTariffPlanRuntimeId:
+      type: object
+      properties: {}
+      title: ApiV1OrganisationOrgIdTariffPlanGetResponsesContentApplicationJsonSchemaItemsTariffPlanTariffPlanRuntimeId
   securitySchemes:
     BearerAuth:
       type: http

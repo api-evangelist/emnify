@@ -333,30 +333,10 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Eid:
+    IccidWithLuhnRef:
       type: string
-      title: Eid
-    Organisation:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-      title: Organisation
-    EuiccUnlinkedValidationResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/EuiccUnlinkedValidationResponseItems'
-      title: EuiccUnlinkedValidationResponse
-    ProfileStatus:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      title: ProfileStatus
+      description: Full ICCID including the Luhn check digit
+      title: IccidWithLuhnRef
     EuiccUnlinkedValidationRequestTargetItems:
       type: object
       properties:
@@ -365,6 +345,25 @@ components:
       required:
       - eid
       title: EuiccUnlinkedValidationRequestTargetItems
+    Error:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      required:
+      - status_code
+      - message
+      title: Error
+    IdName:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: IdName
     Profile:
       type: object
       properties:
@@ -407,53 +406,6 @@ components:
       required:
       - iccid_with_luhn
       title: Profile
-    EuiccEim:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      title: EuiccEim
-    IdName:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-      title: IdName
-    Error:
-      type: object
-      properties:
-        status_code:
-          type: integer
-        message:
-          type: string
-      required:
-      - status_code
-      - message
-      title: Error
-    IccidWithLuhnRef:
-      type: string
-      description: Full ICCID including the Luhn check digit
-      title: IccidWithLuhnRef
-    EuiccUnlinkedValidationResponseItems:
-      type: object
-      properties:
-        eid:
-          $ref: '#/components/schemas/Eid'
-      required:
-      - eid
-      title: EuiccUnlinkedValidationResponseItems
-    EuiccSupportedProfileType:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      title: EuiccSupportedProfileType
     Endpoint:
       type: object
       properties:
@@ -462,6 +414,80 @@ components:
         name:
           type: string
       title: Endpoint
+    Status:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      required:
+      - id
+      - description
+      title: Status
+    Organisation:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: Organisation
+    EuiccUnlinkedValidationResponseItems:
+      type: object
+      properties:
+        eid:
+          $ref: '#/components/schemas/Eid'
+      required:
+      - eid
+      title: EuiccUnlinkedValidationResponseItems
+    EuiccEim:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: EuiccEim
+    EuiccUnlinkedValidationResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/EuiccUnlinkedValidationResponseItems'
+      title: EuiccUnlinkedValidationResponse
+    EuiccSupportedProfileType:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: EuiccSupportedProfileType
+    EuiccUnlinkedValidationRequest:
+      type: object
+      properties:
+        target:
+          type: array
+          items:
+            $ref: '#/components/schemas/EuiccUnlinkedValidationRequestTargetItems'
+      required:
+      - target
+      title: EuiccUnlinkedValidationRequest
+    ProfileProfileType:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ProfileProfileType
+    ProfileStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ProfileStatus
     Euicc:
       type: object
       properties:
@@ -507,35 +533,9 @@ components:
       - created
       - profile
       title: Euicc
-    EuiccUnlinkedValidationRequest:
-      type: object
-      properties:
-        target:
-          type: array
-          items:
-            $ref: '#/components/schemas/EuiccUnlinkedValidationRequestTargetItems'
-      required:
-      - target
-      title: EuiccUnlinkedValidationRequest
-    ProfileProfileType:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      title: ProfileProfileType
-    Status:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      required:
-      - id
-      - description
-      title: Status
+    Eid:
+      type: string
+      title: Eid
   securitySchemes:
     BearerAuth:
       type: http

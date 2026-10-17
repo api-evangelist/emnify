@@ -537,28 +537,7 @@ paths:
                 $ref: '#/components/schemas/UserMfaByUserIdAndKeyIdDeleteRequestNotFoundError'
 components:
   schemas:
-    ApiV1UserMfaPostResponsesContentApplicationJsonSchemaErrorsItems:
-      type: object
-      properties: {}
-      title: ApiV1UserMfaPostResponsesContentApplicationJsonSchemaErrorsItems
-    ApiV1UserMfaStatusGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      title: ApiV1UserMfaStatusGetResponsesContentApplicationJsonSchemaItems
-    ApiV1UserMfaPostResponsesContentApplicationJsonSchemaType:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        description:
-          type: string
-      title: ApiV1UserMfaPostResponsesContentApplicationJsonSchemaType
-    UserMfaTrustedDeviceByUserIdAndDeviceIdDeleteRequestNotFoundError:
+    PostMfaRequestConflictError:
       type: object
       properties:
         error_code:
@@ -567,43 +546,7 @@ components:
           type: string
         message:
           type: string
-      title: UserMfaTrustedDeviceByUserIdAndDeviceIdDeleteRequestNotFoundError
-    UserMfaTrustedDeviceByUserIdGetRequestNotFoundError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-        error_token:
-          type: string
-        message:
-          type: string
-      title: UserMfaTrustedDeviceByUserIdGetRequestNotFoundError
-    UserMfaByIdPatchRequestConflictError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-          description: Numeric error code for programmatic handling.
-        error_token:
-          type: string
-          description: String identifier for the error type.
-        message:
-          type: string
-          description: Human-readable error message.
-      title: UserMfaByIdPatchRequestConflictError
-    UserMfaByIdPatchRequestUnprocessableEntityError:
-      type: object
-      properties:
-        error_code:
-          type: integer
-          description: Numeric error code for programmatic handling.
-        error_token:
-          type: string
-          description: String identifier for the error type.
-        message:
-          type: string
-          description: Human-readable error message.
-      title: UserMfaByIdPatchRequestUnprocessableEntityError
+      title: PostMfaRequestConflictError
     ApiV1AuthenticatePostRequestBodyContentApplicationJsonSchemaTrustedDevice:
       type: object
       properties:
@@ -621,7 +564,34 @@ components:
           description: Optional name for the device
       description: Device information to register as trusted (90-day MFA exemption)
       title: ApiV1AuthenticatePostRequestBodyContentApplicationJsonSchemaTrustedDevice
-    UserMfaByIdPatchRequestNotFoundError:
+    AuthenticateRequestUnauthorizedError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: AuthenticateRequestUnauthorizedError
+    Authentication_Authenticate_Response_200:
+      type: object
+      properties:
+        auth_token:
+          type: string
+          description: JWT authentication token (returned for successful authentication)
+        refresh_token:
+          type: string
+          description: Refresh token (returned with `auth_token` for user credentials auth)
+        mfa_token:
+          type: string
+          description: MFA token (returned instead of `auth_token` when MFA is enabled and device isn't trusted)
+      title: Authentication_Authenticate_Response_200
+    ApiV1UserMfaPostResponsesContentApplicationJsonSchemaErrorsItems:
+      type: object
+      properties: {}
+      title: ApiV1UserMfaPostResponsesContentApplicationJsonSchemaErrorsItems
+    UserMfaByIdPatchRequestUnprocessableEntityError:
       type: object
       properties:
         error_code:
@@ -633,24 +603,11 @@ components:
         message:
           type: string
           description: Human-readable error message.
-      title: UserMfaByIdPatchRequestNotFoundError
-    ApiV1UserMfaPostResponsesContentApplicationJsonSchemaStatus:
+      title: UserMfaByIdPatchRequestUnprocessableEntityError
+    ApiV1UserMfaPostRequestBodyContentApplicationJsonSchemaType:
       type: object
-      properties:
-        id:
-          type: number
-          format: double
-        description:
-          type: string
-      title: ApiV1UserMfaPostResponsesContentApplicationJsonSchemaStatus
-    ApiV1UserMfaTypeGetResponsesContentApplicationJsonSchemaItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        description:
-          type: string
-      title: ApiV1UserMfaTypeGetResponsesContentApplicationJsonSchemaItems
+      properties: {}
+      title: ApiV1UserMfaPostRequestBodyContentApplicationJsonSchemaType
     PostMfaRequestUnprocessableEntityError:
       type: object
       properties:
@@ -665,24 +622,7 @@ components:
           items:
             $ref: '#/components/schemas/ApiV1UserMfaPostResponsesContentApplicationJsonSchemaErrorsItems'
       title: PostMfaRequestUnprocessableEntityError
-    Authentication_postMfa_Response_200:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-        status:
-          $ref: '#/components/schemas/ApiV1UserMfaPostResponsesContentApplicationJsonSchemaStatus'
-        type:
-          $ref: '#/components/schemas/ApiV1UserMfaPostResponsesContentApplicationJsonSchemaType'
-        secret_key:
-          type: string
-        otpauth:
-          type: string
-        creation_date:
-          type: string
-      title: Authentication_postMfa_Response_200
-    UserMfaByUserIdAndKeyIdDeleteRequestNotFoundError:
+    UserMfaTrustedDeviceByUserIdGetRequestNotFoundError:
       type: object
       properties:
         error_code:
@@ -691,7 +631,30 @@ components:
           type: string
         message:
           type: string
-      title: UserMfaByUserIdAndKeyIdDeleteRequestNotFoundError
+      title: UserMfaTrustedDeviceByUserIdGetRequestNotFoundError
+    UserMfaTrustedDeviceByUserIdAndDeviceIdDeleteRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserMfaTrustedDeviceByUserIdAndDeviceIdDeleteRequestNotFoundError
+    UserMfaByIdPatchRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+          description: Numeric error code for programmatic handling.
+        error_token:
+          type: string
+          description: String identifier for the error type.
+        message:
+          type: string
+          description: Human-readable error message.
+      title: UserMfaByIdPatchRequestNotFoundError
     ApiV1UserUserIdMfaTrustedDeviceGetResponsesContentApplicationJsonSchemaItems:
       type: object
       properties:
@@ -704,16 +667,19 @@ components:
         activation_date:
           type: string
       title: ApiV1UserUserIdMfaTrustedDeviceGetResponsesContentApplicationJsonSchemaItems
-    AuthenticateRequestNotFoundError:
+    UserMfaByIdPatchRequestConflictError:
       type: object
       properties:
         error_code:
           type: integer
+          description: Numeric error code for programmatic handling.
         error_token:
           type: string
+          description: String identifier for the error type.
         message:
           type: string
-      title: AuthenticateRequestNotFoundError
+          description: Human-readable error message.
+      title: UserMfaByIdPatchRequestConflictError
     ApiV1UserMfaKeyIdPatchRequestBodyContentApplicationJsonSchemaStatus:
       type: object
       properties:
@@ -731,24 +697,16 @@ components:
       - id
       description: The target status for the MFA key.
       title: ApiV1UserMfaKeyIdPatchRequestBodyContentApplicationJsonSchemaStatus
-    Authentication_Authenticate_Response_200:
+    ApiV1UserMfaPostResponsesContentApplicationJsonSchemaStatus:
       type: object
       properties:
-        auth_token:
+        id:
+          type: number
+          format: double
+        description:
           type: string
-          description: JWT authentication token (returned for successful authentication)
-        refresh_token:
-          type: string
-          description: Refresh token (returned with `auth_token` for user credentials auth)
-        mfa_token:
-          type: string
-          description: MFA token (returned instead of `auth_token` when MFA is enabled and device isn't trusted)
-      title: Authentication_Authenticate_Response_200
-    ApiV1UserMfaPostRequestBodyContentApplicationJsonSchemaType:
-      type: object
-      properties: {}
-      title: ApiV1UserMfaPostRequestBodyContentApplicationJsonSchemaType
-    AuthenticateRequestUnauthorizedError:
+      title: ApiV1UserMfaPostResponsesContentApplicationJsonSchemaStatus
+    AuthenticateRequestNotFoundError:
       type: object
       properties:
         error_code:
@@ -757,8 +715,17 @@ components:
           type: string
         message:
           type: string
-      title: AuthenticateRequestUnauthorizedError
-    PostMfaRequestConflictError:
+      title: AuthenticateRequestNotFoundError
+    ApiV1UserMfaPostResponsesContentApplicationJsonSchemaType:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1UserMfaPostResponsesContentApplicationJsonSchemaType
+    UserMfaByUserIdAndKeyIdDeleteRequestNotFoundError:
       type: object
       properties:
         error_code:
@@ -767,7 +734,40 @@ components:
           type: string
         message:
           type: string
-      title: PostMfaRequestConflictError
+      title: UserMfaByUserIdAndKeyIdDeleteRequestNotFoundError
+    ApiV1UserMfaStatusGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ApiV1UserMfaStatusGetResponsesContentApplicationJsonSchemaItems
+    Authentication_postMfa_Response_200:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        status:
+          $ref: '#/components/schemas/ApiV1UserMfaPostResponsesContentApplicationJsonSchemaStatus'
+        type:
+          $ref: '#/components/schemas/ApiV1UserMfaPostResponsesContentApplicationJsonSchemaType'
+        secret_key:
+          type: string
+        otpauth:
+          type: string
+        creation_date:
+          type: string
+      title: Authentication_postMfa_Response_200
+    ApiV1UserMfaTypeGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ApiV1UserMfaTypeGetResponsesContentApplicationJsonSchemaItems
   securitySchemes:
     BearerAuth:
       type: http
