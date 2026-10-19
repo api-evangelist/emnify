@@ -1,0 +1,1991 @@
+openapi: 3.2.0
+info:
+  title: Enterprise Service Profiles API
+  version: 1.0.0
+  description: Profiles for services and their configuration
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API
+tags:
+- name: serviceProfiles
+  description: Profiles for services and their configuration
+paths:
+  /api/v1/service_profile:
+    get:
+      operationId: serviceProfiles_ServiceProfileGet
+      summary: List service profiles
+      description: 'Required permissions Beta Learn more
+
+
+        `ServiceProfile` + `List`
+
+
+        Roles: Administrator User Observer
+
+
+        Retrieves a collection of all service profiles for your organization.
+
+
+        Returned service profiles contain just the total count of associated services, so this is the short view.'
+      tags:
+      - serviceProfiles
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItems'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProfileGetRequestForbiddenError'
+      security:
+      - bearerAuth: []
+    post:
+      operationId: serviceProfiles_ServiceProfilePost
+      summary: Create service profile
+      description: 'Required permissions Beta Learn more
+
+
+        `ServiceProfile` + `Create`
+
+
+        Roles: Administrator User
+
+
+        Creates a new Service Profile. A `name` must be specified for the Service Profile and all other fields are optional.
+
+
+        Editable fields:
+
+        * `name` (String required)
+
+        * `description` (String optional)
+
+        * `allowed_3g` (boolean optional, defaults to true)
+
+        * `allowed_4g` (boolean optional, defaults to true). Allows or restricts connectivity for 4G/LTE and LTE-M networks.
+
+        * `allowed_nb_iot` (boolean optional, defaults to true)
+
+        * **DEPRECATED** `apply_quota` (boolean optional, defaults to false). Use `apply_data_quota` instead. Will be ignored if `apply_data_quota` is present.
+
+        * `apply_data_quota` (boolean optional, defaults to false)
+
+        * `apply_sms_quota` (boolean optional, defaults to false)
+
+        * `retail` (boolean optional, defaults to false)
+
+        * `sms_p2p_int` (boolean optional, defaults to true)
+
+        * `sms_p2p_ext` (boolean optional, defaults to true)
+
+        * **DEPRECATED** `prepaid` (boolean optional, defaults to false)
+
+        * `nipdp` (boolean optional, defaults to false)
+
+        * `api_callback` (object optional)
+
+        * `api_secret` (object optional)
+
+        * `moc_callback` (object optional)
+
+        * `esme_interface_type` (object optional)
+
+        * `breakout_region` (object optional)
+
+        * `dns` (object optional)
+
+
+        Enabling services (SMS, Data etc.) is done via `PUT` to `/api/v1/service_profile/{profile_id}/service/{service_id}`.'
+      tags:
+      - serviceProfiles
+      responses:
+        '201':
+          description: Resource Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service_profiles_ServiceProfilePost_Response_201'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProfilePostRequestForbiddenError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                allowed_3g:
+                  type: boolean
+                allowed_4g:
+                  type: boolean
+                allowed_nb_iot:
+                  type: boolean
+                allowed_nb_iot_geo:
+                  type: boolean
+                  default: false
+                  description: Allows or restricts NB-IoT connectivity over satellite networks.
+                apply_sms_quota:
+                  type: boolean
+                apply_data_quota:
+                  type: boolean
+                retail:
+                  type: boolean
+                sms_p2p_int:
+                  type: boolean
+                sms_p2p_ext:
+                  type: boolean
+                prepaid:
+                  type: boolean
+                nipdp:
+                  type: boolean
+                api_callback:
+                  $ref: '#/components/schemas/ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaApiCallback'
+                api_secret:
+                  $ref: '#/components/schemas/ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaApiSecret'
+                moc_callback:
+                  $ref: '#/components/schemas/ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaMocCallback'
+                esme_interface_type:
+                  $ref: '#/components/schemas/ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaEsmeInterfaceType'
+                breakout_region:
+                  $ref: '#/components/schemas/ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaBreakoutRegion'
+                dns:
+                  $ref: '#/components/schemas/ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaDns'
+      security:
+      - bearerAuth: []
+  /api/v1/service_profile/{profile_id}:
+    get:
+      operationId: serviceProfiles_ServiceProfileByProfileIdGet
+      summary: Retrieve a service profile
+      description: 'Required permissions Beta Learn more
+
+
+        `ServiceProfile` + `Get`
+
+
+        Roles: Administrator User Observer
+
+
+        Retrieve a service profile with a given id.'
+      tags:
+      - serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        description: The Numeric ID of a Service Profile
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service_profiles_ServiceProfileByProfileIdGet_Response_200'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProfileByProfileIdGetRequestForbiddenError'
+      security:
+      - bearerAuth: []
+    delete:
+      operationId: serviceProfiles_ServiceProfileByProfileIdDelete
+      summary: Delete a service profile
+      description: 'Required permissions Beta Learn more
+
+
+        `ServiceProfile` + `Delete`
+
+
+        Roles: Administrator User
+
+
+        Deletes a service profile and all its associations with services and traffic limits.
+
+        A service profile can only be deleted if it is **not** selected on an endpoint.
+
+        If it is not selected on an endpoint, the used_count is 0.'
+      tags:
+      - serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        description: The Numeric ID of a Service Profile
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProfileByProfileIdDeleteRequestForbiddenError'
+        '409':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProfileByProfileIdDeleteRequestConflictError'
+      security:
+      - bearerAuth: []
+    patch:
+      operationId: serviceProfiles_ServiceProfileByProfileIdPatch
+      summary: Update service profile
+      description: 'Required permissions Beta Learn more
+
+
+        `ServiceProfile` + `Update`
+
+
+        Roles: Administrator User
+
+
+        Update a service profile with a given id.
+
+
+        Editable fields:
+
+        * `name` (String optional)
+
+        * `description` (String optional)
+
+        * `allowed_3g` (boolean optional)
+
+        * `allowed_4g` (boolean optional). Allows or restricts connectivity for 4G/LTE and LTE-M networks.
+
+        * `allowed_nb_iot` (boolean optional)
+
+        * **DEPRECATED** `apply_quota` (boolean optional, defaults to false). Use `apply_data_quota` instead. Will be ignored if `apply_data_quota` is present.
+
+        * `apply_data_quota` (boolean optional, defaults to false)
+
+        * `apply_sms_quota` (boolean optional, defaults to false)
+
+        * `retail` (boolean optional, defaults to false)
+
+        * `sms_p2p_int` (boolean optional, defaults to true)
+
+        * `sms_p2p_ext` (boolean optional, defaults to true)
+
+        * **DEPRECATED** `prepaid` (boolean optional, defaults to false)
+
+        * `nipdp` (boolean optional, defaults to false)
+
+        * `api_callback` (object optional) can be emptied by setting the id to null ("api_callback":{"id":null})
+
+        * `api_secret` (object optional) can be emptied by setting the id to null ("api_secret":{"id":null})
+
+        * `moc_callback` (object optional) can be emptied by setting the id to null ("moc_callback":{"id":null})
+
+        * `esme_interface_type` (object optional)
+
+        * `breakout_region` (object optional)
+
+        * `dns` (object optional)'
+      tags:
+      - serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        description: The Numeric ID of a Service Profile
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        '201':
+          description: Successfully updated the Service Profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service_profiles_ServiceProfileByProfileIdPatch_Response_201'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProfileByProfileIdPatchRequestForbiddenError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                allowed_3g:
+                  type: boolean
+                allowed_4g:
+                  type: boolean
+                allowed_nb_iot:
+                  type: boolean
+                allowed_nb_iot_geo:
+                  type: boolean
+                  description: Allows or restricts NB-IoT connectivity over satellite networks.
+                apply_sms_quota:
+                  type: boolean
+                apply_data_quota:
+                  type: boolean
+                retail:
+                  type: boolean
+                sms_p2p_int:
+                  type: boolean
+                sms_p2p_ext:
+                  type: boolean
+                prepaid:
+                  type: boolean
+                nipdp:
+                  type: boolean
+                api_callback:
+                  $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaApiCallback'
+                api_secret:
+                  $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaApiSecret'
+                moc_callback:
+                  $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaMocCallback'
+                esme_interface_type:
+                  $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaEsmeInterfaceType'
+                breakout_region:
+                  $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaBreakoutRegion'
+                dns:
+                  $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaDns'
+      security:
+      - bearerAuth: []
+  /api/v1/service_profile/{profile_id}/quota/{quota_type}:
+    delete:
+      operationId: serviceProfiles_DeleteQuotaByServiceProfileId
+      summary: Remove all quotas of assigned endpoints
+      description: 'Required permissions Beta Learn more
+
+
+        `ServiceProfile.Quota` + `Remove`
+
+
+        Roles: Administrator User
+
+
+        Remove all quotas of endpoints which are assigned to this profile. Notice that `apply_data_quota` and/or
+
+        `apply_sms_quota` have to be patched to false before, otherwise the endpoints will get blocked
+
+        for having no quota left.
+
+        This call will also return successfully if no endpoint is assigned or no quotas are set.'
+      tags:
+      - serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        description: The Numeric ID of a Service Profile
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: quota_type
+        in: path
+        description: The type of service of the quota, can be `data` or `sms`
+        required: true
+        schema:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdQuotaQuotaTypeDeleteParametersQuotaType'
+      responses:
+        '204':
+          description: Successfully deleted the quota of all (0 or more) assigned endpoints.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteQuotaByServiceProfileIdRequestForbiddenError'
+        '404':
+          description: Service profile not found or not part of this organisation.
+          content:
+            application/json:
+              schema:
+                description: Any type
+      security:
+      - bearerAuth: []
+  /api/v1/service_profile/{profile_id}/service/{service_id}:
+    put:
+      operationId: serviceProfiles_ServiceProfileServiceByProfileAndServicePut
+      summary: Add a service to a service profile
+      description: 'Required permissions Beta Learn more
+
+
+        `ServiceProfile.Service` + `Add`
+
+
+        Roles: Administrator User
+
+
+        Add service to the collection of services associated to a profile.
+
+        Multiple services can be assigned, but each only once.
+
+
+        Adding the voice service with an id of `3` to a service profile will be successful, but this feature **isn''t enabled** by the platform.'
+      tags:
+      - serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        description: The Numeric ID of a Service Profile
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: service_id
+        in: path
+        description: "The numeric ID corresponding to one of the following services:\n * `0` - USSD\n * `3` - Voice\n * `6` - SMS MT\n * `32` - SMS MO\n * `38` - Data\n\n <Error>\n  USSD and Voice services aren't available.\n </Error>\n"
+        required: true
+        schema:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdServiceServiceIdPutParametersServiceId'
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProfileServiceByProfileAndServicePutRequestForbiddenError'
+        '409':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProfileServiceByProfileAndServicePutRequestConflictError'
+      security:
+      - bearerAuth: []
+    delete:
+      operationId: serviceProfiles_ServiceProfileServiceByProfileAndServiceDelete
+      summary: Remove a service from a service profile
+      description: 'Required permissions Beta Learn more
+
+
+        `ServiceProfile.Service` + `Remove`
+
+
+        Roles: Administrator User
+
+
+        Remove service from the collection of services associated to a profile. A service can only be removed if it has no assigned traffic limits.'
+      tags:
+      - serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        description: The Numeric ID of a Service Profile
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: service_id
+        in: path
+        description: "The numeric ID corresponding to one of the following services:\n * `0` - USSD\n * `3` - Voice\n * `6` - SMS MT\n * `32` - SMS MO\n * `38` - Data\n\n <Error>\n  USSD and Voice services aren't available.\n </Error>\n"
+        required: true
+        schema:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdServiceServiceIdDeleteParametersServiceId'
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProfileServiceByProfileAndServiceDeleteRequestForbiddenError'
+        '409':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProfileServiceByProfileAndServiceDeleteRequestConflictError'
+      security:
+      - bearerAuth: []
+  /api/v1/service_profile/{profile_id}/service/{service_id}/traffic_limit/{limit_id}:
+    put:
+      operationId: serviceProfiles_AddTrafficLimit
+      summary: Add SMS limit to service profile
+      description: 'Required permissions Beta Learn more
+
+
+        `ServiceProfile.Service.TrafficLimit` + `Add`
+
+
+        Roles: Administrator User
+
+
+        Add SMS limit to a service policy.'
+      tags:
+      - serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        description: The Numeric ID of a Service Profile
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: limit_id
+        in: path
+        description: Numerical ID of a Traffic Limit
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: service_id
+        in: path
+        description: "The numeric ID corresponding to one of the following services:\n * `6` - SMS MT\n * `32` - SMS MO\n\n <Warning>\n  USSD, Voice and Data services aren't available.\n </Warning>\n"
+        required: true
+        schema:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdServiceServiceIdTrafficLimitLimitIdPutParametersServiceId'
+      responses:
+        '200':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service_profiles_AddTrafficLimit_Response_200'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddTrafficLimitRequestForbiddenError'
+        '404':
+          description: SMS limit not found
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '422':
+          description: General error happened when trying to add the SMS limit
+          content:
+            application/json:
+              schema:
+                description: Any type
+      security:
+      - bearerAuth: []
+    delete:
+      operationId: serviceProfiles_RemoveTrafficLimit
+      summary: Remove SMS limit from a service profile
+      description: 'Required permissions Beta Learn more
+
+
+        `ServiceProfile.Service.TrafficLimit` + `Delete`
+
+
+        Roles: Administrator User
+
+
+        Removes the SMS Limit (if any) from a given service profile.'
+      tags:
+      - serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        description: The Numeric ID of a Service Profile
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: limit_id
+        in: path
+        description: Numerical ID of a Traffic Limit
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: service_id
+        in: path
+        description: "The numeric ID corresponding to one of the following services:\n * `6` - SMS MT\n * `32` - SMS MO\n\n <Warning>\n  USSD, Voice and Data services aren't available.\n </Warning>\n"
+        required: true
+        schema:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdServiceServiceIdTrafficLimitLimitIdDeleteParametersServiceId'
+      responses:
+        '200':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service_profiles_RemoveTrafficLimit_Response_200'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RemoveTrafficLimitRequestForbiddenError'
+        '422':
+          description: General error happened when trying to add the SMS limit
+          content:
+            application/json:
+              schema:
+                description: Any type
+      security:
+      - bearerAuth: []
+  /api/v1/service_profile/{profile_id}/traffic_limit:
+    get:
+      operationId: serviceProfiles_ListServiceProfileTrafficLimits
+      summary: List data limits of a service profile
+      description: 'Required permissions Beta Learn more
+
+
+        `ServiceProfile.TrafficLimit` + `List`
+
+
+        Roles: Administrator User Observer
+
+
+        Lists the data limits of a service profile.
+
+        Each data limit has its own `volume`.
+
+
+        Data limits don''t turn off other traffic limits, but you can use them to get the same result.'
+      tags:
+      - serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        description: Numeric ID of the service profile.
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceProfileTrafficLimit'
+        '403':
+          description: 'The service profile doesn''t exist or doesn''t belong to your organization, or your role doesn''t include the permission to list data limits.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListServiceProfileTrafficLimitsRequestForbiddenError'
+      security:
+      - bearerAuth: []
+    post:
+      operationId: serviceProfiles_AddServiceProfileTrafficLimit
+      summary: Add a data limit to a service profile
+      description: 'Required permissions Beta Learn more
+
+
+        `ServiceProfile.TrafficLimit` + `Create`
+
+
+        Roles: Administrator User
+
+
+        Adds a data limit to a service profile.
+
+        A data limit defines how much data each device with this service profile can use in a period.
+
+        Use data limits to manage data usage and avoid overage charges.
+
+
+        In the request, set the service type, period, volume, and warning percentage.
+
+
+        Only users with the **User** or **Administrator** role can use this endpoint.
+
+        Adding a data limit that already exists returns a `409` error.
+
+
+        To change a data limit, delete it and add a new one.
+
+        The exception is a temporary traffic limit extension, which you can create without deleting the data limit.'
+      tags:
+      - serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        description: Numeric ID of the service profile.
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        '201':
+          description: 'The API created the data limit.
+
+            The response contains the new data limit.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProfileTrafficLimit'
+        '400':
+          description: 'The request body is invalid, for example because a required field is missing or a value isn''t supported.
+
+            `message` lists each invalid field.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddServiceProfileTrafficLimitRequestBadRequestError'
+        '403':
+          description: 'The service profile doesn''t exist or doesn''t belong to your organization, or your role doesn''t include the permission to manage data limits.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddServiceProfileTrafficLimitRequestForbiddenError'
+        '409':
+          description: 'The service profile already has a data limit for this service with the same `satellite_only` value.
+
+            To change a data limit, delete it and add a new one.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddServiceProfileTrafficLimitRequestConflictError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                service:
+                  $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaService'
+                  description: 'Service type to which the limit applies.
+
+                    The only supported service type is `Data`, which has an ID of `38`.
+
+                    '
+                satellite_only:
+                  type: boolean
+                  description: 'Which data traffic the limit counts.
+
+                    This field is required, even if your devices don''t use satellite connectivity.
+
+                    If you''re unsure which value to use, set it to `false`.
+
+
+                    - `false`: the limit counts data over all radio access technology (RAT) types. Use this for most data limits.
+
+                    - `true`: the limit only counts data over satellite RAT types. Satellite data costs more than other data, so use this to set a separate limit for it.
+
+
+                    A service profile can have one data limit with `false` and one with `true` for each service.
+
+                    '
+                period:
+                  $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaPeriod'
+                  description: 'Period of the limit.
+
+                    The only supported period is `Monthly`, which uses calendar months and has an ID of `2`.
+
+                    The limit resets at 00:00 UTC on the first day of each month.
+
+                    '
+                volume:
+                  type: integer
+                  format: int64
+                  minimum: 1
+                  maximum: 9007199254740990
+                  description: 'Limit threshold in the atomic units of the service type, which is bytes for data.
+
+                    It''s the amount of data each device can use in each period before it reaches the limit.
+
+                    '
+                warning_percent:
+                  type: integer
+                  minimum: 1
+                  maximum: 100
+                  description: 'Percentage of the limit volume at which the system sends an Endpoint data traffic limit warning event (event type `65`, see [Event type object](/developers/reference/events#event-type-object)).
+
+                    For example, if you set it to `80`, the system sends the event when a device has used 80% of the limit volume.
+
+                    '
+              required:
+              - service
+              - satellite_only
+              - period
+              - volume
+      security:
+      - bearerAuth: []
+    delete:
+      operationId: serviceProfiles_RemoveServiceProfileTrafficLimits
+      summary: Delete all data limits of a service profile
+      description: 'Required permissions Beta Learn more
+
+
+        `ServiceProfile.TrafficLimit` + `Delete` +1 endpoint
+
+
+        Roles: Administrator User
+
+
+        Deletes all data limits of a service profile.
+
+        Other traffic limits on the service profile aren''t affected.'
+      tags:
+      - serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        description: Numeric ID of the service profile.
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        '204':
+          description: The API deleted all data limits of the service profile.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: 'The service profile doesn''t exist or doesn''t belong to your organization, or your role doesn''t include the permission to manage data limits.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RemoveServiceProfileTrafficLimitsRequestForbiddenError'
+      security:
+      - bearerAuth: []
+  /api/v1/service_profile/{profile_id}/traffic_limit/{limit_id}:
+    delete:
+      operationId: serviceProfiles_DeleteServiceProfileTrafficLimit
+      summary: Delete a data limit from a service profile
+      description: 'Required permissions Beta Learn more
+
+
+        `ServiceProfile.TrafficLimit` + `Delete` +1 endpoint
+
+
+        Roles: Administrator User
+
+
+        Deletes one data limit from a service profile.'
+      tags:
+      - serviceProfiles
+      parameters:
+      - name: profile_id
+        in: path
+        description: Numeric ID of the service profile.
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: limit_id
+        in: path
+        description: Numeric ID of the data limit.
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        '204':
+          description: The API deleted the data limit.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: 'The service profile doesn''t exist or doesn''t belong to your organization, or your role doesn''t include the permission to manage data limits.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteServiceProfileTrafficLimitRequestForbiddenError'
+        '404':
+          description: The data limit doesn't exist on this service profile.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteServiceProfileTrafficLimitRequestNotFoundError'
+      security:
+      - bearerAuth: []
+  /api/v1/service_profile/{service_profile_id}/d2d:
+    get:
+      operationId: serviceProfiles_ServiceProfileDeviceToDeviceGet
+      summary: Retrieve device-to-device mode of a service profile
+      description: 'Required permissions Beta Learn more
+
+
+        `ServiceProfile.D2d` + `Get`
+
+
+        Roles: Administrator
+
+
+        Retrieves the device-to-device (D2D) mode of a service profile.
+
+        D2D controls whether devices assigned to the service profile can exchange IP traffic with other devices in the same organization and region.
+
+
+        A service profile that has never been configured returns `disabled` with `modified_at` set to `null`.
+
+
+        Device-to-device is opt-in and enabled per organization.
+
+        Until it''s enabled for your organization, requests return `403`.
+
+        To request access, contact emnify support.'
+      tags:
+      - serviceProfiles
+      parameters:
+      - name: service_profile_id
+        in: path
+        description: The numeric ID of a service profile.
+        required: true
+        schema:
+          type: integer
+      - name: org_id
+        in: query
+        description: 'Numeric ID of a child organization to act on.
+
+          Omit to use your own organization.
+
+          Returns `403` if the organization isn''t a child of yours.
+
+          The service profile must belong to that organization, and device-to-device must be enabled for it.
+
+          '
+        required: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProfileDeviceToDevice'
+        '401':
+          description: Missing or invalid Authorization header.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: Your user doesn't have the required permission, device-to-device isn't enabled for the organization, or `org_id` isn't a child organization.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProfileDeviceToDeviceGetRequestForbiddenError'
+        '404':
+          description: Service profile not found, or it belongs to another organization.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '422':
+          description: '`service_profile_id` or `org_id` isn''t a number.'
+          content:
+            application/json:
+              schema:
+                description: Any type
+      security:
+      - bearerAuth: []
+    put:
+      operationId: serviceProfiles_ServiceProfileDeviceToDevicePut
+      summary: Update device-to-device mode of a service profile
+      description: 'Required permissions Beta Learn more
+
+
+        `ServiceProfile.D2d` + `Update`
+
+
+        Roles: Administrator
+
+
+        Sets the device-to-device (D2D) mode of a service profile.
+
+        The response returns the updated configuration, so there''s no need for a follow-up `GET` request.
+
+
+        For devices to communicate, enable device-to-device on the service profile of every device involved.
+
+        If only one side is enabled, return traffic is blocked.
+
+        Devices must belong to the same organization and region.
+
+        Communication across organizations or regions isn''t supported.
+
+
+        Setting `enabled` or `forward_to_backend` requires your organization to have a virtual network.
+
+        Setting `disabled` doesn''t require a virtual network.
+
+        Changes take effect without devices reconnecting.
+
+
+        `forward_to_backend` only prepares the configuration.
+
+        It requires a default route over Cloud Connect, and OpenVPN isn''t supported.
+
+        The API accepts the mode without checking your Cloud Connect configuration and returns a warning instead.
+
+        Traffic between devices is dropped until the setup is complete.
+
+
+        Device-to-device is opt-in and enabled per organization.
+
+        Until it''s enabled for your organization, requests return `403`.
+
+        To request access, contact emnify support.'
+      tags:
+      - serviceProfiles
+      parameters:
+      - name: service_profile_id
+        in: path
+        description: The numeric ID of a service profile.
+        required: true
+        schema:
+          type: integer
+      - name: org_id
+        in: query
+        description: 'Numeric ID of a child organization to act on.
+
+          Omit to use your own organization.
+
+          Returns `403` if the organization isn''t a child of yours.
+
+          The service profile must belong to that organization, and device-to-device must be enabled for it.
+
+          '
+        required: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Device-to-device mode updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProfileDeviceToDevice'
+        '400':
+          description: Invalid payload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProfileDeviceToDevicePutRequestBadRequestError'
+        '401':
+          description: Missing or invalid Authorization header.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: Your user doesn't have the required permission, device-to-device isn't enabled for the organization, or `org_id` isn't a child organization.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProfileDeviceToDevicePutRequestForbiddenError'
+        '404':
+          description: Service profile not found, or it belongs to another organization.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '409':
+          description: 'The organization doesn''t have a virtual network, so `enabled` and `forward_to_backend` can''t be set.
+
+            Contact emnify support to set one up.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProfileDeviceToDevicePutRequestConflictError'
+        '422':
+          description: '`service_profile_id` or `org_id` isn''t a number.'
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '503':
+          description: The configuration couldn't be applied. Retry the request.
+          content:
+            application/json:
+              schema:
+                description: Any type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mode:
+                  $ref: '#/components/schemas/ApiV1ServiceProfileServiceProfileIdD2DPutRequestBodyContentApplicationJsonSchemaMode'
+                  description: 'Device-to-device mode to set.
+
+                    The value is case-insensitive.
+
+                    '
+              required:
+              - mode
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsDnsFirewallRuleSetMode:
+      type: string
+      enum:
+      - allowlist
+      - blocklist
+      title: ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsDnsFirewallRuleSetMode
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaEsmeInterfaceType:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaEsmeInterfaceType
+    Service_profiles_ServiceProfileByProfileIdPatch_Response_201:
+      type: object
+      properties: {}
+      title: Service profiles_ServiceProfileByProfileIdPatch_Response_201
+    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaDns:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaDns
+    DeleteServiceProfileTrafficLimitRequestNotFoundError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: DeleteServiceProfileTrafficLimitRequestNotFoundError
+    RemoveServiceProfileTrafficLimitsRequestForbiddenError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: RemoveServiceProfileTrafficLimitsRequestForbiddenError
+    ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsIpFirewallRuleSet:
+      type: object
+      properties:
+        ip_firewall_profiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsIpFirewallRuleSetIpFirewallProfilesItems'
+        enforce:
+          type: boolean
+      title: ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsIpFirewallRuleSet
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaServiceItems:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaServiceItems
+    ServiceProfileTrafficLimit:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+          description: ID of the data limit.
+        service:
+          $ref: '#/components/schemas/ServiceProfileTrafficLimitService'
+          description: Service type to which the limit applies.
+        satellite_only:
+          type: boolean
+          description: 'Which data traffic the limit counts.
+
+            If `false`, the limit counts data over all radio access technology (RAT) types.
+
+            If `true`, it only counts data over satellite RAT types.
+
+            Satellite data costs more than other data.
+
+            '
+        period:
+          $ref: '#/components/schemas/ServiceProfileTrafficLimitPeriod'
+          description: Period of the limit.
+        volume:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 9007199254740990
+          description: Limit threshold in the atomic units of the service type, which is bytes for data.
+        warning_percent:
+          type: integer
+          minimum: 1
+          maximum: 100
+          description: 'Percentage of the limit volume at which the system sends an Endpoint data traffic limit warning event (event type `65`, see [Event type object](/developers/reference/events#event-type-object)).
+
+            Only present if the data limit has a warning percentage.
+
+            '
+      required:
+      - id
+      - service
+      - satellite_only
+      - period
+      - volume
+      description: A data limit of a service profile.
+      title: ServiceProfileTrafficLimit
+    AddTrafficLimitRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: AddTrafficLimitRequestForbiddenError
+    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaApiCallback:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaApiCallback
+    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaEsmeInterfaceType:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaEsmeInterfaceType
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaDnsFirewallRuleSet:
+      type: object
+      properties:
+        dns_firewall_profiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaDnsFirewallRuleSetDnsFirewallProfilesItems'
+        enforce:
+          type: boolean
+        mode:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaDnsFirewallRuleSetMode'
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaDnsFirewallRuleSet
+    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaApiSecret:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaApiSecret
+    ServiceProfileDeviceToDeviceGetRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ServiceProfileDeviceToDeviceGetRequestForbiddenError
+    ApiV1ServiceProfileProfileIdServiceServiceIdTrafficLimitLimitIdPutParametersServiceId:
+      type: string
+      enum:
+      - '6'
+      - '32'
+      title: ApiV1ServiceProfileProfileIdServiceServiceIdTrafficLimitLimitIdPutParametersServiceId
+    AddServiceProfileTrafficLimitRequestConflictError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: AddServiceProfileTrafficLimitRequestConflictError
+    ApiV1ServiceProfileServiceProfileIdD2DPutRequestBodyContentApplicationJsonSchemaMode:
+      type: string
+      enum:
+      - disabled
+      - enabled
+      - forward_to_backend
+      description: 'Device-to-device mode to set.
+
+        The value is case-insensitive.
+
+        '
+      title: ApiV1ServiceProfileServiceProfileIdD2DPutRequestBodyContentApplicationJsonSchemaMode
+    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaMocCallback:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaMocCallback
+    Service_profiles_AddTrafficLimit_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Service profiles_AddTrafficLimit_Response_200
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaMocCallback:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaMocCallback
+    ServiceProfileDeviceToDevicePutRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ServiceProfileDeviceToDevicePutRequestForbiddenError
+    ServiceProfileDeviceToDevice:
+      type: object
+      properties:
+        service_profile_id:
+          type: integer
+          description: ID of the service profile.
+        mode:
+          $ref: '#/components/schemas/ServiceProfileDeviceToDeviceMode'
+          description: 'Device-to-device mode of the service profile:
+
+
+            - `disabled` (default): Traffic between devices is dropped.
+
+            - `enabled`: Traffic is delivered directly between devices, as long as the service profiles of both devices have device-to-device enabled.
+
+            - `forward_to_backend`: Traffic between devices is routed through your Cloud Connect backend, for example so your own firewall can inspect it.
+
+            '
+        modified_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: 'When the mode was last changed.
+
+            `null` if device-to-device has never been configured on the service profile.
+
+            '
+        warnings:
+          type: array
+          items:
+            type: string
+          description: 'Advisory messages about the configuration.
+
+            Only present in `PUT` responses, and only when there''s something to report, for example after setting `forward_to_backend`.
+
+            '
+      required:
+      - service_profile_id
+      - mode
+      - modified_at
+      title: ServiceProfileDeviceToDevice
+    ServiceProfileServiceByProfileAndServiceDeleteRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: ServiceProfileServiceByProfileAndServiceDeleteRequestForbiddenError
+    ServiceProfileServiceByProfileAndServicePutRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ServiceProfileServiceByProfileAndServicePutRequestConflictError
+    Service_profiles_ServiceProfileByProfileIdGet_Response_200:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        allowed_3g:
+          type: boolean
+        allowed_4g:
+          type: boolean
+        allowed_nb_iot:
+          type: boolean
+        allowed_nb_iot_geo:
+          type: boolean
+        apply_sms_quota:
+          type: boolean
+        apply_data_quota:
+          type: boolean
+        retail:
+          type: boolean
+        sms_p2p_int:
+          type: boolean
+        sms_p2p_ext:
+          type: boolean
+        prepaid:
+          type: boolean
+        nipdp:
+          type: boolean
+        used_count:
+          type: integer
+        api_callback:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaApiCallback'
+        api_secret:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaApiSecret'
+        moc_callback:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaMocCallback'
+        esme_interface_type:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaEsmeInterfaceType'
+        breakout_region:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaBreakoutRegion'
+        service:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaServiceItems'
+        ip_firewall_rule_set:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaIpFirewallRuleSet'
+        dns_firewall_rule_set:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaDnsFirewallRuleSet'
+      title: Service profiles_ServiceProfileByProfileIdGet_Response_200
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaIpFirewallRuleSetIpFirewallProfilesItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        added:
+          type: string
+          format: date-time
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaIpFirewallRuleSetIpFirewallProfilesItems
+    ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsDnsFirewallRuleSetDnsFirewallProfilesItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        added:
+          type: string
+          format: date-time
+      title: ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsDnsFirewallRuleSetDnsFirewallProfilesItems
+    ServiceProfileDeviceToDevicePutRequestBadRequestError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ServiceProfileDeviceToDevicePutRequestBadRequestError
+    ServiceProfileServiceByProfileAndServicePutRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: ServiceProfileServiceByProfileAndServicePutRequestForbiddenError
+    ServiceProfileByProfileIdDeleteRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: ServiceProfileByProfileIdDeleteRequestForbiddenError
+    ServiceProfileDeviceToDevicePutRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ServiceProfileDeviceToDevicePutRequestConflictError
+    AddServiceProfileTrafficLimitRequestBadRequestError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: AddServiceProfileTrafficLimitRequestBadRequestError
+    ServiceProfileByProfileIdGetRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: ServiceProfileByProfileIdGetRequestForbiddenError
+    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaBreakoutRegion:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaBreakoutRegion
+    DeleteServiceProfileTrafficLimitRequestForbiddenError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: DeleteServiceProfileTrafficLimitRequestForbiddenError
+    ListServiceProfileTrafficLimitsRequestForbiddenError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: ListServiceProfileTrafficLimitsRequestForbiddenError
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaApiSecret:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaApiSecret
+    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaEsmeInterfaceType:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaEsmeInterfaceType
+    ServiceProfileTrafficLimitService:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      description: Service type to which the limit applies.
+      title: ServiceProfileTrafficLimitService
+    ApiV1ServiceProfileProfileIdQuotaQuotaTypeDeleteParametersQuotaType:
+      type: string
+      enum:
+      - data
+      - sms
+      title: ApiV1ServiceProfileProfileIdQuotaQuotaTypeDeleteParametersQuotaType
+    ServiceProfileServiceByProfileAndServiceDeleteRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ServiceProfileServiceByProfileAndServiceDeleteRequestConflictError
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaDnsFirewallRuleSetDnsFirewallProfilesItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        added:
+          type: string
+          format: date-time
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaDnsFirewallRuleSetDnsFirewallProfilesItems
+    ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaServiceId:
+      type: string
+      enum:
+      - '38'
+      title: ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaServiceId
+    ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsDnsFirewallRuleSet:
+      type: object
+      properties:
+        dns_firewall_profiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsDnsFirewallRuleSetDnsFirewallProfilesItems'
+        enforce:
+          type: boolean
+        mode:
+          $ref: '#/components/schemas/ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsDnsFirewallRuleSetMode'
+      title: ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsDnsFirewallRuleSet
+    ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaPeriod:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaPeriodId'
+      description: 'Period of the limit.
+
+        The only supported period is `Monthly`, which uses calendar months and has an ID of `2`.
+
+        The limit resets at 00:00 UTC on the first day of each month.
+
+        '
+      title: ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaPeriod
+    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaDns:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaDns
+    ApiV1ServiceProfileProfileIdServiceServiceIdDeleteParametersServiceId:
+      type: string
+      enum:
+      - '0'
+      - '3'
+      - '6'
+      - '32'
+      - '38'
+      title: ApiV1ServiceProfileProfileIdServiceServiceIdDeleteParametersServiceId
+    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaBreakoutRegion:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaBreakoutRegion
+    ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsIpFirewallRuleSetIpFirewallProfilesItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        added:
+          type: string
+          format: date-time
+      title: ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsIpFirewallRuleSetIpFirewallProfilesItems
+    Service_profiles_RemoveTrafficLimit_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Service profiles_RemoveTrafficLimit_Response_200
+    ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaService:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaServiceId'
+      description: 'Service type to which the limit applies.
+
+        The only supported service type is `Data`, which has an ID of `38`.
+
+        '
+      title: ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaService
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaBreakoutRegion:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaBreakoutRegion
+    ApiV1ServiceProfileProfileIdServiceServiceIdTrafficLimitLimitIdDeleteParametersServiceId:
+      type: string
+      enum:
+      - '6'
+      - '32'
+      title: ApiV1ServiceProfileProfileIdServiceServiceIdTrafficLimitLimitIdDeleteParametersServiceId
+    Service_profiles_ServiceProfilePost_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Service profiles_ServiceProfilePost_Response_201
+    ServiceProfileByProfileIdPatchRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: ServiceProfileByProfileIdPatchRequestForbiddenError
+    ApiV1ServiceProfileProfileIdServiceServiceIdPutParametersServiceId:
+      type: string
+      enum:
+      - '0'
+      - '3'
+      - '6'
+      - '32'
+      - '38'
+      title: ApiV1ServiceProfileProfileIdServiceServiceIdPutParametersServiceId
+    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaApiSecret:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaApiSecret
+    RemoveTrafficLimitRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: RemoveTrafficLimitRequestForbiddenError
+    ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaMocCallback:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfilePostRequestBodyContentApplicationJsonSchemaMocCallback
+    ServiceProfileByProfileIdDeleteRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ServiceProfileByProfileIdDeleteRequestConflictError
+    ServiceProfileTrafficLimitPeriod:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        time_units:
+          type: number
+          format: double
+        unit:
+          type: string
+      description: Period of the limit.
+      title: ServiceProfileTrafficLimitPeriod
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaIpFirewallRuleSet:
+      type: object
+      properties:
+        ip_firewall_profiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaIpFirewallRuleSetIpFirewallProfilesItems'
+        enforce:
+          type: boolean
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaIpFirewallRuleSet
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaDnsFirewallRuleSetMode:
+      type: string
+      enum:
+      - allowlist
+      - blocklist
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaDnsFirewallRuleSetMode
+    ServiceProfilePostRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: ServiceProfilePostRequestForbiddenError
+    ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaPeriodId:
+      type: string
+      enum:
+      - '2'
+      title: ApiV1ServiceProfileProfileIdTrafficLimitPostRequestBodyContentApplicationJsonSchemaPeriodId
+    ServiceProfileDeviceToDeviceMode:
+      type: string
+      enum:
+      - disabled
+      - enabled
+      - forward_to_backend
+      description: 'Device-to-device mode of the service profile:
+
+
+        - `disabled` (default): Traffic between devices is dropped.
+
+        - `enabled`: Traffic is delivered directly between devices, as long as the service profiles of both devices have device-to-device enabled.
+
+        - `forward_to_backend`: Traffic between devices is routed through your Cloud Connect backend, for example so your own firewall can inspect it.
+
+        '
+      title: ServiceProfileDeviceToDeviceMode
+    AddServiceProfileTrafficLimitRequestForbiddenError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: AddServiceProfileTrafficLimitRequestForbiddenError
+    ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaApiCallback:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdPatchRequestBodyContentApplicationJsonSchemaApiCallback
+    ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaApiCallback:
+      type: object
+      properties: {}
+      title: ApiV1ServiceProfileProfileIdGetResponsesContentApplicationJsonSchemaApiCallback
+    ServiceProfileGetRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: ServiceProfileGetRequestForbiddenError
+    DeleteQuotaByServiceProfileIdRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: DeleteQuotaByServiceProfileIdRequestForbiddenError
+    ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        used_count:
+          type: string
+        allowed_3g:
+          type: boolean
+        allowed_4g:
+          type: boolean
+        allowed_nb_iot:
+          type: boolean
+        allowed_nb_iot_geo:
+          type: boolean
+        apply_sms_quota:
+          type: boolean
+        apply_data_quota:
+          type: boolean
+        ip_firewall_rule_set:
+          $ref: '#/components/schemas/ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsIpFirewallRuleSet'
+        dns_firewall_rule_set:
+          $ref: '#/components/schemas/ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItemsDnsFirewallRuleSet'
+      title: ApiV1ServiceProfileGetResponsesContentApplicationJsonSchemaItems
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'An `auth_token` should be provided to authenticate a session.
+
+
+        To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+        '

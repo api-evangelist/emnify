@@ -1,0 +1,606 @@
+openapi: 3.2.0
+info:
+  title: Enterprise Flow Logs API
+  version: 1.0.0
+  description: Network Flow Log records for device traffic observability
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API
+tags:
+- name: flowLogs
+  description: Network Flow Log records for device traffic observability
+paths:
+  /api/v1/endpoint/{endpointId}/flowlogs/destination:
+    get:
+      operationId: flowLogs_ListEndpointFlowLogsByDestination
+      summary: Retrieve Flow Logs by destination
+      description: 'Required permissions Beta Learn more
+
+
+        `Endpoint.FlowLogs.Destination` + `List`
+
+
+        Roles: Administrator
+
+
+        Retrieves Flow Log activity for an endpoint, grouped by destination hostname, IP address, port, and protocol.
+
+
+        By default, the response covers the last hour.
+
+        Use `started_from` in the `q` parameter to look back up to **30 days**.
+
+
+        Filters follow the standard `q=:` syntax:
+
+        - Combine multiple filters on different fields with `,` (AND).
+
+        - Combine multiple values for the same field with `||` (OR).
+
+
+        Use `sort` to order the results and `page` / `per_page` to paginate.'
+      tags:
+      - flowLogs
+      parameters:
+      - name: endpointId
+        in: path
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: per_page
+        in: query
+        description: Number of destination groups to return per page.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 25
+      - name: page
+        in: query
+        description: 'Page number to retrieve.
+
+          Starts at `1`.
+
+          '
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+      - name: sort
+        in: query
+        description: 'Sorts destination groups by field value.
+
+          Use `<operator><field>` format.
+
+          Operators: `-` descending, `+` ascending.
+
+
+          <Tip>
+
+          You can also combine multiple sort fields with commas (for example, `-started_on,destination_hostname`).
+
+          </Tip>
+
+          '
+        required: false
+        schema:
+          type: string
+          pattern: '(^-?(destination_hostname|
+
+            destination_ip|
+
+            destination_port|
+
+            protocol|
+
+            started_on|
+
+            completed_on|
+
+            bytes_up|
+
+            bytes_down)),?'
+          default: -started_on
+      - name: q
+        in: query
+        description: "Filters destination groups by field value.\nUse `<field>:<criteria>` format.\n\nCombine multiple filters with commas (for example, `protocol:TCP,destination_hostname:api.example.com`).\nUse `||` within one field for multiple values (for example, `protocol:TCP||UDP`).\n\nTime window (optional, each as `<field>:<ISO-8601 UTC>`):\n\n- `started_from` - Lower bound on flow start\n  - Defaults to 1 hour ago\n  - Maximum look-back 30 days.\n- `started_until` - Upper bound on flow start\n  - Defaults to now.\n- `completed_from` / `completed_until` - Bounds on flow completion time.\n\n<Warning>\n  Window fields must use `:` only (no other operators).\n</Warning>\n"
+        required: false
+        schema:
+          type: string
+          pattern: '(destination_hostname|
+
+            destination_ip|
+
+            destination_port|
+
+            protocol|
+
+            started_from|
+
+            started_until|
+
+            completed_from|
+
+            completed_until):.+'
+      responses:
+        '200':
+          description: Destination groups for the requested window.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1EndpointEndpointIdFlowlogsDestinationGetResponsesContentApplicationJsonSchemaItems'
+        '400':
+          description: 'The request is malformed.
+
+
+            Common causes:
+
+
+            - Invalid filter expression syntax in `q`
+
+            - Invalid value for a filter or sort field
+
+            - Datetime not in ISO-8601 format
+
+            - Requested window exceeds the 30-day maximum
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListEndpointFlowLogsByDestinationRequestBadRequestError'
+        '401':
+          description: No token given.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListEndpointFlowLogsByDestinationRequestUnauthorizedError'
+        '403':
+          description: Caller lacks permission or the feature is not enabled for the organization.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListEndpointFlowLogsByDestinationRequestForbiddenError'
+        '404':
+          description: Endpoint with ID <number> not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListEndpointFlowLogsByDestinationRequestNotFoundError'
+      security:
+      - bearerAuth: []
+  /api/v1/endpoint/{endpointId}/flowlogs/detail:
+    get:
+      operationId: flowLogs_ListEndpointFlowLogsDetail
+      summary: List Flow Log details
+      description: 'Required permissions Beta Learn more
+
+
+        `Endpoint.FlowLogs.Detail` + `List`
+
+
+        Roles: Administrator
+
+
+        Returns individual (non-aggregated) Flow Log rows for a device, with pagination, filtering, and sorting.
+
+        Each row includes information such as `destination_ip`, `destination_port`, `protocol`, `bytes_up`, and `bytes_down`, and, when available, the `destination_hostname`, `pdp_context`, country, and network.
+
+
+        By default, the response covers the last hour.
+
+        Use `started_from` in the `q` parameter to look back up to **30 days**.
+
+
+        Filters follow the standard `q=:` syntax:
+
+        - Combine multiple filters on different fields with `,` (AND).
+
+        - Combine multiple values for the same field with `||` (OR).
+
+
+        Use `sort` to order the results and `page` / `per_page` to paginate.'
+      tags:
+      - flowLogs
+      parameters:
+      - name: endpointId
+        in: path
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: per_page
+        in: query
+        description: Number of detail rows to return per page.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 1000
+          default: 25
+      - name: page
+        in: query
+        description: 'Page number to retrieve.
+
+          Starts at `1`.
+
+          '
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+      - name: sort
+        in: query
+        description: 'Sorts detail rows by field value.
+
+          Use `<operator><field>` format.
+
+          Operators: `-` descending, `+` ascending.
+
+
+          <Tip>
+
+          You can also combine multiple sort fields with commas (for example, `-started_on,destination_hostname`).
+
+          </Tip>
+
+          '
+        required: false
+        schema:
+          type: string
+          pattern: '(^-?(destination_hostname|
+
+            destination_ip|
+
+            destination_port|
+
+            protocol|
+
+            started_on|
+
+            completed_on|
+
+            bytes_up|
+
+            bytes_down)),?'
+          default: -started_on
+      - name: q
+        in: query
+        description: "Filters detail rows by field value.\nUse `<field>:<criteria>` format.\n\nCombine multiple filters with commas (for example, `protocol:TCP,destination_hostname:api.example.com`).\nUse `||` within one field for multiple values (for example, `protocol:TCP||UDP`).\n\nSupported keys: `destination_hostname`, `destination_ip`, `destination_port`, `protocol`, `flow_id`, `event_type`.\n\nTime window (optional, each as `<field>:<ISO-8601 UTC>`):\n\n- `started_from` - Lower bound on flow start\n  - Defaults to 1 hour ago\n  - Maximum look-back 30 days.\n- `started_until` - Upper bound on flow start\n  - Defaults to now.\n- `completed_from` / `completed_until` - Bounds on flow completion time.\n\n<Warning>\n  Window fields must use `:` only (no other operators).\n</Warning>\n"
+        required: false
+        schema:
+          type: string
+          pattern: '(destination_hostname|
+
+            destination_ip|
+
+            destination_port|
+
+            protocol|
+
+            flow_id|
+
+            event_type|
+
+            started_from|
+
+            started_until|
+
+            completed_from|
+
+            completed_until):.+'
+      responses:
+        '200':
+          description: Detail rows for the requested filter window.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1EndpointEndpointIdFlowlogsDetailGetResponsesContentApplicationJsonSchemaItems'
+        '400':
+          description: 'The request is malformed.
+
+
+            Common causes:
+
+
+            - Invalid filter expression syntax in `q`
+
+            - Invalid value for a filter or sort field
+
+            - Datetime not in ISO-8601 format
+
+            - Requested window exceeds the 30-day maximum
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListEndpointFlowLogsDetailRequestBadRequestError'
+        '401':
+          description: No token given.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListEndpointFlowLogsDetailRequestUnauthorizedError'
+        '403':
+          description: Caller lacks permission or the feature is not enabled for the organization.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListEndpointFlowLogsDetailRequestForbiddenError'
+        '404':
+          description: Endpoint with ID <number> not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListEndpointFlowLogsDetailRequestNotFoundError'
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    ListEndpointFlowLogsDetailRequestNotFoundError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: ListEndpointFlowLogsDetailRequestNotFoundError
+    ListEndpointFlowLogsByDestinationRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+      title: ListEndpointFlowLogsByDestinationRequestUnauthorizedError
+    ListEndpointFlowLogsByDestinationRequestNotFoundError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: ListEndpointFlowLogsByDestinationRequestNotFoundError
+    ListEndpointFlowLogsDetailRequestForbiddenError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: ListEndpointFlowLogsDetailRequestForbiddenError
+    ApiV1EndpointEndpointIdFlowlogsDetailGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        flow_id:
+          type: string
+          description: Unique identifier of the flow.
+        organisation_id:
+          type: integer
+          description: Identifier of the organization that owns the endpoint.
+        endpoint_id:
+          type: integer
+          description: Identifier of the endpoint the flow belongs to.
+        started_on:
+          type: string
+          format: date-time
+          description: Start time of the flow.
+        completed_on:
+          type: string
+          format: date-time
+          description: Completion time of the flow.
+        duration_seconds:
+          type: integer
+          description: Duration of the flow in seconds.
+        event_type:
+          type: string
+          description: Type of flow event (for example, `flow_start`, `flow_update`).
+        direction:
+          type: string
+          description: Direction of the flow (for example, `ingress`, `egress`).
+        source_ip:
+          type: string
+          description: Source IP address of the flow.
+        source_port:
+          type: integer
+          description: Source port of the flow.
+        destination_ip:
+          type: string
+          description: IP address of the destination.
+        destination_port:
+          type: integer
+          description: Destination port number.
+        protocol:
+          type: string
+          description: Transport protocol (for example, `TCP`, `UDP`).
+        bytes_up:
+          type: integer
+          description: Total bytes uploaded to the destination.
+        bytes_down:
+          type: integer
+          description: Total bytes downloaded from the destination.
+        destination_hostname:
+          type:
+          - string
+          - 'null'
+          description: Hostname of the destination, if resolved.
+        destination_hostname_source:
+          type:
+          - string
+          - 'null'
+          description: Source used to resolve the destination hostname (for example, `TLS_SNI`, `reverse_dns`).
+        nat_details:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV1EndpointEndpointIdFlowlogsDetailGetResponsesContentApplicationJsonSchemaItemsNatDetails'
+          - type: 'null'
+          description: Network address translation details, if available.
+        pdp_context:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV1EndpointEndpointIdFlowlogsDetailGetResponsesContentApplicationJsonSchemaItemsPdpContext'
+          - type: 'null'
+          description: PDP context information for the flow, if available.
+        release_details:
+          oneOf:
+          - $ref: '#/components/schemas/ApiV1EndpointEndpointIdFlowlogsDetailGetResponsesContentApplicationJsonSchemaItemsReleaseDetails'
+          - type: 'null'
+          description: Details about how the flow was released, if available.
+        session_id:
+          type: string
+          description: Identifier of the PDP session the flow belongs to.
+        last_loaded_at:
+          type: string
+          format: date-time
+          description: Time the flow record was last loaded.
+      title: ApiV1EndpointEndpointIdFlowlogsDetailGetResponsesContentApplicationJsonSchemaItems
+    ApiV1EndpointEndpointIdFlowlogsDetailGetResponsesContentApplicationJsonSchemaItemsPdpContextCountry:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Country name.
+        country_code:
+          type: string
+          description: International dialing code.
+        iso_code:
+          type: string
+          description: ISO country code.
+        id:
+          type: integer
+          description: Identifier of the country.
+      description: Country associated with the network.
+      title: ApiV1EndpointEndpointIdFlowlogsDetailGetResponsesContentApplicationJsonSchemaItemsPdpContextCountry
+    ApiV1EndpointEndpointIdFlowlogsDetailGetResponsesContentApplicationJsonSchemaItemsPdpContextOperator:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of the operator.
+        name:
+          type: string
+          description: Name of the operator.
+      description: Mobile network operator associated with the PDP context.
+      title: ApiV1EndpointEndpointIdFlowlogsDetailGetResponsesContentApplicationJsonSchemaItemsPdpContextOperator
+    ListEndpointFlowLogsDetailRequestBadRequestError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: ListEndpointFlowLogsDetailRequestBadRequestError
+    ListEndpointFlowLogsByDestinationRequestBadRequestError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: ListEndpointFlowLogsByDestinationRequestBadRequestError
+    ListEndpointFlowLogsByDestinationRequestForbiddenError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: ListEndpointFlowLogsByDestinationRequestForbiddenError
+    ApiV1EndpointEndpointIdFlowlogsDetailGetResponsesContentApplicationJsonSchemaItemsPdpContext:
+      type: object
+      properties:
+        mcc:
+          type: string
+          description: Mobile country code.
+        mnc:
+          type: string
+          description: Mobile network code.
+        apn:
+          type: string
+          description: Access point name (APN) used for the PDP context.
+        imsi:
+          type: string
+          description: International Mobile Subscriber Identity of the SIM.
+        country:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdFlowlogsDetailGetResponsesContentApplicationJsonSchemaItemsPdpContextCountry'
+          description: Country associated with the network.
+        operator:
+          $ref: '#/components/schemas/ApiV1EndpointEndpointIdFlowlogsDetailGetResponsesContentApplicationJsonSchemaItemsPdpContextOperator'
+          description: Mobile network operator associated with the PDP context.
+      description: PDP context information for the flow, if available.
+      title: ApiV1EndpointEndpointIdFlowlogsDetailGetResponsesContentApplicationJsonSchemaItemsPdpContext
+    ListEndpointFlowLogsDetailRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+      title: ListEndpointFlowLogsDetailRequestUnauthorizedError
+    ApiV1EndpointEndpointIdFlowlogsDestinationGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        destination_hostname:
+          type:
+          - string
+          - 'null'
+          description: Hostname of the destination, if resolved.
+        destination_ip:
+          type: string
+          description: IP address of the destination.
+        destination_port:
+          type: integer
+          description: Destination port number.
+        protocol:
+          type: string
+          description: Transport protocol (for example, `TCP`, `UDP`).
+        started_on:
+          type: string
+          format: date-time
+          description: Earliest start time across the aggregated flows.
+        completed_on:
+          type: string
+          format: date-time
+          description: Latest completion time across the aggregated flows.
+        bytes_up:
+          type: integer
+          description: Total bytes uploaded to the destination.
+        bytes_down:
+          type: integer
+          description: Total bytes downloaded from the destination.
+        flow_count:
+          type: integer
+          description: Number of flows aggregated into this destination group.
+      title: ApiV1EndpointEndpointIdFlowlogsDestinationGetResponsesContentApplicationJsonSchemaItems
+    ApiV1EndpointEndpointIdFlowlogsDetailGetResponsesContentApplicationJsonSchemaItemsNatDetails:
+      type: object
+      properties:
+        public_ip:
+          type: string
+          description: Public IP address used for the flow.
+      description: Network address translation details, if available.
+      title: ApiV1EndpointEndpointIdFlowlogsDetailGetResponsesContentApplicationJsonSchemaItemsNatDetails
+    ApiV1EndpointEndpointIdFlowlogsDetailGetResponsesContentApplicationJsonSchemaItemsReleaseDetails:
+      type: object
+      properties:
+        release_side:
+          type: string
+          description: Side that released the flow (for example, `server`).
+        release_reason:
+          type: string
+          description: Reason the flow was released (for example, `tcp_fin`).
+      description: Details about how the flow was released, if available.
+      title: ApiV1EndpointEndpointIdFlowlogsDetailGetResponsesContentApplicationJsonSchemaItemsReleaseDetails
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'An `auth_token` should be provided to authenticate a session.
+
+
+        To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+        '

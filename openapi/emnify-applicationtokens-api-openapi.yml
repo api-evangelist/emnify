@@ -1,0 +1,1016 @@
+openapi: 3.2.0
+info:
+  title: Enterprise Application Tokens API
+  version: 1.0.0
+  description: Management of application tokens for API access
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API
+tags:
+- name: applicationTokens
+  description: Management of application tokens for API access
+paths:
+  /api/v1/application_token:
+    get:
+      operationId: applicationTokens_ApplicationTokenGet
+      summary: List application tokens
+      description: 'Required permissions Beta Learn more
+
+
+        `ApplicationToken` + `List` +1 endpoint
+
+
+        Roles: Administrator User Observer
+
+
+        **This call is deprecated.**
+
+
+        Please use GET `/api/v2/application_token` instead.
+
+
+        Returns the list of application tokens for the organisation of the requesting user.'
+      tags:
+      - applicationTokens
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItems'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationTokenGetRequestForbiddenError'
+      deprecated: true
+      security:
+      - bearerAuth: []
+    post:
+      operationId: applicationTokens_ApplicationTokenPost
+      summary: Create application token
+      description: 'Required permissions Beta Learn more
+
+
+        `ApplicationToken` + `Create` +1 endpoint
+
+
+        Roles: Administrator
+
+
+        **This call is deprecated.**
+
+
+        Please use POST `/api/v2/application_token` instead.
+
+
+        Creates a new application token.
+
+        ID must not be specified, as it is auto-generated and returned in case of a successful JSON response.
+
+        You can provide following fields with this request:
+
+
+        * `description` (String, optional)
+
+        * `expiry_date` with optional time + time zone (String, optional)
+
+        * `ip` - IP Address in CIDR notation (String, optional)'
+      tags:
+      - applicationTokens
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application_tokens_ApplicationTokenPost_Response_200'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationTokenPostRequestForbiddenError'
+        '422':
+          description: Unprocessable Entity. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationTokenPostRequestUnprocessableEntityError'
+      deprecated: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                expiry_date:
+                  type: string
+                ip:
+                  type: string
+      security:
+      - bearerAuth: []
+  /api/v1/application_token/{app_token_id}:
+    patch:
+      operationId: applicationTokens_ApplicationTokenByIdPatch
+      summary: Update application token
+      description: 'Required permissions Beta Learn more
+
+
+        `ApplicationToken` + `Update` +1 endpoint
+
+
+        Roles: Administrator
+
+
+        **This call is deprecated.**
+
+
+        Please use PATCH `/api/v2/application_token/{id}` to rename a token, and DELETE `/api/v2/application_token/{id}` to revoke it.
+
+
+        The `description` of the token may be updated and the
+
+        Application Token can be revoked by updating the `status`.
+
+        The possible statuses of tokens are
+
+
+        * `"id": 0` - Activated
+
+        * `"id": 1` - Revoked'
+      tags:
+      - applicationTokens
+      parameters:
+      - name: app_token_id
+        in: path
+        description: application token ID
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationTokenByIdPatchRequestForbiddenError'
+      deprecated: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                status:
+                  $ref: '#/components/schemas/ApiV1ApplicationTokenAppTokenIdPatchRequestBodyContentApplicationJsonSchemaStatus'
+      security:
+      - bearerAuth: []
+  /api/v2/application_token:
+    get:
+      operationId: applicationTokens_ListApplicationTokens
+      summary: List application tokens
+      description: 'Required permissions Beta Learn more
+
+
+        `ApplicationToken` + `List` +1 endpoint
+
+
+        Roles: Administrator User Observer
+
+
+        Returns the application tokens of the requesting organisation.
+
+
+        Only tokens in status `ACTIVE` are returned unless the `q` filter asks otherwise.
+
+        The token itself is never returned; it is available only from the response of the create endpoint.'
+      tags:
+      - applicationTokens
+      parameters:
+      - name: q
+        in: query
+        description: 'Filter the tokens.
+
+          The only key is `status`, whose values are the ids that `GET /api/v2/application_token/status` lists: `q=status:1` for the active tokens, `q=status:3` for the deleted ones, `q=status:1||3` for both.
+
+          Percent-encode the pipes - `q=status:1%7C%7C3` - as an unencoded `|` is not a legal URI character and is rejected before the request arrives.
+
+          Defaults to active tokens only.
+
+          '
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApplicationTokenV2'
+        '400':
+          description: 'The filter is malformed or names an unknown status.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationTokenV2Error'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListApplicationTokensRequestForbiddenError'
+      security:
+      - bearerAuth: []
+    post:
+      operationId: applicationTokens_CreateApplicationToken
+      summary: Create an application token
+      description: 'Required permissions Beta Learn more
+
+
+        `ApplicationToken` + `Create` +1 endpoint
+
+
+        Roles: Administrator
+
+
+        Creates an application token for the requesting organisation and returns it.
+
+
+        The token itself is only available from this response and cannot be retrieved later, so store it immediately.
+
+        The number of active tokens an organisation may hold is limited.'
+      tags:
+      - applicationTokens
+      responses:
+        '201':
+          description: Application token created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application_tokens_CreateApplicationToken_Response_201'
+        '400':
+          description: 'The payload is invalid or names an unknown role.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationTokenV2Error'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateApplicationTokenRequestForbiddenError'
+        '422':
+          description: The organisation has reached its application token limit.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationTokenV2Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 2
+                  maxLength: 64
+                  description: 'Name of the application token. Letters, digits, spaces and - _ . : / ( ) [ ] @ + # are allowed.'
+                roles:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ApiV2ApplicationTokenPostRequestBodyContentApplicationJsonSchemaRolesItems'
+                  description: 'The role granted to the token.
+
+                    Exactly one role is assigned, and the Support role can''t be assigned to a token.
+
+                    '
+                expiry_date:
+                  type: string
+                  format: date-time
+                  description: 'Expiry date in ISO 8601 format, either `2027-08-21T10:00:00.000Z` or `2027-08-21 10:00:00`.
+
+                    A value carrying no time zone is read as UTC.
+
+                    Must be at least one day in the future and at most 10 years in the future.
+
+                    '
+                ip_restrictions:
+                  type: array
+                  items:
+                    type: string
+                  description: IP addresses the token may connect from. Each entry is an IPv4 address, optionally in CIDR notation. Omit to allow any address.
+              required:
+              - name
+              - roles
+              - expiry_date
+      security:
+      - bearerAuth: []
+  /api/v2/application_token/status:
+    get:
+      operationId: applicationTokens_ListApplicationTokenStatuses
+      summary: List application token statuses
+      description: 'Required permissions Beta Learn more
+
+
+        `ApplicationToken.Status` + `List`
+
+
+        Roles: Administrator User Observer
+
+
+        Returns the statuses an application token can be in.
+
+
+        A token is either active or deleted.'
+      tags:
+      - applicationTokens
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV2ApplicationTokenStatusGetResponsesContentApplicationJsonSchemaItems'
+        '401':
+          description: The request is not authenticated.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListApplicationTokenStatusesRequestForbiddenError'
+      security:
+      - bearerAuth: []
+  /api/v2/application_token/{id}:
+    get:
+      operationId: applicationTokens_GetApplicationToken
+      summary: Get application token
+      description: 'Required permissions Beta Learn more
+
+
+        `ApplicationToken` + `Get`
+
+
+        Roles: Administrator User Observer
+
+
+        Returns the requested application token.
+
+
+        Tokens in any status other than `ACTIVE` result in a 404 error.'
+      tags:
+      - applicationTokens
+      parameters:
+      - name: id
+        in: path
+        description: The id of the application token.
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationTokenV2'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApplicationTokenRequestForbiddenError'
+        '404':
+          description: Application token does not exist or is not accessible.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationTokenV2Error'
+      security:
+      - bearerAuth: []
+    delete:
+      operationId: applicationTokens_DeleteApplicationToken
+      summary: Delete an application token
+      description: 'Required permissions Beta Learn more
+
+
+        `ApplicationToken` + `Delete`
+
+
+        Roles: Administrator
+
+
+        Deletes an application token.
+
+
+        The application token can no longer be used to authenticate, and it''s no longer listed, but its record is kept for auditing.
+
+        An `auth_token` already generated from it stays valid until it expires, up to 240 minutes later.'
+      tags:
+      - applicationTokens
+      parameters:
+      - name: id
+        in: path
+        description: The id of the application token.
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: The organisation is not enabled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationTokenV2Error'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteApplicationTokenRequestForbiddenError'
+        '404':
+          description: Application token does not exist or is not accessible.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationTokenV2Error'
+      security:
+      - bearerAuth: []
+    patch:
+      operationId: applicationTokens_UpdateApplicationToken
+      summary: Update an application token
+      description: 'Required permissions Beta Learn more
+
+
+        `ApplicationToken` + `Update` +1 endpoint
+
+
+        Roles: Administrator
+
+
+        Changes the name and/or the role of an application token.
+
+
+        Omitted fields keep their current value.
+
+        Expiry date and IP restrictions are fixed for the life of a token.
+
+
+        To revoke a token, use DELETE `/api/v2/application_token/{id}`.
+
+        A `status` field in the request body is ignored.'
+      tags:
+      - applicationTokens
+      parameters:
+      - name: id
+        in: path
+        description: The id of the application token.
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+      responses:
+        '200':
+          description: Application token updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationTokenV2'
+        '400':
+          description: 'The payload is invalid or changes nothing, or the organisation is not enabled.
+
+            See HTTP response body for details.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationTokenV2Error'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateApplicationTokenRequestForbiddenError'
+        '404':
+          description: Application token does not exist or is not accessible.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationTokenV2Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 2
+                  maxLength: 64
+                  description: 'Name of the application token. Letters, digits, spaces and - _ . : / ( ) [ ] @ + # are allowed.'
+                roles:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ApiV2ApplicationTokenIdPatchRequestBodyContentApplicationJsonSchemaRolesItems'
+                  description: 'The role granted to the token.
+
+                    Exactly one role is assigned, and the Support role can''t be assigned to a token.
+
+                    '
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    GetApplicationTokenRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: GetApplicationTokenRequestForbiddenError
+    ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsCreator:
+      type: object
+      properties: {}
+      title: ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsCreator
+    ApplicationTokenByIdPatchRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: ApplicationTokenByIdPatchRequestForbiddenError
+    ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsStatus:
+      type: object
+      properties: {}
+      title: ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsStatus
+    ApplicationTokenV2ActorType:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ApplicationTokenV2ActorType
+    ApiV2ApplicationTokenIdPatchRequestBodyContentApplicationJsonSchemaRolesItems:
+      type: object
+      properties:
+        id:
+          type: integer
+      required:
+      - id
+      title: ApiV2ApplicationTokenIdPatchRequestBodyContentApplicationJsonSchemaRolesItems
+    CreateApplicationTokenRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: CreateApplicationTokenRequestForbiddenError
+    ApiV1ApplicationTokenAppTokenIdPatchRequestBodyContentApplicationJsonSchemaStatus:
+      type: object
+      properties: {}
+      title: ApiV1ApplicationTokenAppTokenIdPatchRequestBodyContentApplicationJsonSchemaStatus
+    ApplicationTokenV2Error:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: ApplicationTokenV2Error
+    ApplicationTokenGetRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: ApplicationTokenGetRequestForbiddenError
+    ApplicationTokenV2IpRestrictionsItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        ip_address:
+          type: string
+          description: An IP address in CIDR notation.
+      title: ApplicationTokenV2IpRestrictionsItems
+    ApiV2ApplicationTokenPostResponsesContentApplicationJsonSchemaIpRestrictionsItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        ip_address:
+          type: string
+          description: An IP address in CIDR notation.
+      title: ApiV2ApplicationTokenPostResponsesContentApplicationJsonSchemaIpRestrictionsItems
+    ApplicationTokenV2Actor:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/ApplicationTokenV2ActorType'
+      required:
+      - id
+      - username
+      - type
+      description: A user that acted on the token. Absent where an application token acted instead.
+      title: ApplicationTokenV2Actor
+    ApplicationTokenPostRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: ApplicationTokenPostRequestUnprocessableEntityError
+    ApiV2ApplicationTokenPostResponsesContentApplicationJsonSchemaRolesItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: ApiV2ApplicationTokenPostResponsesContentApplicationJsonSchemaRolesItems
+    DeleteApplicationTokenRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: DeleteApplicationTokenRequestForbiddenError
+    ApplicationTokenV2:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of this application token.
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/ApplicationTokenV2Status'
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationTokenV2RolesItems'
+          description: The role granted to the token.
+        ip_restrictions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationTokenV2IpRestrictionsItems'
+          description: IP addresses the token may connect from. Absent where it may connect from any.
+        expiry_date:
+          type: string
+          format: date-time
+          description: Absent for a token created without one through the v1 API.
+        created_date:
+          type: string
+          format: date-time
+        last_used_date:
+          type: string
+          format: date-time
+          description: Absent until the token has been used.
+        last_used_ip:
+          type: string
+          description: IP address the token was last used from.
+        created_by:
+          $ref: '#/components/schemas/ApplicationTokenV2Actor'
+        last_modified_date:
+          type: string
+          format: date-time
+          description: Absent until the token has been modified.
+        last_modified_by:
+          $ref: '#/components/schemas/ApplicationTokenV2Actor'
+        deleted_date:
+          type: string
+          format: date-time
+          description: Set only once the token has been deleted.
+        deleted_by:
+          $ref: '#/components/schemas/ApplicationTokenV2Actor'
+      required:
+      - id
+      - name
+      - status
+      - roles
+      - created_date
+      title: ApplicationTokenV2
+    UpdateApplicationTokenRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: UpdateApplicationTokenRequestForbiddenError
+    ListApplicationTokenStatusesRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: ListApplicationTokenStatusesRequestForbiddenError
+    ApplicationTokenV2Status:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ApplicationTokenV2Status
+    ApplicationTokenPostRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: ApplicationTokenPostRequestForbiddenError
+    ListApplicationTokensRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: ListApplicationTokensRequestForbiddenError
+    ApiV2ApplicationTokenPostResponsesContentApplicationJsonSchemaStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ApiV2ApplicationTokenPostResponsesContentApplicationJsonSchemaStatus
+    ApplicationTokenV2RolesItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: ApplicationTokenV2RolesItems
+    ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+        created:
+          type: string
+        status:
+          $ref: '#/components/schemas/ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsStatus'
+        expiry_date:
+          type: string
+        ip:
+          type: string
+        creator:
+          $ref: '#/components/schemas/ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItemsCreator'
+      title: ApiV1ApplicationTokenGetResponsesContentApplicationJsonSchemaItems
+    ApiV2ApplicationTokenStatusGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ApiV2ApplicationTokenStatusGetResponsesContentApplicationJsonSchemaItems
+    ApiV2ApplicationTokenPostRequestBodyContentApplicationJsonSchemaRolesItems:
+      type: object
+      properties:
+        id:
+          type: integer
+      required:
+      - id
+      title: ApiV2ApplicationTokenPostRequestBodyContentApplicationJsonSchemaRolesItems
+    Application_tokens_ApplicationTokenPost_Response_200:
+      type: object
+      properties:
+        application_token:
+          type: string
+      title: Application tokens_ApplicationTokenPost_Response_200
+    Application_tokens_CreateApplicationToken_Response_201:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of this application token.
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/ApiV2ApplicationTokenPostResponsesContentApplicationJsonSchemaStatus'
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV2ApplicationTokenPostResponsesContentApplicationJsonSchemaRolesItems'
+          description: The role granted to the token.
+        ip_restrictions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV2ApplicationTokenPostResponsesContentApplicationJsonSchemaIpRestrictionsItems'
+          description: IP addresses the token may connect from. Absent where it may connect from any.
+        expiry_date:
+          type: string
+          format: date-time
+          description: Absent for a token created without one through the v1 API.
+        created_date:
+          type: string
+          format: date-time
+        last_used_date:
+          type: string
+          format: date-time
+          description: Absent until the token has been used.
+        last_used_ip:
+          type: string
+          description: IP address the token was last used from.
+        created_by:
+          $ref: '#/components/schemas/ApplicationTokenV2Actor'
+        last_modified_date:
+          type: string
+          format: date-time
+          description: Absent until the token has been modified.
+        last_modified_by:
+          $ref: '#/components/schemas/ApplicationTokenV2Actor'
+        deleted_date:
+          type: string
+          format: date-time
+          description: Set only once the token has been deleted.
+        deleted_by:
+          $ref: '#/components/schemas/ApplicationTokenV2Actor'
+        token:
+          type: string
+          description: The application token. Store it immediately after creation, it is not retrievable afterwards.
+      required:
+      - id
+      - name
+      - status
+      - roles
+      - created_date
+      title: Application tokens_CreateApplicationToken_Response_201
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'An `auth_token` should be provided to authenticate a session.
+
+
+        To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+        '

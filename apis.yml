@@ -18,8 +18,9 @@ apis:
     type: Documentation
   - url: https://docs.emnify.com/developers/api-guidelines/conventions
     type: Documentation
-  description: emnify GraphQL API for flexible, single-request queries against the emnify data model with
-    customizable response shapes. An in-browser GraphiQL IDE supports interactive exploration and testing.
+  description: >-
+    emnify GraphQL API for flexible, single-request queries against the emnify data model with customizable
+    response shapes. An in-browser GraphiQL IDE supports interactive exploration and testing.
 - aid: emnify:emnify-data-streamer
   name: emnify Data Streamer
   tags:
@@ -42,10 +43,11 @@ apis:
     type: Documentation
   - url: https://docs.emnify.com/developers/callbacks/sms
     type: Documentation
-  description: Stream event and usage data to outbound destinations (AWS S3, AWS Kinesis, REST/webhook,
-    Datadog, Salesforce, Keen.io). Supports detailed object schemas for data types, traffic types, tariffs,
-    operators, and volume tracking. SMS and API callbacks deliver mobile-originated SMS and event payloads
-    to your infrastructure.
+  description: >-
+    Stream event and usage data to outbound destinations (AWS S3, AWS Kinesis, REST/webhook, Datadog,
+    Salesforce, Keen.io). Supports detailed object schemas for data types, traffic types, tariffs, operators,
+    and volume tracking. SMS and API callbacks deliver mobile-originated SMS and event payloads to your
+    infrastructure.
 - aid: emnify:emnify-mcp-server
   name: emnify Documentation MCP Server
   tags:
@@ -62,17 +64,18 @@ apis:
     type: Documentation
   - url: https://docs.emnify.com/developers/developer-tools/ai-assistance
     type: Documentation
-  description: Public MCP server for emnify documentation. Connect Claude Code, Cursor, or any MCP-aware
-    client to query emnify product, developer, and API reference content directly from your AI assistant.
-- aid: emnify:emnify-subpackage-applicationtokens-api
-  name: emnify Subpackage Application Tokens API
-  description: The subpackage_applicationTokens API from emnify — 2 operation(s) for subpackage_applicationtokens.
-  humanURL: https://docs.emnify.com/developers
+  description: >-
+    Public MCP server for emnify documentation. Connect Claude Code, Cursor, or any MCP-aware client to
+    query emnify product, developer, and API reference content directly from your AI assistant.
+- aid: emnify:emnify-applicationtokens-api
+  name: emnify Application Tokens API
+  description: Management of application tokens for API access
+  humanURL: https://docs.emnify.com/developers/graphql
   tags:
-  - subpackage_applicationTokens
+  - applicationTokens
   properties:
   - type: OpenAPI
-    url: openapi/emnify-subpackage-applicationtokens-api-openapi.yml
+    url: openapi/emnify-applicationtokens-api-openapi.yml
   - type: Documentation
     url: https://docs.emnify.com/developers
   - type: Documentation
@@ -103,95 +106,15 @@ apis:
     url: examples/emnify-list-events-example.json
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-authentication-api
-  name: emnify Subpackage Authentication API
-  description: The subpackage_authentication API from emnify — 8 operation(s) for subpackage_authentication.
-  humanURL: https://docs.emnify.com/developers
-  tags: []
-  tags_raw:
-  - subpackage_authentication
-  properties:
-  - type: OpenAPI
-    url: openapi/emnify-subpackage-authentication-api-openapi.yml
-  - type: Documentation
-    url: https://docs.emnify.com/developers
-  - type: Documentation
-    url: https://docs.emnify.com/developers/api-guidelines/conventions
-  - type: Documentation
-    url: https://docs.emnify.com/llms-full.txt
-  - type: SpectralRules
-    url: rules/emnify-rules.yml
-  - type: JSONSchema
-    url: json-schema/emnify-sim-schema.json
-  - type: JSONSchema
-    url: json-schema/emnify-endpoint-schema.json
-  - type: JSONSchema
-    url: json-schema/emnify-event-schema.json
-  - type: JSONStructure
-    url: json-structure/emnify-sim-structure.json
-  - type: JSONStructure
-    url: json-structure/emnify-endpoint-structure.json
-  - type: JSONLD
-    url: json-ld/emnify-context.jsonld
-  - type: Examples
-    url: examples/emnify-authenticate-example.json
-  - type: Examples
-    url: examples/emnify-list-endpoints-example.json
-  - type: Examples
-    url: examples/emnify-send-sms-example.json
-  - type: Examples
-    url: examples/emnify-list-events-example.json
-  - type: Vocabulary
-    url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-automations-api
-  name: emnify Subpackage Automations API
-  description: The subpackage_automations API from emnify — 6 operation(s) for subpackage_automations.
-  humanURL: https://docs.emnify.com/developers
-  tags: []
-  tags_raw:
-  - subpackage_automations
-  properties:
-  - type: OpenAPI
-    url: openapi/emnify-subpackage-automations-api-openapi.yml
-  - type: Documentation
-    url: https://docs.emnify.com/developers
-  - type: Documentation
-    url: https://docs.emnify.com/developers/api-guidelines/conventions
-  - type: Documentation
-    url: https://docs.emnify.com/llms-full.txt
-  - type: SpectralRules
-    url: rules/emnify-rules.yml
-  - type: JSONSchema
-    url: json-schema/emnify-sim-schema.json
-  - type: JSONSchema
-    url: json-schema/emnify-endpoint-schema.json
-  - type: JSONSchema
-    url: json-schema/emnify-event-schema.json
-  - type: JSONStructure
-    url: json-structure/emnify-sim-structure.json
-  - type: JSONStructure
-    url: json-structure/emnify-endpoint-structure.json
-  - type: JSONLD
-    url: json-ld/emnify-context.jsonld
-  - type: Examples
-    url: examples/emnify-authenticate-example.json
-  - type: Examples
-    url: examples/emnify-list-endpoints-example.json
-  - type: Examples
-    url: examples/emnify-send-sms-example.json
-  - type: Examples
-    url: examples/emnify-list-events-example.json
-  - type: Vocabulary
-    url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-cloudconnect-api
-  name: emnify Subpackage Cloud Connect API
-  description: The subpackage_cloudConnect API from emnify — 7 operation(s) for subpackage_cloudconnect.
-  humanURL: https://docs.emnify.com/developers
+- aid: emnify:emnify-authentication-api
+  name: emnify Authentication API
+  description: Mechanisms for API authentication
+  humanURL: https://docs.emnify.com/developers/graphql
   tags:
-  - subpackage_cloudConnect
+  - authentication
   properties:
   - type: OpenAPI
-    url: openapi/emnify-subpackage-cloudconnect-api-openapi.yml
+    url: openapi/emnify-authentication-api-openapi.yml
   - type: Documentation
     url: https://docs.emnify.com/developers
   - type: Documentation
@@ -222,15 +145,15 @@ apis:
     url: examples/emnify-list-events-example.json
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-customevents-api
-  name: emnify Subpackage Custom Events API
-  description: The subpackage_customEvents API from emnify — 4 operation(s) for subpackage_customevents.
-  humanURL: https://docs.emnify.com/developers
+- aid: emnify:emnify-cloudconnect-api
+  name: emnify Cloud Connect API
+  description: Cloud connection services and their configuration
+  humanURL: https://docs.emnify.com/developers/graphql
   tags:
-  - subpackage_customEvents
+  - cloudConnect
   properties:
   - type: OpenAPI
-    url: openapi/emnify-subpackage-customevents-api-openapi.yml
+    url: openapi/emnify-cloudconnect-api-openapi.yml
   - type: Documentation
     url: https://docs.emnify.com/developers
   - type: Documentation
@@ -261,95 +184,15 @@ apis:
     url: examples/emnify-list-events-example.json
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-endpoint-api
-  name: emnify Subpackage Endpoint API
-  description: The subpackage_endpoint API from emnify — 16 operation(s) for subpackage_endpoint.
-  humanURL: https://docs.emnify.com/developers
-  tags: []
-  tags_raw:
-  - subpackage_endpoint
-  properties:
-  - type: OpenAPI
-    url: openapi/emnify-subpackage-endpoint-api-openapi.yml
-  - type: Documentation
-    url: https://docs.emnify.com/developers
-  - type: Documentation
-    url: https://docs.emnify.com/developers/api-guidelines/conventions
-  - type: Documentation
-    url: https://docs.emnify.com/llms-full.txt
-  - type: SpectralRules
-    url: rules/emnify-rules.yml
-  - type: JSONSchema
-    url: json-schema/emnify-sim-schema.json
-  - type: JSONSchema
-    url: json-schema/emnify-endpoint-schema.json
-  - type: JSONSchema
-    url: json-schema/emnify-event-schema.json
-  - type: JSONStructure
-    url: json-structure/emnify-sim-structure.json
-  - type: JSONStructure
-    url: json-structure/emnify-endpoint-structure.json
-  - type: JSONLD
-    url: json-ld/emnify-context.jsonld
-  - type: Examples
-    url: examples/emnify-authenticate-example.json
-  - type: Examples
-    url: examples/emnify-list-endpoints-example.json
-  - type: Examples
-    url: examples/emnify-send-sms-example.json
-  - type: Examples
-    url: examples/emnify-list-events-example.json
-  - type: Vocabulary
-    url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-euicc-api
-  name: emnify Subpackage Euicc API
-  description: The subpackage_euicc API from emnify — 5 operation(s) for subpackage_euicc.
-  humanURL: https://docs.emnify.com/developers
-  tags: []
-  tags_raw:
-  - subpackage_euicc
-  properties:
-  - type: OpenAPI
-    url: openapi/emnify-subpackage-euicc-api-openapi.yml
-  - type: Documentation
-    url: https://docs.emnify.com/developers
-  - type: Documentation
-    url: https://docs.emnify.com/developers/api-guidelines/conventions
-  - type: Documentation
-    url: https://docs.emnify.com/llms-full.txt
-  - type: SpectralRules
-    url: rules/emnify-rules.yml
-  - type: JSONSchema
-    url: json-schema/emnify-sim-schema.json
-  - type: JSONSchema
-    url: json-schema/emnify-endpoint-schema.json
-  - type: JSONSchema
-    url: json-schema/emnify-event-schema.json
-  - type: JSONStructure
-    url: json-structure/emnify-sim-structure.json
-  - type: JSONStructure
-    url: json-structure/emnify-endpoint-structure.json
-  - type: JSONLD
-    url: json-ld/emnify-context.jsonld
-  - type: Examples
-    url: examples/emnify-authenticate-example.json
-  - type: Examples
-    url: examples/emnify-list-endpoints-example.json
-  - type: Examples
-    url: examples/emnify-send-sms-example.json
-  - type: Examples
-    url: examples/emnify-list-events-example.json
-  - type: Vocabulary
-    url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-euiccoperation-api
-  name: emnify Subpackage Euicc Operation API
-  description: The subpackage_euiccOperation API from emnify — 4 operation(s) for subpackage_euiccoperation.
-  humanURL: https://docs.emnify.com/developers
+- aid: emnify:emnify-endpoint-api
+  name: emnify Endpoint API
+  description: API endpoints for enterprise resources
+  humanURL: https://docs.emnify.com/developers/graphql
   tags:
-  - subpackage_euiccOperation
+  - endpoint
   properties:
   - type: OpenAPI
-    url: openapi/emnify-subpackage-euiccoperation-api-openapi.yml
+    url: openapi/emnify-endpoint-api-openapi.yml
   - type: Documentation
     url: https://docs.emnify.com/developers
   - type: Documentation
@@ -380,95 +223,15 @@ apis:
     url: examples/emnify-list-events-example.json
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-events-api
-  name: emnify Subpackage Events API
-  description: The subpackage_events API from emnify — 2 operation(s) for subpackage_events.
-  humanURL: https://docs.emnify.com/developers
-  tags: []
-  tags_raw:
-  - subpackage_events
-  properties:
-  - type: OpenAPI
-    url: openapi/emnify-subpackage-events-api-openapi.yml
-  - type: Documentation
-    url: https://docs.emnify.com/developers
-  - type: Documentation
-    url: https://docs.emnify.com/developers/api-guidelines/conventions
-  - type: Documentation
-    url: https://docs.emnify.com/llms-full.txt
-  - type: SpectralRules
-    url: rules/emnify-rules.yml
-  - type: JSONSchema
-    url: json-schema/emnify-sim-schema.json
-  - type: JSONSchema
-    url: json-schema/emnify-endpoint-schema.json
-  - type: JSONSchema
-    url: json-schema/emnify-event-schema.json
-  - type: JSONStructure
-    url: json-structure/emnify-sim-structure.json
-  - type: JSONStructure
-    url: json-structure/emnify-endpoint-structure.json
-  - type: JSONLD
-    url: json-ld/emnify-context.jsonld
-  - type: Examples
-    url: examples/emnify-authenticate-example.json
-  - type: Examples
-    url: examples/emnify-list-endpoints-example.json
-  - type: Examples
-    url: examples/emnify-send-sms-example.json
-  - type: Examples
-    url: examples/emnify-list-events-example.json
-  - type: Vocabulary
-    url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-integrations-api
-  name: emnify Subpackage Integrations API
-  description: The subpackage_integrations API from emnify — 10 operation(s) for subpackage_integrations.
-  humanURL: https://docs.emnify.com/developers
-  tags: []
-  tags_raw:
-  - subpackage_integrations
-  properties:
-  - type: OpenAPI
-    url: openapi/emnify-subpackage-integrations-api-openapi.yml
-  - type: Documentation
-    url: https://docs.emnify.com/developers
-  - type: Documentation
-    url: https://docs.emnify.com/developers/api-guidelines/conventions
-  - type: Documentation
-    url: https://docs.emnify.com/llms-full.txt
-  - type: SpectralRules
-    url: rules/emnify-rules.yml
-  - type: JSONSchema
-    url: json-schema/emnify-sim-schema.json
-  - type: JSONSchema
-    url: json-schema/emnify-endpoint-schema.json
-  - type: JSONSchema
-    url: json-schema/emnify-event-schema.json
-  - type: JSONStructure
-    url: json-structure/emnify-sim-structure.json
-  - type: JSONStructure
-    url: json-structure/emnify-endpoint-structure.json
-  - type: JSONLD
-    url: json-ld/emnify-context.jsonld
-  - type: Examples
-    url: examples/emnify-authenticate-example.json
-  - type: Examples
-    url: examples/emnify-list-endpoints-example.json
-  - type: Examples
-    url: examples/emnify-send-sms-example.json
-  - type: Examples
-    url: examples/emnify-list-events-example.json
-  - type: Vocabulary
-    url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-ipaddressspaces-api
-  name: emnify Subpackage Ip Address Spaces API
-  description: The subpackage_ipAddressSpaces API from emnify — 3 operation(s) for subpackage_ipaddressspaces.
-  humanURL: https://docs.emnify.com/developers
+- aid: emnify:emnify-events-api
+  name: emnify Events API
+  description: Event logging and management
+  humanURL: https://docs.emnify.com/developers/graphql
   tags:
-  - subpackage_ipAddressSpaces
+  - events
   properties:
   - type: OpenAPI
-    url: openapi/emnify-subpackage-ipaddressspaces-api-openapi.yml
+    url: openapi/emnify-events-api-openapi.yml
   - type: Documentation
     url: https://docs.emnify.com/developers
   - type: Documentation
@@ -499,135 +262,15 @@ apis:
     url: examples/emnify-list-events-example.json
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-lookups-api
-  name: emnify Subpackage Lookups API
-  description: The subpackage_lookups API from emnify — 8 operation(s) for subpackage_lookups.
-  humanURL: https://docs.emnify.com/developers
-  tags: []
-  tags_raw:
-  - subpackage_lookups
-  properties:
-  - type: OpenAPI
-    url: openapi/emnify-subpackage-lookups-api-openapi.yml
-  - type: Documentation
-    url: https://docs.emnify.com/developers
-  - type: Documentation
-    url: https://docs.emnify.com/developers/api-guidelines/conventions
-  - type: Documentation
-    url: https://docs.emnify.com/llms-full.txt
-  - type: SpectralRules
-    url: rules/emnify-rules.yml
-  - type: JSONSchema
-    url: json-schema/emnify-sim-schema.json
-  - type: JSONSchema
-    url: json-schema/emnify-endpoint-schema.json
-  - type: JSONSchema
-    url: json-schema/emnify-event-schema.json
-  - type: JSONStructure
-    url: json-structure/emnify-sim-structure.json
-  - type: JSONStructure
-    url: json-structure/emnify-endpoint-structure.json
-  - type: JSONLD
-    url: json-ld/emnify-context.jsonld
-  - type: Examples
-    url: examples/emnify-authenticate-example.json
-  - type: Examples
-    url: examples/emnify-list-endpoints-example.json
-  - type: Examples
-    url: examples/emnify-send-sms-example.json
-  - type: Examples
-    url: examples/emnify-list-events-example.json
-  - type: Vocabulary
-    url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-operator-api
-  name: emnify Subpackage Operator API
-  description: The subpackage_operator API from emnify — 1 operation(s) for subpackage_operator.
-  humanURL: https://docs.emnify.com/developers
-  tags: []
-  tags_raw:
-  - subpackage_operator
-  properties:
-  - type: OpenAPI
-    url: openapi/emnify-subpackage-operator-api-openapi.yml
-  - type: Documentation
-    url: https://docs.emnify.com/developers
-  - type: Documentation
-    url: https://docs.emnify.com/developers/api-guidelines/conventions
-  - type: Documentation
-    url: https://docs.emnify.com/llms-full.txt
-  - type: SpectralRules
-    url: rules/emnify-rules.yml
-  - type: JSONSchema
-    url: json-schema/emnify-sim-schema.json
-  - type: JSONSchema
-    url: json-schema/emnify-endpoint-schema.json
-  - type: JSONSchema
-    url: json-schema/emnify-event-schema.json
-  - type: JSONStructure
-    url: json-structure/emnify-sim-structure.json
-  - type: JSONStructure
-    url: json-structure/emnify-endpoint-structure.json
-  - type: JSONLD
-    url: json-ld/emnify-context.jsonld
-  - type: Examples
-    url: examples/emnify-authenticate-example.json
-  - type: Examples
-    url: examples/emnify-list-endpoints-example.json
-  - type: Examples
-    url: examples/emnify-send-sms-example.json
-  - type: Examples
-    url: examples/emnify-list-events-example.json
-  - type: Vocabulary
-    url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-organization-api
-  name: emnify Subpackage Organization API
-  description: The subpackage_organization API from emnify — 9 operation(s) for subpackage_organization.
-  humanURL: https://docs.emnify.com/developers
-  tags: []
-  tags_raw:
-  - subpackage_organization
-  properties:
-  - type: OpenAPI
-    url: openapi/emnify-subpackage-organization-api-openapi.yml
-  - type: Documentation
-    url: https://docs.emnify.com/developers
-  - type: Documentation
-    url: https://docs.emnify.com/developers/api-guidelines/conventions
-  - type: Documentation
-    url: https://docs.emnify.com/llms-full.txt
-  - type: SpectralRules
-    url: rules/emnify-rules.yml
-  - type: JSONSchema
-    url: json-schema/emnify-sim-schema.json
-  - type: JSONSchema
-    url: json-schema/emnify-endpoint-schema.json
-  - type: JSONSchema
-    url: json-schema/emnify-event-schema.json
-  - type: JSONStructure
-    url: json-structure/emnify-sim-structure.json
-  - type: JSONStructure
-    url: json-structure/emnify-endpoint-structure.json
-  - type: JSONLD
-    url: json-ld/emnify-context.jsonld
-  - type: Examples
-    url: examples/emnify-authenticate-example.json
-  - type: Examples
-    url: examples/emnify-list-endpoints-example.json
-  - type: Examples
-    url: examples/emnify-send-sms-example.json
-  - type: Examples
-    url: examples/emnify-list-events-example.json
-  - type: Vocabulary
-    url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-passwordmanagementandactivation-api
-  name: emnify Subpackage Password Management And Activation API
-  description: The subpackage_passwordManagementAndActivation API from emnify — 4 operation(s) for subpackage_passwordmanagementandactivation.
-  humanURL: https://docs.emnify.com/developers
+- aid: emnify:emnify-flowlogs-api
+  name: emnify Flow Logs API
+  description: Network Flow Log records for device traffic observability
+  humanURL: https://docs.emnify.com/developers/graphql
   tags:
-  - subpackage_passwordManagementAndActivation
+  - flowLogs
   properties:
   - type: OpenAPI
-    url: openapi/emnify-subpackage-passwordmanagementandactivation-api-openapi.yml
+    url: openapi/emnify-flowlogs-api-openapi.yml
   - type: Documentation
     url: https://docs.emnify.com/developers
   - type: Documentation
@@ -658,15 +301,15 @@ apis:
     url: examples/emnify-list-events-example.json
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-servicelookupsandconfiguration-api
-  name: emnify Subpackage Service Lookups And Configuration API
-  description: The subpackage_serviceLookupsAndConfiguration API from emnify — 5 operation(s) for subpackage_servicelookupsandconfiguration.
-  humanURL: https://docs.emnify.com/developers
+- aid: emnify:emnify-integrations-api
+  name: emnify Integrations API
+  description: Integration of external services and systems
+  humanURL: https://docs.emnify.com/developers/graphql
   tags:
-  - subpackage_serviceLookupsAndConfiguration
+  - integrations
   properties:
   - type: OpenAPI
-    url: openapi/emnify-subpackage-servicelookupsandconfiguration-api-openapi.yml
+    url: openapi/emnify-integrations-api-openapi.yml
   - type: Documentation
     url: https://docs.emnify.com/developers
   - type: Documentation
@@ -697,15 +340,15 @@ apis:
     url: examples/emnify-list-events-example.json
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-serviceprofiles-api
-  name: emnify Subpackage Service Profiles API
-  description: The subpackage_serviceProfiles API from emnify — 7 operation(s) for subpackage_serviceprofiles.
-  humanURL: https://docs.emnify.com/developers
+- aid: emnify:emnify-ipaddressspaces-api
+  name: emnify Ip Address Spaces API
+  description: Management of IP address spaces
+  humanURL: https://docs.emnify.com/developers/graphql
   tags:
-  - subpackage_serviceProfiles
+  - ipAddressSpaces
   properties:
   - type: OpenAPI
-    url: openapi/emnify-subpackage-serviceprofiles-api-openapi.yml
+    url: openapi/emnify-ipaddressspaces-api-openapi.yml
   - type: Documentation
     url: https://docs.emnify.com/developers
   - type: Documentation
@@ -736,55 +379,15 @@ apis:
     url: examples/emnify-list-events-example.json
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-sim-api
-  name: emnify Subpackage Sim API
-  description: The subpackage_sim API from emnify — 9 operation(s) for subpackage_sim.
-  humanURL: https://docs.emnify.com/developers
-  tags: []
-  tags_raw:
-  - subpackage_sim
-  properties:
-  - type: OpenAPI
-    url: openapi/emnify-subpackage-sim-api-openapi.yml
-  - type: Documentation
-    url: https://docs.emnify.com/developers
-  - type: Documentation
-    url: https://docs.emnify.com/developers/api-guidelines/conventions
-  - type: Documentation
-    url: https://docs.emnify.com/llms-full.txt
-  - type: SpectralRules
-    url: rules/emnify-rules.yml
-  - type: JSONSchema
-    url: json-schema/emnify-sim-schema.json
-  - type: JSONSchema
-    url: json-schema/emnify-endpoint-schema.json
-  - type: JSONSchema
-    url: json-schema/emnify-event-schema.json
-  - type: JSONStructure
-    url: json-structure/emnify-sim-structure.json
-  - type: JSONStructure
-    url: json-structure/emnify-endpoint-structure.json
-  - type: JSONLD
-    url: json-ld/emnify-context.jsonld
-  - type: Examples
-    url: examples/emnify-authenticate-example.json
-  - type: Examples
-    url: examples/emnify-list-endpoints-example.json
-  - type: Examples
-    url: examples/emnify-send-sms-example.json
-  - type: Examples
-    url: examples/emnify-list-events-example.json
-  - type: Vocabulary
-    url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-simoperation-api
-  name: emnify Subpackage Sim Operation API
-  description: The subpackage_simOperation API from emnify — 4 operation(s) for subpackage_simoperation.
-  humanURL: https://docs.emnify.com/developers
+- aid: emnify:emnify-lookups-api
+  name: emnify Lookups API
+  description: Lookup services for various resources
+  humanURL: https://docs.emnify.com/developers/graphql
   tags:
-  - subpackage_simOperation
+  - lookups
   properties:
   - type: OpenAPI
-    url: openapi/emnify-subpackage-simoperation-api-openapi.yml
+    url: openapi/emnify-lookups-api-openapi.yml
   - type: Documentation
     url: https://docs.emnify.com/developers
   - type: Documentation
@@ -815,15 +418,15 @@ apis:
     url: examples/emnify-list-events-example.json
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-simunlinkedproductstatistics-api
-  name: emnify Subpackage Sim Unlinked Product Statistics API
-  description: The subpackage_simUnlinkedProductStatistics API from emnify — 1 operation(s) for subpackage_simunlinkedproductstatistics.
-  humanURL: https://docs.emnify.com/developers
+- aid: emnify:emnify-operator-api
+  name: emnify Operator API
+  description: Management of network operators and their data
+  humanURL: https://docs.emnify.com/developers/graphql
   tags:
-  - subpackage_simUnlinkedProductStatistics
+  - operator
   properties:
   - type: OpenAPI
-    url: openapi/emnify-subpackage-simunlinkedproductstatistics-api-openapi.yml
+    url: openapi/emnify-operator-api-openapi.yml
   - type: Documentation
     url: https://docs.emnify.com/developers
   - type: Documentation
@@ -854,15 +457,15 @@ apis:
     url: examples/emnify-list-events-example.json
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-systemevents-api
-  name: emnify Subpackage System Events API
-  description: The subpackage_systemEvents API from emnify — 2 operation(s) for subpackage_systemevents.
-  humanURL: https://docs.emnify.com/developers
+- aid: emnify:emnify-organization-api
+  name: emnify Organization API
+  description: Management of organizations and their data
+  humanURL: https://docs.emnify.com/developers/graphql
   tags:
-  - subpackage_systemEvents
+  - organization
   properties:
   - type: OpenAPI
-    url: openapi/emnify-subpackage-systemevents-api-openapi.yml
+    url: openapi/emnify-organization-api-openapi.yml
   - type: Documentation
     url: https://docs.emnify.com/developers
   - type: Documentation
@@ -893,15 +496,15 @@ apis:
     url: examples/emnify-list-events-example.json
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-tagmanagement-api
-  name: emnify Subpackage Tag Management API
-  description: The subpackage_tagManagement API from emnify — 8 operation(s) for subpackage_tagmanagement.
-  humanURL: https://docs.emnify.com/developers
+- aid: emnify:emnify-passwordmanagementandactivation-api
+  name: emnify Password Management And Activation API
+  description: Password management and activation services
+  humanURL: https://docs.emnify.com/developers/graphql
   tags:
-  - subpackage_tagManagement
+  - passwordManagementAndActivation
   properties:
   - type: OpenAPI
-    url: openapi/emnify-subpackage-tagmanagement-api-openapi.yml
+    url: openapi/emnify-passwordmanagementandactivation-api-openapi.yml
   - type: Documentation
     url: https://docs.emnify.com/developers
   - type: Documentation
@@ -932,15 +535,15 @@ apis:
     url: examples/emnify-list-events-example.json
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-tariffplans-api
-  name: emnify Subpackage Tariff Plans API
-  description: The subpackage_tariffPlans API from emnify — 3 operation(s) for subpackage_tariffplans.
-  humanURL: https://docs.emnify.com/developers
+- aid: emnify:emnify-permissionandrolemanagement-api
+  name: emnify Permission And Role Management API
+  description: Management of permissions, roles, and role assignments
+  humanURL: https://docs.emnify.com/developers/graphql
   tags:
-  - subpackage_tariffPlans
+  - permissionAndRoleManagement
   properties:
   - type: OpenAPI
-    url: openapi/emnify-subpackage-tariffplans-api-openapi.yml
+    url: openapi/emnify-permissionandrolemanagement-api-openapi.yml
   - type: Documentation
     url: https://docs.emnify.com/developers
   - type: Documentation
@@ -971,15 +574,15 @@ apis:
     url: examples/emnify-list-events-example.json
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-tariffprofiles-api
-  name: emnify Subpackage Tariff Profiles API
-  description: The subpackage_tariffProfiles API from emnify — 9 operation(s) for subpackage_tariffprofiles.
-  humanURL: https://docs.emnify.com/developers
+- aid: emnify:emnify-servicelookupsandconfiguration-api
+  name: emnify Service Lookups And Configuration API
+  description: Lookup and configuration services for API resources
+  humanURL: https://docs.emnify.com/developers/graphql
   tags:
-  - subpackage_tariffProfiles
+  - serviceLookupsAndConfiguration
   properties:
   - type: OpenAPI
-    url: openapi/emnify-subpackage-tariffprofiles-api-openapi.yml
+    url: openapi/emnify-servicelookupsandconfiguration-api-openapi.yml
   - type: Documentation
     url: https://docs.emnify.com/developers
   - type: Documentation
@@ -1010,15 +613,15 @@ apis:
     url: examples/emnify-list-events-example.json
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-usermanagement-api
-  name: emnify Subpackage User Management API
-  description: The subpackage_userManagement API from emnify — 8 operation(s) for subpackage_usermanagement.
-  humanURL: https://docs.emnify.com/developers
+- aid: emnify:emnify-serviceprofiles-api
+  name: emnify Service Profiles API
+  description: Profiles for services and their configuration
+  humanURL: https://docs.emnify.com/developers/graphql
   tags:
-  - subpackage_userManagement
+  - serviceProfiles
   properties:
   - type: OpenAPI
-    url: openapi/emnify-subpackage-usermanagement-api-openapi.yml
+    url: openapi/emnify-serviceprofiles-api-openapi.yml
   - type: Documentation
     url: https://docs.emnify.com/developers
   - type: Documentation
@@ -1049,16 +652,210 @@ apis:
     url: examples/emnify-list-events-example.json
   - type: Vocabulary
     url: vocabulary/emnify-vocabulary.yml
-- aid: emnify:emnify-subpackage-workspaces-api
-  name: emnify Subpackage Workspaces API
-  description: The subpackage_workspaces API from emnify — 7 operation(s) for subpackage_workspaces.
-  humanURL: https://docs.emnify.com/developers
-  tags: []
-  tags_raw:
-  - subpackage_workspaces
+- aid: emnify:emnify-sim-api
+  name: emnify Sim API
+  description: Management of SIM cards and their data
+  humanURL: https://docs.emnify.com/developers/graphql
+  tags:
+  - sim
   properties:
   - type: OpenAPI
-    url: openapi/emnify-subpackage-workspaces-api-openapi.yml
+    url: openapi/emnify-sim-api-openapi.yml
+  - type: Documentation
+    url: https://docs.emnify.com/developers
+  - type: Documentation
+    url: https://docs.emnify.com/developers/api-guidelines/conventions
+  - type: Documentation
+    url: https://docs.emnify.com/llms-full.txt
+  - type: SpectralRules
+    url: rules/emnify-rules.yml
+  - type: JSONSchema
+    url: json-schema/emnify-sim-schema.json
+  - type: JSONSchema
+    url: json-schema/emnify-endpoint-schema.json
+  - type: JSONSchema
+    url: json-schema/emnify-event-schema.json
+  - type: JSONStructure
+    url: json-structure/emnify-sim-structure.json
+  - type: JSONStructure
+    url: json-structure/emnify-endpoint-structure.json
+  - type: JSONLD
+    url: json-ld/emnify-context.jsonld
+  - type: Examples
+    url: examples/emnify-authenticate-example.json
+  - type: Examples
+    url: examples/emnify-list-endpoints-example.json
+  - type: Examples
+    url: examples/emnify-send-sms-example.json
+  - type: Examples
+    url: examples/emnify-list-events-example.json
+  - type: Vocabulary
+    url: vocabulary/emnify-vocabulary.yml
+- aid: emnify:emnify-tagmanagement-api
+  name: emnify Tag Management API
+  description: Management of endpoint tags
+  humanURL: https://docs.emnify.com/developers/graphql
+  tags:
+  - tagManagement
+  properties:
+  - type: OpenAPI
+    url: openapi/emnify-tagmanagement-api-openapi.yml
+  - type: Documentation
+    url: https://docs.emnify.com/developers
+  - type: Documentation
+    url: https://docs.emnify.com/developers/api-guidelines/conventions
+  - type: Documentation
+    url: https://docs.emnify.com/llms-full.txt
+  - type: SpectralRules
+    url: rules/emnify-rules.yml
+  - type: JSONSchema
+    url: json-schema/emnify-sim-schema.json
+  - type: JSONSchema
+    url: json-schema/emnify-endpoint-schema.json
+  - type: JSONSchema
+    url: json-schema/emnify-event-schema.json
+  - type: JSONStructure
+    url: json-structure/emnify-sim-structure.json
+  - type: JSONStructure
+    url: json-structure/emnify-endpoint-structure.json
+  - type: JSONLD
+    url: json-ld/emnify-context.jsonld
+  - type: Examples
+    url: examples/emnify-authenticate-example.json
+  - type: Examples
+    url: examples/emnify-list-endpoints-example.json
+  - type: Examples
+    url: examples/emnify-send-sms-example.json
+  - type: Examples
+    url: examples/emnify-list-events-example.json
+  - type: Vocabulary
+    url: vocabulary/emnify-vocabulary.yml
+- aid: emnify:emnify-tariffplans-api
+  name: emnify Tariff Plans API
+  description: Management of tariff plans
+  humanURL: https://docs.emnify.com/developers/graphql
+  tags:
+  - tariffPlans
+  properties:
+  - type: OpenAPI
+    url: openapi/emnify-tariffplans-api-openapi.yml
+  - type: Documentation
+    url: https://docs.emnify.com/developers
+  - type: Documentation
+    url: https://docs.emnify.com/developers/api-guidelines/conventions
+  - type: Documentation
+    url: https://docs.emnify.com/llms-full.txt
+  - type: SpectralRules
+    url: rules/emnify-rules.yml
+  - type: JSONSchema
+    url: json-schema/emnify-sim-schema.json
+  - type: JSONSchema
+    url: json-schema/emnify-endpoint-schema.json
+  - type: JSONSchema
+    url: json-schema/emnify-event-schema.json
+  - type: JSONStructure
+    url: json-structure/emnify-sim-structure.json
+  - type: JSONStructure
+    url: json-structure/emnify-endpoint-structure.json
+  - type: JSONLD
+    url: json-ld/emnify-context.jsonld
+  - type: Examples
+    url: examples/emnify-authenticate-example.json
+  - type: Examples
+    url: examples/emnify-list-endpoints-example.json
+  - type: Examples
+    url: examples/emnify-send-sms-example.json
+  - type: Examples
+    url: examples/emnify-list-events-example.json
+  - type: Vocabulary
+    url: vocabulary/emnify-vocabulary.yml
+- aid: emnify:emnify-tariffprofiles-api
+  name: emnify Tariff Profiles API
+  description: Profiles for tariffs and their configuration
+  humanURL: https://docs.emnify.com/developers/graphql
+  tags:
+  - tariffProfiles
+  properties:
+  - type: OpenAPI
+    url: openapi/emnify-tariffprofiles-api-openapi.yml
+  - type: Documentation
+    url: https://docs.emnify.com/developers
+  - type: Documentation
+    url: https://docs.emnify.com/developers/api-guidelines/conventions
+  - type: Documentation
+    url: https://docs.emnify.com/llms-full.txt
+  - type: SpectralRules
+    url: rules/emnify-rules.yml
+  - type: JSONSchema
+    url: json-schema/emnify-sim-schema.json
+  - type: JSONSchema
+    url: json-schema/emnify-endpoint-schema.json
+  - type: JSONSchema
+    url: json-schema/emnify-event-schema.json
+  - type: JSONStructure
+    url: json-structure/emnify-sim-structure.json
+  - type: JSONStructure
+    url: json-structure/emnify-endpoint-structure.json
+  - type: JSONLD
+    url: json-ld/emnify-context.jsonld
+  - type: Examples
+    url: examples/emnify-authenticate-example.json
+  - type: Examples
+    url: examples/emnify-list-endpoints-example.json
+  - type: Examples
+    url: examples/emnify-send-sms-example.json
+  - type: Examples
+    url: examples/emnify-list-events-example.json
+  - type: Vocabulary
+    url: vocabulary/emnify-vocabulary.yml
+- aid: emnify:emnify-workspaces-api
+  name: emnify Workspaces API
+  description: Management of workspaces and their data
+  humanURL: https://docs.emnify.com/developers/graphql
+  tags:
+  - workspaces
+  properties:
+  - type: OpenAPI
+    url: openapi/emnify-workspaces-api-openapi.yml
+  - type: Documentation
+    url: https://docs.emnify.com/developers
+  - type: Documentation
+    url: https://docs.emnify.com/developers/api-guidelines/conventions
+  - type: Documentation
+    url: https://docs.emnify.com/llms-full.txt
+  - type: SpectralRules
+    url: rules/emnify-rules.yml
+  - type: JSONSchema
+    url: json-schema/emnify-sim-schema.json
+  - type: JSONSchema
+    url: json-schema/emnify-endpoint-schema.json
+  - type: JSONSchema
+    url: json-schema/emnify-event-schema.json
+  - type: JSONStructure
+    url: json-structure/emnify-sim-structure.json
+  - type: JSONStructure
+    url: json-structure/emnify-endpoint-structure.json
+  - type: JSONLD
+    url: json-ld/emnify-context.jsonld
+  - type: Examples
+    url: examples/emnify-authenticate-example.json
+  - type: Examples
+    url: examples/emnify-list-endpoints-example.json
+  - type: Examples
+    url: examples/emnify-send-sms-example.json
+  - type: Examples
+    url: examples/emnify-list-events-example.json
+  - type: Vocabulary
+    url: vocabulary/emnify-vocabulary.yml
+- aid: emnify:emnify-user-management-api
+  name: emnify User Management API
+  description: Management of users and their roles
+  humanURL: https://docs.emnify.com/developers/graphql
+  tags:
+  - User Management
+  properties:
+  - type: OpenAPI
+    url: openapi/emnify-user-management-api-openapi.yml
   - type: Documentation
     url: https://docs.emnify.com/developers
   - type: Documentation

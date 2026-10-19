@@ -1,0 +1,535 @@
+openapi: 3.2.0
+info:
+  title: Enterprise Ip Address Spaces API
+  version: 1.0.0
+  description: Management of IP address spaces
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API
+tags:
+- name: ipAddressSpaces
+  description: Management of IP address spaces
+paths:
+  /api/v1/ip_address_space:
+    get:
+      operationId: ipAddressSpaces_IpAddressSpaceGet
+      summary: List IP address spaces
+      description: 'Required permissions Beta Learn more
+
+
+        `IpAddressSpace` + `List` +1 endpoint
+
+
+        Roles: Administrator User Observer
+
+
+        Returns a list of allocated IP address spaces for your organization.'
+      tags:
+      - ipAddressSpaces
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1IpAddressSpaceGetResponsesContentApplicationJsonSchemaItems'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpAddressSpaceGetRequestForbiddenError'
+      security:
+      - bearerAuth: []
+    post:
+      operationId: ipAddressSpaces_IpAddressSpacePost
+      summary: Create an IP address space
+      description: 'Required permissions Beta Learn more
+
+
+        `IpAddressSpace` + `Create`
+
+
+        Roles: Administrator
+
+
+        Checks the requested IP address space for validity and availability, then allocates it to your organization.'
+      tags:
+      - ipAddressSpaces
+      responses:
+        '201':
+          description: 'Created
+
+
+            The requested IP address space is created.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IP_address_spaces_IpAddressSpacePost_Response_201'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpAddressSpacePostRequestBadRequestError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpAddressSpacePostRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpAddressSpacePostRequestNotFoundError'
+        '409':
+          description: 'The requested IP address space overlaps with an existing allocated IP address space.
+
+
+            For example, `10.176.0.0/12` and `10.176.0.0/24` or `10.188.33.16/28`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpAddressSpacePostRequestConflictError'
+        '422':
+          description: "Your requested IP address space isn't allowed or overlaps with a reserved range.\n\n<Warning>\n  These responses have different root causes but share an [error code](/developers/api-guidelines/errors#list-of-error-codes) and token.\n  Be sure to check the error message to determine the exact cause.\n</Warning>\n\nThe requested IP address space must be in one of the following ranges:\n\n- `10.192.0.0/12`\n- `100.64.0.0/10`\n- `10.112.0.0/12`\n- `10.176.0.0/12`\n\nIt also can't overlap with a reserved range (`100.64.0.0/24`).\n"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpAddressSpacePostRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ip_address_space:
+                  type: string
+                ip_address_version:
+                  type: integer
+              required:
+              - ip_address_space
+              - ip_address_version
+      security:
+      - bearerAuth: []
+  /api/v1/ip_address_space/available:
+    get:
+      operationId: ipAddressSpaces_IpAddressSpaceAvailableByIpAddressVersionGet
+      summary: Get random address spaces
+      description: 'Required permissions Beta Learn more
+
+
+        `IpAddressSpace` + `List` +1 endpoint
+
+
+        Roles: Administrator User Observer
+
+
+        Provides a list of 10 random available address spaces (unassigned to any organization).
+
+        As the list is generated for each request, two successive requests will have different results.'
+      tags:
+      - ipAddressSpaces
+      parameters:
+      - name: ip_address_version
+        in: query
+        description: 'Filter by IPv4 which is default or by IPv6.
+
+          Example: `ip_address_version=4` or `ip_address_version=6`
+
+          '
+        required: false
+        schema:
+          type: number
+          format: double
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1IpAddressSpaceAvailableGetResponsesContentApplicationJsonSchemaItems'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpAddressSpaceAvailableByIpAddressVersionGetRequestForbiddenError'
+      security:
+      - bearerAuth: []
+  /api/v1/ip_address_space/{address_space_id}:
+    put:
+      operationId: ipAddressSpaces_IpAddressSpaceByIdPut
+      summary: Assign an IP address space to an organization
+      description: 'Required permissions Beta Learn more
+
+
+        `IpAddressSpace` + `Add`
+
+
+        Roles: Administrator
+
+
+        Use POST API call instead of this deprecated PUT command.
+
+
+        The IP address space is assigned to the user''s organization.'
+      tags:
+      - ipAddressSpaces
+      parameters:
+      - name: address_space_id
+        in: path
+        description: ID of the IP address space to be assigned
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpAddressSpaceByIdPutRequestForbiddenError'
+        '404':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpAddressSpaceByIdPutRequestNotFoundError'
+        '409':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpAddressSpaceByIdPutRequestConflictError'
+      deprecated: true
+      security:
+      - bearerAuth: []
+    delete:
+      operationId: ipAddressSpaces_IpAddressSpaceByIdDelete
+      summary: Release an IP address space from an organization
+      description: 'Required permissions Beta Learn more
+
+
+        `IpAddressSpace` + `Remove`
+
+
+        Roles: Administrator
+
+
+        Release the IP address space from association with the user''s organisation.
+
+
+        IP address spaces can only be removed, if the IP address space isn''t used on any of the organisations endpoints.'
+      tags:
+      - ipAddressSpaces
+      parameters:
+      - name: address_space_id
+        in: path
+        description: ID of the IP address space to be assigned
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        '204':
+          description: Response to a successful request that is not returning a body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpAddressSpaceByIdDeleteRequestForbiddenError'
+        '404':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpAddressSpaceByIdDeleteRequestNotFoundError'
+        '409':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpAddressSpaceByIdDeleteRequestConflictError'
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    IpAddressSpacePostRequestBadRequestError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1IpAddressSpacePostResponsesContentApplicationJsonSchemaErrorsItems'
+          description: sub error descriptions
+      required:
+      - error_token
+      - message
+      title: IpAddressSpacePostRequestBadRequestError
+    IpAddressSpaceByIdPutRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: IpAddressSpaceByIdPutRequestNotFoundError
+    IpAddressSpacePostRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1IpAddressSpacePostResponsesContentApplicationJsonSchemaErrorsItems'
+          description: sub error descriptions
+      required:
+      - error_token
+      - message
+      title: IpAddressSpacePostRequestNotFoundError
+    IpAddressSpaceByIdPutRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: IpAddressSpaceByIdPutRequestConflictError
+    ApiV1IpAddressSpaceAvailableGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        ip_address_space:
+          type: string
+        ip_address_version:
+          type: integer
+      title: ApiV1IpAddressSpaceAvailableGetResponsesContentApplicationJsonSchemaItems
+    IpAddressSpaceGetRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: IpAddressSpaceGetRequestForbiddenError
+    IpAddressSpaceAvailableByIpAddressVersionGetRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: IpAddressSpaceAvailableByIpAddressVersionGetRequestForbiddenError
+    IpAddressSpacePostRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1IpAddressSpacePostResponsesContentApplicationJsonSchemaErrorsItems'
+          description: sub error descriptions
+      required:
+      - error_token
+      - message
+      title: IpAddressSpacePostRequestForbiddenError
+    IP_address_spaces_IpAddressSpacePost_Response_201:
+      type: object
+      properties:
+        id:
+          type: integer
+        ip_address_space:
+          type: string
+        ip_address_version:
+          type: integer
+      title: IP address spaces_IpAddressSpacePost_Response_201
+    ApiV1IpAddressSpaceGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        ip_address_space:
+          type: string
+        ip_address_version:
+          type: integer
+        used_count:
+          type: integer
+        available_count:
+          type: integer
+      title: ApiV1IpAddressSpaceGetResponsesContentApplicationJsonSchemaItems
+    IpAddressSpaceByIdDeleteRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: IpAddressSpaceByIdDeleteRequestForbiddenError
+    IpAddressSpaceByIdPutRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: IpAddressSpaceByIdPutRequestForbiddenError
+    IpAddressSpaceByIdDeleteRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: IpAddressSpaceByIdDeleteRequestConflictError
+    IpAddressSpacePostRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1IpAddressSpacePostResponsesContentApplicationJsonSchemaErrorsItems'
+          description: sub error descriptions
+      required:
+      - error_token
+      - message
+      title: IpAddressSpacePostRequestUnprocessableEntityError
+    IpAddressSpacePostRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1IpAddressSpacePostResponsesContentApplicationJsonSchemaErrorsItems'
+          description: sub error descriptions
+      required:
+      - error_token
+      - message
+      title: IpAddressSpacePostRequestConflictError
+    ApiV1IpAddressSpacePostResponsesContentApplicationJsonSchemaErrorsItems:
+      type: object
+      properties: {}
+      title: ApiV1IpAddressSpacePostResponsesContentApplicationJsonSchemaErrorsItems
+    IpAddressSpaceByIdDeleteRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: IpAddressSpaceByIdDeleteRequestNotFoundError
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'An `auth_token` should be provided to authenticate a session.
+
+
+        To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+        '

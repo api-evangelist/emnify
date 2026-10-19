@@ -1,0 +1,1367 @@
+openapi: 3.2.0
+info:
+  title: Enterprise User Management API
+  version: 1.0.0
+  description: Management of users and their roles
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API
+tags:
+- name: User Management
+  description: Management of users and their roles
+paths:
+  /api/v1/user:
+    get:
+      operationId: userManagement_UserPerPageSortByQAndPageGet
+      summary: List user accounts
+      description: 'Required permissions Beta Learn more
+
+
+        `User` + `List`
+
+
+        Roles: Administrator
+
+
+        Retrieves the collection of user accounts, filtered, sorted and paged accourding to query parameters.'
+      tags:
+      - User Management
+      parameters:
+      - name: page
+        in: query
+        description: Current page number
+        required: false
+        schema:
+          type: number
+          format: double
+      - name: q
+        in: query
+        description: 'Filter parameter in `<filter>:<value>` format. Multiple filters must be in the format of a comma separated list of the following fields:
+
+
+          * `id`
+
+          * `status`
+
+          * `name`
+
+          * `username`
+
+          * `organisation`
+
+          '
+        required: false
+        schema:
+          type: string
+          pattern: (id|status|name|username|organisation):.+
+      - name: per_page
+        in: query
+        description: Defines the number of items per page
+        required: false
+        schema:
+          type: integer
+      - name: sort
+        in: query
+        description: 'Sort parameter in `<operator><field>` format.
+
+          Expects a comma-separated list from the allowed fields:
+
+
+          * `id`
+
+          * `status`
+
+          * `name`
+
+          * `username`
+
+          * `organisation`
+
+          * `created`
+
+          '
+        required: false
+        schema:
+          type: string
+          pattern: -?(id|status|name|username|organisation|created),?
+      responses:
+        '200':
+          description: Successfully returned a list of Users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1UserGetResponsesContentApplicationJsonSchemaItems'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPerPageSortByQAndPageGetRequestForbiddenError'
+      security:
+      - bearerAuth: []
+    post:
+      operationId: userManagement_UserPerPageSortByQAndPagePost
+      summary: Create user
+      description: 'Required permissions Beta Learn more
+
+
+        `User` + `Create`
+
+
+        Roles: Administrator
+
+
+        Creates a user which is *not active and has no password assigned*.
+
+        The URL to get the user details is provided as Location Header in the response.
+
+
+        #### ACTIVATION
+
+
+        Upon creation, the user account undergoes an activation process (see services below ) in which she receives an email with activation link.
+
+        Following this link the user is asked to set the password and upon successful completion of this process, the account becomes active and operational.
+
+
+        Provided fields:
+
+
+        * `username` (String required) - has to be the email of this user
+
+        * `name` (String required)
+
+        * `organisation` (Object optional) - **may be provided** by regular user, but **is required** for master user.
+
+        * `roles` (List of Objects optional) - List of one or more role Ids to be assigned at once. If missing, a default role is assigned
+
+
+        #### Notes
+
+
+        * Password is not provided. Separate calls provide password management.
+
+        * When the organisation of the new user is not specified in the request, it is inherited from the user creating the account.
+
+
+        A regular user is allowed to specify **only organisations which are direct children** of his/her own organisation, or his/her own organisation.
+
+        * The status field is not user editable at account creation time - the default imposed by server is ACTIVATION_PENDING.'
+      tags:
+      - User Management
+      responses:
+        '201':
+          description: Resource Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_management_UserPerPageSortByQAndPagePost_Response_201'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPerPageSortByQAndPagePostRequestForbiddenError'
+        '404':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPerPageSortByQAndPagePostRequestNotFoundError'
+        '422':
+          description: Unprocessable Entity. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPerPageSortByQAndPagePostRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                name:
+                  type: string
+                organisation:
+                  $ref: '#/components/schemas/ApiV1UserPostRequestBodyContentApplicationJsonSchemaOrganisation'
+                roles:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ApiV1UserPostRequestBodyContentApplicationJsonSchemaRolesItems'
+              required:
+              - username
+              - name
+              - organisation
+              - roles
+      security:
+      - bearerAuth: []
+  /api/v1/user/status:
+    get:
+      operationId: userManagement_UserStatusGet
+      summary: List user statuses
+      description: 'Required permissions Beta Learn more
+
+
+        `User.Status` + `List`
+
+
+        Roles: Administrator User Observer
+
+
+        Provides the list of available user status (lookup).'
+      tags:
+      - User Management
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1UserStatusGetResponsesContentApplicationJsonSchemaItems'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserStatusGetRequestForbiddenError'
+      security:
+      - bearerAuth: []
+  /api/v1/user/role:
+    get:
+      operationId: userManagement_UserRoleGet
+      summary: List user roles
+      description: 'Required permissions Beta Learn more
+
+
+        `User.My.Role` + `List`
+
+
+        Roles: Administrator User
+
+
+        Retrieves the collection of available user roles'
+      tags:
+      - User Management
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1UserRoleGetResponsesContentApplicationJsonSchemaItems'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRoleGetRequestForbiddenError'
+      security:
+      - bearerAuth: []
+  /api/v1/user/{user_id}:
+    get:
+      operationId: userManagement_UserByIdGet
+      summary: Get user by ID or username
+      description: 'Required permissions Beta Learn more
+
+
+        `User` + `Get`
+
+
+        Roles: Administrator
+
+
+        Get a specific user by ID provided the user is within this requesting user''s organisation or the organisation''s immediate child organisations.
+
+
+        `id` may be one of:
+
+
+        * The numeric ID of the user, e.g. "123". This is the top-level `id` object returned by each item in `GET /api/v1/user`
+
+        * Username (email), e.g. "exampleuser@org.de". This is the top-level `username` object returned by each item in `GET /api/v1/user`'
+      tags:
+      - User Management
+      parameters:
+      - name: user_id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_management_UserByIdGet_Response_200'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserByIdGetRequestForbiddenError'
+        '404':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserByIdGetRequestNotFoundError'
+      security:
+      - bearerAuth: []
+    delete:
+      operationId: userManagement_UserByIdDelete
+      summary: Delete user by ID
+      description: 'Required permissions Beta Learn more
+
+
+        `User` + `Delete` +1 endpoint
+
+
+        Roles: Administrator
+
+
+        **This call is deprecated.**
+
+        Please use DELETE `/api/v2/user/:id` instead.
+
+
+        A user can be deleted, if belonging to the same organization as the requesting user, or to an organization which is a direct child of the requesting user''s organization.'
+      tags:
+      - User Management
+      parameters:
+      - name: user_id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserByIdDeleteRequestForbiddenError'
+        '404':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserByIdDeleteRequestNotFoundError'
+      deprecated: true
+      security:
+      - bearerAuth: []
+    patch:
+      operationId: userManagement_UserByIdPatch
+      summary: Update user by ID
+      description: 'Required permissions Beta Learn more
+
+
+        `User` + `Update`
+
+
+        Roles: Administrator
+
+
+        Provided fields
+
+        * `username` (String optional) - has to be user''s email
+
+        * `name` (String optional)
+
+        * `status` (Object optional)
+
+        * `organisation` (Object optional) - must be the current organisation or not to be provided
+
+
+        #### Notes
+
+
+        * Password is not provided. Separate calls provide password management.
+
+        * The organisation is not modifiable. A user can be updated, if belonging to the same organisation as the requesting user,
+
+        or to an organisation which is a direct child of the requesting user''s organisation.
+
+        * Status can be changed between ACTIVE (id: 1) and SUSPENDED (id: 2), and from ACTIVATION_PENDING (id: 0) to SUSPENDED.
+
+
+        Modifying the username invalidates account and triggers the activation procedure.'
+      tags:
+      - User Management
+      parameters:
+      - name: user_id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserByIdPatchRequestForbiddenError'
+        '422':
+          description: Unprocessable Entity. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserByIdPatchRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                name:
+                  type: string
+                status:
+                  $ref: '#/components/schemas/ApiV1UserUserIdPatchRequestBodyContentApplicationJsonSchemaStatus'
+              required:
+              - username
+              - name
+              - status
+      security:
+      - bearerAuth: []
+  /api/v1/user/{user_id}/event:
+    get:
+      operationId: userManagement_UserEventPagePerPageSortByUserIdAndQGet
+      summary: List user events
+      description: 'Required permissions Beta Learn more
+
+
+        `User.Event` + `List`
+
+
+        Roles: Administrator
+
+
+        Returns the list of events, filtered, sorted and paged according to query parameters.
+
+
+        Only an administrator or observer may be allowed to see events of other users, provided they belong to an organisation he/she has access to.
+
+
+        Any user can retrieve their own events at `/api/v1/user/my/event`.
+
+
+        This API endpoint deviates from the specified conventions and may not return the same HTTP Codes as the higher layer call (`/api/v1/user/{user_id|my}`).
+
+
+        In case the requested `{user_id}` does not exist or is not accessible for the user, **HTTP 200** will be returned with empty **[]** as long as the provided `{user_id}` is a number and all parameters are valid.
+
+
+        Please take that into consideration when building automation on top of the error behavior of this endpoint.'
+      tags:
+      - User Management
+      parameters:
+      - name: user_id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: page
+        in: query
+        description: Current page number
+        required: false
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: Defines the number of items per page
+        required: false
+        schema:
+          type: integer
+      - name: sort
+        in: query
+        description: 'Sort properties according to a comma separated list of accepted fields. Valid fields are:
+
+
+          * `id` - (**event id**)
+
+          * `timestamp` - (**event timestamp**)
+
+          * `source` - (**event source**)
+
+          * `severity` - (**event severity**)
+
+          * `alert` - (**alert status**)
+
+          * `organisation` - (**organisation name**)
+
+          * `user` - (**user id**)
+
+          * `endpoint` - (**endpoint name**)
+
+          * `tags` - (**endpoint tags**)
+
+          * `ip_address` - (**endpoint ip_address**)
+
+          * `iccid` - (**sim iccid**)
+
+          * `imsi` - (**sim imsi**)
+
+          * `type` - (**event type**)
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: q
+        in: query
+        description: 'Filter parameter in `<filter>:<value>` format.
+
+          Multiple filters must be a comma-separated list of the following fields:
+
+
+          * `from` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, **only valid with until**)
+
+          * `until` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, **only valid with from**)
+
+          * `type` (**event_type**, numerical)
+
+          * `source` (**event_type**, numerical, e.g. 0 = Network), 1 = Policy Control, 2 = API)
+
+          * `severity` (**event_severity**, numerical, e.g. 0 = Info, 1 = Warn), 2 = Critical)
+
+          * `alert` (boolean, e.g. true, false)
+
+          * `description` (**event description**, string)
+
+          * `organisation` (**organisation name**, string)
+
+          * `user` (**user name**, string)
+
+          * `endpoint` (**endpoint name**, string)
+
+          * `tags` (**endpoint tags**, string)
+
+          * `tag_id` (**endpoint tag ID**, numerical, matches events whose endpoint has the tag. Tag IDs are listed in the endpoint''s `tag_assignments`)
+
+          * `ip_address` (**endpoint IP address**, valid IPv4/IPv6 address)
+
+          * `imei` (**endpoint imei**, numerical string)
+
+          * `iccid` (**sim iccid**, numerical string)
+
+          * `imsi` (**sim imsi**, numerical string)
+
+          * `timestamp` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, for querying events of 1 day, deprecated in future)
+
+          * `iccid_with_luhn` (**sim iccid with Luhn**, numerical string)
+
+          * `network` (**endpoint network**, string, e.g. Telekom)
+
+          * `rat` (**event pdp context rat type**, numerical string, e.g. 6)
+
+          * `country` (**endpoint country**, string, e.g. Germany)
+
+
+          Some filters can accept up to 6 values which must be separated by the pipe symbol (`|`) or url-encoded as (`%7C`):
+
+
+          * `iccid` (q: iccid:1234567890123456789|8988303000123456789)
+
+          * `iccid_with_luhn` (q: iccid:12345678901234567891|89883030001234567891)
+
+          * `endpoint` (q: endpoint:example_endpoint_name|another_endpoint_name)
+
+          * `type` (q: type:example_event_type|another_event_type)
+
+          * `network` (q: network:example_network|another_network)
+
+          * `rat` (q: rat:example_rat|another_rat)
+
+          * `country` (q: country:example_country|another_country)
+
+          * `tag_id` (q: tag_id:7|12, matches events whose endpoint has any of the tags)
+
+          '
+        required: false
+        schema:
+          type: string
+          pattern: (from|until|type|source|severity|alert|description|organisation|user|endpoint|tags|tag_id|ip_address|imei|iccid|iccid_with_luhn|imsi|timestamp|network|rat|country):.+
+      responses:
+        '200':
+          description: Successfully returned a list of User events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItems'
+        '400':
+          description: '**Bad Request** due to incorrect **Paging** Parameters, **Sorting** Parameter or incorrect `{user_id}`
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: '**Forbidden** due to incorrect user role or lack of access
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '422':
+          description: '**Unprocessable Entity** due to incorrect **Query** parameters
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+      security:
+      - bearerAuth: []
+  /api/v1/user/{user_id}/role/permission:
+    get:
+      operationId: userManagement_UserRolePermissionByIdGet
+      summary: List user role permissions
+      description: 'Required permissions Beta Learn more
+
+
+        `User.Role.Permission` + `List`
+
+
+        Roles: Administrator
+
+
+        **Deprecated.** This endpoint, together with the
+
+        `/api/v1/user/my/role/permission` convenience variant, is deprecated and
+
+        will be removed in a future release.
+
+
+        Role permissions available to this user.
+
+
+        Only an administrator or observer is allowed to see the role permissions of other users, provided they belong to an organisation he/she has access to.
+
+
+        Any user can also retrieve one''s own role permissions at:
+
+        `/api/v1/user/my/role/permission`.'
+      tags:
+      - User Management
+      parameters:
+      - name: user_id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_management_UserRolePermissionByIdGet_Response_200'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRolePermissionByIdGetRequestForbiddenError'
+      deprecated: true
+      security:
+      - bearerAuth: []
+  /api/v1/user/{user_id}/role/{role_id}:
+    put:
+      operationId: userManagement_UserRoleByIdAndRoleIdPut
+      summary: Assign role to user
+      description: 'Required permissions Beta Learn more
+
+
+        `User.Role` + `Add`
+
+
+        Roles: Administrator
+
+
+        Role is assigned to this user.'
+      tags:
+      - User Management
+      parameters:
+      - name: user_id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: role_id
+        in: path
+        description: Role ID to be assigned
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRoleByIdAndRoleIdPutRequestForbiddenError'
+        '404':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRoleByIdAndRoleIdPutRequestNotFoundError'
+        '409':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRoleByIdAndRoleIdPutRequestConflictError'
+      security:
+      - bearerAuth: []
+    delete:
+      operationId: userManagement_UserRoleByIdAndRoleIdDelete
+      summary: Delete user role
+      description: 'Required permissions Beta Learn more
+
+
+        `User.Role` + `Remove`
+
+
+        Roles: Administrator
+
+
+        Release a Role from association with this user.
+
+
+        A role can only be removed if it''s not the last role of this user.'
+      tags:
+      - User Management
+      parameters:
+      - name: user_id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: role_id
+        in: path
+        description: Role ID to be assigned
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        '204':
+          description: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRoleByIdAndRoleIdDeleteRequestForbiddenError'
+        '404':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRoleByIdAndRoleIdDeleteRequestNotFoundError'
+        '409':
+          description: Unexpected error in API call. See HTTP response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRoleByIdAndRoleIdDeleteRequestConflictError'
+      security:
+      - bearerAuth: []
+  /api/v2/user/{user_id}:
+    delete:
+      operationId: userManagement_UserByIdDeleteV2
+      summary: Delete user by ID
+      description: 'Required permissions Beta Learn more
+
+
+        `User` + `Delete` +1 endpoint
+
+
+        Roles: Administrator
+
+
+        A user can be deleted, if they:
+
+
+        * belong to the same organization as the requesting user
+
+        * belong to an organization which is a direct child of the requesting user''s organization'
+      tags:
+      - User Management
+      parameters:
+      - name: user_id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserByIdDeleteV2RequestForbiddenError'
+        '404':
+          description: User does not exist or is not visible to the requesting user
+          content:
+            application/json:
+              schema:
+                description: Any type
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    UserPerPageSortByQAndPageGetRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: UserPerPageSortByQAndPageGetRequestForbiddenError
+    ApiV1UserPostRequestBodyContentApplicationJsonSchemaRolesItems:
+      type: object
+      properties: {}
+      title: ApiV1UserPostRequestBodyContentApplicationJsonSchemaRolesItems
+    UserByIdPatchRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1UserUserIdPatchResponsesContentApplicationJsonSchemaErrorsItems'
+      title: UserByIdPatchRequestUnprocessableEntityError
+    ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaOrganisation:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaOrganisation
+    UserByIdGetRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: UserByIdGetRequestForbiddenError
+    UserByIdPatchRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: UserByIdPatchRequestForbiddenError
+    ApiV1UserUserIdPatchRequestBodyContentApplicationJsonSchemaStatus:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdPatchRequestBodyContentApplicationJsonSchemaStatus
+    UserPerPageSortByQAndPagePostRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: UserPerPageSortByQAndPagePostRequestForbiddenError
+    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity
+    UserRoleByIdAndRoleIdDeleteRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: UserRoleByIdAndRoleIdDeleteRequestForbiddenError
+    ApiV1UserPostRequestBodyContentApplicationJsonSchemaOrganisation:
+      type: object
+      properties: {}
+      title: ApiV1UserPostRequestBodyContentApplicationJsonSchemaOrganisation
+    UserRolePermissionByIdGetRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: UserRolePermissionByIdGetRequestForbiddenError
+    UserRoleByIdAndRoleIdPutRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: UserRoleByIdAndRoleIdPutRequestForbiddenError
+    UserPerPageSortByQAndPagePostRequestUnprocessableEntityError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1UserPostResponsesContentApplicationJsonSchemaErrorsItems'
+      title: UserPerPageSortByQAndPagePostRequestUnprocessableEntityError
+    ApiV1UserPostResponsesContentApplicationJsonSchemaErrorsItems:
+      type: object
+      properties: {}
+      title: ApiV1UserPostResponsesContentApplicationJsonSchemaErrorsItems
+    ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaMfaItems:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaMfaItems
+    ApiV1UserRoleGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+      title: ApiV1UserRoleGetResponsesContentApplicationJsonSchemaItems
+    ApiV1UserGetResponsesContentApplicationJsonSchemaItemsStatus:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1UserGetResponsesContentApplicationJsonSchemaItemsStatus
+    ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaStatus:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaStatus
+    UserStatusGetRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: UserStatusGetRequestForbiddenError
+    ApiV1UserUserIdPatchResponsesContentApplicationJsonSchemaErrorsItems:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdPatchResponsesContentApplicationJsonSchemaErrorsItems
+    UserByIdGetRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserByIdGetRequestNotFoundError
+    UserRoleGetRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: UserRoleGetRequestForbiddenError
+    UserPerPageSortByQAndPagePostRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserPerPageSortByQAndPagePostRequestNotFoundError
+    UserRoleByIdAndRoleIdPutRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserRoleByIdAndRoleIdPutRequestNotFoundError
+    UserRoleByIdAndRoleIdDeleteRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserRoleByIdAndRoleIdDeleteRequestConflictError
+    UserRoleByIdAndRoleIdDeleteRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserRoleByIdAndRoleIdDeleteRequestNotFoundError
+    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsUser:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsUser
+    UserByIdDeleteRequestNotFoundError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserByIdDeleteRequestNotFoundError
+    User_management_UserByIdGet_Response_200:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        name:
+          type: string
+        created:
+          type: string
+        status:
+          $ref: '#/components/schemas/ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaStatus'
+        organisation:
+          $ref: '#/components/schemas/ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaOrganisation'
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaRolesItems'
+        mfa:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaMfaItems'
+      title: User management_UserByIdGet_Response_200
+    ApiV1UserGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        name:
+          type: string
+        created:
+          type: string
+        status:
+          $ref: '#/components/schemas/ApiV1UserGetResponsesContentApplicationJsonSchemaItemsStatus'
+        organisation:
+          $ref: '#/components/schemas/ApiV1UserGetResponsesContentApplicationJsonSchemaItemsOrganisation'
+      title: ApiV1UserGetResponsesContentApplicationJsonSchemaItems
+    ApiV1UserStatusGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ApiV1UserStatusGetResponsesContentApplicationJsonSchemaItems
+    UserRoleByIdAndRoleIdPutRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UserRoleByIdAndRoleIdPutRequestConflictError
+    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        alert:
+          type: boolean
+        description:
+          type: string
+        timestamp:
+          type: string
+        event_type:
+          $ref: '#/components/schemas/ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventType'
+        event_source:
+          $ref: '#/components/schemas/ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource'
+        event_severity:
+          $ref: '#/components/schemas/ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSeverity'
+        organisation:
+          $ref: '#/components/schemas/ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation'
+        user:
+          $ref: '#/components/schemas/ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsUser'
+      required:
+      - id
+      - alert
+      - description
+      - timestamp
+      - event_type
+      - event_source
+      - event_severity
+      - organisation
+      - user
+      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItems
+    User_management_UserPerPageSortByQAndPagePost_Response_201:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: User management_UserPerPageSortByQAndPagePost_Response_201
+    UserByIdDeleteV2RequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: UserByIdDeleteV2RequestForbiddenError
+    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsOrganisation
+    ApiV1UserGetResponsesContentApplicationJsonSchemaItemsOrganisation:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+      title: ApiV1UserGetResponsesContentApplicationJsonSchemaItemsOrganisation
+    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventType:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventType
+    UserByIdDeleteRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: UserByIdDeleteRequestForbiddenError
+    ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdEventGetResponsesContentApplicationJsonSchemaItemsEventSource
+    User_management_UserRolePermissionByIdGet_Response_200:
+      type: object
+      properties: {}
+      title: User management_UserRolePermissionByIdGet_Response_200
+    ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaRolesItems:
+      type: object
+      properties: {}
+      title: ApiV1UserUserIdGetResponsesContentApplicationJsonSchemaRolesItems
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'An `auth_token` should be provided to authenticate a session.
+
+
+        To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+        '

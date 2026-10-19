@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.emnify.com/openapi/enterprise.yaml",
+ "final": "https://docs.emnify.com/openapi/enterprise.yaml",
+ "status": 200,
+ "content_type": "application/x-yaml; charset=utf-8",
+ "bytes": 987998,
+ "sha256": "18b0f2d78295ef68ab79f506223be0bf8381db8a53a7b219eaa4e46393028196",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "re-archived: the provider's current document replaced a stale archive (roadmap#793); the old files are in openapi/_superseded/2026-10-19-stale"
+}

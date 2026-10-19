@@ -1,0 +1,1122 @@
+openapi: 3.2.0
+info:
+  title: Enterprise Permission And Role Management API
+  version: 1.0.0
+  description: Management of permissions, roles, and role assignments
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API
+tags:
+- name: permissionAndRoleManagement
+  description: Management of permissions, roles, and role assignments
+paths:
+  /api/v1/organisation/{orgId}/permission:
+    get:
+      operationId: permissionAndRoleManagement_listOrganisationPermissions
+      summary: List available permissions
+      description: 'Required permissions Beta Learn more
+
+
+        `Organisation.Permission` + `List`
+
+
+        Roles: Administrator
+
+
+        Returns the catalog of permissions usable in this Workspace, excluding deleted permissions.
+
+        Deprecated permissions are still returned with `deprecated_at` populated, so consumers can surface end-of-life warnings.
+
+
+        The catalog isn''t paginated.
+
+        Use `my` in place of a numeric `orgId` to target the caller''s own Workspace.'
+      tags:
+      - permissionAndRoleManagement
+      parameters:
+      - name: orgId
+        in: path
+        description: 'Workspace identifier.
+
+          Either a positive integer organization ID, or the literal string `my` to target the caller''s own Workspace.
+
+          '
+        required: true
+        schema:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdPermissionGetParametersOrgId'
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrganisationPermissionOutputDto'
+        '404':
+          description: Organization not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOrganisationPermissionsRequestNotFoundError'
+      security:
+      - bearerAuth: []
+  /api/v1/organisation/{orgId}/role:
+    get:
+      operationId: permissionAndRoleManagement_listOrganisationRoles
+      summary: List system and custom roles
+      description: 'Required permissions Beta Learn more
+
+
+        `Organisation.Role` + `List`
+
+
+        Roles: Administrator User
+
+
+        Returns all roles in the Workspace.
+
+        System roles come first, in the order Administrator, User, and Observer, followed by custom roles alphabetically.
+
+
+        Pass `include_permissions=true` to also receive each role''s permission list.
+
+        Use `my` in place of a numeric `orgId` to target the caller''s own Workspace.'
+      tags:
+      - permissionAndRoleManagement
+      parameters:
+      - name: orgId
+        in: path
+        description: 'Workspace identifier.
+
+          Either a positive integer organization ID, or the literal string `my` to target the caller''s own Workspace.
+
+          '
+        required: true
+        schema:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdRoleGetParametersOrgId'
+      - name: include_permissions
+        in: query
+        description: 'When true, each returned role also includes its `permissions` array.
+
+          Defaults to `false` to keep the list response light.
+
+          '
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleOutputDto'
+        '404':
+          description: Organization not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOrganisationRolesRequestNotFoundError'
+      security:
+      - bearerAuth: []
+    post:
+      operationId: permissionAndRoleManagement_createCustomRole
+      summary: Create a custom role
+      description: 'Required permissions Beta Learn more
+
+
+        `Organisation.Role` + `Create`
+
+
+        Roles: Administrator
+
+
+        Creates a custom role in the Workspace.
+
+        A Workspace can hold at most 50 custom roles, and the name must be unique within the Workspace.
+
+
+        Supply permissions either as `permission_ids`, using numeric IDs, or as `permissions`, using resource and action pairs, but not both.
+
+        Retrieve the valid permissions with `GET /api/v1/organisation/{orgId}/permission`.
+
+
+        Use `my` in place of a numeric `orgId` to target the caller''s own Workspace.'
+      tags:
+      - permissionAndRoleManagement
+      parameters:
+      - name: orgId
+        in: path
+        description: 'Workspace identifier.
+
+          Either a positive integer organization ID, or the literal string `my` to target the caller''s own Workspace.
+
+          '
+        required: true
+        schema:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdRolePostParametersOrgId'
+      responses:
+        '201':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleWithPermissionsOutputDto'
+        '400':
+          description: 'Validation error.
+
+            For example, an invalid name or description, or a referenced permission that isn''t available to the Workspace''s organization type.
+
+            Supplying both `permission_ids` and `permissions` in the same request is also rejected, because the two fields are mutually exclusive.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCustomRoleRequestBadRequestError'
+        '403':
+          description: 'Custom role creation isn''t available for the organization, or the user doesn''t have the required permissions.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCustomRoleRequestForbiddenError'
+        '409':
+          description: A role with this name already exists in the Workspace.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCustomRoleRequestConflictError'
+        '422':
+          description: 'Business rule violation.
+
+            For example, the limit of 50 custom roles is reached, or `permission_ids` or `permissions` references a permission that is unknown, deprecated, deleted, or granted globally.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCustomRoleRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCustomRoleInputDto'
+      security:
+      - bearerAuth: []
+  /api/v1/organisation/{orgId}/role/{roleId}:
+    get:
+      operationId: permissionAndRoleManagement_getOrganisationRole
+      summary: Retrieve a role with its permissions
+      description: 'Required permissions Beta Learn more
+
+
+        `Organisation.Role` + `Get`
+
+
+        Roles: Administrator User
+
+
+        Returns a single role with its full permission list.
+
+        Works for both system and custom roles.
+
+
+        Use `my` in place of a numeric `orgId` to target the caller''s own Workspace.'
+      tags:
+      - permissionAndRoleManagement
+      parameters:
+      - name: roleId
+        in: path
+        description: Numeric identifier of the role.
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+      - name: orgId
+        in: path
+        description: 'Workspace identifier.
+
+          Either a positive integer organization ID, or the literal string `my` to target the caller''s own Workspace.
+
+          '
+        required: true
+        schema:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdRoleRoleIdGetParametersOrgId'
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleWithPermissionsOutputDto'
+        '404':
+          description: Role not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrganisationRoleRequestNotFoundError'
+      security:
+      - bearerAuth: []
+    delete:
+      operationId: permissionAndRoleManagement_deleteCustomRole
+      summary: Delete a custom role
+      description: 'Required permissions Beta Learn more
+
+
+        `Organisation.Role` + `Delete`
+
+
+        Roles: Administrator
+
+
+        Deletes a custom role.
+
+        The request fails if the role is a system role, or if any users are still assigned to it.
+
+
+        Use `my` in place of a numeric `orgId` to target the caller''s own Workspace.'
+      tags:
+      - permissionAndRoleManagement
+      parameters:
+      - name: roleId
+        in: path
+        description: Numeric identifier of the role.
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+      - name: orgId
+        in: path
+        description: 'Workspace identifier.
+
+          Either a positive integer organization ID, or the literal string `my` to target the caller''s own Workspace.
+
+          '
+        required: true
+        schema:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdRoleRoleIdDeleteParametersOrgId'
+      responses:
+        '204':
+          description: Role deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '404':
+          description: Role not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteCustomRoleRequestNotFoundError'
+        '422':
+          description: 'Business rule violation.
+
+            Either the role is a system role, or users are still assigned to it.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteCustomRoleRequestUnprocessableEntityError'
+      security:
+      - bearerAuth: []
+    patch:
+      operationId: permissionAndRoleManagement_updateCustomRole
+      summary: Update a custom role
+      description: 'Required permissions Beta Learn more
+
+
+        `Organisation.Role` + `Update`
+
+
+        Roles: Administrator
+
+
+        Partially updates a custom role.
+
+        System roles can''t be modified.
+
+
+        When you provide `permission_ids` or `permissions`, the field replaces the existing permission list.
+
+        The two fields are mutually exclusive.
+
+        Retrieve the valid permissions with `GET /api/v1/organisation/{orgId}/permission`.
+
+
+        Use `my` in place of a numeric `orgId` to target the caller''s own Workspace.'
+      tags:
+      - permissionAndRoleManagement
+      parameters:
+      - name: roleId
+        in: path
+        description: Numeric identifier of the role.
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+      - name: orgId
+        in: path
+        description: 'Workspace identifier.
+
+          Either a positive integer organization ID, or the literal string `my` to target the caller''s own Workspace.
+
+          '
+        required: true
+        schema:
+          $ref: '#/components/schemas/ApiV1OrganisationOrgIdRoleRoleIdPatchParametersOrgId'
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleWithPermissionsOutputDto'
+        '400':
+          description: 'Validation error.
+
+            For example, an invalid name or description, or a referenced permission that isn''t available to the Workspace''s organization type.
+
+            Supplying both `permission_ids` and `permissions` in the same request is also rejected, because the two fields are mutually exclusive.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateCustomRoleRequestBadRequestError'
+        '404':
+          description: Role not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateCustomRoleRequestNotFoundError'
+        '409':
+          description: A role with this name already exists in the Workspace.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateCustomRoleRequestConflictError'
+        '422':
+          description: 'Business rule violation.
+
+            For example, an attempt to modify a system role, or `permission_ids` or `permissions` references a permission that is unknown, deprecated, deleted, or granted globally.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateCustomRoleRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCustomRoleInputDto'
+      security:
+      - bearerAuth: []
+  /api/v1/user/my/permission:
+    get:
+      operationId: permissionAndRoleManagement_getUserPermissions
+      summary: List your permissions in the current Workspace
+      description: 'Required permissions Beta Learn more
+
+
+        No permission required. Available to all roles.
+
+
+        Returns a flattened list of permissions across all user roles assigned to the calling user in the current Workspace.'
+      tags:
+      - permissionAndRoleManagement
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PermissionOutputDto'
+        '401':
+          description: 'The request has no valid authentication token.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUserPermissionsRequestUnauthorizedError'
+        '403':
+          description: 'The caller''s roles don''t include the permission needed to read this list.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUserPermissionsRequestForbiddenError'
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    GetOrganisationRoleRequestNotFoundError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: GetOrganisationRoleRequestNotFoundError
+    ApiV1OrganisationOrgIdRoleRoleIdGetParametersOrgId:
+      oneOf:
+      - type: integer
+        minimum: 1
+      - $ref: '#/components/schemas/ApiV1OrganisationOrgIdRoleRoleIdGetParametersOrgId1'
+      title: ApiV1OrganisationOrgIdRoleRoleIdGetParametersOrgId
+    ApiV1OrganisationOrgIdRoleRoleIdDeleteParametersOrgId1:
+      type: string
+      enum:
+      - my
+      title: ApiV1OrganisationOrgIdRoleRoleIdDeleteParametersOrgId1
+    ApiV1OrganisationOrgIdRolePostParametersOrgId:
+      oneOf:
+      - type: integer
+        minimum: 1
+      - $ref: '#/components/schemas/ApiV1OrganisationOrgIdRolePostParametersOrgId1'
+      title: ApiV1OrganisationOrgIdRolePostParametersOrgId
+    RoleOutputDto:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+          description: Unique role identifier.
+        name:
+          type: string
+          description: Display name of the role.
+        name_translation_key:
+          type:
+          - string
+          - 'null'
+          description: 'Translation key for the role name.
+
+            Set for system roles only.
+
+            '
+        description:
+          type: string
+          description: 'Human-readable description of the role.
+
+            An empty string when no description has been set.
+
+            '
+        description_translation_key:
+          type:
+          - string
+          - 'null'
+          description: 'Translation key for the role description.
+
+            Set for system roles only.
+
+            '
+        user_count:
+          type: number
+          format: double
+          description: Number of users assigned to this role in the Workspace.
+        type:
+          $ref: '#/components/schemas/RoleOutputDtoType'
+          description: Whether this is a system-defined role or an organization's custom role.
+        is_system_role:
+          type: boolean
+          description: True for built-in system roles, which can't be modified or deleted.
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/RolePermissionOutputDto'
+          description: 'Permissions assigned to this role.
+
+            Present only on single-role retrieval, or on the list when `include_permissions=true`.
+
+            '
+      required:
+      - id
+      - name
+      - name_translation_key
+      - description
+      - description_translation_key
+      - user_count
+      - type
+      - is_system_role
+      title: RoleOutputDto
+    PermissionOutputDto:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        resource:
+          type: string
+        action:
+          type: string
+      required:
+      - id
+      - resource
+      - action
+      title: PermissionOutputDto
+    CreateCustomRoleRequestForbiddenError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: CreateCustomRoleRequestForbiddenError
+    UpdateCustomRoleRequestBadRequestError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: UpdateCustomRoleRequestBadRequestError
+    RoleWithPermissionsOutputDtoType:
+      type: string
+      enum:
+      - system
+      - custom
+      description: Whether this is a system-defined role or an organization's custom role.
+      title: RoleWithPermissionsOutputDtoType
+    ListOrganisationPermissionsRequestNotFoundError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: ListOrganisationPermissionsRequestNotFoundError
+    UpdateCustomRoleRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: UpdateCustomRoleRequestConflictError
+    DeleteCustomRoleRequestUnprocessableEntityError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: DeleteCustomRoleRequestUnprocessableEntityError
+    UpdateCustomRoleRequestNotFoundError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: UpdateCustomRoleRequestNotFoundError
+    RestApiEntrypointDto:
+      type: object
+      properties:
+        method:
+          $ref: '#/components/schemas/RestApiEntrypointDtoMethod'
+          description: HTTP method of the REST route.
+        path:
+          type: string
+          description: REST route path.
+        created_at:
+          type: string
+          format: date-time
+          description: When the entrypoint was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: When the entrypoint was last updated.
+        deprecated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: 'Set once the entrypoint is end-of-life.
+
+            Null while the entrypoint is active.
+
+            '
+      required:
+      - method
+      - path
+      - created_at
+      - updated_at
+      - deprecated_at
+      title: RestApiEntrypointDto
+    ListOrganisationRolesRequestNotFoundError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: ListOrganisationRolesRequestNotFoundError
+    ApiV1OrganisationOrgIdRoleRoleIdPatchParametersOrgId:
+      oneOf:
+      - type: integer
+        minimum: 1
+      - $ref: '#/components/schemas/ApiV1OrganisationOrgIdRoleRoleIdPatchParametersOrgId1'
+      title: ApiV1OrganisationOrgIdRoleRoleIdPatchParametersOrgId
+    GetUserPermissionsRequestUnauthorizedError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: GetUserPermissionsRequestUnauthorizedError
+    RolePermissionOutputDto:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+          description: Unique permission identifier.
+        resource:
+          type: string
+          description: Resource the permission applies to.
+        action:
+          type: string
+          description: Action the permission grants on the resource.
+      required:
+      - id
+      - resource
+      - action
+      title: RolePermissionOutputDto
+    RestApiEntrypointDtoMethod:
+      type: string
+      enum:
+      - GET
+      - POST
+      - PATCH
+      - DELETE
+      - PUT
+      description: HTTP method of the REST route.
+      title: RestApiEntrypointDtoMethod
+    ApiV1OrganisationOrgIdRoleGetParametersOrgId1:
+      type: string
+      enum:
+      - my
+      title: ApiV1OrganisationOrgIdRoleGetParametersOrgId1
+    UpdateCustomRoleInputDto:
+      type: object
+      properties:
+        name:
+          type: string
+          pattern: ^[A-Za-z0-9 _\-&'()]+$
+          minLength: 2
+          maxLength: 50
+          description: 'New unique role name within the Workspace.
+
+            Use letters, digits, spaces, dashes, underscores, ampersands, apostrophes, and parentheses.
+
+            Leading and trailing whitespace is trimmed before validation and storage.
+
+            Omit the field to leave the name unchanged, because an explicit `null` is rejected.
+
+            '
+        description:
+          type:
+          - string
+          - 'null'
+          minLength: 2
+          maxLength: 250
+          description: 'Free-text description of the role.
+
+            Pass `null` to clear it, which stores an empty string.
+
+            When provided, it must be 2 to 250 characters.
+
+            Leading and trailing whitespace is trimmed before validation and storage.
+
+            '
+        permission_ids:
+          type: array
+          items:
+            type: number
+            format: double
+          description: 'When provided, replaces the existing permission list.
+
+            Mutually exclusive with `permissions`.
+
+            Deprecated or deleted permissions are rejected.
+
+            Omit the field to leave assignments unchanged, and send `[]` to clear them, because an explicit `null` is rejected.
+
+            '
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/PermissionRefInputDto'
+          description: 'Resource and action pairs replacing the existing permission list, resolved to permission IDs on the server.
+
+            Mutually exclusive with `permission_ids`.
+
+            Deprecated or deleted permissions are rejected.
+
+            Omit the field to leave assignments unchanged, and send `[]` to clear them, because an explicit `null` is rejected.
+
+            '
+      title: UpdateCustomRoleInputDto
+    PermissionEntrypointsDto:
+      type: object
+      properties:
+        rest:
+          type: array
+          items:
+            $ref: '#/components/schemas/RestApiEntrypointDto'
+          description: REST routes guarded by the permission.
+        graphql:
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphqlApiEntrypointDto'
+          description: GraphQL operations guarded by the permission.
+      required:
+      - rest
+      - graphql
+      title: PermissionEntrypointsDto
+    CreateCustomRoleRequestUnprocessableEntityError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: CreateCustomRoleRequestUnprocessableEntityError
+    OrganisationPermissionOutputDto:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+          description: Unique permission identifier.
+        resource:
+          type: string
+          description: Resource the permission applies to.
+        action:
+          type: string
+          description: Action the permission grants on the resource.
+        created_at:
+          type: string
+          format: date-time
+          description: When the permission was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: When the permission was last updated.
+        deprecated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: 'Set once the permission is end-of-life.
+
+            The permission is still returned so clients can warn users, but it can''t be assigned to new or updated custom roles.
+
+            '
+        entrypoints:
+          $ref: '#/components/schemas/PermissionEntrypointsDto'
+          description: 'API entrypoints guarded by this permission, grouped into `rest` and `graphql`.
+
+            Both arrays are always present, and empty when the permission guards no entrypoint of that kind.
+
+            '
+      required:
+      - id
+      - resource
+      - action
+      - created_at
+      - updated_at
+      - deprecated_at
+      - entrypoints
+      title: OrganisationPermissionOutputDto
+    UpdateCustomRoleRequestUnprocessableEntityError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: UpdateCustomRoleRequestUnprocessableEntityError
+    ApiV1OrganisationOrgIdRoleRoleIdDeleteParametersOrgId:
+      oneOf:
+      - type: integer
+        minimum: 1
+      - $ref: '#/components/schemas/ApiV1OrganisationOrgIdRoleRoleIdDeleteParametersOrgId1'
+      title: ApiV1OrganisationOrgIdRoleRoleIdDeleteParametersOrgId
+    GetUserPermissionsRequestForbiddenError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: GetUserPermissionsRequestForbiddenError
+    CreateCustomRoleRequestConflictError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: CreateCustomRoleRequestConflictError
+    ApiV1OrganisationOrgIdRoleRoleIdPatchParametersOrgId1:
+      type: string
+      enum:
+      - my
+      title: ApiV1OrganisationOrgIdRoleRoleIdPatchParametersOrgId1
+    ApiV1OrganisationOrgIdRolePostParametersOrgId1:
+      type: string
+      enum:
+      - my
+      title: ApiV1OrganisationOrgIdRolePostParametersOrgId1
+    GraphqlApiEntrypointDto:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/GraphqlApiEntrypointDtoType'
+          description: GraphQL operation kind.
+        path:
+          type: string
+          description: GraphQL operation name.
+        created_at:
+          type: string
+          format: date-time
+          description: When the entrypoint was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: When the entrypoint was last updated.
+        deprecated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: 'Set once the entrypoint is end-of-life.
+
+            Null while the entrypoint is active.
+
+            '
+      required:
+      - type
+      - path
+      - created_at
+      - updated_at
+      - deprecated_at
+      title: GraphqlApiEntrypointDto
+    CreateCustomRoleInputDto:
+      type: object
+      properties:
+        name:
+          type: string
+          pattern: ^[A-Za-z0-9 _\-&'()]+$
+          minLength: 2
+          maxLength: 50
+          description: 'Unique role name within the Workspace.
+
+            Use letters, digits, spaces, dashes, underscores, ampersands, apostrophes, and parentheses.
+
+            Leading and trailing whitespace is trimmed before validation and storage.
+
+            '
+        description:
+          type:
+          - string
+          - 'null'
+          minLength: 2
+          maxLength: 250
+          description: 'Optional free-text description of the role.
+
+            Omit it or pass `null` to store an empty string.
+
+            When provided, it must be 2 to 250 characters.
+
+            Leading and trailing whitespace is trimmed before validation and storage.
+
+            '
+        permission_ids:
+          type: array
+          items:
+            type: number
+            format: double
+          default: []
+          description: 'IDs of permissions to assign.
+
+            May be empty, and mutually exclusive with `permissions`.
+
+            Deprecated or deleted permissions are rejected.
+
+            Omit the field to send no value, because an explicit `null` is rejected.
+
+            '
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/PermissionRefInputDto'
+          description: 'Resource and action pairs of permissions to assign, resolved to permission IDs on the server.
+
+            Mutually exclusive with `permission_ids`.
+
+            Deprecated or deleted permissions are rejected.
+
+            Omit the field to send no value, because an explicit `null` is rejected.
+
+            '
+      required:
+      - name
+      title: CreateCustomRoleInputDto
+    RoleWithPermissionsOutputDto:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+          description: Unique role identifier.
+        name:
+          type: string
+          description: Display name of the role.
+        name_translation_key:
+          type:
+          - string
+          - 'null'
+          description: 'Translation key for the role name.
+
+            Set for system roles only.
+
+            '
+        description:
+          type: string
+          description: 'Human-readable description of the role.
+
+            An empty string when no description has been set.
+
+            '
+        description_translation_key:
+          type:
+          - string
+          - 'null'
+          description: 'Translation key for the role description.
+
+            Set for system roles only.
+
+            '
+        user_count:
+          type: number
+          format: double
+          description: Number of users assigned to this role in the Workspace.
+        type:
+          $ref: '#/components/schemas/RoleWithPermissionsOutputDtoType'
+          description: Whether this is a system-defined role or an organization's custom role.
+        is_system_role:
+          type: boolean
+          description: True for built-in system roles, which can't be modified or deleted.
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/RolePermissionOutputDto'
+          description: Full list of permissions assigned to this role.
+      required:
+      - id
+      - name
+      - name_translation_key
+      - description
+      - description_translation_key
+      - user_count
+      - type
+      - is_system_role
+      title: RoleWithPermissionsOutputDto
+    ApiV1OrganisationOrgIdRoleRoleIdGetParametersOrgId1:
+      type: string
+      enum:
+      - my
+      title: ApiV1OrganisationOrgIdRoleRoleIdGetParametersOrgId1
+    ApiV1OrganisationOrgIdRoleGetParametersOrgId:
+      oneOf:
+      - type: integer
+        minimum: 1
+      - $ref: '#/components/schemas/ApiV1OrganisationOrgIdRoleGetParametersOrgId1'
+      title: ApiV1OrganisationOrgIdRoleGetParametersOrgId
+    RoleOutputDtoType:
+      type: string
+      enum:
+      - system
+      - custom
+      description: Whether this is a system-defined role or an organization's custom role.
+      title: RoleOutputDtoType
+    ApiV1OrganisationOrgIdPermissionGetParametersOrgId:
+      oneOf:
+      - type: integer
+        minimum: 1
+      - $ref: '#/components/schemas/ApiV1OrganisationOrgIdPermissionGetParametersOrgId1'
+      title: ApiV1OrganisationOrgIdPermissionGetParametersOrgId
+    GraphqlApiEntrypointDtoType:
+      type: string
+      enum:
+      - query
+      - mutation
+      description: GraphQL operation kind.
+      title: GraphqlApiEntrypointDtoType
+    DeleteCustomRoleRequestNotFoundError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: DeleteCustomRoleRequestNotFoundError
+    CreateCustomRoleRequestBadRequestError:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: CreateCustomRoleRequestBadRequestError
+    PermissionRefInputDto:
+      type: object
+      properties:
+        resource:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Resource the permission applies to.
+        action:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Action the permission grants on the resource.
+      required:
+      - resource
+      - action
+      title: PermissionRefInputDto
+    ApiV1OrganisationOrgIdPermissionGetParametersOrgId1:
+      type: string
+      enum:
+      - my
+      title: ApiV1OrganisationOrgIdPermissionGetParametersOrgId1
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'An `auth_token` should be provided to authenticate a session.
+
+
+        To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+        '

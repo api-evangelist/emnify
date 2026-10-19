@@ -1,0 +1,348 @@
+openapi: 3.2.0
+info:
+  title: Enterprise Events API
+  version: 1.0.0
+  description: Event logging and management
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API
+tags:
+- name: Events
+  description: Event logging and management
+paths:
+  /api/v1/event:
+    get:
+      operationId: events_GetEvents
+      summary: List events
+      description: 'Required permissions Beta Learn more
+
+
+        `Event` + `List`
+
+
+        Roles: Administrator User Observer
+
+
+        Returns the list of events, filtered, sorted and paged according to query parameters.'
+      tags:
+      - Events
+      parameters:
+      - name: page
+        in: query
+        description: Current page number
+        required: false
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: Defines the number of items per page
+        required: false
+        schema:
+          type: integer
+      - name: sort
+        in: query
+        description: 'Sort properties according to a comma separated list of accepted fields. Valid fields are:
+
+
+          * `id` - (**event id**)
+
+          * `timestamp` - (**event timestamp**)
+
+          * `source` - (**event source**)
+
+          * `severity` - (**event severity**)
+
+          * `alert` - (**alert status**)
+
+          * `organisation` - (**organisation name**)
+
+          * `user` - (**user id**)
+
+          * `endpoint` - (**endpoint name**)
+
+          * `tags` - (**endpoint tags**)
+
+          * `ip_address` - (**endpoint ip_address**)
+
+          * `iccid` - (**sim iccid**)
+
+          * `imsi` - (**sim imsi**)
+
+          * `type` - (**event type**)
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: q
+        in: query
+        description: 'Filter parameter in `<filter>:<value>` format.
+
+          Multiple filters must be a comma-separated list of the following fields:
+
+
+          * `from` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, **only valid with until**)
+
+          * `until` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, **only valid with from**)
+
+          * `type` (**event_type**, numerical)
+
+          * `source` (**event_type**, numerical, e.g. 0 = Network), 1 = Policy Control, 2 = API)
+
+          * `severity` (**event_severity**, numerical, e.g. 0 = Info, 1 = Warn), 2 = Critical)
+
+          * `alert` (boolean, e.g. true, false)
+
+          * `description` (**event description**, string)
+
+          * `organisation` (**organisation name**, string)
+
+          * `user` (**user name**, string)
+
+          * `endpoint` (**endpoint name**, string)
+
+          * `tags` (**endpoint tags**, string)
+
+          * `tag_id` (**endpoint tag ID**, numerical, matches events whose endpoint has the tag. Tag IDs are listed in the endpoint''s `tag_assignments`)
+
+          * `ip_address` (**endpoint IP address**, valid IPv4/IPv6 address)
+
+          * `imei` (**endpoint imei**, numerical string)
+
+          * `iccid` (**sim iccid**, numerical string)
+
+          * `imsi` (**sim imsi**, numerical string)
+
+          * `timestamp` (**date**, format `YYYY-MM-DDTHH:mm:ssZ`, for querying events of 1 day, deprecated in future)
+
+          * `iccid_with_luhn` (**sim iccid with Luhn**, numerical string)
+
+          * `network` (**endpoint network**, string, e.g. Telekom)
+
+          * `rat` (**event pdp context rat type**, numerical string, e.g. 6)
+
+          * `country` (**endpoint country**, string, e.g. Germany)
+
+
+          Some filters can accept up to 6 values which must be separated by the pipe symbol (`|`) or url-encoded as (`%7C`):
+
+
+          * `iccid` (q: iccid:1234567890123456789|8988303000123456789)
+
+          * `iccid_with_luhn` (q: iccid:12345678901234567891|89883030001234567891)
+
+          * `endpoint` (q: endpoint:example_endpoint_name|another_endpoint_name)
+
+          * `type` (q: type:example_event_type|another_event_type)
+
+          * `network` (q: network:example_network|another_network)
+
+          * `rat` (q: rat:example_rat|another_rat)
+
+          * `country` (q: country:example_country|another_country)
+
+          * `tag_id` (q: tag_id:7|12, matches events whose endpoint has any of the tags)
+
+          '
+        required: false
+        schema:
+          type: string
+          pattern: (from|until|type|source|severity|alert|description|organisation|user|endpoint|tags|tag_id|ip_address|imei|iccid|iccid_with_luhn|imsi|timestamp|network|rat|country):.+
+      responses:
+        '200':
+          description: Successfully returned a list of events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1EventGetResponsesContentApplicationJsonSchemaItems'
+        '400':
+          description: '**Bad Request** due to incorrect **Paging** Parameters or **Sorting** Parameter
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEventsRequestForbiddenError'
+        '422':
+          description: '**Unprocessable Entity** due to incorrect **Query** parameters
+
+            '
+          content:
+            application/json:
+              schema:
+                description: Any type
+      security:
+      - bearerAuth: []
+  /api/v1/event/type:
+    get:
+      operationId: events_EventTypeGet
+      summary: List event types
+      description: 'Required permissions Beta Learn more
+
+
+        `Event.Type` + `List`
+
+
+        Roles: Administrator User Observer
+
+
+        Provides the list of event_types (lookup).
+
+
+        Event type `Device offline` (ID `49`) is a placeholder.
+
+        The API lists it among the event types, but the platform never sends events of this type.'
+      tags:
+      - Events
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1EventTypeGetResponsesContentApplicationJsonSchemaItems'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventTypeGetRequestForbiddenError'
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventSeverity:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventSeverity
+    ApiV1EventGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        alert:
+          type: boolean
+        description:
+          type: string
+        timestamp:
+          type: string
+        event_type:
+          $ref: '#/components/schemas/ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventType'
+        event_source:
+          $ref: '#/components/schemas/ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventSource'
+        event_severity:
+          $ref: '#/components/schemas/ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventSeverity'
+        organisation:
+          $ref: '#/components/schemas/ApiV1EventGetResponsesContentApplicationJsonSchemaItemsOrganisation'
+        user:
+          $ref: '#/components/schemas/ApiV1EventGetResponsesContentApplicationJsonSchemaItemsUser'
+      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItems
+    ApiV1EventGetResponsesContentApplicationJsonSchemaItemsOrganisation:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsOrganisation
+    ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventType:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventType
+    ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventSource:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsEventSource
+    GetEventsRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: GetEventsRequestForbiddenError
+    EventTypeGetRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: EventTypeGetRequestForbiddenError
+    ApiV1EventGetResponsesContentApplicationJsonSchemaItemsUser:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        username:
+          type: string
+        name:
+          type: string
+      title: ApiV1EventGetResponsesContentApplicationJsonSchemaItemsUser
+    ApiV1EventTypeGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      title: ApiV1EventTypeGetResponsesContentApplicationJsonSchemaItems
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'An `auth_token` should be provided to authenticate a session.
+
+
+        To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+        '

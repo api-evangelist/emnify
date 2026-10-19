@@ -1,0 +1,628 @@
+openapi: 3.2.0
+info:
+  title: Enterprise Lookups API
+  version: 1.0.0
+  description: Lookup services for various resources
+servers:
+- url: https://cdn.emnify.net
+  description: emnify REST API
+tags:
+- name: lookups
+  description: Lookup services for various resources
+paths:
+  /api/v1/country:
+    get:
+      operationId: lookups_CountryGet
+      summary: List country codes
+      description: 'Required permissions Beta Learn more
+
+
+        `Country` + `List`
+
+
+        Roles: Administrator User Observer
+
+
+        Provides the list of available countries (lookup).'
+      tags:
+      - lookups
+      parameters:
+      - name: geographic
+        in: query
+        description: 'Filters the country list for geographic countries only.
+
+          This will exclude duplicate countries with different MCCs, like `India MCC 405` or `United States (311)`.
+
+          '
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1CountryGetResponsesContentApplicationJsonSchemaItems'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CountryGetRequestForbiddenError'
+      security:
+      - bearerAuth: []
+  /api/v1/currency:
+    get:
+      operationId: lookups_CurrencyGet
+      summary: List currencies
+      description: 'Required permissions Beta Learn more
+
+
+        `Currency` + `List`
+
+
+        Roles: Administrator User Observer
+
+
+        Provides the list of available currencies (lookup).'
+      tags:
+      - lookups
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1CurrencyGetResponsesContentApplicationJsonSchemaItems'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrencyGetRequestForbiddenError'
+      security:
+      - bearerAuth: []
+  /api/v1/data_blocksize:
+    get:
+      operationId: lookups_DataBlocksizeGet
+      summary: List data blocksizes
+      description: 'Required permissions Beta Learn more
+
+
+        `DataBlocksize` + `List`
+
+
+        Roles: Administrator User Observer
+
+
+        Provides the list of available data blocksizes (lookup).'
+      tags:
+      - lookups
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1DataBlocksizeGetResponsesContentApplicationJsonSchemaItems'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataBlocksizeGetRequestForbiddenError'
+      security:
+      - bearerAuth: []
+  /api/v1/data_throttle:
+    get:
+      operationId: lookups_DataThrottleGet
+      summary: List data throttles
+      description: 'Required permissions Beta Learn more
+
+
+        `DataThrottle` + `List`
+
+
+        Roles: Administrator User Observer
+
+
+        Provides the list of available data throttles (lookup).'
+      tags:
+      - lookups
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1DataThrottleGetResponsesContentApplicationJsonSchemaItems'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataThrottleGetRequestForbiddenError'
+      security:
+      - bearerAuth: []
+  /api/v1/breakout_region:
+    get:
+      operationId: lookups_BreakoutRegionGet
+      summary: List breakout regions
+      description: 'Required permissions Beta Learn more
+
+
+        `BreakoutRegion` + `List`
+
+
+        Roles: Administrator User Observer
+
+
+        Provides the list of available breakout regions.'
+      tags:
+      - lookups
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1BreakoutRegionGetResponsesContentApplicationJsonSchemaItems'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BreakoutRegionGetRequestForbiddenError'
+      security:
+      - bearerAuth: []
+  /api/v1/breakout_ip_range:
+    get:
+      operationId: lookups_BreakoutIpRangeGet
+      summary: List public breakout IP ranges
+      description: 'Required permissions Beta Learn more
+
+
+        No permission required. Available to all roles.
+
+
+        Returns the current public IPv4 egress ranges used for internet breakout,
+
+        grouped by breakout region. Use these CIDR ranges to keep firewall and
+
+        allowlist rules up to date.'
+      tags:
+      - lookups
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lookups_BreakoutIpRangeGet_Response_200'
+        '401':
+          description: Missing or invalid Authorization header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BreakoutIpRangeGetRequestUnauthorizedError'
+        '403':
+          description: The user does not have permission to list public breakout IP ranges.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BreakoutIpRangeGetRequestForbiddenError'
+        '500':
+          description: Unexpected error while checking permissions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BreakoutIpRangeGetRequestInternalServerError'
+      security:
+      - bearerAuth: []
+  /api/v1/esme_interface_type:
+    get:
+      operationId: lookups_EsmeInterfaceTypeGet
+      summary: List ESME interface types
+      description: 'Required permissions Beta Learn more
+
+
+        `EsmeInterfaceType` + `List`
+
+
+        Roles: Administrator User Observer
+
+
+        Provides the list of available ESME interface types.'
+      tags:
+      - lookups
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1EsmeInterfaceTypeGetResponsesContentApplicationJsonSchemaItems'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EsmeInterfaceTypeGetRequestForbiddenError'
+      security:
+      - bearerAuth: []
+  /api/v1/rat_type:
+    get:
+      operationId: lookups_RatType
+      summary: List RAT types
+      description: 'Required permissions Beta Learn more
+
+
+        `RatType` + `List`
+
+
+        Roles: Administrator User Observer
+
+
+        Returns a list of supported RAT types.'
+      tags:
+      - lookups
+      parameters:
+      - name: blacklistable
+        in: query
+        description: 'Returns a list of RAT types that can be blacklisted for network coverage data.
+
+
+          `/api/v1/rat_type?blacklistable`
+
+          '
+        required: false
+        schema:
+          type: boolean
+      - name: limitable
+        in: query
+        description: 'Returns a list of RAT types that can be limited for a pdp_context_definition
+
+
+          `/api/v1/rat_type?limitable`
+
+          '
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1RatTypeGetResponsesContentApplicationJsonSchemaItems'
+        '403':
+          description: 'Your role doesn''t include the permission this endpoint requires.
+
+
+            Most endpoints return `error_code`, `error_token`, and `message`.
+
+            Some return only `status_code` and `message`.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RatTypeRequestForbiddenError'
+      security:
+      - bearerAuth: []
+  /api/v1/service_level:
+    get:
+      operationId: lookups_ListServiceLevels
+      summary: Get list of service levels
+      description: 'Required permissions Beta Learn more
+
+
+        No permission required. Available to all roles.
+
+
+        Returns a list of service levels that can be configured on a tariff plan level.
+
+        For non-enterprise organisations, only own service levels will be returned.
+
+        For enterprise organisations, only the service levels of the parent organisation will be returned.'
+      tags:
+      - lookups
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiV1ServiceLevelGetResponsesContentApplicationJsonSchemaItems'
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    Lookups_BreakoutIpRangeGet_Response_200:
+      type: object
+      properties:
+        updated_at:
+          type: string
+          format: date-time
+          description: Date and time when the published dataset was last updated.
+        internet_breakout:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Public IPv4 CIDR ranges grouped by breakout region.
+      required:
+      - updated_at
+      - internet_breakout
+      title: Lookups_BreakoutIpRangeGet_Response_200
+    ApiV1DataBlocksizeGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        octets:
+          type: string
+        description:
+          type: string
+      title: ApiV1DataBlocksizeGetResponsesContentApplicationJsonSchemaItems
+    BreakoutIpRangeGetRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: BreakoutIpRangeGetRequestForbiddenError
+    CurrencyGetRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: CurrencyGetRequestForbiddenError
+    BreakoutIpRangeGetRequestInternalServerError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: BreakoutIpRangeGetRequestInternalServerError
+    CountryGetRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: CountryGetRequestForbiddenError
+    BreakoutRegionGetRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: BreakoutRegionGetRequestForbiddenError
+    DataBlocksizeGetRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: DataBlocksizeGetRequestForbiddenError
+    RatTypeRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: RatTypeRequestForbiddenError
+    ApiV1CurrencyGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        code:
+          type: string
+        symbol:
+          type: string
+      title: ApiV1CurrencyGetResponsesContentApplicationJsonSchemaItems
+    EsmeInterfaceTypeGetRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: EsmeInterfaceTypeGetRequestForbiddenError
+    ApiV1CountryGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country_code:
+          type: string
+        mcc:
+          type: string
+        iso_code:
+          type: string
+      title: ApiV1CountryGetResponsesContentApplicationJsonSchemaItems
+    ApiV1EsmeInterfaceTypeGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+      required:
+      - id
+      - description
+      title: ApiV1EsmeInterfaceTypeGetResponsesContentApplicationJsonSchemaItems
+    ApiV1ServiceLevelGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+      required:
+      - id
+      description: The default service level of a tariff plan. Possible values can be fetched with GET `/api/v1/service_level`.
+      title: ApiV1ServiceLevelGetResponsesContentApplicationJsonSchemaItems
+    BreakoutIpRangeGetRequestUnauthorizedError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        message:
+          type: string
+      title: BreakoutIpRangeGetRequestUnauthorizedError
+    DataThrottleGetRequestForbiddenError:
+      type: object
+      properties:
+        error_code:
+          type: integer
+        error_token:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+      title: DataThrottleGetRequestForbiddenError
+    ApiV1RatTypeGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+        description:
+          type: string
+      title: ApiV1RatTypeGetResponsesContentApplicationJsonSchemaItems
+    ApiV1DataThrottleGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        octets:
+          type: string
+        description:
+          type: string
+      title: ApiV1DataThrottleGetResponsesContentApplicationJsonSchemaItems
+    ApiV1BreakoutRegionGetResponsesContentApplicationJsonSchemaItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        ip_address:
+          type: string
+      title: ApiV1BreakoutRegionGetResponsesContentApplicationJsonSchemaItems
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'An `auth_token` should be provided to authenticate a session.
+
+
+        To obtain an `auth_token`, see the [`/api/v1/authenticate` **POST** request](/developers/api/authentication/authenticate).
+
+        '
