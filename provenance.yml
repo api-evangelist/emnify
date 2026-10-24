@@ -7,56 +7,56 @@ artifacts:
     method: generated
     evidence: declared in the artifact
   arazzo/emnify-blacklist-operator-for-endpoint-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/emnify-check-endpoint-connectivity-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/emnify-create-and-tag-endpoint-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/emnify-decommission-endpoint-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/emnify-extend-traffic-limit-when-blocked-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/emnify-find-sim-and-provision-endpoint-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/emnify-get-endpoint-usage-stats-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/emnify-locate-endpoint-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/emnify-organization-volume-report-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/emnify-provision-and-activate-endpoint-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/emnify-register-sim-batch-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/emnify-reset-endpoint-connectivity-when-blocked-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/emnify-send-sms-and-track-delivery-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/emnify-send-sms-to-endpoint-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/emnify-set-endpoint-data-quota-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/emnify-set-endpoint-sms-quota-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/emnify-suspend-sim-when-active-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   authentication/emnify-authentication.yml:
     method: derived
     evidence: declared in the artifact
@@ -70,161 +70,161 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   collections/emnify-subpackage-applicationtokens-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-applicationtokens-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-applicationtokens-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-applicationtokens-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-authentication-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-authentication-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-authentication-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-authentication-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-automations-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-automations-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-automations-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-automations-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-cloudconnect-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-cloudconnect-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-cloudconnect-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-cloudconnect-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-customevents-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-customevents-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-customevents-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-customevents-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-endpoint-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-endpoint-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-endpoint-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-endpoint-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-euicc-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-euicc-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-euicc-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-euicc-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-euiccoperation-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-euiccoperation-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-euiccoperation-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-euiccoperation-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-events-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-events-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-events-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-events-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-integrations-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-integrations-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-integrations-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-integrations-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-ipaddressspaces-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-ipaddressspaces-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-ipaddressspaces-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-ipaddressspaces-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-lookups-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-lookups-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-lookups-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-lookups-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-operator-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-operator-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-operator-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-operator-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-organization-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-organization-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-organization-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-organization-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-passwordmanagementandactivation-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-passwordmanagementandactivation-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-passwordmanagementandactivation-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-passwordmanagementandactivation-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-servicelookupsandconfiguration-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-servicelookupsandconfiguration-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-servicelookupsandconfiguration-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-servicelookupsandconfiguration-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-serviceprofiles-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-serviceprofiles-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-serviceprofiles-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-serviceprofiles-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-sim-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-sim-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-sim-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-sim-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-simoperation-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-simoperation-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-simoperation-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-simoperation-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-simunlinkedproductstatistics-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-simunlinkedproductstatistics-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-simunlinkedproductstatistics-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-simunlinkedproductstatistics-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-systemevents-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-systemevents-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-systemevents-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-systemevents-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-tagmanagement-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-tagmanagement-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-tagmanagement-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-tagmanagement-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-tariffplans-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-tariffplans-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-tariffplans-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-tariffplans-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-tariffprofiles-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-tariffprofiles-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-tariffprofiles-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-tariffprofiles-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-usermanagement-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-usermanagement-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-usermanagement-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-usermanagement-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-workspaces-api.opencollection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-workspaces-api
+    method: unknown
+    evidence: no authorship recorded
   collections/emnify-subpackage-workspaces-api.postman_collection.json:
-    method: derived
-    evidence: openapi/emnify-subpackage-workspaces-api
+    method: unknown
+    evidence: no authorship recorded
   examples/emnify-authenticate-example.json:
     method: unknown
     evidence: no authorship recorded
@@ -238,11 +238,17 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   finops/emnify-finops.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: generated
+    evidence: declared in the artifact
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
+  integrations/_index.yml:
+    method: generated
+    evidence: carries an API Evangelist house phrase
+  integrations/emnify-integration-edges.yml:
+    method: searched
+    evidence: declared in the artifact
   json-ld/emnify-context.jsonld:
     method: unknown
     evidence: no authorship recorded
@@ -261,127 +267,7 @@ artifacts:
   json-structure/emnify-sim-structure.json:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-24T161608.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T125852.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T133943.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T143147.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T154045.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-26T215308.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T094438.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T103455.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T123021.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T132314.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T140727.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-28T221322.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T213958.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T230545.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T203505.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T220315.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-31T223420.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T063623.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T210448.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T222808.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T224043.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T161828.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T174231.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T062714.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T212454.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T224856.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T055819.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T072335.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T144739.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T195450.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T211839.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T011047.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T224210.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T200636.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T213054.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T214843.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T232836.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T204815.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T222408.yml:
+  kin/checks-2026-10-11T110117.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-12T062655.yml:
@@ -465,97 +351,97 @@ artifacts:
   kin/score-2026-09-24T161608.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  openapi/_original/emnify-api-openapi.yml:
+  kin/score-2026-09-25T210408.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T232841.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T000835.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T024842.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-11T110117.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  openapi/_original/emnify-openapi.yml:
     method: harvested
-    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
-      to the provider's source is unverified
-  openapi/emnify-subpackage-applicationtokens-api-openapi.yml:
+    evidence: byte-identical to https://docs.emnify.com/openapi/enterprise.yaml (sha256 18b0f2d78295,
+      fetched 2026-10-19)
+  openapi/emnify-applicationtokens-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-authentication-api-openapi.yml:
+  openapi/emnify-authentication-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-automations-api-openapi.yml:
+  openapi/emnify-cloudconnect-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-cloudconnect-api-openapi.yml:
+  openapi/emnify-endpoint-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-customevents-api-openapi.yml:
+  openapi/emnify-events-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-endpoint-api-openapi.yml:
+  openapi/emnify-flowlogs-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-euicc-api-openapi.yml:
+  openapi/emnify-integrations-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-euiccoperation-api-openapi.yml:
+  openapi/emnify-ipaddressspaces-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-events-api-openapi.yml:
+  openapi/emnify-lookups-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-integrations-api-openapi.yml:
+  openapi/emnify-operator-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-ipaddressspaces-api-openapi.yml:
+  openapi/emnify-organization-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-lookups-api-openapi.yml:
+  openapi/emnify-passwordmanagementandactivation-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-operator-api-openapi.yml:
+  openapi/emnify-permissionandrolemanagement-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-organization-api-openapi.yml:
+  openapi/emnify-servicelookupsandconfiguration-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-passwordmanagementandactivation-api-openapi.yml:
+  openapi/emnify-serviceprofiles-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-servicelookupsandconfiguration-api-openapi.yml:
+  openapi/emnify-sim-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-serviceprofiles-api-openapi.yml:
+  openapi/emnify-tagmanagement-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-sim-api-openapi.yml:
+  openapi/emnify-tariffplans-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-simoperation-api-openapi.yml:
+  openapi/emnify-tariffprofiles-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-simunlinkedproductstatistics-api-openapi.yml:
+  openapi/emnify-user-management-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-systemevents-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-tagmanagement-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-tariffplans-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-tariffprofiles-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-usermanagement-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/emnify-subpackage-workspaces-api-openapi.yml:
+  openapi/emnify-workspaces-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   plans/emnify-plans-pricing.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: generated
+    evidence: declared in the artifact
   postman/emnify-api.postman_collection.json:
     method: unknown
     evidence: no authorship recorded
   rate-limits/emnify-rate-limits.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: generated
+    evidence: declared in the artifact
   rules/emnify-jsonschema-spectral-rules.yml:
     method: generated
     evidence: declared in the artifact
