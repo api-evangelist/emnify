@@ -1,4 +1,4 @@
-# emnify (emnify)
+# emnify
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,174 +66,248 @@
 
 emnify is a cloud-native global IoT cellular connectivity provider operating its own mobile core and SuperNetwork across 540+ MNOs in 190+ countries. emnify supplies SIMs, eUICC-enabled multi-form-factor cards, and Consumer/Advanced eSIM (SGP.32) profiles to enterprise IoT deployments — fleet tracking, EV charging, point-of-sale, smart buildings, micromobility, airline crew tablets, and more. The emnify REST API, GraphQL API, and Data Streamer give programmatic control over SIMs, endpoints, service and tariff profiles, eUICC profile operations, events, SMS, callbacks, and outbound usage/event streaming to S3, Kinesis, and webhooks. NTN-IoT satellite connectivity via Skylo extends coverage beyond terrestrial cellular.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/emnify/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/emnify/refs/heads/main/apis.yml)
+**Areas:** IoT · Cellular Connectivity · IoT SIM · eSIM · Consumer eSIM · SGP.32 · M2M · NTN-IoT · Satellite · SuperNetwork · Machine-to-Machine
 
-## Scope
+## emnify on APIs.io
 
-- **Position:** Consuming
-- **Access:** 3rd-Party
+Everything profiled for emnify is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/emnify/](https://apis.io/providers/emnify/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (29)
 
-- IoT
-- Internet of Things
-- Cellular Connectivity
-- IoT SIM
-- eSIM
-- Consumer eSIM
-- SGP.32
-- M2M
-- NTN-IoT
-- Satellite
-- SuperNetwork
+- [emnify GraphQL API](https://apis.io/apis/emnify/emnify-graphql-api/) — emnify GraphQL API for flexible, single-request queries against the emnify data model with customizable response shapes. An in-browser GraphiQL IDE supports…
+- [emnify Data Streamer](https://apis.io/apis/emnify/emnify-data-streamer/) — Stream event and usage data to outbound destinations (AWS S3, AWS Kinesis, REST/webhook, Datadog, Salesforce, Keen.io). Supports detailed object schemas for…
+- [emnify Documentation MCP Server](https://apis.io/apis/emnify/emnify-mcp-server/) — Public MCP server for emnify documentation. Connect Claude Code, Cursor, or any MCP-aware client to query emnify product, developer, and API reference…
+- [emnify Subpackage Application Tokens API](https://apis.io/apis/emnify/emnify-subpackage-applicationtokens-api/) — The subpackage_applicationTokens API from emnify — 2 operation(s) for subpackage_applicationtokens.
+- [emnify Subpackage Authentication API](https://apis.io/apis/emnify/emnify-subpackage-authentication-api/) — The subpackage_authentication API from emnify — 8 operation(s) for subpackage_authentication.
+- [emnify Subpackage Automations API](https://apis.io/apis/emnify/emnify-subpackage-automations-api/) — The subpackage_automations API from emnify — 6 operation(s) for subpackage_automations.
+- [emnify Subpackage Cloud Connect API](https://apis.io/apis/emnify/emnify-subpackage-cloudconnect-api/) — The subpackage_cloudConnect API from emnify — 7 operation(s) for subpackage_cloudconnect.
+- [emnify Subpackage Custom Events API](https://apis.io/apis/emnify/emnify-subpackage-customevents-api/) — The subpackage_customEvents API from emnify — 4 operation(s) for subpackage_customevents.
+- [emnify Subpackage Endpoint API](https://apis.io/apis/emnify/emnify-subpackage-endpoint-api/) — The subpackage_endpoint API from emnify — 16 operation(s) for subpackage_endpoint.
+- [emnify Subpackage Euicc API](https://apis.io/apis/emnify/emnify-subpackage-euicc-api/) — The subpackage_euicc API from emnify — 5 operation(s) for subpackage_euicc.
+- [emnify Subpackage Euicc Operation API](https://apis.io/apis/emnify/emnify-subpackage-euiccoperation-api/) — The subpackage_euiccOperation API from emnify — 4 operation(s) for subpackage_euiccoperation.
+- [emnify Subpackage Events API](https://apis.io/apis/emnify/emnify-subpackage-events-api/) — The subpackage_events API from emnify — 2 operation(s) for subpackage_events.
+- [emnify Subpackage Integrations API](https://apis.io/apis/emnify/emnify-subpackage-integrations-api/) — The subpackage_integrations API from emnify — 10 operation(s) for subpackage_integrations.
+- [emnify Subpackage Ip Address Spaces API](https://apis.io/apis/emnify/emnify-subpackage-ipaddressspaces-api/) — The subpackage_ipAddressSpaces API from emnify — 3 operation(s) for subpackage_ipaddressspaces.
+- [emnify Subpackage Lookups API](https://apis.io/apis/emnify/emnify-subpackage-lookups-api/) — The subpackage_lookups API from emnify — 8 operation(s) for subpackage_lookups.
+- [emnify Subpackage Operator API](https://apis.io/apis/emnify/emnify-subpackage-operator-api/) — The subpackage_operator API from emnify — 1 operation(s) for subpackage_operator.
+- [emnify Subpackage Organization API](https://apis.io/apis/emnify/emnify-subpackage-organization-api/) — The subpackage_organization API from emnify — 9 operation(s) for subpackage_organization.
+- [emnify Subpackage Password Management And Activation API](https://apis.io/apis/emnify/emnify-subpackage-passwordmanagementandactivation-api/) — The subpackage_passwordManagementAndActivation API from emnify — 4 operation(s) for subpackage_passwordmanagementandactivation.
+- [emnify Subpackage Service Lookups And Configuration API](https://apis.io/apis/emnify/emnify-subpackage-servicelookupsandconfiguration-api/) — The subpackage_serviceLookupsAndConfiguration API from emnify — 5 operation(s) for subpackage_servicelookupsandconfiguration.
+- [emnify Subpackage Service Profiles API](https://apis.io/apis/emnify/emnify-subpackage-serviceprofiles-api/) — The subpackage_serviceProfiles API from emnify — 7 operation(s) for subpackage_serviceprofiles.
+- [emnify Subpackage Sim API](https://apis.io/apis/emnify/emnify-subpackage-sim-api/) — The subpackage_sim API from emnify — 9 operation(s) for subpackage_sim.
+- [emnify Subpackage Sim Operation API](https://apis.io/apis/emnify/emnify-subpackage-simoperation-api/) — The subpackage_simOperation API from emnify — 4 operation(s) for subpackage_simoperation.
+- [emnify Subpackage Sim Unlinked Product Statistics API](https://apis.io/apis/emnify/emnify-subpackage-simunlinkedproductstatistics-api/) — The subpackage_simUnlinkedProductStatistics API from emnify — 1 operation(s) for subpackage_simunlinkedproductstatistics.
+- [emnify Subpackage System Events API](https://apis.io/apis/emnify/emnify-subpackage-systemevents-api/) — The subpackage_systemEvents API from emnify — 2 operation(s) for subpackage_systemevents.
+- [emnify Subpackage Tag Management API](https://apis.io/apis/emnify/emnify-subpackage-tagmanagement-api/) — The subpackage_tagManagement API from emnify — 8 operation(s) for subpackage_tagmanagement.
+- [emnify Subpackage Tariff Plans API](https://apis.io/apis/emnify/emnify-subpackage-tariffplans-api/) — The subpackage_tariffPlans API from emnify — 3 operation(s) for subpackage_tariffplans.
+- [emnify Subpackage Tariff Profiles API](https://apis.io/apis/emnify/emnify-subpackage-tariffprofiles-api/) — The subpackage_tariffProfiles API from emnify — 9 operation(s) for subpackage_tariffprofiles.
+- [emnify Subpackage User Management API](https://apis.io/apis/emnify/emnify-subpackage-usermanagement-api/) — The subpackage_userManagement API from emnify — 8 operation(s) for subpackage_usermanagement.
+- [emnify Subpackage Workspaces API](https://apis.io/apis/emnify/emnify-subpackage-workspaces-api/) — The subpackage_workspaces API from emnify — 7 operation(s) for subpackage_workspaces.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-05-25T00:00:00.000Z
-- **Modified:** 2026-05-25
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Arazzo workflows (17)
 
-### emnify REST API
+Multi-step workflows that chain operations into a business task.
 
-The emnify REST API gives programmatic access to the emnify IoT SuperNetwork — global cellular connectivity for IoT devices. Manage SIMs, endpoints (devices), service and tariff profiles, events, SMS, eSIM (SGP.32) profiles, organizations, users, API callbacks, and the Data Streamer. Authenticate with short-lived JWTs obtained via application tokens or user credentials.
+- [emnify Blacklist Operator for Endpoint](https://apis.io/arazzos/emnify/emnify-blacklist-operator-for-endpoint-workflow/)
+- [emnify Check Endpoint Connectivity](https://apis.io/arazzos/emnify/emnify-check-endpoint-connectivity-workflow/)
+- [emnify Create and Tag Endpoint](https://apis.io/arazzos/emnify/emnify-create-and-tag-endpoint-workflow/)
+- [emnify Decommission Endpoint](https://apis.io/arazzos/emnify/emnify-decommission-endpoint-workflow/)
+- [emnify Extend Traffic Limit When Blocked](https://apis.io/arazzos/emnify/emnify-extend-traffic-limit-when-blocked-workflow/)
+- [emnify Find SIM and Provision Endpoint](https://apis.io/arazzos/emnify/emnify-find-sim-and-provision-endpoint-workflow/)
+- [emnify Get Endpoint Usage Statistics](https://apis.io/arazzos/emnify/emnify-get-endpoint-usage-stats-workflow/)
+- [emnify Locate Endpoint](https://apis.io/arazzos/emnify/emnify-locate-endpoint-workflow/)
+- [emnify Organization Volume Report](https://apis.io/arazzos/emnify/emnify-organization-volume-report-workflow/)
+- [emnify Provision and Activate Endpoint](https://apis.io/arazzos/emnify/emnify-provision-and-activate-endpoint-workflow/)
+- [emnify Register SIM Batch by BIC](https://apis.io/arazzos/emnify/emnify-register-sim-batch-workflow/)
+- [emnify Reset Endpoint Connectivity When Blocked](https://apis.io/arazzos/emnify/emnify-reset-endpoint-connectivity-when-blocked-workflow/)
+- [emnify Send SMS and Track Delivery](https://apis.io/arazzos/emnify/emnify-send-sms-and-track-delivery-workflow/)
+- [emnify Send SMS to Endpoint](https://apis.io/arazzos/emnify/emnify-send-sms-to-endpoint-workflow/)
+- [emnify Set Endpoint Data Quota](https://apis.io/arazzos/emnify/emnify-set-endpoint-data-quota-workflow/)
+- [emnify Set Endpoint SMS Quota](https://apis.io/arazzos/emnify/emnify-set-endpoint-sms-quota-workflow/)
+- [emnify Suspend SIM When Active](https://apis.io/arazzos/emnify/emnify-suspend-sim-when-active-workflow/)
 
-- **Human URL:** [https://docs.emnify.com/developers](https://docs.emnify.com/developers)
+#### GraphQL (1)
 
-#### Tags
+GraphQL schemas.
 
-- IoT
-- Cellular
-- Connectivity
-- SIM
-- eSIM
+- [Moved to /providers/emnify/](https://apis.io/graphqls/emnify/emnify-graphql/)
 
-#### Properties
+#### Agentic access (1)
 
-- [Documentation](https://docs.emnify.com/developers)
-- [Documentation](https://docs.emnify.com/developers/api-guidelines/conventions)
-- [Documentation](https://docs.emnify.com/llms-full.txt)
-- [OpenAPI](openapi/emnify-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/emnify-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/emnify-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Spectral Rules](rules/emnify-rules.yml)
-- [JSON Schema](json-schema/emnify-sim-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/emnify-endpoint-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/emnify-event-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/emnify-sim-structure.json)
-- [JSON Structure](json-structure/emnify-endpoint-structure.json)
-- [JSON-LD](json-ld/emnify-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [Example](examples/emnify-authenticate-example.json)
-- [Example](examples/emnify-list-endpoints-example.json)
-- [Example](examples/emnify-send-sms-example.json)
-- [Example](examples/emnify-list-events-example.json)
-- [Vocabulary](vocabulary/emnify-vocabulary.yml)
+Which operations an agent can call, which act, and which need a human in the loop.
 
-### emnify GraphQL API
+- [Emnify Agentic Access](https://apis.io/agentic-access/emnify/emnify-agentic-access/)
 
-emnify GraphQL API for flexible, single-request queries against the emnify data model with customizable response shapes. An in-browser GraphiQL IDE supports interactive exploration and testing.
+#### JSON Schema (3)
 
-- **Human URL:** [https://docs.emnify.com/developers/graphql](https://docs.emnify.com/developers/graphql)
+The data models the API reads and writes.
 
-#### Tags
+- [emnify Endpoint](https://apis.io/schemas/emnify/emnify-endpoint/)
+- [emnify Event](https://apis.io/schemas/emnify/emnify-event/)
+- [emnify SIM](https://apis.io/schemas/emnify/emnify-sim/)
 
-- IoT
-- GraphQL
-- Query
+#### JSON Structure (2)
 
-#### Properties
+Data models expressed in JSON Structure.
 
-- [Documentation](https://docs.emnify.com/developers/graphql)
-- [Documentation](https://docs.emnify.com/developers/graphql/graphiql-ide)
-- [Documentation](https://docs.emnify.com/developers/api-guidelines/conventions)
-- [Postman Collection](collections/emnify-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/emnify-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Emnify Endpoint Structure](https://apis.io/json-structure/emnify/emnify-endpoint-structure/)
+- [Emnify Sim Structure](https://apis.io/json-structure/emnify/emnify-sim-structure/)
 
-### emnify Data Streamer
+#### JSON-LD (1)
 
-Stream event and usage data to outbound destinations (AWS S3, AWS Kinesis, REST/webhook, Datadog, Salesforce, Keen.io). Supports detailed object schemas for data types, traffic types, tariffs, operators, and volume tracking. SMS and API callbacks deliver mobile-originated SMS and event payloads to your infrastructure.
+Linked-data contexts for the provider's vocabulary.
 
-- **Human URL:** [https://docs.emnify.com/developers/reference/data-streamer](https://docs.emnify.com/developers/reference/data-streamer)
+- [Emnify Context](https://apis.io/jsonld/emnify/emnify-context/)
 
-#### Tags
+#### Vocabulary (1)
 
-- Streaming
-- Events
-- Data
-- Webhooks
+The provider's domain terms, defined.
 
-#### Properties
+- [Emnify Vocabulary](https://apis.io/vocabularies/emnify/emnify-vocabulary/)
 
-- [Documentation](https://docs.emnify.com/developers/reference/data-streamer)
-- [Documentation](https://docs.emnify.com/developers/integrations/data-streamer/aws-s3-kinesis)
-- [Documentation](https://docs.emnify.com/developers/callbacks/api)
-- [Documentation](https://docs.emnify.com/developers/callbacks/sms)
-- [Postman Collection](collections/emnify-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/emnify-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Examples (4)
 
-### emnify Documentation MCP Server
+Example requests and responses.
 
-Public MCP server for emnify documentation. Connect Claude Code, Cursor, or any MCP-aware client to query emnify product, developer, and API reference content directly from your AI assistant.
+- [Emnify Authenticate Example](https://apis.io/examples/emnify/emnify-authenticate-example/)
+- [Emnify List Endpoints Example](https://apis.io/examples/emnify/emnify-list-endpoints-example/)
+- [Emnify List Events Example](https://apis.io/examples/emnify/emnify-list-events-example/)
+- [Emnify Send Sms Example](https://apis.io/examples/emnify/emnify-send-sms-example/)
 
-- **Human URL:** [https://docs.emnify.com/_mcp/server](https://docs.emnify.com/_mcp/server)
+#### Collections (28)
 
-#### Tags
+Postman and Open Collection request collections.
 
-- MCP
-- Documentation
-- AI
+- [emnify REST API](https://apis.io/collections/emnify/open-emnify-api/)
+- [emnify REST subpackage_applicationTokens API](https://apis.io/collections/emnify/open-emnify-subpackage-applicationtokens-api/)
+- [emnify REST subpackage_applicationTokens subpackage_authentication API](https://apis.io/collections/emnify/open-emnify-subpackage-authentication-api/)
+- [emnify REST subpackage_applicationTokens subpackage_automations API](https://apis.io/collections/emnify/open-emnify-subpackage-automations-api/)
+- [emnify REST subpackage_applicationTokens subpackage_cloudConnect API](https://apis.io/collections/emnify/open-emnify-subpackage-cloudconnect-api/)
+- [emnify REST subpackage_applicationTokens subpackage_customEvents API](https://apis.io/collections/emnify/open-emnify-subpackage-customevents-api/)
+- [emnify REST subpackage_applicationTokens subpackage_endpoint API](https://apis.io/collections/emnify/open-emnify-subpackage-endpoint-api/)
+- [emnify REST subpackage_applicationTokens subpackage_euicc API](https://apis.io/collections/emnify/open-emnify-subpackage-euicc-api/)
+- [emnify REST subpackage_applicationTokens subpackage_euiccOperation API](https://apis.io/collections/emnify/open-emnify-subpackage-euiccoperation-api/)
+- [emnify REST subpackage_applicationTokens subpackage_events API](https://apis.io/collections/emnify/open-emnify-subpackage-events-api/)
+- [emnify REST subpackage_applicationTokens subpackage_integrations API](https://apis.io/collections/emnify/open-emnify-subpackage-integrations-api/)
+- [emnify REST subpackage_applicationTokens subpackage_ipAddressSpaces API](https://apis.io/collections/emnify/open-emnify-subpackage-ipaddressspaces-api/)
+- [emnify REST subpackage_applicationTokens subpackage_lookups API](https://apis.io/collections/emnify/open-emnify-subpackage-lookups-api/)
+- [emnify REST subpackage_applicationTokens subpackage_operator API](https://apis.io/collections/emnify/open-emnify-subpackage-operator-api/)
+- [emnify REST subpackage_applicationTokens subpackage_organization API](https://apis.io/collections/emnify/open-emnify-subpackage-organization-api/)
+- [emnify REST subpackage_applicationTokens subpackage_passwordManagementAndActivation API](https://apis.io/collections/emnify/open-emnify-subpackage-passwordmanagementandactivation-api/)
+- [emnify REST subpackage_applicationTokens subpackage_serviceLookupsAndConfiguration API](https://apis.io/collections/emnify/open-emnify-subpackage-servicelookupsandconfiguration-api/)
+- [emnify REST subpackage_applicationTokens subpackage_serviceProfiles API](https://apis.io/collections/emnify/open-emnify-subpackage-serviceprofiles-api/)
+- [emnify REST subpackage_applicationTokens subpackage_sim API](https://apis.io/collections/emnify/open-emnify-subpackage-sim-api/)
+- [emnify REST subpackage_applicationTokens subpackage_simOperation API](https://apis.io/collections/emnify/open-emnify-subpackage-simoperation-api/)
+- [emnify REST subpackage_applicationTokens subpackage_simUnlinkedProductStatistics API](https://apis.io/collections/emnify/open-emnify-subpackage-simunlinkedproductstatistics-api/)
+- [emnify REST subpackage_applicationTokens subpackage_systemEvents API](https://apis.io/collections/emnify/open-emnify-subpackage-systemevents-api/)
+- [emnify REST subpackage_applicationTokens subpackage_tagManagement API](https://apis.io/collections/emnify/open-emnify-subpackage-tagmanagement-api/)
+- [emnify REST subpackage_applicationTokens subpackage_tariffPlans API](https://apis.io/collections/emnify/open-emnify-subpackage-tariffplans-api/)
+- [emnify REST subpackage_applicationTokens subpackage_tariffProfiles API](https://apis.io/collections/emnify/open-emnify-subpackage-tariffprofiles-api/)
+- …and 3 more published on APIs.io
 
-#### Properties
+#### Governance rules (2)
 
-- [M C P](https://docs.emnify.com/_mcp/server)
-- [Documentation](https://docs.emnify.com/developers/developer-tools/ai-assistance)
-- [Postman Collection](collections/emnify-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/emnify-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Spectral rulesets for the provider's contracts.
 
-## Common Properties
+- [emnify — jsonschema rules](https://apis.io/rules/emnify/emnify-jsonschema-spectral-rules/)
+- [emnify API Rules](https://apis.io/rules/emnify/emnify-rules/)
 
-- [Arazzo Workflows](arazzo/) — [Arazzo Specification](https://spec.openapis.org/arazzo/latest.html)
-- [Portal](https://www.emnify.com)
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Emnify Authentication](https://apis.io/security/emnify/emnify-authentication/)
+- [Emnify Domain Security](https://apis.io/security/emnify/emnify-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Emnify Plans Pricing](https://apis.io/plans/emnify/emnify-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Emnify Rate Limits](https://apis.io/rate-limits/emnify/emnify-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Emnify Finops](https://apis.io/finops/emnify/emnify-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.emnify.com/)
 - [Documentation](https://docs.emnify.com)
-- [Documentation](https://docs.emnify.com/developers)
-- [Getting Started](https://docs.emnify.com/quickstart)
-- [Sign Up](https://www.emnify.com/get-started)
+- [Getting started](https://docs.emnify.com/quickstart)
 - [Pricing](https://www.emnify.com/plans-and-packages)
-- [GitHub Organization](https://github.com/EMnify)
-- [SDK](https://github.com/emnify/emnify-sdk-python)
-- [SDK](https://github.com/emnify/emnify-sdk-java)
-- [SDK](https://pypi.org/project/emnify-sdk/)
-- [Documentation](https://emnify.github.io/emnify-sdk-python/autoapi/index.html)
-- [Documentation](https://docs.emnify.com/developers/sdks)
-- [Documentation](https://docs.emnify.com/developers/sdks/python/quickstart)
-- [Documentation](https://docs.emnify.com/developers/sdks/java/quickstart)
-- [Documentation](https://docs.emnify.com/developers/auth/application-tokens)
-- [Documentation](https://docs.emnify.com/developers/auth/user-credentials)
-- [Documentation](https://docs.emnify.com/developers/auth/multi-factor-authentication)
-- [Documentation](https://docs.emnify.com/developers/auth/jwts)
-- [Rate Limits](https://docs.emnify.com/developers/api-guidelines/rate-limits)
-- [Errors](https://docs.emnify.com/developers/api-guidelines/errors)
-- [Pagination](https://docs.emnify.com/developers/api-guidelines/collections-pagination)
-- [Conventions](https://docs.emnify.com/developers/api-guidelines/conventions)
-- [Changelog](https://docs.emnify.com/changelog)
 - [Support](https://support.emnify.com/hc/en-us/requests/new)
-- [Forum](https://www.emnify.com/iot-blog)
+- [Changelog](https://docs.emnify.com/changelog)
 - [Blog](https://www.emnify.com/iot-blog)
-- [Terms of Service](https://www.emnify.com/legal/terms-and-conditions)
-- [Privacy Policy](https://www.emnify.com/legal/privacy-statement)
-- [Trust Center](https://www.emnify.com/iot-security)
-- [Tool](https://github.com/emnify/grafana-pcapextractor-plugin)
-- [Tool](https://github.com/emnify/akamai-insights-datasource)
-- [LinkedIn](https://www.linkedin.com/company/emnify)
-- [Twitter](https://twitter.com/emnify)
-- [YouTube](https://www.youtube.com/c/emnify)
-- [Plans](plans/emnify-plans-pricing.yml)
-- [Rate Limits](rate-limits/emnify-rate-limits.yml)
-- [Fin Ops](finops/emnify-finops.yml)
-- [Features](undefined)
+- [Trust centre](https://www.emnify.com/iot-security)
+- [Terms of service](https://www.emnify.com/legal/terms-and-conditions)
+- [Privacy policy](https://www.emnify.com/legal/privacy-statement)
+- [GitHub](https://github.com/EMnify)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** info@apievangelist.com
-**URL:** https://apievangelist.com
+**Kin Score 49.1** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 57.1 |
+| Contract quality | 66.3 |
+| Contract governance | 27.3 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 68.6 |
+| Access clarity | 47.4 |
+
+**Agent readiness 31.9** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | yes |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | mostly |
+
+**Regulatory alignment 18.3** — Telecommunications
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/emnify/](https://apis.io/providers/emnify/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for emnify: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/emnify/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
